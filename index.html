@@ -201,11 +201,11 @@
       // Draw power lines first (behind dots)
       if (GEO && GEO.l) {
         ctx.lineCap = 'round';
-        ctx.globalAlpha = 0.45;
+        ctx.globalAlpha = 0.5;
         for (const l of GEO.l) {
           if (!l.p || l.p.length < 2) continue;
           ctx.strokeStyle = kvColor(l.kv);
-          ctx.lineWidth = kvWidth(l.kv) * 0.5;
+          ctx.lineWidth = kvWidth(l.kv) * 0.55;
           ctx.beginPath();
           ctx.moveTo(toX(l.p[0][0]), toY(l.p[0][1]));
           for (let j = 1; j < l.p.length; j++) {

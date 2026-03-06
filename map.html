@@ -286,11 +286,11 @@
       // Draw power lines (before substations)
       if (GEO && GEO.l) {
         ctx.lineCap = 'round';
-        ctx.globalAlpha = 0.4;
+        ctx.globalAlpha = 0.55;
         for (const l of GEO.l) {
           if (!l.p || l.p.length < 2) continue;
           ctx.strokeStyle = kvColor(l.kv);
-          ctx.lineWidth = kvWidth(l.kv) * Math.min(mapState.scale * 0.5, 1.5);
+          ctx.lineWidth = kvWidth(l.kv) * Math.min(mapState.scale * 0.6, 1.8);
           ctx.beginPath();
           for (let j = 0; j < l.p.length; j++) {
             const baseX = ((l.p[j][0] - LON_MIN) / (LON_MAX - LON_MIN)) * w;
@@ -307,8 +307,6 @@
 
       // Draw substations
       const subs = mapState.filteredSubstations;
-      const npvStats = engine.computeStats(subs, 'bess.config_B.NPV_M');
-      const irrStats = engine.computeStats(subs, 'bess.config_B.IRR_pct');
 
       // We store display coords in CSS pixels (not device pixels)
       subs.forEach(sub => {
@@ -317,11 +315,9 @@
         const x = (baseX - w / 2) * mapState.scale + w / 2 + mapState.offsetX;
         const y = (baseY - h / 2) * mapState.scale + h / 2 + mapState.offsetY;
 
-        // Size by NPV
-        const npvVal = sub.bess?.config_B?.NPV_M || 0;
-        const npvRange = (npvStats?.max || 1) - (npvStats?.min || 0) || 1;
-        const npvNorm = (npvVal - (npvStats?.min || 0)) / npvRange;
-        const radius = 2.5 + (npvNorm * 5);
+        // Size: fixed radius matching SSI style (slightly larger for HV)
+        const kv = sub.voltage_kv || 0;
+        const radius = kv >= 132 ? 3.5 : 2.5;
 
         // Color by mode
         let color;
