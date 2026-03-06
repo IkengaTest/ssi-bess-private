@@ -14,7 +14,8 @@ class BESSEngine {
     try {
       const response = await fetch(url);
       this.data = await response.json();
-      this.substations = this.data.substations || [];
+      // Support both flat array and {substations: [...]} formats
+      this.substations = Array.isArray(this.data) ? this.data : (this.data.substations || []);
       this.regions = this.extractRegions();
       return true;
     } catch (error) {
