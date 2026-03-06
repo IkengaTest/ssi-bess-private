@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <nav class="topnav"></nav>
@@ -25,11 +25,11 @@
 
   <footer class="footer"></footer>
 
-  <script src="bess-engine.js?v=3"></script>
-  <script src="nav.js?v=3"></script>
+  <script src="bess-engine.js?v=6"></script>
+  <script src="nav.js?v=6"></script>
   <script>
     async function initRegional() {
-      const loaded = await engine.loadData('data.json?v=3');
+      const loaded = await engine.loadData('data.json?v=6');
       if (!loaded) {
         document.querySelector('main').innerHTML = '<div class="container"><p style="color: red;">Error loading data</p></div>';
         return;

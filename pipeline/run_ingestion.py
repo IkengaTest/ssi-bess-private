@@ -103,10 +103,26 @@ def increment_version() -> int:
     try:
         current = int(VERSION_FILE.read_text().strip())
     except (FileNotFoundError, ValueError):
-        current = 3  # Start after v=3 (current cache-buster)
+        current = 6  # Start after v=6 (current cache-buster)
     new_version = current + 1
     VERSION_FILE.write_text(str(new_version))
     return new_version
+
+
+def update_html_cache_busters(version: int, verbose: bool = False) -> int:
+    """Update ?v=N in all HTML files to match current version.txt."""
+    import re
+    html_files = sorted(OUTPUT_DIR.glob('*.html'))
+    total_replacements = 0
+    for html_file in html_files:
+        content = html_file.read_text()
+        new_content, count = re.subn(r'\?v=\d+', f'?v={version}', content)
+        if count > 0:
+            html_file.write_text(new_content)
+            total_replacements += count
+            if verbose:
+                print(f"  {html_file.name}: {count} references → ?v={version}")
+    return total_replacements
 
 
 def run_pipeline(use_cache=True, strict=False, compute_bess=True,
@@ -212,6 +228,11 @@ def run_pipeline(use_cache=True, strict=False, compute_bess=True,
         version = increment_version()
         if verbose:
             print(f"  version.txt: v{version}")
+
+        # Update HTML cache-busters to match new version
+        replacements = update_html_cache_busters(version, verbose)
+        if verbose:
+            print(f"  HTML cache-busters: {replacements} references updated")
 
     # ── STEP 9: Print summary ──
     duration = time.time() - t0

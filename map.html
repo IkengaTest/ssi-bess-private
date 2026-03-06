@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <nav class="topnav"></nav>
@@ -90,8 +90,8 @@
 
   <footer class="footer"></footer>
 
-  <script src="bess-engine.js?v=3"></script>
-  <script src="nav.js?v=3"></script>
+  <script src="bess-engine.js?v=6"></script>
+  <script src="nav.js?v=6"></script>
   <script>
     // Map state
     const mapState = {
@@ -133,8 +133,8 @@
 
     async function initMap() {
       const [loaded] = await Promise.all([
-        engine.loadData('data.json?v=3'),
-        fetch('grid-geo.json?v=3').then(r => r.json()).then(d => { GEO = d; }).catch(() => {})
+        engine.loadData('data.json?v=6'),
+        fetch('grid-geo.json?v=6').then(r => r.json()).then(d => { GEO = d; }).catch(() => {})
       ]);
       if (!loaded) {
         document.querySelector('main').innerHTML = '<div class="container"><p style="color: red;">Error loading data</p></div>';
