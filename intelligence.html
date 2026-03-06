@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSI-ENN BESS — Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav"></nav>
+
+  <div class="container">
+    <div class="hero-left">
+      <h1>BESS Intelligence</h1>
+      <p class="hero-subtitle">Substation Value Stack Explorer</p>
+      <p class="hero-intro">
+        Deep-dive into any substation's BESS investment case. Select a substation to see its full value decomposition — how each SSI component translates into revenue, which configuration is recommended, and where the opportunity sits in the national fleet.
+      </p>
+    </div>
+
+    <!-- Part A: Explorer -->
+    <div class="section-label">Explorer</div>
+    <h2 style="margin-bottom:1.5rem;">Substation Value Stack</h2>
+
+    <!-- Search -->
+    <div class="explorer-search">
+      <input type="text" id="sub-search" placeholder="Search by substation name, province, or region..." autocomplete="off">
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <!-- Profile (hidden until selection) -->
+    <div id="profile-section" style="display:none;">
+
+      <!-- Header card -->
+      <div class="profile-header">
+        <div class="profile-title" id="prof-name"></div>
+        <div class="profile-subtitle" id="prof-location"></div>
+        <div class="profile-metrics">
+          <div>
+            <div class="profile-metric-label">R_FINAL</div>
+            <div class="profile-metric-value" id="prof-r"></div>
+          </div>
+          <div>
+            <div class="profile-metric-label">Classification</div>
+            <div class="profile-metric-value" id="prof-band"></div>
+          </div>
+          <div>
+            <div class="profile-metric-label">CI Width</div>
+            <div class="profile-metric-value" id="prof-ci"></div>
+          </div>
+          <div>
+            <div class="profile-metric-label">Fleet Percentile</div>
+            <div class="profile-metric-value" id="prof-pctl"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-col: Radar + Modifiers -->
+      <div class="two-col">
+        <div class="radar-container">
+          <h4 style="margin-bottom:1rem;">Component Profile</h4>
+          <canvas id="radar-chart" class="radar-canvas" width="350" height="350"></canvas>
+        </div>
+        <div>
+          <h4 style="margin-bottom:1rem;">Contextual Modifiers</h4>
+          <div class="modifier-grid" id="modifier-grid"></div>
+        </div>
+      </div>
+
+      <!-- Value Stack Waterfall -->
+      <div class="waterfall-container">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <h4 style="margin-bottom:0;">Value Stack Decomposition</h4>
+          <div style="display:flex;gap:1rem;">
+            <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;">
+              <span style="width:12px;height:12px;background:var(--bronze);border-radius:2px;display:inline-block;"></span> Config A
+            </span>
+            <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;">
+              <span style="width:12px;height:12px;background:var(--sage);border-radius:2px;display:inline-block;"></span> Config B
+            </span>
+          </div>
+        </div>
+        <canvas id="waterfall-chart" style="width:100%;height:300px;"></canvas>
+      </div>
+
+      <!-- Config Comparison -->
+      <div class="config-compare">
+        <div class="config-card" id="config-a-card">
+          <span class="config-badge config-badge-a">Config A — 4.9 MW</span>
+          <div id="config-a-rows"></div>
+        </div>
+        <div class="config-card" id="config-b-card">
+          <span class="config-badge config-badge-b">Config B — 9.9 MW</span>
+          <div id="config-b-rows"></div>
+        </div>
+      </div>
+
+      <!-- Recommendation -->
+      <div style="text-align:center;margin:1.5rem 0;">
+        <div class="recommendation-badge" id="recommendation-badge"></div>
+      </div>
+
+      <!-- Narrative -->
+      <div class="narrative-block" id="narrative-block">
+        <p id="narrative-text"></p>
+      </div>
+    </div>
+
+    <!-- Part B: Spotlight -->
+    <div class="spotlight-section">
+      <div class="section-label">Spotlight — March 2026</div>
+      <h2>Southern Calabria — Investment Thesis</h2>
+
+      <div class="highlight-card" style="margin-top:1.5rem;">
+        <h3>Why This Cluster</h3>
+        <p>Southern Calabria hosts some of Italy's most grid-stressed substations. The convergence of high congestion (C), weak infrastructure (I), and significant social vulnerability (S) produces elevated SSI scores — and correspondingly strong BESS investment cases. The region's isolation from major transmission corridors and its role as a renewable energy corridor (wind and solar) create persistent grid imbalances that battery storage is uniquely positioned to resolve.</p>
+      </div>
+
+      <div class="kpi-grid" id="spotlight-kpis">
+        <div class="kpi-card">
+          <div class="kpi-label">Substations in Cluster</div>
+          <div class="kpi-value" id="spot-count">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Median R Score</div>
+          <div class="kpi-value" id="spot-r">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Median IRR</div>
+          <div class="kpi-value" id="spot-irr">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total NPV (Config B)</div>
+          <div class="kpi-value" id="spot-npv">—</div>
+        </div>
+      </div>
+
+      <h4 style="margin-top:2rem;">Top 5 Substations</h4>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Substation</th><th>Province</th><th>R Score</th><th>NPV €M</th><th>IRR %</th><th>Band</th></tr>
+          </thead>
+          <tbody id="spotlight-table"></tbody>
+        </table>
+      </div>
+
+      <div class="highlight-card" style="margin-top:2rem;border-left-color:var(--terracotta);">
+        <h3 style="color:var(--terracotta);">Risk Factors</h3>
+        <p>Planned Terna transmission upgrades (SA.CO.I.3 cable) could reduce congestion in southern Calabria by 2029, potentially eroding V_DNO revenues. Additionally, competing utility-scale solar-plus-storage projects in Basilicata may shift grid investment priorities. Investors should monitor ARERA's forthcoming ROSS-base 2025 network development plan for updated timelines.</p>
+      </div>
+
+      <div class="highlight-card" style="margin-top:1.5rem;border-left-color:var(--sage);">
+        <h3 style="color:var(--sage);">Investment View</h3>
+        <p>Despite medium-term grid upgrade risks, southern Calabria represents a compelling near-term BESS deployment opportunity. The combination of elevated IRR (median 12.4%), strong V_Community values driven by high social vulnerability scores, and a 3–5 year window before transmission relief arrives creates an attractive entry point for Config B deployments at the top-ranked substations.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"></footer>
+
+  <script src="bess-engine.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    let selectedSub = null;
+
+    async function init() {
+      const loaded = await engine.loadData('data.json');
+      if (!loaded) return;
+      setupSearch();
+      populateSpotlight();
+    }
+
+    // ─── SEARCH ───
+    function setupSearch() {
+      const input = document.getElementById('sub-search');
+      const results = document.getElementById('search-results');
+
+      input.addEventListener('input', () => {
+        const q = input.value.trim();
+        if (q.length < 2) { results.classList.remove('active'); return; }
+        const matches = engine.search(q).slice(0, 15);
+        if (matches.length === 0) { results.classList.remove('active'); return; }
+        results.innerHTML = matches.map(sub => `
+          <div class="search-result-item" data-id="${sub.substation_id || sub.id || sub.name}">
+            <div class="search-result-name">${sub.name}</div>
+            <div class="search-result-meta">${sub.province}, ${sub.region} · ${sub.voltage_kv} kV · <span class="band-chip band-${sub.classification.toLowerCase()}" style="font-size:0.7rem;padding:0.15rem 0.5rem;">${sub.classification}</span></div>
+          </div>
+        `).join('');
+        results.classList.add('active');
+
+        results.querySelectorAll('.search-result-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const id = item.dataset.id;
+            const sub = engine.substations.find(s => (s.substation_id || s.id || s.name) === id);
+            if (sub) selectSubstation(sub);
+            results.classList.remove('active');
+            input.value = sub ? sub.name : '';
+          });
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.explorer-search')) results.classList.remove('active');
+      });
+    }
+
+    // ─── SELECT SUBSTATION ───
+    function selectSubstation(sub) {
+      selectedSub = sub;
+      document.getElementById('profile-section').style.display = 'block';
+
+      // Header
+      document.getElementById('prof-name').textContent = sub.name;
+      document.getElementById('prof-location').textContent = `${sub.province}, ${sub.region} · ${sub.voltage_kv} kV`;
+      document.getElementById('prof-r').textContent = sub.R_median.toFixed(3);
+      document.getElementById('prof-band').innerHTML = `<span class="band-chip band-${sub.classification.toLowerCase()}">${sub.classification}</span>`;
+      document.getElementById('prof-ci').textContent = sub.CI_width ? sub.CI_width.toFixed(3) : '—';
+      document.getElementById('prof-pctl').textContent = sub.fleet_percentile ? (sub.fleet_percentile * 100).toFixed(0) + 'th' : '—';
+
+      drawRadar(sub);
+      drawModifiers(sub);
+      drawWaterfall(sub);
+      drawConfigs(sub);
+      drawRecommendation(sub);
+      drawNarrative(sub);
+
+      document.getElementById('profile-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ─── RADAR CHART ───
+    function drawRadar(sub) {
+      const canvas = document.getElementById('radar-chart');
+      canvas.width = 350; canvas.height = 350;
+      const ctx = canvas.getContext('2d');
+      const cx = 175, cy = 175, R = 130;
+      const labels = ['C','V','I','E','S','T'];
+      const weights = [0.30, 0.10, 0.25, 0.10, 0.20, 0.05];
+      const comps = sub.components || {};
+      const values = labels.map(l => comps[l] || 0);
+      const maxVals = weights; // weight ceiling
+      const n = 6;
+
+      ctx.clearRect(0, 0, 350, 350);
+
+      // Grid rings
+      for (let ring = 1; ring <= 4; ring++) {
+        const r = R * ring / 4;
+        ctx.beginPath();
+        for (let i = 0; i <= n; i++) {
+          const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+          const x = cx + r * Math.cos(angle);
+          const y = cy + r * Math.sin(angle);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = 'rgba(44,36,32,0.1)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Spokes + labels
+      for (let i = 0; i < n; i++) {
+        const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + R * Math.cos(angle), cy + R * Math.sin(angle));
+        ctx.strokeStyle = 'rgba(44,36,32,0.1)';
+        ctx.stroke();
+
+        const lx = cx + (R + 20) * Math.cos(angle);
+        const ly = cy + (R + 20) * Math.sin(angle);
+        ctx.font = '600 13px DM Sans';
+        ctx.fillStyle = '#941914';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(labels[i], lx, ly);
+
+        // Weight annotation
+        ctx.font = '500 10px DM Sans';
+        ctx.fillStyle = '#8a7e76';
+        ctx.fillText((weights[i]*100).toFixed(0)+'%', lx, ly + 14);
+      }
+
+      // Data polygon
+      ctx.beginPath();
+      for (let i = 0; i < n; i++) {
+        const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+        const norm = maxVals[i] > 0 ? values[i] / maxVals[i] : 0;
+        const r = Math.min(norm, 1) * R;
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(148,25,20,0.12)';
+      ctx.fill();
+      ctx.strokeStyle = '#941914';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Data points
+      for (let i = 0; i < n; i++) {
+        const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+        const norm = maxVals[i] > 0 ? values[i] / maxVals[i] : 0;
+        const r = Math.min(norm, 1) * R;
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#941914';
+        ctx.fill();
+      }
+    }
+
+    // ─── MODIFIERS ───
+    function drawModifiers(sub) {
+      const mods = sub.modifiers || {};
+      const modDefs = [
+        { key: 'R3', name: 'Consequence' },
+        { key: 'R4', name: 'Graph Criticality' },
+        { key: 'R6', name: 'Restoration' },
+        { key: 'R7', name: 'Digital Readiness' }
+      ];
+
+      document.getElementById('modifier-grid').innerHTML = modDefs.map(m => {
+        const val = mods[m.key];
+        const dir = val > 1.0 ? 'amplifies' : val < 1.0 ? 'attenuates' : 'neutral';
+        const arrow = val > 1.0 ? '↑' : val < 1.0 ? '↓' : '—';
+        return `
+          <div class="modifier-item">
+            <div class="modifier-name">${m.key} ${m.name}</div>
+            <div class="modifier-value">${val ? val.toFixed(3) : '—'}</div>
+            <div class="modifier-direction ${dir}">${arrow} ${dir}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ─── WATERFALL CHART ───
+    function drawWaterfall(sub) {
+      const canvas = document.getElementById('waterfall-chart');
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = 300 * window.devicePixelRatio;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const W = rect.width, H = 300;
+
+      const a = sub.bess?.config_A || {};
+      const b = sub.bess?.config_B || {};
+
+      const categories = ['V_DNO', 'V_Community', 'V_RO', 'CAPEX', 'NPV'];
+      const valsA = [a.V_DNO_M||0, a.V_Community_M||0, a.V_RO_M||0, -3.5, a.NPV_M||0];
+      const valsB = [b.V_DNO_M||0, b.V_Community_M||0, b.V_RO_M||0, -7.0, b.NPV_M||0];
+
+      const allVals = [...valsA, ...valsB].map(Math.abs);
+      const maxVal = Math.max(...allVals, 1);
+
+      const barAreaH = H - 70;
+      const groupW = W / categories.length;
+      const barW = groupW * 0.25;
+      const gap = 6;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Baseline
+      ctx.strokeStyle = 'rgba(44,36,32,0.1)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4,4]);
+      const baseY = 30;
+      ctx.beginPath(); ctx.moveTo(0, baseY + barAreaH); ctx.lineTo(W, baseY + barAreaH); ctx.stroke();
+      ctx.setLineDash([]);
+
+      categories.forEach((cat, i) => {
+        const cx = groupW * i + groupW / 2;
+
+        // Config A bar
+        const hA = Math.abs(valsA[i]) / maxVal * barAreaH;
+        const colorA = valsA[i] < 0 ? '#aa4234' : '#b8863a';
+        ctx.fillStyle = colorA;
+        ctx.fillRect(cx - barW - gap/2, baseY + barAreaH - hA, barW, hA);
+
+        // Config B bar
+        const hB = Math.abs(valsB[i]) / maxVal * barAreaH;
+        const colorB = valsB[i] < 0 ? '#941914' : '#5d8563';
+        ctx.fillStyle = colorB;
+        ctx.fillRect(cx + gap/2, baseY + barAreaH - hB, barW, hB);
+
+        // Value labels
+        ctx.font = '600 11px DM Sans';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = colorA;
+        ctx.fillText('€' + Math.abs(valsA[i]).toFixed(1) + 'M', cx - barW/2 - gap/2, baseY + barAreaH - hA - 6);
+        ctx.fillStyle = colorB;
+        ctx.fillText('€' + Math.abs(valsB[i]).toFixed(1) + 'M', cx + barW/2 + gap/2, baseY + barAreaH - hB - 6);
+
+        // Category label
+        ctx.font = '600 10px DM Sans';
+        ctx.fillStyle = '#8a7e76';
+        ctx.textAlign = 'center';
+        ctx.fillText(cat, cx, baseY + barAreaH + 18);
+      });
+    }
+
+    // ─── CONFIG COMPARISON ───
+    function drawConfigs(sub) {
+      const a = sub.bess?.config_A || {};
+      const b = sub.bess?.config_B || {};
+      const rec = sub.bess?.recommendation || 'Config B';
+
+      function makeRows(config, capex) {
+        const rows = [
+          { label: 'V_DNO', value: '€' + (config.V_DNO_M||0).toFixed(2) + 'M' },
+          { label: 'V_Community', value: '€' + (config.V_Community_M||0).toFixed(2) + 'M' },
+          { label: 'V_RO', value: '€' + (config.V_RO_M||0).toFixed(2) + 'M' },
+          { label: 'Total Value', value: '€' + ((config.V_DNO_M||0) + (config.V_Community_M||0) + (config.V_RO_M||0)).toFixed(2) + 'M' },
+          { label: 'CAPEX', value: '€' + capex + 'M' },
+          { label: 'NPV', value: '€' + (config.NPV_M||0).toFixed(2) + 'M', highlight: true },
+          { label: 'IRR', value: (config.IRR_pct||0).toFixed(1) + '%' },
+          { label: 'Payback', value: (config.Payback_yr||0).toFixed(1) + ' years' }
+        ];
+        return rows.map(r =>
+          `<div class="config-row ${r.highlight ? 'highlight' : ''}">
+            <span class="config-row-label">${r.label}</span>
+            <span class="config-row-value">${r.value}</span>
+          </div>`
+        ).join('');
+      }
+
+      document.getElementById('config-a-rows').innerHTML = makeRows(a, '3.5');
+      document.getElementById('config-b-rows').innerHTML = makeRows(b, '7.0');
+
+      // Highlight recommended
+      const aCard = document.getElementById('config-a-card');
+      const bCard = document.getElementById('config-b-card');
+      aCard.classList.toggle('recommended', rec === 'Config A');
+      bCard.classList.toggle('recommended', rec === 'Config B');
+    }
+
+    // ─── RECOMMENDATION ───
+    function drawRecommendation(sub) {
+      const rec = sub.bess?.recommendation || 'Config B';
+      const isB = rec === 'Config B';
+      const badge = document.getElementById('recommendation-badge');
+      badge.className = 'recommendation-badge ' + (isB ? 'config-b' : 'config-a');
+      badge.textContent = '✓ ' + rec + ' recommended';
+    }
+
+    // ─── NARRATIVE ───
+    function drawNarrative(sub) {
+      const comps = sub.components || {};
+      const weights = { C: 0.30, V: 0.10, I: 0.25, E: 0.10, S: 0.20, T: 0.05 };
+      const labels = { C: 'Congestion', V: 'Voltage Support', I: 'Infrastructure', E: 'Frequency', S: 'Social Impact', T: 'Transmission' };
+
+      // Find top two components by % of weight ceiling
+      const ratios = Object.entries(comps).map(([k, v]) => ({
+        key: k, ratio: weights[k] ? v / weights[k] : 0, label: labels[k] || k
+      })).sort((a, b) => b.ratio - a.ratio);
+
+      const top1 = ratios[0] || { label: 'N/A', ratio: 0 };
+      const top2 = ratios[1] || { label: 'N/A', ratio: 0 };
+
+      const mods = sub.modifiers || {};
+      const modProduct = Object.values(mods).reduce((a, b) => a * b, 1);
+      const modEffect = modProduct > 1 ? 'amplify' : 'attenuate';
+      const modPct = ((modProduct - 1) * 100).toFixed(1);
+
+      const b = sub.bess?.config_B || {};
+      const rank = sub.bess?.investment_priority || '—';
+      const pctl = sub.fleet_percentile ? (sub.fleet_percentile * 100).toFixed(0) : '—';
+
+      document.getElementById('narrative-text').textContent =
+        `${sub.name} in ${sub.province}, ${sub.region} scores R=${sub.R_median.toFixed(3)} (${sub.classification} band, ${pctl}th fleet percentile). ` +
+        `Its risk profile is dominated by ${top1.label} at ${(top1.ratio * 100).toFixed(0)}% of its weight ceiling, followed by ${top2.label} at ${(top2.ratio * 100).toFixed(0)}%. ` +
+        `The modifiers collectively ${modEffect} R_base by ${Math.abs(modPct)}%, reflecting the substation's specific geographic, socio-economic, and network context. ` +
+        `Under Config B, the NPV of €${(b.NPV_M||0).toFixed(2)}M and IRR of ${(b.IRR_pct||0).toFixed(1)}% place this substation at rank ${rank} in the national fleet.`;
+    }
+
+    // ─── SPOTLIGHT ───
+    function populateSpotlight() {
+      const calabriaSubs = engine.filterByRegion('Calabria');
+      if (calabriaSubs.length === 0) return;
+
+      const stats = engine.computeStats(calabriaSubs, 'R_median');
+      const irrStats = engine.computeStats(calabriaSubs, 'bess.config_B.IRR_pct');
+      const npvStats = engine.computeStats(calabriaSubs, 'bess.config_B.NPV_M');
+
+      document.getElementById('spot-count').textContent = calabriaSubs.length;
+      document.getElementById('spot-r').textContent = stats?.median?.toFixed(3) || '—';
+      document.getElementById('spot-irr').textContent = (irrStats?.median?.toFixed(1) || '—') + '%';
+      document.getElementById('spot-npv').textContent = '€' + (npvStats?.sum?.toFixed(1) || '—') + 'M';
+
+      const top5 = engine.sortByField(calabriaSubs, 'bess.config_B.NPV_M', false).slice(0, 5);
+      document.getElementById('spotlight-table').innerHTML = top5.map(sub => `
+        <tr style="cursor:pointer;" onclick="selectSubstation(engine.substations.find(s=>s.name==='${sub.name.replace(/'/g, "\\'")}'))">
+          <td style="font-weight:600;color:var(--ink);">${sub.name}</td>
+          <td>${sub.province}</td>
+          <td>${sub.R_median.toFixed(3)}</td>
+          <td style="font-weight:600;">€${sub.bess.config_B.NPV_M.toFixed(2)}M</td>
+          <td>${sub.bess.config_B.IRR_pct.toFixed(1)}%</td>
+          <td><span class="band-chip band-${sub.classification.toLowerCase()}">${sub.classification}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    init();
+  </script>
+</body>
+</html>

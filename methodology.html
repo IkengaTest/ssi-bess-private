@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSI-ENN BESS — Methodology</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav"></nav>
+
+  <div class="container container-narrow">
+    <div class="hero-left">
+      <h1>Methodology</h1>
+      <p class="hero-intro">How the BESS Valuation Platform scores and values substations — from raw data ingestion through resilience scoring to investment-grade financial modelling. The methodology is built on the SSI v4.0 open framework, extended with proprietary BESS sizing, value stacking, and real options pricing.</p>
+    </div>
+
+    <div class="highlight-card">
+      <h3>Breaking the Silos — Then Pricing Them</h3>
+      <p>Traditional BESS siting relies on congestion data alone. The SSI-ENN platform starts where others stop: it fuses grid stress with socio-economic consequence, environmental exposure, and energy-transition readiness — then converts each dimension into a quantified revenue stream for the battery operator.</p>
+    </div>
+
+    <!-- Section A: SSI Scoring -->
+    <div class="methodology-section">
+      <div class="section-label">Foundation Layer</div>
+      <h2>SSI v4.0 Composite Score</h2>
+      <p>The Systemic System Infrastructure Index produces a composite resilience score R for each substation. Six weighted components — Congestion (C, 30%), Voltage Support (V, 10%), Intraday Variation (I, 25%), Frequency (E, 10%), Social Impact (S, 20%), and Transmission (T, 5%) — are normalised, weighted, and adjusted by five contextual modifiers (R2–R7) capturing transmission congestion, renewable penetration, load profile, network topology, and regulatory readiness.</p>
+
+      <div class="formula-block">
+        <div style="margin-bottom:0.5rem;"><strong>R_base</strong> = 0.30·C + 0.10·V + 0.25·I + 0.10·E + 0.20·S + 0.05·T</div>
+        <div><strong>R_final</strong> = R_base × R2 × R3 × R4 × R6 × R7</div>
+      </div>
+
+      <div class="weights-grid">
+        <div class="weight-card">
+          <div class="weight-symbol">C</div>
+          <div class="weight-label">Congestion</div>
+          <div class="weight-percent">30%</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-symbol">V</div>
+          <div class="weight-label">Voltage Support</div>
+          <div class="weight-percent">10%</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-symbol">I</div>
+          <div class="weight-label">Infrastructure</div>
+          <div class="weight-percent">25%</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-symbol">E</div>
+          <div class="weight-label">Frequency</div>
+          <div class="weight-percent">10%</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-symbol">S</div>
+          <div class="weight-label">Social Impact</div>
+          <div class="weight-percent">20%</div>
+        </div>
+        <div class="weight-card">
+          <div class="weight-symbol">T</div>
+          <div class="weight-label">Transmission</div>
+          <div class="weight-percent">5%</div>
+        </div>
+      </div>
+
+      <h4 style="margin-top:2rem;">Classification Bands</h4>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Band</th><th>R Range</th><th>Investment Signal</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="band-chip band-low">Low</span></td><td>0.00 – 0.35</td><td>Limited near-term opportunity</td></tr>
+            <tr><td><span class="band-chip band-medium">Medium</span></td><td>0.35 – 0.50</td><td>Moderate opportunity — conditional on local factors</td></tr>
+            <tr><td><span class="band-chip band-high">High</span></td><td>0.50 – 0.65</td><td>Strong deployment case</td></tr>
+            <tr><td><span class="band-chip band-critical">Critical</span></td><td>0.65 – 1.00</td><td>Priority investment — immediate action warranted</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section B: BESS Configuration -->
+    <div class="methodology-section">
+      <div class="section-label">Sizing Layer</div>
+      <h2>Dual BESS Configurations</h2>
+      <p>Each substation is evaluated against two standardised battery configurations, enabling investors to compare deployment scales without bespoke engineering at the screening stage.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Config A</th><th>Config B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Power rating</td><td>4.9 MW</td><td>9.9 MW</td></tr>
+            <tr><td>Energy capacity</td><td>19.6 MWh</td><td>39.6 MWh</td></tr>
+            <tr><td>Duration</td><td>4 hours</td><td>4 hours</td></tr>
+            <tr><td>CAPEX</td><td style="font-weight:600;">€3.5M</td><td style="font-weight:600;">€7.0M</td></tr>
+            <tr><td>Degradation</td><td>0.8%/year</td><td>0.8%/year</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section C: Value Stack -->
+    <div class="methodology-section">
+      <div class="section-label">Valuation Layer</div>
+      <h2>Three-Pillar Value Stack</h2>
+      <p>Total BESS value at each substation is the sum of three distinct revenue/benefit pillars, each grounded in the substation's SSI component scores.</p>
+
+      <div class="formula-block">
+        <strong>Total Value</strong> = V_DNO + V_Community + V_RO
+      </div>
+
+      <div style="margin-top:2rem;">
+        <div class="highlight-card" style="border-left-color:var(--sage);">
+          <h3 style="color:var(--sage);">V_DNO — Distribution Network Operator Value</h3>
+          <p>Revenue from services sold to the grid operator: congestion relief, voltage regulation, capacity deferral, and resilience provision. Derived primarily from the C, V, and I components of the SSI score. Higher grid stress = higher DNO willingness to pay.</p>
+        </div>
+
+        <div class="highlight-card" style="border-left-color:var(--bronze);">
+          <h3 style="color:var(--bronze);">V_Community — Socio-Economic Value</h3>
+          <p>Monetised societal benefit: CO₂ avoidance (€100/ton), energy independence improvement, and local economic development. Driven by the S (Social Impact) and E (Frequency/Economic) components. Captures the value that justifies public co-investment and regulatory support.</p>
+        </div>
+
+        <div class="highlight-card" style="border-left-color:var(--terracotta);">
+          <h3 style="color:var(--terracotta);">V_RO — Real Options Value</h3>
+          <p>Flexibility premium from Monte Carlo simulation (10,000 iterations): the option value of being able to respond to future market, technology, and regulatory shifts. Accounts for price volatility, degradation uncertainty, and policy evolution.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section D: Financial Modelling -->
+    <div class="methodology-section">
+      <div class="section-label">Output Layer</div>
+      <h2>Investment Metrics</h2>
+
+      <div class="formula-block">
+        <div style="margin-bottom:0.5rem;"><strong>NPV</strong> = (V_DNO + V_Community + V_RO) − CAPEX, discounted at WACC</div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Value</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>WACC</td><td style="font-weight:600;">5.2%</td><td>Blended cost of capital</td></tr>
+            <tr><td>Debt share</td><td>80%</td><td>At 3.5% cost of debt</td></tr>
+            <tr><td>Equity share</td><td>20%</td><td>At 8.0% cost of equity</td></tr>
+            <tr><td>Horizon</td><td style="font-weight:600;">25 years</td><td>Full asset life</td></tr>
+            <tr><td>Battery degradation</td><td>0.8%/year</td><td>Linear capacity fade</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:1.5rem;">IRR and payback period are computed per configuration. The platform recommends Config A or Config B based on which delivers the higher risk-adjusted NPV.</p>
+    </div>
+  </div>
+
+  <footer class="footer"></footer>
+  <script src="nav.js"></script>
+</body>
+</html>

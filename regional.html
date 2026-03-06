@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSI-ENN BESS — Regional Breakdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav"></nav>
+
+  <main class="container container-narrow">
+    <div class="hero-left">
+      <h1>Regional Breakdown</h1>
+      <p class="hero-intro">BESS deployment potential analysed region by region. Each card summarises the investment landscape — substation count, median suitability score, headline IRR, and the province with the strongest deployment case. Expand any region for its top-5 substations ranked by NPV.</p>
+    </div>
+
+    <div class="region-cards" id="region-cards">
+      <!-- Populated by JavaScript -->
+    </div>
+  </main>
+
+  <footer class="footer"></footer>
+
+  <script src="bess-engine.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    async function initRegional() {
+      const loaded = await engine.loadData('data.json');
+      if (!loaded) {
+        document.querySelector('main').innerHTML = '<div class="container"><p style="color: red;">Error loading data</p></div>';
+        return;
+      }
+
+      renderRegionalCards();
+    }
+
+    function renderRegionalCards() {
+      const regions = engine.getAllRegions();
+      const container = document.getElementById('region-cards');
+
+      container.innerHTML = regions.map((region, idx) => {
+        const summary = engine.getRegionSummary(region);
+        const topSubs = engine.getRegionTopSubstations(region, 5);
+
+        if (!summary) return '';
+
+        const dist = summary.bandDistribution;
+        const total = Object.values(dist).reduce((a, b) => a + b, 0);
+
+        const bandBar = [
+          { band: 'Low', count: dist.Low },
+          { band: 'Medium', count: dist.Medium },
+          { band: 'High', count: dist.High },
+          { band: 'Critical', count: dist.Critical }
+        ].map(seg => {
+          const pct = total > 0 ? (seg.count / total * 100) : 0;
+          const className = `band-bar-${seg.band.toLowerCase()}`;
+          return `<div class="band-bar-segment ${className}" style="width: ${pct}%; min-width: 2px;"></div>`;
+        }).join('');
+
+        return `
+          <div class="region-card" data-region="${region}" data-index="${idx}">
+            <div class="region-header">
+              <div>
+                <h3 class="region-title">${region}</h3>
+              </div>
+              <button class="region-toggle">▼</button>
+            </div>
+
+            <div class="region-stats">
+              <div class="region-stat">
+                <div class="region-stat-label">Substations</div>
+                <div class="region-stat-value">${summary.count}</div>
+              </div>
+              <div class="region-stat">
+                <div class="region-stat-label">Median R</div>
+                <div class="region-stat-value">${engine.formatNumber(summary.medianR, 2)}</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <div style="font-size: 0.8rem; color: var(--warm-grey-light); text-transform: uppercase; margin-bottom: 0.5rem;">Band Distribution</div>
+              <div class="band-bar">${bandBar}</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem;">
+              <div>
+                <div style="font-size: 0.8rem; color: var(--warm-grey-light); text-transform: uppercase; margin-bottom: 0.3rem;">Config A Median NPV</div>
+                <div style="font-size: 1.4rem; color: var(--ink); font-weight: 600;">€${engine.formatNumber(summary.medianNPVConfigA, 2)}M</div>
+              </div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--warm-grey-light); text-transform: uppercase; margin-bottom: 0.3rem;">Config B Median NPV</div>
+                <div style="font-size: 1.4rem; color: var(--ink); font-weight: 600;">€${engine.formatNumber(summary.medianNPVConfigB, 2)}M</div>
+              </div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--warm-grey-light); text-transform: uppercase; margin-bottom: 0.3rem;">Median IRR</div>
+                <div style="font-size: 1.4rem; color: var(--ink); font-weight: 600;">${engine.formatNumber(summary.medianIRR, 1)}%</div>
+              </div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--warm-grey-light); text-transform: uppercase; margin-bottom: 0.3rem;">Top Province</div>
+                <div style="font-size: 1.1rem; color: var(--ink); font-weight: 600;">${summary.topProvince}</div>
+              </div>
+            </div>
+
+            <div class="region-expanded-content">
+              <h4 style="margin: 1rem 0 0.8rem;">Top 5 Substations by NPV</h4>
+              <div class="table-wrapper">
+                <table style="margin: 0;">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Province</th>
+                      <th>R Median</th>
+                      <th>Config B NPV</th>
+                      <th>IRR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${topSubs.map(sub => `
+                      <tr>
+                        <td><strong>${sub.name}</strong></td>
+                        <td>${sub.province}</td>
+                        <td>${engine.formatNumber(sub.R_median, 3)}</td>
+                        <td>€${engine.formatNumber(sub.bess?.config_B?.NPV_M || 0, 2)}M</td>
+                        <td>${engine.formatNumber(sub.bess?.config_B?.IRR_pct || 0, 1)}%</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add click handlers
+      document.querySelectorAll('.region-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const isExpanded = card.classList.contains('expanded');
+          document.querySelectorAll('.region-card.expanded').forEach(c => {
+            c.classList.remove('expanded');
+          });
+          if (!isExpanded) {
+            card.classList.add('expanded');
+          }
+        });
+      });
+    }
+
+    initRegional();
+  </script>
+</body>
+</html>

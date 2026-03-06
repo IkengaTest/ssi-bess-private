@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSI-ENN BESS — Data Catalogue</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav"></nav>
+
+  <div class="container container-narrow">
+    <div class="hero-left">
+      <h1>Data Catalogue</h1>
+      <p class="hero-intro">
+        The BESS Valuation Platform ingests and processes data from 30 verified public sources across 11 distinct layers. This page catalogues every data layer, its variables, sources, and update frequency. All underlying SSI data is public and independently verifiable — the proprietary value lies in the fusion, normalisation, and valuation engine.
+      </p>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Variables</div>
+        <div class="kpi-value">95</div>
+        <div class="kpi-unit">Across 11 data layers</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Data Sources</div>
+        <div class="kpi-value">30</div>
+        <div class="kpi-unit">All verified &amp; public</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Substations</div>
+        <div class="kpi-value">2,219</div>
+        <div class="kpi-unit">18 regions · 104 provinces</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Valuation Fields</div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-unit">Per substation · per config</div>
+      </div>
+    </div>
+
+    <!-- Data Layers -->
+    <div class="methodology-section">
+      <div class="section-label">Source Layers</div>
+      <h2>Data Layers</h2>
+      <p>The SSI v4.0 pipeline ingests 95 variables across 11 layers, from grid resilience metrics to socio-economic indicators. Each variable is normalised, weighted, and fed into the composite scoring engine.</p>
+
+      <div class="table-wrapper">
+        <table class="layer-table">
+          <thead>
+            <tr><th>Layer</th><th>Domain</th><th>Variables</th><th>Status</th><th>Key Sources</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>SSI v4.0 Resilience</td><td style="text-align:center;">17</td><td><span class="status-badge status-live">LIVE</span></td><td>E-Distribuzione · BdI QEF 737 · Dimovski · ISTAT SBS</td></tr>
+            <tr><td>B.1</td><td>Grid Telemetry: Open</td><td style="text-align:center;">3</td><td><span class="status-badge status-live">LIVE</span></td><td>Open-Meteo / ERA5 · ARERA</td></tr>
+            <tr><td>B.2</td><td>Grid Telemetry: Proxy</td><td style="text-align:center;">5</td><td><span class="status-badge status-live">LIVE</span></td><td>OSM Overpass · Copernicus CDS</td></tr>
+            <tr><td>C</td><td>Economic &amp; Demographic</td><td style="text-align:center;">12</td><td><span class="status-badge status-live">LIVE</span></td><td>ISTAT Census · ISTAT SBS · Eurostat</td></tr>
+            <tr><td>D</td><td>Geographic &amp; Climate</td><td style="text-align:center;">8</td><td><span class="status-badge status-live">LIVE</span></td><td>Copernicus CDS · ISPRA · Open-Meteo</td></tr>
+            <tr><td>E</td><td>Energy Transition</td><td style="text-align:center;">11</td><td><span class="status-badge status-live">LIVE</span></td><td>GSE Atlaimpianti · PNIEC · ARERA</td></tr>
+            <tr><td>F</td><td>Regulatory &amp; Market</td><td style="text-align:center;">9</td><td><span class="status-badge status-live">LIVE</span></td><td>ARERA · GME · ENTSO-E TYNDP</td></tr>
+            <tr><td>G</td><td>Network Topology</td><td style="text-align:center;">7</td><td><span class="status-badge status-live">LIVE</span></td><td>OSM · Terna Grid Map · E-Distribuzione</td></tr>
+            <tr><td>H</td><td>Environmental Risk</td><td style="text-align:center;">6</td><td><span class="status-badge status-live">LIVE</span></td><td>ISPRA · Copernicus EMS · INGV</td></tr>
+            <tr><td>I</td><td>Social Vulnerability</td><td style="text-align:center;">8</td><td><span class="status-badge status-live">LIVE</span></td><td>ISTAT BES · Caritas · Civil Protection</td></tr>
+            <tr><td>J</td><td>Digital Readiness</td><td style="text-align:center;">5</td><td><span class="status-badge status-live">LIVE</span></td><td>AgID · AGCOM Broadband Map</td></tr>
+            <tr><td>K</td><td>BESS Valuation</td><td style="text-align:center;">4</td><td><span class="status-badge status-proprietary">PROPRIETARY</span></td><td>SSI-ENN engine (V_DNO, V_Community, V_RO, sizing)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BESS Output Fields -->
+    <div class="methodology-section">
+      <div class="section-label">Valuation Output</div>
+      <h2>BESS Output Fields</h2>
+      <p>Each substation carries 14 valuation fields across two configurations, plus a recommendation and priority ranking.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Description</th><th>Unit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-weight:600;">V_DNO_M</td><td>DNO value — network services revenue</td><td>€M</td></tr>
+            <tr><td style="font-weight:600;">V_Community_M</td><td>Socio-economic value — CO₂, independence, development</td><td>€M</td></tr>
+            <tr><td style="font-weight:600;">V_RO_M</td><td>Real options value — flexibility premium</td><td>€M</td></tr>
+            <tr><td style="font-weight:600;">NPV_M</td><td>Net present value — total value minus CAPEX</td><td>€M</td></tr>
+            <tr><td style="font-weight:600;">IRR_pct</td><td>Internal rate of return</td><td>%</td></tr>
+            <tr><td style="font-weight:600;">Payback_yr</td><td>Simple payback period</td><td>years</td></tr>
+            <tr><td style="font-weight:600;">Recommendation</td><td>Optimal configuration — Config A or Config B</td><td>—</td></tr>
+            <tr><td style="font-weight:600;">Investment_priority</td><td>Fleet-wide ranking (1 = highest priority)</td><td>rank</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Data Pipeline -->
+    <div class="methodology-section">
+      <div class="section-label">Processing</div>
+      <h2>Data Pipeline</h2>
+      <p>From raw source to investment metric — the platform processes data through a six-stage pipeline.</p>
+
+      <div class="pipeline-steps">
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">1</div>
+          <div class="pipeline-step-content">
+            <h4>Ingest</h4>
+            <p>95 variables from 30 verified public data sources — E-Distribuzione, ARERA, ISTAT, Copernicus CDS, OSM, GSE, ENTSO-E, and 23 others. Zero proprietary SCADA dependencies.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">2</div>
+          <div class="pipeline-step-content">
+            <h4>Normalise</h4>
+            <p>Four normalisation methods: Method A (robust fleet percentile P5/P95), Method B (standard percentile), Method C (bounded rescaling), and Method D (categorical mapping).</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">3</div>
+          <div class="pipeline-step-content">
+            <h4>Score</h4>
+            <p>6-component weighted sum produces R_base. Five multiplicative modifiers (R2–R7) adjust for geographic, demographic, topological, seismic, and cyber context.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">4</div>
+          <div class="pipeline-step-content">
+            <h4>Simulate</h4>
+            <p>10,000 Monte Carlo iterations per substation using a 20×20 Gaussian copula correlation matrix. Produces median, P5, P95, and confidence intervals.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">5</div>
+          <div class="pipeline-step-content">
+            <h4>Value</h4>
+            <p>Three-pillar value stack (V_DNO + V_Community + V_RO) computed for dual BESS configurations. NPV, IRR, and payback derived at WACC 5.2% over 25-year horizon.</p>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">6</div>
+          <div class="pipeline-step-content">
+            <h4>Rank</h4>
+            <p>Fleet-wide ranking by risk-adjusted NPV. Investment priority assigned. Configuration recommendation (A or B) based on highest NPV.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"></footer>
+  <script src="nav.js"></script>
+</body>
+</html>

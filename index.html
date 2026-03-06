@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSI-ENN BESS — Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav"></nav>
+
+  <div class="container">
+    <!-- Hero -->
+    <div class="hero-left">
+      <h1>BESS Valuation Platform</h1>
+      <p class="hero-subtitle">Substation-Level Investment Intelligence for Battery Energy Storage</p>
+      <p class="hero-intro">
+        A proprietary valuation engine scoring 2,219 Italian distribution substations for BESS deployment suitability — combining grid resilience analytics, socio-economic consequence modelling, and real options pricing into a single investment-grade metric.
+      </p>
+      <p class="hero-intro">
+        Built on the SSI Index v4.0 — the first composite score fusing grid engineering with societal exposure — the platform translates resilience signals into actionable investment returns.
+      </p>
+    </div>
+
+    <!-- Highlight cards -->
+    <div class="two-col">
+      <div class="highlight-card">
+        <h3>From Risk to Return</h3>
+        <p>The SSI identifies where the grid is most stressed. The BESS platform converts that stress into quantified investment opportunity — NPV, IRR, and payback for two standardised configurations at every substation.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Dual Configuration Analysis</h3>
+        <p>Every substation is evaluated under Config A (4.9 MW / 19.6 MWh, €3.5M CAPEX) and Config B (9.9 MW / 39.6 MWh, €7.0M CAPEX), enabling direct comparison across investment scales.</p>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Substations Valued</div>
+        <div class="kpi-value" id="kpi-subs">—</div>
+        <div class="kpi-unit" id="kpi-subs-unit">loading...</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Fleet Median IRR</div>
+        <div class="kpi-value" id="kpi-irr">—</div>
+        <div class="kpi-unit">Config B · 25-year horizon</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Fleet NPV</div>
+        <div class="kpi-value" id="kpi-npv">—</div>
+        <div class="kpi-unit">Config B aggregate</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Critical Band</div>
+        <div class="kpi-value" id="kpi-critical">—</div>
+        <div class="kpi-unit">R ≥ 0.65 · top investment priority</div>
+      </div>
+    </div>
+
+    <!-- Band Distribution -->
+    <div class="card" style="margin-bottom:2rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h4 style="margin-bottom:0;">Investment Suitability Distribution</h4>
+        <span class="kpi-unit" id="band-total"></span>
+      </div>
+      <div class="band-bar" id="band-bar"></div>
+      <div id="band-legend" style="display:flex;gap:1.5rem;margin-top:0.75rem;flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Two column: map preview + top opportunities -->
+    <div class="two-col">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <h4 style="margin-bottom:0;">National View</h4>
+          <a href="map.html" style="font-size:0.9rem;font-weight:600;">Explore map →</a>
+        </div>
+        <canvas id="mini-map" style="width:100%;height:350px;background-color:var(--cream);border-radius:6px;"></canvas>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <h4 style="margin-bottom:0;">Top Investment Opportunities</h4>
+          <span class="kpi-unit">TOP 8 BY NPV</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Substation</th>
+                <th>Region</th>
+                <th>NPV €M</th>
+                <th>IRR %</th>
+                <th>Band</th>
+              </tr>
+            </thead>
+            <tbody id="top-opportunities"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"></footer>
+
+  <script src="bess-engine.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    // Italy outline for mini map
+    const ITALY_OUTLINE = [[6.63,47.09],[6.95,46.30],[7.02,45.93],[7.53,45.98],[7.68,45.24],[8.23,45.54],[8.60,46.12],[9.01,45.84],[9.07,46.44],[9.29,46.50],[9.98,46.37],[10.39,46.98],[11.11,46.93],[11.51,47.01],[12.15,47.09],[12.48,46.68],[13.70,46.52],[13.68,45.85],[13.85,45.65],[13.60,45.48],[12.50,45.47],[12.27,45.28],[12.33,44.97],[12.76,44.42],[13.60,43.57],[14.24,42.45],[14.69,42.10],[15.14,41.92],[15.69,41.87],[15.89,41.54],[16.17,41.74],[16.52,41.24],[17.14,40.89],[17.95,40.68],[18.52,40.10],[18.34,39.81],[17.92,40.26],[17.35,40.20],[16.93,39.77],[16.65,39.71],[16.57,39.39],[17.12,39.08],[17.17,38.97],[16.60,38.71],[16.13,38.72],[16.07,38.40],[15.69,38.21],[15.69,37.96],[15.60,38.00],[15.50,37.82],[15.17,37.46],[15.10,37.49],[15.28,37.76],[15.12,37.95],[14.56,37.67],[13.41,37.12],[12.73,37.57],[12.47,37.80],[12.55,38.08],[13.03,38.27],[13.34,38.19],[13.44,38.71],[12.83,38.84],[12.46,38.56],[12.43,38.15],[11.89,37.94],[12.08,38.65],[11.27,38.91],[10.61,38.73],[9.95,39.11],[8.98,38.82],[8.58,38.93],[8.73,39.56],[8.53,39.13],[8.42,38.97],[8.39,39.23],[8.15,39.18],[8.44,39.89],[8.39,40.35],[8.19,40.40],[8.17,40.76],[8.62,40.94],[8.56,41.26],[9.18,41.38],[9.54,42.14],[9.49,42.57],[9.55,43.18],[9.19,43.13],[8.77,43.69],[8.45,43.93],[8.00,43.89],[7.57,43.79],[7.50,43.91],[6.86,44.12],[6.63,44.69],[6.98,45.17],[6.75,45.18],[6.80,45.78],[6.63,47.09]];
+
+    async function init() {
+      const loaded = await engine.loadData('data.json');
+      if (!loaded) return;
+
+      const kpis = engine.computeKPIs();
+
+      // KPIs
+      document.getElementById('kpi-subs').textContent = kpis.totalSubstations.toLocaleString();
+      document.getElementById('kpi-subs-unit').textContent = `${engine.regions.length} regions · ${kpis.totalProvinces} provinces`;
+      document.getElementById('kpi-irr').textContent = kpis.medianIRR.toFixed(1) + '%';
+      document.getElementById('kpi-npv').textContent = '€' + kpis.totalInvestmentNPV.toFixed(1) + 'M';
+      document.getElementById('kpi-critical').textContent = kpis.bandDistribution.Critical;
+
+      // Band bar
+      const bd = kpis.bandDistribution;
+      const total = kpis.totalSubstations;
+      document.getElementById('band-total').textContent = total.toLocaleString() + ' SUBSTATIONS';
+      
+      const bandBar = document.getElementById('band-bar');
+      const bands = ['Low','Medium','High','Critical'];
+      const bandClasses = ['band-bar-low','band-bar-medium','band-bar-high','band-bar-critical'];
+      bandBar.innerHTML = bands.map((b,i) => {
+        const pct = (bd[b]/total*100);
+        return pct > 0 ? `<div class="${bandClasses[i]}" style="flex:${bd[b]}" title="${b}: ${bd[b]}"></div>` : '';
+      }).join('');
+
+      const colors = ['var(--band-low)','var(--band-medium)','var(--band-high)','var(--band-critical)'];
+      document.getElementById('band-legend').innerHTML = bands.map((b,i) => 
+        `<span style="display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;">
+          <span style="width:10px;height:10px;border-radius:50%;background:${colors[i]};display:inline-block;"></span>
+          ${b} ${bd[b]} (${(bd[b]/total*100).toFixed(1)}%)
+        </span>`
+      ).join('');
+
+      // Top opportunities
+      const top8 = engine.getTopOpportunities(engine.substations, 8);
+      document.getElementById('top-opportunities').innerHTML = top8.map(sub => `
+        <tr>
+          <td style="font-weight:600;color:var(--ink);">${sub.name}</td>
+          <td>${sub.region}</td>
+          <td style="font-weight:600;">€${sub.bess.config_B.NPV_M.toFixed(2)}M</td>
+          <td>${sub.bess.config_B.IRR_pct.toFixed(1)}%</td>
+          <td><span class="band-chip band-${sub.classification.toLowerCase()}">${sub.classification}</span></td>
+        </tr>
+      `).join('');
+
+      // Mini map
+      drawMiniMap();
+    }
+
+    function drawMiniMap() {
+      const canvas = document.getElementById('mini-map');
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const W = rect.width, H = rect.height;
+
+      ctx.fillStyle = '#faf6f5';
+      ctx.fillRect(0, 0, W, H);
+
+      // Compute bounds
+      const lons = ITALY_OUTLINE.map(p => p[0]);
+      const lats = ITALY_OUTLINE.map(p => p[1]);
+      const lonMin = Math.min(...lons) - 0.5, lonMax = Math.max(...lons) + 0.5;
+      const latMin = Math.min(...lats) - 0.5, latMax = Math.max(...lats) + 0.5;
+      const scale = Math.min(W / (lonMax - lonMin), H / (latMax - latMin)) * 0.85;
+      const offsetX = (W - (lonMax - lonMin) * scale) / 2;
+      const offsetY = (H - (latMax - latMin) * scale) / 2;
+
+      function toX(lon) { return (lon - lonMin) * scale + offsetX; }
+      function toY(lat) { return H - ((lat - latMin) * scale + offsetY); }
+
+      // Draw outline
+      ctx.beginPath();
+      ctx.moveTo(toX(ITALY_OUTLINE[0][0]), toY(ITALY_OUTLINE[0][1]));
+      for (let i = 1; i < ITALY_OUTLINE.length; i++) {
+        ctx.lineTo(toX(ITALY_OUTLINE[i][0]), toY(ITALY_OUTLINE[i][1]));
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(93,133,99,0.06)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(44,36,32,0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Draw dots
+      const bandColors = { Low: '#5d8563', Medium: '#b8863a', High: '#aa4234', Critical: '#941914' };
+      engine.substations.forEach(sub => {
+        const x = toX(sub.lon);
+        const y = toY(sub.lat);
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = bandColors[sub.classification] || '#8a7e76';
+        ctx.globalAlpha = 0.6;
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+    }
+
+    init();
+  </script>
+</body>
+</html>
