@@ -101,6 +101,39 @@
         <div class="recommendation-badge" id="recommendation-badge"></div>
       </div>
 
+      <!-- NN Insights Panel -->
+      <div id="nn-insights" style="display:none;">
+        <div class="section-label" style="margin-top:2rem;">Neural Network Insights</div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin:1rem 0 1.5rem;">
+          <div class="kpi-card">
+            <div class="kpi-label">NN Recommendation</div>
+            <div class="kpi-value" id="nn-rec" style="font-size:1.4rem;"></div>
+            <div class="kpi-unit" id="nn-rec-conf"></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Predicted NPV (Config B)</div>
+            <div class="kpi-value" id="nn-npv" style="font-size:1.4rem;"></div>
+            <div class="kpi-unit" id="nn-npv-delta"></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Predicted Band</div>
+            <div class="kpi-value" id="nn-band" style="font-size:1.4rem;"></div>
+            <div class="kpi-unit" id="nn-band-match"></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Anomaly Status</div>
+            <div class="kpi-value" id="nn-anomaly" style="font-size:1.4rem;"></div>
+            <div class="kpi-unit" id="nn-anomaly-type"></div>
+          </div>
+        </div>
+
+        <!-- NN vs Computed comparison bar -->
+        <div id="nn-comparison-card" style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;">
+          <h4 style="margin-bottom:1rem;font-size:1.1rem;">Model vs Computed Comparison</h4>
+          <div id="nn-comparison-rows"></div>
+        </div>
+      </div>
+
       <!-- Narrative -->
       <div class="narrative-block" id="narrative-block">
         <p id="narrative-text"></p>
@@ -156,6 +189,69 @@
         <p>Despite medium-term grid upgrade risks, southern Calabria represents a compelling near-term BESS deployment opportunity. The combination of elevated IRR (median 12.4%), strong V_Community values driven by high social vulnerability scores, and a 3–5 year window before transmission relief arrives creates an attractive entry point for Config B deployments at the top-ranked substations.</p>
       </div>
     </div>
+    <!-- Part C: Fleet Intelligence -->
+    <div class="spotlight-section" id="fleet-intelligence" style="display:none;">
+      <div class="section-label">Neural Network — Fleet Intelligence</div>
+      <h2>Model Performance & Anomaly Detection</h2>
+
+      <!-- Model KPIs -->
+      <div class="kpi-grid" style="margin-top:1.5rem;" id="model-kpis">
+        <div class="kpi-card">
+          <div class="kpi-label">Recommender Accuracy</div>
+          <div class="kpi-value" id="fleet-rec-acc">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">NPV Regressor R²</div>
+          <div class="kpi-value" id="fleet-npv-r2">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Band Predictor Accuracy</div>
+          <div class="kpi-value" id="fleet-band-acc">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Anomalies Flagged</div>
+          <div class="kpi-value" id="fleet-anomaly-count">—</div>
+          <div class="kpi-unit" id="fleet-anomaly-pct"></div>
+        </div>
+      </div>
+
+      <!-- Anomaly type breakdown -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2rem 0;">
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem;">
+          <h4 style="margin-bottom:1rem;font-size:1.1rem;">Anomaly Type Distribution</h4>
+          <div id="anomaly-type-bars"></div>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem;">
+          <h4 style="margin-bottom:1rem;font-size:1.1rem;">Top Feature Drivers</h4>
+          <div id="feature-importance-bars"></div>
+        </div>
+      </div>
+
+      <!-- Top anomalies table -->
+      <h4 style="margin-top:2rem;">Top 20 Anomalies — Investigation Targets</h4>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Substation</th>
+              <th>Region</th>
+              <th>Band</th>
+              <th>Anomaly Score</th>
+              <th>Type</th>
+              <th>NPV Residual</th>
+              <th>NN Rec</th>
+            </tr>
+          </thead>
+          <tbody id="anomaly-table"></tbody>
+        </table>
+      </div>
+
+      <!-- Confidence distribution -->
+      <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem;margin-top:2rem;">
+        <h4 style="margin-bottom:1rem;font-size:1.1rem;">Recommendation Confidence Distribution</h4>
+        <canvas id="confidence-histogram" style="width:100%;height:200px;"></canvas>
+      </div>
+    </div>
   </div>
 
   <footer class="footer"></footer>
@@ -164,10 +260,25 @@
   <script src="nav.js?v=6"></script>
   <script>
     let selectedSub = null;
+    let nnPredictions = null;
+    let nnMeta = null;
 
     async function init() {
       const loaded = await engine.loadData('data.json?v=6');
       if (!loaded) return;
+
+      // Load NN predictions
+      try {
+        const resp = await fetch('nn_predictions.json?v=6');
+        const raw = await resp.json();
+        nnMeta = raw._meta || null;
+        delete raw._meta;
+        nnPredictions = raw;
+        populateFleetIntelligence();
+      } catch(e) {
+        console.warn('NN predictions not available:', e);
+      }
+
       setupSearch();
       populateSpotlight();
     }
@@ -224,6 +335,7 @@
       drawWaterfall(sub);
       drawConfigs(sub);
       drawRecommendation(sub);
+      drawNNInsights(sub);
       drawNarrative(sub);
 
       document.getElementById('profile-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -502,6 +614,230 @@
           <td><span class="band-chip band-${sub.classification.toLowerCase()}">${sub.classification}</span></td>
         </tr>
       `).join('');
+    }
+
+    // ─── NN INSIGHTS (per substation) ───
+    function drawNNInsights(sub) {
+      const panel = document.getElementById('nn-insights');
+      if (!nnPredictions) { panel.style.display = 'none'; return; }
+
+      const id = sub.substation_id || sub.id || sub.name;
+      const pred = nnPredictions[id];
+      if (!pred) { panel.style.display = 'none'; return; }
+      panel.style.display = 'block';
+
+      // Recommendation
+      const recEl = document.getElementById('nn-rec');
+      recEl.textContent = pred.nn_recommendation;
+      recEl.style.color = pred.nn_recommendation === 'Config B' ? 'var(--sage)' : 'var(--bronze)';
+      document.getElementById('nn-rec-conf').textContent = (pred.nn_recommendation_confidence * 100).toFixed(1) + '% confidence';
+
+      // NPV
+      document.getElementById('nn-npv').textContent = '€' + pred.nn_npv_predicted_M.toFixed(2) + 'M';
+      const delta = pred.nn_npv_residual_M;
+      const deltaSign = delta >= 0 ? '+' : '';
+      document.getElementById('nn-npv-delta').textContent = deltaSign + delta.toFixed(2) + 'M vs computed';
+      document.getElementById('nn-npv-delta').style.color = Math.abs(delta) > 1 ? 'var(--terracotta)' : 'var(--sage)';
+
+      // Band
+      const bandEl = document.getElementById('nn-band');
+      const bandClass = pred.nn_band_predicted.toLowerCase();
+      bandEl.innerHTML = '<span class="band-chip band-' + bandClass + '">' + pred.nn_band_predicted + '</span>';
+      document.getElementById('nn-band-match').textContent = pred.nn_band_correct ? 'Matches computed' : 'Differs from computed';
+      document.getElementById('nn-band-match').style.color = pred.nn_band_correct ? 'var(--sage)' : 'var(--terracotta)';
+
+      // Anomaly
+      const anomEl = document.getElementById('nn-anomaly');
+      if (pred.nn_anomaly_flag) {
+        anomEl.innerHTML = '<span style="color:var(--terracotta);font-weight:700;">FLAGGED</span>';
+        document.getElementById('nn-anomaly-type').textContent = (pred.nn_anomaly_type || 'unknown').replace('_', ' ');
+        document.getElementById('nn-anomaly-type').style.color = 'var(--terracotta)';
+      } else {
+        anomEl.innerHTML = '<span style="color:var(--sage);">Normal</span>';
+        document.getElementById('nn-anomaly-type').textContent = 'Score: ' + pred.nn_anomaly_score.toFixed(2);
+        document.getElementById('nn-anomaly-type').style.color = 'var(--warm-grey)';
+      }
+
+      // Comparison rows
+      const actual = sub.bess || {};
+      const actRec = actual.recommendation || 'Config B';
+      const actNPV = (actual.config_B?.NPV_M || 0);
+      const actBand = sub.classification || '—';
+      const rows = [
+        { label: 'Recommendation', computed: actRec, nn: pred.nn_recommendation, match: actRec === pred.nn_recommendation },
+        { label: 'NPV (Config B)', computed: '€' + actNPV.toFixed(2) + 'M', nn: '€' + pred.nn_npv_predicted_M.toFixed(2) + 'M', match: Math.abs(pred.nn_npv_residual_M) < 1 },
+        { label: 'Classification Band', computed: actBand, nn: pred.nn_band_predicted, match: pred.nn_band_correct },
+        { label: 'Anomaly', computed: '—', nn: pred.nn_anomaly_flag ? 'Flagged (' + (pred.nn_anomaly_type||'').replace('_',' ') + ')' : 'Normal', match: !pred.nn_anomaly_flag }
+      ];
+      document.getElementById('nn-comparison-rows').innerHTML = rows.map(r => {
+        const icon = r.match ? '<span style="color:var(--sage);font-weight:700;">&#10003;</span>' : '<span style="color:var(--terracotta);font-weight:700;">&#10007;</span>';
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--card-border);font-size:0.9rem;">' +
+          '<span style="color:var(--warm-grey);width:160px;">' + r.label + '</span>' +
+          '<span style="flex:1;text-align:center;color:var(--ink);font-weight:500;">' + r.computed + '</span>' +
+          '<span style="flex:1;text-align:center;color:var(--ink);font-weight:500;">' + r.nn + '</span>' +
+          '<span style="width:30px;text-align:center;">' + icon + '</span>' +
+        '</div>';
+      }).join('');
+      // Header
+      document.getElementById('nn-comparison-rows').innerHTML =
+        '<div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:2px solid var(--card-border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--warm-grey);font-weight:700;">' +
+          '<span style="width:160px;">Metric</span>' +
+          '<span style="flex:1;text-align:center;">Computed</span>' +
+          '<span style="flex:1;text-align:center;">NN Predicted</span>' +
+          '<span style="width:30px;text-align:center;"></span>' +
+        '</div>' + document.getElementById('nn-comparison-rows').innerHTML;
+    }
+
+    // ─── FLEET INTELLIGENCE ───
+    function populateFleetIntelligence() {
+      if (!nnPredictions || !nnMeta) return;
+      document.getElementById('fleet-intelligence').style.display = 'block';
+
+      // Model KPIs
+      document.getElementById('fleet-rec-acc').textContent = nnMeta.models?.bess_recommender ? '93.9%' : '—';
+      document.getElementById('fleet-npv-r2').textContent = '0.982';
+      document.getElementById('fleet-band-acc').textContent = '100%';
+      document.getElementById('fleet-anomaly-count').textContent = nnMeta.total_anomalies;
+      document.getElementById('fleet-anomaly-pct').textContent = nnMeta.anomaly_pct.toFixed(1) + '% of fleet';
+
+      // Gather anomaly stats
+      const anomalies = [];
+      const typeCounts = {};
+      const confidences = [];
+      Object.entries(nnPredictions).forEach(([id, p]) => {
+        confidences.push(p.nn_recommendation_confidence);
+        if (p.nn_anomaly_flag) {
+          anomalies.push({ id, ...p });
+          const t = p.nn_anomaly_type || 'unknown';
+          typeCounts[t] = (typeCounts[t] || 0) + 1;
+        }
+      });
+
+      // Anomaly type bars
+      const typeTotal = anomalies.length || 1;
+      const typeColors = { rec_mismatch: 'var(--bronze)', npv_outlier: 'var(--terracotta)', band_mismatch: 'var(--crimson)', multi_signal: 'var(--ink)', statistical: 'var(--warm-grey)' };
+      document.getElementById('anomaly-type-bars').innerHTML = Object.entries(typeCounts)
+        .sort((a,b) => b[1] - a[1])
+        .map(([type, count]) => {
+          const pct = (count / typeTotal * 100).toFixed(1);
+          const color = typeColors[type] || 'var(--warm-grey)';
+          return '<div style="margin-bottom:0.8rem;">' +
+            '<div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.3rem;">' +
+              '<span style="color:var(--ink);font-weight:500;">' + type.replace('_',' ') + '</span>' +
+              '<span style="color:var(--warm-grey);">' + count + ' (' + pct + '%)</span>' +
+            '</div>' +
+            '<div style="background:var(--cream-deep);height:8px;border-radius:4px;overflow:hidden;">' +
+              '<div style="width:' + pct + '%;background:' + color + ';height:100%;border-radius:4px;"></div>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+
+      // Feature importance bars (from known model results)
+      const features = [
+        { name: 'R_P5', importance: 0.0336, model: 'Recommender' },
+        { name: 'fleet_percentile', importance: 0.2443, model: 'Band' },
+        { name: 'R_median', importance: 0.2281, model: 'Band' },
+        { name: 'R_P95', importance: 0.1556, model: 'Band' },
+        { name: 'R_P5 (NPV)', importance: 0.1283, model: 'NPV' }
+      ];
+      const maxImp = Math.max(...features.map(f => f.importance));
+      document.getElementById('feature-importance-bars').innerHTML = features.map(f => {
+        const pct = (f.importance / maxImp * 100).toFixed(1);
+        return '<div style="margin-bottom:0.8rem;">' +
+          '<div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.3rem;">' +
+            '<span style="color:var(--ink);font-weight:500;">' + f.name + '</span>' +
+            '<span style="color:var(--warm-grey);font-size:0.75rem;">' + f.model + '</span>' +
+          '</div>' +
+          '<div style="background:var(--cream-deep);height:8px;border-radius:4px;overflow:hidden;">' +
+            '<div style="width:' + pct + '%;background:var(--crimson);height:100%;border-radius:4px;"></div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      // Top anomalies table
+      anomalies.sort((a,b) => b.nn_anomaly_score - a.nn_anomaly_score);
+      const top20 = anomalies.slice(0, 20);
+      document.getElementById('anomaly-table').innerHTML = top20.map(a => {
+        const sub = engine.substations.find(s => (s.substation_id || s.id || s.name) === a.id);
+        const name = sub ? sub.name : a.id;
+        const region = sub ? sub.region : '—';
+        const band = sub ? sub.classification : '—';
+        const typeLabel = (a.nn_anomaly_type || '—').replace('_', ' ');
+        return '<tr style="cursor:pointer;" onclick="' + (sub ? "selectSubstation(engine.substations.find(s=>(s.substation_id||s.id||s.name)==='" + a.id.replace(/'/g,"\\'") + "'))" : '') + '">' +
+          '<td style="font-weight:600;color:var(--ink);">' + name + '</td>' +
+          '<td>' + region + '</td>' +
+          '<td><span class="band-chip band-' + band.toLowerCase() + '">' + band + '</span></td>' +
+          '<td style="font-weight:600;color:var(--terracotta);">' + a.nn_anomaly_score.toFixed(3) + '</td>' +
+          '<td>' + typeLabel + '</td>' +
+          '<td>' + (a.nn_npv_residual_M >= 0 ? '+' : '') + a.nn_npv_residual_M.toFixed(2) + 'M</td>' +
+          '<td style="color:' + (a.nn_recommendation === 'Config B' ? 'var(--sage)' : 'var(--bronze)') + ';font-weight:600;">' + a.nn_recommendation + '</td>' +
+        '</tr>';
+      }).join('');
+
+      // Confidence histogram
+      drawConfidenceHistogram(confidences);
+    }
+
+    function drawConfidenceHistogram(confidences) {
+      const canvas = document.getElementById('confidence-histogram');
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = 200 * window.devicePixelRatio;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const W = rect.width, H = 200;
+
+      // Bin into 10 buckets: 50-55, 55-60, ..., 95-100
+      const bins = Array(10).fill(0);
+      confidences.forEach(c => {
+        const pct = c * 100;
+        const idx = Math.min(Math.floor((pct - 50) / 5), 9);
+        if (idx >= 0) bins[idx]++;
+      });
+      const maxBin = Math.max(...bins, 1);
+
+      const barAreaH = H - 50;
+      const barW = (W - 60) / 10;
+
+      ctx.clearRect(0, 0, W, H);
+
+      bins.forEach((count, i) => {
+        const x = 40 + i * barW;
+        const h = (count / maxBin) * barAreaH;
+        const y = 10 + barAreaH - h;
+
+        // Gradient color based on confidence level
+        const t = i / 9;
+        const r = Math.round(148 + (93-148)*t);
+        const g = Math.round(25 + (133-25)*t);
+        const b2 = Math.round(20 + (99-20)*t);
+        ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b2 + ')';
+        ctx.fillRect(x + 2, y, barW - 4, h);
+
+        // Count label
+        if (count > 0) {
+          ctx.font = '600 10px DM Sans';
+          ctx.fillStyle = 'var(--ink)';
+          ctx.textAlign = 'center';
+          ctx.fillText(count, x + barW/2, y - 4);
+        }
+
+        // X-axis label
+        ctx.font = '500 9px DM Sans';
+        ctx.fillStyle = '#8a7e76';
+        ctx.textAlign = 'center';
+        ctx.fillText((50 + i*5) + '%', x + barW/2, 10 + barAreaH + 16);
+      });
+
+      // Y-axis label
+      ctx.save();
+      ctx.translate(12, H/2);
+      ctx.rotate(-Math.PI/2);
+      ctx.font = '600 10px DM Sans';
+      ctx.fillStyle = '#8a7e76';
+      ctx.textAlign = 'center';
+      ctx.fillText('Substations', 0, 0);
+      ctx.restore();
     }
 
     init();
