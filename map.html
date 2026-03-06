@@ -110,11 +110,32 @@
       dragStartY: 0
     };
 
+    let GEO = null; // Grid line geometry
+
+    // Voltage-based line colors (matching SSI)
+    function kvColor(kv) {
+      if (kv >= 300) return '#941914';
+      if (kv >= 200) return '#b8863a';
+      if (kv >= 140) return '#aa4234';
+      if (kv >= 100) return '#5d8563';
+      return '#8a7e76';
+    }
+    function kvWidth(kv) {
+      if (kv >= 300) return 2.5;
+      if (kv >= 200) return 2;
+      if (kv >= 140) return 1.5;
+      if (kv >= 100) return 1.2;
+      return 0.8;
+    }
+
     // Map bounds (Italy)
     const LAT_MIN = 36.5, LAT_MAX = 47.1, LON_MIN = 6.6, LON_MAX = 18.5;
 
     async function initMap() {
-      const loaded = await engine.loadData('data.json?v=3');
+      const [loaded] = await Promise.all([
+        engine.loadData('data.json?v=3'),
+        fetch('grid-geo.json?v=3').then(r => r.json()).then(d => { GEO = d; }).catch(() => {})
+      ]);
       if (!loaded) {
         document.querySelector('main').innerHTML = '<div class="container"><p style="color: red;">Error loading data</p></div>';
         return;
@@ -261,6 +282,28 @@
       // Clear — cream background
       ctx.fillStyle = '#faf6f5';
       ctx.fillRect(0, 0, w, h);
+
+      // Draw power lines (before substations)
+      if (GEO && GEO.l) {
+        ctx.lineCap = 'round';
+        ctx.globalAlpha = 0.4;
+        for (const l of GEO.l) {
+          if (!l.p || l.p.length < 2) continue;
+          ctx.strokeStyle = kvColor(l.kv);
+          ctx.lineWidth = kvWidth(l.kv) * Math.min(mapState.scale * 0.5, 1.5);
+          ctx.beginPath();
+          for (let j = 0; j < l.p.length; j++) {
+            const baseX = ((l.p[j][0] - LON_MIN) / (LON_MAX - LON_MIN)) * w;
+            const baseY = ((LAT_MAX - l.p[j][1]) / (LAT_MAX - LAT_MIN)) * h;
+            const sx = (baseX - w / 2) * mapState.scale + w / 2 + mapState.offsetX;
+            const sy = (baseY - h / 2) * mapState.scale + h / 2 + mapState.offsetY;
+            if (j === 0) ctx.moveTo(sx, sy);
+            else ctx.lineTo(sx, sy);
+          }
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
 
       // Draw substations
       const subs = mapState.filteredSubstations;
