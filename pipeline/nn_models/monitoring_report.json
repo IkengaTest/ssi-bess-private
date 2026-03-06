@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-03-06T18:46:49.729638+00:00",
+  "status": "healthy",
+  "checks": {
+    "recommendation_drift": {
+      "status": "ok",
+      "baseline_config_b_pct": 38.59,
+      "current_config_b_pct": 37.43,
+      "delta_pct": 1.16,
+      "threshold": 5.0
+    },
+    "npv_residual_drift": {
+      "status": "ok",
+      "mean_residual_M": 0.0256,
+      "std_residual_M": 0.5166,
+      "max_abs_residual_M": 2.5893,
+      "bias_threshold": 0.5,
+      "std_threshold": 2.0
+    },
+    "band_distribution_drift": {
+      "status": "ok",
+      "baseline_distribution": {
+        "Low": 0.1271,
+        "Medium": 0.6765,
+        "High": 0.1965,
+        "Critical": 0.0
+      },
+      "current_distribution": {
+        "Low": 0.1358,
+        "Medium": 0.6746,
+        "High": 0.1896,
+        "Critical": 0.0
+      },
+      "threshold_p": 0.05,
+      "chi_squared": 3.6338,
+      "p_value": 0.1625
+    },
+    "anomaly_rate_drift": {
+      "status": "ok",
+      "baseline_pct": 5.01,
+      "current_pct": 5.01,
+      "delta_pct": 0.0,
+      "threshold": 2.0
+    },
+    "confidence_drift": {
+      "status": "ok",
+      "mean_confidence": 0.9358,
+      "min_confidence": 0.5011,
+      "pct_below_70": 8.43,
+      "threshold_mean": 0.85
+    }
+  },
+  "summary": "All checks passed. Models performing within expected parameters.",
+  "recommendations": [
+    "All checks passed. Models performing within expected parameters."
+  ]
+}
