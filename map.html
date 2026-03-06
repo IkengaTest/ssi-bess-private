@@ -12,23 +12,42 @@
 <body>
   <nav class="topnav"></nav>
 
-  <main class="container container-narrow">
+  <main class="container">
     <div class="hero-left">
       <h1>Map Explorer</h1>
-      <p class="hero-intro">Explore the spatial distribution of BESS investment opportunities across the Italian distribution grid. Each dot represents a scored substation — colour-coded by suitability band, investment return, or portfolio priority. Click any substation for its full valuation profile.</p>
+      <p class="hero-intro">Explore the spatial distribution of BESS investment opportunities across the Italian distribution grid. Click to inspect scores, components, and valuations.</p>
     </div>
 
-    <!-- Filters -->
-    <div class="filter-section" id="filters">
-      <div class="filter-group">
-        <label for="region-filter">Region</label>
-        <select id="region-filter">
-          <option value="">All Regions</option>
+    <!-- Filter Bar — single horizontal row matching public SSI layout -->
+    <div class="filter-bar">
+      <div class="filter-bar-item">
+        <span class="filter-bar-label">BAND</span>
+        <select id="band-filter">
+          <option value="all">All Bands</option>
+          <option value="Low">Low (0.00–0.35)</option>
+          <option value="Medium">Medium (0.35–0.50)</option>
+          <option value="High">High (0.50–0.65)</option>
+          <option value="Critical">Critical (0.65–1.00)</option>
         </select>
       </div>
-
-      <div class="filter-group">
-        <label for="color-mode">Color By</label>
+      <div class="filter-bar-item">
+        <span class="filter-bar-label">REGION</span>
+        <select id="region-filter">
+          <option value="all">All Regions</option>
+        </select>
+      </div>
+      <div class="filter-bar-item">
+        <span class="filter-bar-label">VOLTAGE</span>
+        <select id="voltage-filter">
+          <option value="all">All Voltages</option>
+          <option value="380">≥ 380 kV</option>
+          <option value="220">220 kV</option>
+          <option value="132">132–150 kV</option>
+          <option value="other">&lt; 132 kV</option>
+        </select>
+      </div>
+      <div class="filter-bar-item">
+        <span class="filter-bar-label">COLOR MODE</span>
         <select id="color-mode">
           <option value="band">SSI Band</option>
           <option value="irr">IRR</option>
@@ -36,65 +55,63 @@
           <option value="priority">Investment Priority</option>
         </select>
       </div>
-
-      <div class="filter-group">
-        <label for="voltage-filter">Voltage Range (kV)</label>
-        <input type="range" id="voltage-filter" min="0" max="400" value="400">
-        <span id="voltage-value">All</span>
-      </div>
-
-      <div class="filter-group">
-        <label for="irr-filter">Min IRR (%)</label>
-        <input type="range" id="irr-filter" min="0" max="50" value="0" step="1">
-        <span id="irr-value">0%</span>
-      </div>
-
-      <div class="filter-group">
-        <label>Bands</label>
-        <div class="checkbox-group" id="band-filters">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-
-      <div class="filter-group" style="display: flex; flex-direction: column; justify-content: flex-end;">
-        <button class="btn btn-secondary" id="reset-filters">Reset Filters</button>
+      <div class="filter-bar-item filter-bar-search">
+        <input type="search" id="search-input" placeholder="Search substation…">
       </div>
     </div>
 
-    <!-- Map Container -->
-    <div class="map-container">
-      <canvas id="italy-map"></canvas>
-      <div class="map-legend" id="map-legend">
-        <!-- Populated by JavaScript -->
+    <!-- Map Layout — two-column: map left, detail panel right -->
+    <div class="map-layout">
+      <div class="card map-card">
+        <div class="map-container">
+          <canvas id="italy-map"></canvas>
+          <!-- Stats overlay -->
+          <div class="map-stats" id="map-stats"></div>
+          <!-- Legend bottom-left -->
+          <div class="map-legend" id="map-legend"></div>
+          <!-- Zoom controls bottom-center -->
+          <div class="map-zoom">
+            <button id="zoom-in" title="Zoom in">+</button>
+            <button id="zoom-out" title="Zoom out">−</button>
+            <button id="zoom-reset" title="Reset view">◇</button>
+          </div>
+        </div>
+      </div>
+      <div class="detail-scroll" id="detail-panel">
+        <div class="detail-placeholder" id="detail-placeholder">
+          <div class="detail-placeholder-icon">🔍</div>
+          <div class="detail-placeholder-title">Click a substation</div>
+          <div class="detail-placeholder-text">to inspect its BESS valuation, SSI score, components, and investment metrics</div>
+        </div>
+        <div class="detail-content" id="detail-content" style="display: none;"></div>
       </div>
     </div>
   </main>
 
   <footer class="footer"></footer>
 
-  <script src="bess-engine.js?v=4"></script>
+  <script src="bess-engine.js"></script>
   <script src="nav.js"></script>
   <script>
     // Map state
     const mapState = {
       colorMode: 'band',
-      selectedRegion: '',
-      selectedBands: { Low: true, Medium: true, High: true, Critical: true },
-      minVoltage: 0,
-      maxVoltage: 400,
-      minIRR: 0,
-      filteredSubstations: []
+      selectedRegion: 'all',
+      selectedBand: 'all',
+      selectedVoltage: 'all',
+      searchQuery: '',
+      filteredSubstations: [],
+      // Zoom/pan state
+      scale: 1,
+      offsetX: 0,
+      offsetY: 0,
+      dragging: false,
+      dragStartX: 0,
+      dragStartY: 0
     };
 
-    // Italy simplified polygon (roughly 40 points for coastline)
-    const italyPolygon = [
-      [12.6, 47.1], [13.5, 47.2], [14.2, 47.0], [15.2, 46.9], [15.8, 46.5],
-      [16.5, 46.2], [17.5, 45.8], [17.8, 45.3], [18.5, 44.5], [18.0, 44.0],
-      [17.5, 43.8], [16.8, 43.5], [16.0, 43.8], [15.5, 43.5], [14.8, 43.8],
-      [14.0, 44.2], [13.2, 44.1], [12.5, 44.3], [12.0, 44.8], [11.5, 45.0],
-      [11.0, 45.2], [10.5, 45.5], [10.2, 46.0], [9.8, 46.5], [9.5, 47.0],
-      [10.0, 47.1], [10.5, 47.2], [11.0, 47.1], [12.0, 47.2], [12.6, 47.1]
-    ];
+    // Map bounds (Italy)
+    const LAT_MIN = 36.5, LAT_MAX = 47.1, LON_MIN = 6.6, LON_MAX = 18.5;
 
     async function initMap() {
       const loaded = await engine.loadData('data.json');
@@ -111,7 +128,6 @@
     }
 
     function populateFilters() {
-      // Regions
       const regionFilter = document.getElementById('region-filter');
       engine.getAllRegions().forEach(region => {
         const option = document.createElement('option');
@@ -119,129 +135,150 @@
         option.textContent = region;
         regionFilter.appendChild(option);
       });
-
-      // Band checkboxes
-      const bandFilters = document.getElementById('band-filters');
-      engine.getBands().forEach(band => {
-        const label = document.createElement('label');
-        label.className = 'checkbox-item';
-        label.innerHTML = `
-          <input type="checkbox" class="band-checkbox" value="${band}" checked>
-          <span>${band}</span>
-        `;
-        bandFilters.appendChild(label);
-      });
     }
 
     function setupEventListeners() {
+      document.getElementById('band-filter').addEventListener('change', (e) => {
+        mapState.selectedBand = e.target.value;
+        applyFilters();
+      });
+
       document.getElementById('region-filter').addEventListener('change', (e) => {
         mapState.selectedRegion = e.target.value;
+        applyFilters();
+      });
+
+      document.getElementById('voltage-filter').addEventListener('change', (e) => {
+        mapState.selectedVoltage = e.target.value;
         applyFilters();
       });
 
       document.getElementById('color-mode').addEventListener('change', (e) => {
         mapState.colorMode = e.target.value;
         drawMap();
+        updateLegend();
       });
 
-      document.getElementById('voltage-filter').addEventListener('change', (e) => {
-        mapState.maxVoltage = Number(e.target.value);
-        document.getElementById('voltage-value').textContent = e.target.value + ' kV';
+      document.getElementById('search-input').addEventListener('input', (e) => {
+        mapState.searchQuery = e.target.value.trim().toLowerCase();
         applyFilters();
       });
 
-      document.getElementById('irr-filter').addEventListener('change', (e) => {
-        mapState.minIRR = Number(e.target.value);
-        document.getElementById('irr-value').textContent = e.target.value + '%';
-        applyFilters();
+      // Zoom controls
+      document.getElementById('zoom-in').addEventListener('click', () => {
+        mapState.scale = Math.min(mapState.scale * 1.3, 8);
+        drawMap();
       });
-
-      document.querySelectorAll('.band-checkbox').forEach(cb => {
-        cb.addEventListener('change', (e) => {
-          mapState.selectedBands[e.target.value] = e.target.checked;
-          applyFilters();
-        });
+      document.getElementById('zoom-out').addEventListener('click', () => {
+        mapState.scale = Math.max(mapState.scale / 1.3, 1);
+        if (mapState.scale === 1) { mapState.offsetX = 0; mapState.offsetY = 0; }
+        drawMap();
       });
-
-      document.getElementById('reset-filters').addEventListener('click', () => {
-        document.getElementById('region-filter').value = '';
-        document.getElementById('color-mode').value = 'band';
-        document.getElementById('voltage-filter').value = '400';
-        document.getElementById('irr-filter').value = '0';
-        document.querySelectorAll('.band-checkbox').forEach(cb => cb.checked = true);
-        mapState.selectedRegion = '';
-        mapState.colorMode = 'band';
-        mapState.maxVoltage = 400;
-        mapState.minIRR = 0;
-        mapState.selectedBands = { Low: true, Medium: true, High: true, Critical: true };
-        document.getElementById('voltage-value').textContent = 'All';
-        document.getElementById('irr-value').textContent = '0%';
-        applyFilters();
+      document.getElementById('zoom-reset').addEventListener('click', () => {
+        mapState.scale = 1;
+        mapState.offsetX = 0;
+        mapState.offsetY = 0;
+        drawMap();
       });
     }
 
     function applyFilters() {
       let filtered = engine.substations;
 
-      if (mapState.selectedRegion) {
+      if (mapState.selectedRegion !== 'all') {
         filtered = filtered.filter(s => s.region === mapState.selectedRegion);
       }
 
-      filtered = filtered.filter(s => mapState.selectedBands[s.classification]);
-      filtered = filtered.filter(s => (s.voltage_kv || 0) <= mapState.maxVoltage);
-      filtered = filtered.filter(s => (s.bess?.config_B?.IRR_pct || 0) >= mapState.minIRR);
+      if (mapState.selectedBand !== 'all') {
+        filtered = filtered.filter(s => s.classification === mapState.selectedBand);
+      }
+
+      if (mapState.selectedVoltage !== 'all') {
+        const v = mapState.selectedVoltage;
+        filtered = filtered.filter(s => {
+          const kv = s.voltage_kv || 0;
+          if (v === '380') return kv >= 380;
+          if (v === '220') return kv >= 200 && kv < 380;
+          if (v === '132') return kv >= 132 && kv < 200;
+          if (v === 'other') return kv < 132;
+          return true;
+        });
+      }
+
+      if (mapState.searchQuery) {
+        filtered = filtered.filter(s =>
+          (s.name && s.name.toLowerCase().includes(mapState.searchQuery)) ||
+          (s.province && s.province.toLowerCase().includes(mapState.searchQuery)) ||
+          (s.region && s.region.toLowerCase().includes(mapState.searchQuery))
+        );
+      }
 
       mapState.filteredSubstations = filtered;
+      updateStats();
       drawMap();
+      updateLegend();
+    }
+
+    function updateStats() {
+      const subs = mapState.filteredSubstations;
+      const total = subs.length;
+      const bandDist = engine.getBandDistribution(subs);
+      const rStats = engine.computeStats(subs, 'R_median');
+      const critical = bandDist.Critical || 0;
+      const high = bandDist.High || 0;
+
+      const statsEl = document.getElementById('map-stats');
+      statsEl.innerHTML = `<strong>${total.toLocaleString()}</strong> substations · <strong>${high + critical}</strong> high/critical · median R = <strong>${rStats?.median?.toFixed(3) || 'N/A'}</strong>`;
+    }
+
+    // Transform helpers with zoom/pan
+    function lonToX(lon, canvas) {
+      const base = ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * canvas.width;
+      return (base - canvas.width / 2) * mapState.scale + canvas.width / 2 + mapState.offsetX;
+    }
+    function latToY(lat, canvas) {
+      const base = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * canvas.height;
+      return (base - canvas.height / 2) * mapState.scale + canvas.height / 2 + mapState.offsetY;
     }
 
     function drawMap() {
       const canvas = document.getElementById('italy-map');
       const ctx = canvas.getContext('2d');
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const container = canvas.parentElement;
+      const rect = container.getBoundingClientRect();
 
-      // Map bounds
-      const lat_min = 36.5, lat_max = 47.1, lon_min = 6.6, lon_max = 18.5;
+      // Set canvas resolution to match container size
+      canvas.width = rect.width * (window.devicePixelRatio || 1);
+      canvas.height = rect.height * (window.devicePixelRatio || 1);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
 
-      // Transform functions
-      const lonToX = lon => ((lon - lon_min) / (lon_max - lon_min)) * canvas.width;
-      const latToY = lat => ((lat_max - lat) / (lat_max - lat_min)) * canvas.height;
+      // Use CSS dimensions for coordinate calculations
+      const w = rect.width;
+      const h = rect.height;
 
-      // Clear
+      // Clear — cream background
       ctx.fillStyle = '#faf6f5';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw Italy outline
-      ctx.strokeStyle = 'rgba(44,36,32,0.2)';
-      ctx.fillStyle = '#f0ebe8';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      italyPolygon.forEach((point, i) => {
-        const x = lonToX(point[0]);
-        const y = latToY(point[1]);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      });
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
+      ctx.fillRect(0, 0, w, h);
 
       // Draw substations
       const subs = mapState.filteredSubstations;
       const npvStats = engine.computeStats(subs, 'bess.config_B.NPV_M');
       const irrStats = engine.computeStats(subs, 'bess.config_B.IRR_pct');
 
+      // We store display coords in CSS pixels (not device pixels)
       subs.forEach(sub => {
-        const x = lonToX(sub.lon);
-        const y = latToY(sub.lat);
+        const baseX = ((sub.lon - LON_MIN) / (LON_MAX - LON_MIN)) * w;
+        const baseY = ((LAT_MAX - sub.lat) / (LAT_MAX - LAT_MIN)) * h;
+        const x = (baseX - w / 2) * mapState.scale + w / 2 + mapState.offsetX;
+        const y = (baseY - h / 2) * mapState.scale + h / 2 + mapState.offsetY;
 
         // Size by NPV
         const npvVal = sub.bess?.config_B?.NPV_M || 0;
         const npvRange = (npvStats?.max || 1) - (npvStats?.min || 0) || 1;
         const npvNorm = (npvVal - (npvStats?.min || 0)) / npvRange;
-        const radius = 3 + (npvNorm * 7);
+        const radius = 2.5 + (npvNorm * 5);
 
         // Color by mode
         let color;
@@ -267,258 +304,323 @@
           else color = '#941914';
         }
 
-        // Draw dot
+        // Draw dot with slight opacity for overlap
+        ctx.globalAlpha = 0.8;
         ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.globalAlpha = 1.0;
 
-        // Hover tooltip
+        // Store hit-test coordinates (CSS pixels)
         sub._mapX = x;
         sub._mapY = y;
         sub._mapRadius = radius;
       });
-
-      // Update legend
-      updateLegend();
     }
 
-    // Set up canvas event listeners ONCE (outside drawMap)
+    // Canvas event listeners — attached ONCE
     let canvasListenersAttached = false;
     function attachCanvasListeners() {
       if (canvasListenersAttached) return;
       const canvas = document.getElementById('italy-map');
       if (!canvas) return;
+
+      // Hover tooltip
       canvas.addEventListener('mousemove', (e) => {
-        handleMapMouseMove(e, canvas, mapState.filteredSubstations);
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Remove existing tooltip
+        document.querySelectorAll('.map-tooltip').forEach(t => t.remove());
+        canvas.style.cursor = 'default';
+
+        if (mapState.dragging) return;
+
+        let closest = null;
+        let closestDist = Infinity;
+        mapState.filteredSubstations.forEach(sub => {
+          if (sub._mapX === undefined) return;
+          const dx = x - sub._mapX;
+          const dy = y - sub._mapY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < sub._mapRadius + 8 && dist < closestDist) {
+            closestDist = dist;
+            closest = sub;
+          }
+        });
+
+        if (closest) {
+          canvas.style.cursor = 'pointer';
+          const tooltip = document.createElement('div');
+          tooltip.className = 'map-tooltip';
+          tooltip.innerHTML = `<strong>${closest.name}</strong><br>${closest.R_median?.toFixed(3) || '—'} <span style="color: ${engine.getBandColor(closest.classification)}">${closest.classification}</span><br>${closest.region} · ${closest.province}`;
+          tooltip.style.cssText = `
+            position: fixed;
+            background: rgba(44,36,32,0.92);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 20;
+            pointer-events: none;
+            white-space: nowrap;
+            line-height: 1.5;
+            left: ${e.clientX + 12}px;
+            top: ${e.clientY + 12}px;
+          `;
+          document.body.appendChild(tooltip);
+        }
       });
+
+      // Click — show detail panel
       canvas.addEventListener('click', (e) => {
-        handleMapClick(e, canvas, mapState.filteredSubstations);
+        if (mapState.dragging) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        let closest = null;
+        let closestDist = Infinity;
+        mapState.filteredSubstations.forEach(sub => {
+          if (sub._mapX === undefined) return;
+          const dx = x - sub._mapX;
+          const dy = y - sub._mapY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < sub._mapRadius + 8 && dist < closestDist) {
+            closestDist = dist;
+            closest = sub;
+          }
+        });
+
+        if (closest) {
+          showDetailPanel(closest);
+        }
       });
+
+      // Drag to pan
+      canvas.addEventListener('mousedown', (e) => {
+        if (mapState.scale > 1) {
+          mapState.dragging = true;
+          mapState.dragStartX = e.clientX - mapState.offsetX;
+          mapState.dragStartY = e.clientY - mapState.offsetY;
+          canvas.style.cursor = 'grabbing';
+        }
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+        if (mapState.dragging) {
+          mapState.offsetX = e.clientX - mapState.dragStartX;
+          mapState.offsetY = e.clientY - mapState.dragStartY;
+          drawMap();
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        mapState.dragging = false;
+      });
+
+      // Scroll to zoom
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? 0.9 : 1.1;
+        mapState.scale = Math.min(Math.max(mapState.scale * delta, 1), 8);
+        if (mapState.scale === 1) { mapState.offsetX = 0; mapState.offsetY = 0; }
+        drawMap();
+      }, { passive: false });
+
       canvasListenersAttached = true;
     }
 
-    function handleMapMouseMove(e, canvas, subs) {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    function showDetailPanel(sub) {
+      document.getElementById('detail-placeholder').style.display = 'none';
+      const content = document.getElementById('detail-content');
+      content.style.display = 'block';
 
-      canvas.style.cursor = 'default';
+      const bandColor = engine.getBandColor(sub.classification);
 
-      // Remove existing tooltip
-      document.querySelectorAll('.map-tooltip').forEach(t => t.remove());
+      // Component bars (max weight for scaling)
+      const weights = { C: 0.30, V: 0.10, I: 0.25, E: 0.10, S: 0.20, T: 0.05 };
+      const compNames = { C: 'Congestion', V: 'Voltage', I: 'Intraday', E: 'Frequency', S: 'Social', T: 'Transmission' };
 
-      // Find closest substation within hit radius
-      let closest = null;
-      let closestDist = Infinity;
-      subs.forEach(sub => {
-        if (sub._mapX === undefined) return;
-        const dx = x - sub._mapX;
-        const dy = y - sub._mapY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < sub._mapRadius + 8 && dist < closestDist) {
-          closestDist = dist;
-          closest = sub;
-        }
-      });
-
-      if (closest) {
-        canvas.style.cursor = 'pointer';
-        const tooltip = document.createElement('div');
-        tooltip.className = 'map-tooltip';
-        tooltip.textContent = closest.name;
-        tooltip.style.cssText = `
-          position: absolute;
-          background: rgba(44,36,32,0.9);
-          color: white;
-          padding: 6px 12px;
-          border-radius: 4px;
-          font-size: 12px;
-          z-index: 15;
-          pointer-events: none;
-          white-space: nowrap;
-          left: ${rect.left + x + 10}px;
-          top: ${rect.top + y + 10}px;
+      let componentBarsHTML = '';
+      Object.keys(weights).forEach(key => {
+        const val = sub.components?.[key] || 0;
+        const pct = Math.min((val / weights[key]) * 100, 100);
+        componentBarsHTML += `
+          <div class="detail-comp-row">
+            <span class="detail-comp-label">${key} ${compNames[key]}</span>
+            <div class="detail-comp-bar-bg">
+              <div class="detail-comp-bar" style="width: ${pct}%; background: ${bandColor};"></div>
+            </div>
+            <span class="detail-comp-value">${val.toFixed(4)}</span>
+          </div>
         `;
-        document.body.appendChild(tooltip);
-      }
-    }
-
-    function handleMapClick(e, canvas, subs) {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // Find the single closest substation within hit radius
-      let closest = null;
-      let closestDist = Infinity;
-
-      subs.forEach(sub => {
-        if (sub._mapX === undefined) return;
-        const dx = x - sub._mapX;
-        const dy = y - sub._mapY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < sub._mapRadius + 8 && dist < closestDist) {
-          closestDist = dist;
-          closest = sub;
-        }
       });
 
-      if (closest) {
-        showSubstationPopup(closest, e.pageX, e.pageY);
+      // Modifier rows
+      const modifierNames = { R3: 'Renewable Penetration', R4: 'Load Profile', R6: 'Network Topology', R7: 'Regulatory' };
+      let modifiersHTML = '';
+      if (sub.modifiers) {
+        Object.entries(sub.modifiers).forEach(([key, val]) => {
+          const isHigh = val > 1.05;
+          modifiersHTML += `
+            <div class="detail-modifier-row">
+              <span>${key} ${modifierNames[key] || ''}</span>
+              <span class="${isHigh ? 'modifier-high' : ''}">×${val.toFixed(3)}</span>
+            </div>
+          `;
+        });
       }
-    }
 
-    function showSubstationPopup(sub, pageX, pageY) {
-      // Remove existing popup and its outside-click handler
-      closeActivePopup();
+      // Config A vs B
+      const cfgA = sub.bess?.config_A || {};
+      const cfgB = sub.bess?.config_B || {};
 
-      const popup = document.createElement('div');
-      popup.className = 'map-popup';
+      content.innerHTML = `
+        <div class="detail-section">
+          <div class="detail-section-label">SELECTED SUBSTATION</div>
+          <h3 class="detail-sub-name">${sub.name}</h3>
+          <div class="detail-sub-meta">${sub.region} · ${sub.province} · ${sub.voltage_kv} kV</div>
+          <div class="detail-score-row">
+            <span class="detail-score-big" style="color: ${bandColor}">${sub.R_median?.toFixed(4) || '—'}</span>
+            <span class="detail-band-badge" style="background: ${engine.getBandBgColor(sub.classification)}; color: ${bandColor};">● ${sub.classification}</span>
+          </div>
+          <div class="detail-ci">
+            <div class="detail-ci-label">90% Confidence Interval</div>
+            <div class="detail-ci-bar">
+              <div class="detail-ci-track"></div>
+              <div class="detail-ci-range" style="left: ${((sub.R_P5 || 0) / 1) * 100}%; width: ${(((sub.R_P95 || 0) - (sub.R_P5 || 0)) / 1) * 100}%; background: ${bandColor};"></div>
+            </div>
+            <div class="detail-ci-labels">
+              <span>P5 = ${sub.R_P5?.toFixed(4) || '—'}</span>
+              <span>P95 = ${sub.R_P95?.toFixed(4) || '—'}</span>
+            </div>
+          </div>
+        </div>
 
-      // Position popup, keeping it within viewport
-      const viewW = window.innerWidth;
-      const viewH = window.innerHeight;
-      let left = pageX + 15;
-      let top = pageY + 15;
-      // Adjust if it would go off-screen (estimate 320px wide, 450px tall)
-      if (left + 330 > viewW) left = pageX - 335;
-      if (top + 460 > window.scrollY + viewH) top = pageY - 460;
-      if (left < 5) left = 5;
-      if (top < window.scrollY + 5) top = window.scrollY + 5;
+        <div class="detail-section">
+          <div class="detail-section-label">COMPONENT SCORES</div>
+          <div class="detail-comp-header">
+            <span>◄ Higher risk</span>
+            <span>Lower risk ►</span>
+          </div>
+          ${componentBarsHTML}
+        </div>
 
-      popup.style.cssText = `
-        left: ${left}px;
-        top: ${top}px;
+        <div class="detail-section">
+          <div class="detail-section-label">ACTIVE MODIFIERS</div>
+          ${modifiersHTML}
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-label">BESS VALUATION — Config A (4.9 MW)</div>
+          <div class="detail-bess-grid">
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">V_DNO</span>
+              <span class="detail-bess-value">€${(cfgA.V_DNO_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">V_Community</span>
+              <span class="detail-bess-value">€${(cfgA.V_Community_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">V_RO</span>
+              <span class="detail-bess-value">€${(cfgA.V_RO_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">NPV</span>
+              <span class="detail-bess-value" style="font-weight: 600;">€${(cfgA.NPV_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">IRR</span>
+              <span class="detail-bess-value">${(cfgA.IRR_pct || 0).toFixed(1)}%</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">Payback</span>
+              <span class="detail-bess-value">${(cfgA.Payback_yr || 0).toFixed(1)} y</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-label">BESS VALUATION — Config B (9.9 MW)</div>
+          <div class="detail-bess-grid">
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">V_DNO</span>
+              <span class="detail-bess-value">€${(cfgB.V_DNO_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">V_Community</span>
+              <span class="detail-bess-value">€${(cfgB.V_Community_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">V_RO</span>
+              <span class="detail-bess-value">€${(cfgB.V_RO_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">NPV</span>
+              <span class="detail-bess-value" style="font-weight: 600; color: ${bandColor};">€${(cfgB.NPV_M || 0).toFixed(2)}M</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">IRR</span>
+              <span class="detail-bess-value" style="font-weight: 600; color: ${bandColor};">${(cfgB.IRR_pct || 0).toFixed(1)}%</span>
+            </div>
+            <div class="detail-bess-item">
+              <span class="detail-bess-label">Payback</span>
+              <span class="detail-bess-value">${(cfgB.Payback_yr || 0).toFixed(1)} y</span>
+            </div>
+          </div>
+          <div class="detail-recommendation">
+            ${sub.bess?.recommendation || 'Config B'} recommended · Priority ${sub.bess?.investment_priority || '—'}
+          </div>
+        </div>
       `;
 
-      const html = `
-        <button class="map-popup-close">×</button>
-        <div class="map-popup-title">${sub.name}</div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">Province:</span>
-          <span class="map-popup-value">${sub.province}</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">Region:</span>
-          <span class="map-popup-value">${sub.region}</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">Voltage:</span>
-          <span class="map-popup-value">${sub.voltage_kv} kV</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">R Median:</span>
-          <span class="map-popup-value">${engine.formatNumber(sub.R_median, 3)}</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">Classification:</span>
-          <span class="map-popup-value"><span class="band-chip band-${(sub.classification||'medium').toLowerCase()}">${sub.classification}</span></span>
-        </div>
-        <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--card-border); font-weight: 600; font-size: 0.8rem; color: var(--warm-grey); text-transform: uppercase;">Config A (4.9 MW / 19.6 MWh)</div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">V_DNO:</span>
-          <span class="map-popup-value">€${engine.formatNumber(sub.bess?.config_A?.V_DNO_M || 0, 2)}M</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">NPV:</span>
-          <span class="map-popup-value">€${engine.formatNumber(sub.bess?.config_A?.NPV_M || 0, 2)}M</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">IRR:</span>
-          <span class="map-popup-value">${engine.formatNumber(sub.bess?.config_A?.IRR_pct || 0, 1)}%</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">Payback:</span>
-          <span class="map-popup-value">${engine.formatYears(sub.bess?.config_A?.Payback_yr || 0)}</span>
-        </div>
-        <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--card-border); font-weight: 600; font-size: 0.8rem; color: var(--warm-grey); text-transform: uppercase;">Config B (9.9 MW / 39.6 MWh)</div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">V_DNO:</span>
-          <span class="map-popup-value">€${engine.formatNumber(sub.bess?.config_B?.V_DNO_M || 0, 2)}M</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">NPV:</span>
-          <span class="map-popup-value">€${engine.formatNumber(sub.bess?.config_B?.NPV_M || 0, 2)}M</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">IRR:</span>
-          <span class="map-popup-value">${engine.formatNumber(sub.bess?.config_B?.IRR_pct || 0, 1)}%</span>
-        </div>
-        <div class="map-popup-field">
-          <span class="map-popup-label">Payback:</span>
-          <span class="map-popup-value">${engine.formatYears(sub.bess?.config_B?.Payback_yr || 0)}</span>
-        </div>
-        <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--card-border); font-size: 0.8rem; color: var(--warm-grey); font-style: italic;">
-          ${sub.bess?.recommendation || 'Recommendation pending detailed analysis.'}
-        </div>
-      `;
-
-      popup.innerHTML = html;
-      document.body.appendChild(popup);
-
-      popup.querySelector('.map-popup-close').addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeActivePopup();
-      });
-
-      // Delay adding outside-click handler so the current click event doesn't trigger it
-      if (activePopupTimerId) clearTimeout(activePopupTimerId);
-      activePopupTimerId = setTimeout(() => {
-        activePopupTimerId = null;
-        activePopupCloseHandler = (e) => {
-          if (!popup.contains(e.target)) {
-            closeActivePopup();
-          }
-        };
-        document.addEventListener('click', activePopupCloseHandler);
-      }, 50);
-    }
-
-    // Track active popup so we can clean up properly
-    let activePopupCloseHandler = null;
-    let activePopupTimerId = null;
-    function closeActivePopup() {
-      document.querySelectorAll('.map-popup').forEach(p => p.remove());
-      if (activePopupTimerId) {
-        clearTimeout(activePopupTimerId);
-        activePopupTimerId = null;
-      }
-      if (activePopupCloseHandler) {
-        document.removeEventListener('click', activePopupCloseHandler);
-        activePopupCloseHandler = null;
-      }
+      // Scroll to top of detail panel
+      document.getElementById('detail-panel').scrollTop = 0;
     }
 
     function updateLegend() {
       const legend = document.getElementById('map-legend');
-      let html = '<div style="font-weight: 600; margin-bottom: 0.8rem; font-size: 0.9rem;">Legend</div>';
+      let html = '<div class="legend-title">';
 
       if (mapState.colorMode === 'band') {
+        html += 'SSI BAND</div>';
         html += `
-          <div class="legend-item"><div class="legend-dot" style="background-color: #5d8563;"></div> <span>Low</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #b8863a;"></div> <span>Medium</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #aa4234;"></div> <span>High</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #941914;"></div> <span>Critical</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #5d8563;"></span> Low (0.00–0.35)</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> Medium (0.35–0.50)</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> High (0.50–0.65)</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> Critical (0.65–1.00)</div>
         `;
       } else if (mapState.colorMode === 'irr') {
+        html += 'IRR (Config B)</div>';
         html += `
-          <div class="legend-item"><div class="legend-dot" style="background-color: #5d8563;"></div> <span>&lt;5%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #b8863a;"></div> <span>5-10%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #aa4234;"></div> <span>10-15%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #941914;"></div> <span>&gt;15%</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #5d8563;"></span> &lt; 10%</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> 10–13%</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> 13–16%</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> &gt; 16%</div>
         `;
       } else if (mapState.colorMode === 'npv') {
+        html += 'NPV (Config B)</div>';
         html += `
-          <div class="legend-item"><div class="legend-dot" style="background-color: #5d8563;"></div> <span>&lt;€500k</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #b8863a;"></div> <span>€500k-1.5M</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #aa4234;"></div> <span>€1.5M-3M</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background-color: #941914;"></div> <span>&gt;€3M</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #5d8563;"></span> &lt; €300k</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> €300k–800k</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> €800k–2M</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> &gt; €2M</div>
+        `;
+      } else if (mapState.colorMode === 'priority') {
+        html += 'INVESTMENT PRIORITY</div>';
+        html += `
+          <div class="legend-item"><span class="legend-dot" style="background-color: #5d8563;"></span> 1–2 (Low)</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> 3 (Medium)</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> 4 (High)</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> 5 (Critical)</div>
         `;
       }
 
-      html += '<div style="margin-top: 0.8rem; font-size: 0.75rem; color: var(--warm-grey-light);">Dot size: NPV magnitude</div>';
+      html += '<div class="legend-hint">Scroll to zoom · Drag to pan<br>Click substation to inspect</div>';
       legend.innerHTML = html;
     }
 
