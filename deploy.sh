@@ -65,6 +65,32 @@ else
   echo ""
 fi
 
+# ── Step 1b: Run NN inference + monitoring (if models exist) ──
+if [ "$SKIP_PIPELINE" = false ] && [ -f "pipeline/nn_models/scaler.pkl" ]; then
+  echo -e "${YELLOW}[1b/4]${NC} Running NN inference + monitoring..."
+
+  if [ "$DRY_RUN" = false ]; then
+    python3 -m pipeline.nn_inference --quiet
+    if [ $? -eq 0 ]; then
+      PRED_COUNT=$(python3 -c "import json; d=json.load(open('nn_predictions.json')); del d['_meta']; print(len(d))" 2>/dev/null || echo "0")
+      echo -e "  nn_predictions.json: ${GREEN}${PRED_COUNT} substations scored${NC}"
+    else
+      echo -e "  ${YELLOW}NN inference failed (non-critical)${NC}"
+    fi
+
+    python3 -m pipeline.nn_monitor --quiet
+    if [ $? -eq 0 ]; then
+      HEALTH=$(python3 -c "import json; print(json.load(open('pipeline/nn_models/monitoring_report.json'))['status'].upper())" 2>/dev/null || echo "UNKNOWN")
+      echo -e "  Model health: ${GREEN}${HEALTH}${NC}"
+    else
+      echo -e "  ${YELLOW}Model monitoring failed (non-critical)${NC}"
+    fi
+  else
+    echo -e "  Skipped (dry-run)"
+  fi
+  echo ""
+fi
+
 # ── Step 2: Read version ──
 VERSION_FILE="pipeline/version.txt"
 if [ -f "$VERSION_FILE" ]; then
@@ -125,9 +151,11 @@ echo -e "${YELLOW}[4/4]${NC} Committing and pushing..."
 if git diff --quiet && git diff --cached --quiet; then
   echo -e "  No changes to commit."
 else
-  # Stage data files + HTML + pipeline
+  # Stage data files + HTML + pipeline + NN outputs
   git add data.json
+  git add nn_predictions.json 2>/dev/null || true
   git add pipeline/version.txt pipeline/audit_report.json 2>/dev/null || true
+  git add pipeline/nn_models/monitoring_report.json 2>/dev/null || true
   git add *.html
   git add pipeline/*.py
   git add deploy.sh 2>/dev/null || true

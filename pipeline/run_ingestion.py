@@ -234,6 +234,55 @@ def run_pipeline(use_cache=True, strict=False, compute_bess=True,
         if verbose:
             print(f"  HTML cache-busters: {replacements} references updated")
 
+    # ── STEP 8b: Run NN inference (if models exist) ──
+    models_dir = PIPELINE_DIR / 'nn_models'
+    if (models_dir / 'scaler.pkl').exists() and not dry_run:
+        if verbose:
+            print(f"\n── Step 8b: Neural Network Inference ──")
+        try:
+            from pipeline.nn_inference import NeuralNetworkInference
+            inferencer = NeuralNetworkInference(
+                data_file=OUTPUT_DIR / 'data.json',
+                models_dir=models_dir,
+                verbose=False,
+            )
+            inferencer.score_all()
+            output_path = OUTPUT_DIR / 'nn_predictions.json'
+            inferencer.save_predictions(output_path)
+            meta = inferencer.meta
+            if verbose:
+                print(f"  nn_predictions.json: {meta.get('total_scored', 0):,} substations scored")
+                print(f"  Anomalies flagged:   {meta.get('total_anomalies', 0)} ({meta.get('anomaly_pct', 0):.1f}%)")
+        except Exception as e:
+            if verbose:
+                print(f"  NN inference skipped: {e}")
+
+    # ── STEP 8c: Run model monitoring (if predictions exist) ──
+    predictions_path = OUTPUT_DIR / 'nn_predictions.json'
+    if predictions_path.exists() and not dry_run:
+        if verbose:
+            print(f"\n── Step 8c: Model Monitoring ──")
+        try:
+            from pipeline.nn_monitor import ModelMonitor
+            monitor = ModelMonitor(
+                baseline_metrics_path=str(models_dir / 'metrics.json'),
+                predictions_path=str(predictions_path),
+                data_path=str(OUTPUT_DIR / 'data.json'),
+            )
+            report = monitor.run_monitoring()
+            # Save report
+            report_path = models_dir / 'monitoring_report.json'
+            with open(report_path, 'w') as f:
+                json.dump(report, f, indent=2)
+            if verbose:
+                status = report.get('status', 'unknown').upper()
+                checks = report.get('checks', {})
+                ok_count = sum(1 for c in checks.values() if c.get('status') == 'ok')
+                print(f"  Model health: {status} ({ok_count}/{len(checks)} checks passed)")
+        except Exception as e:
+            if verbose:
+                print(f"  Model monitoring skipped: {e}")
+
     # ── STEP 9: Print summary ──
     duration = time.time() - t0
     print_summary(substations, report, loader.get_summary(), version, duration)

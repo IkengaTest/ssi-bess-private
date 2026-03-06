@@ -138,6 +138,13 @@
       <div class="narrative-block" id="narrative-block">
         <p id="narrative-text"></p>
       </div>
+
+      <!-- Download Report Button -->
+      <div style="text-align:center;margin:2rem 0;">
+        <button class="btn btn-primary" id="download-report-btn" onclick="generateReport()">
+          Download Investment Report
+        </button>
+      </div>
     </div>
 
     <!-- Part B: Spotlight -->
@@ -614,6 +621,131 @@
           <td><span class="band-chip band-${sub.classification.toLowerCase()}">${sub.classification}</span></td>
         </tr>
       `).join('');
+    }
+
+    // ─── GENERATE REPORT ───
+    function generateReport() {
+      if (!selectedSub) return;
+      const sub = selectedSub;
+      const id = sub.substation_id || sub.id || sub.name;
+      const pred = nnPredictions ? nnPredictions[id] : null;
+      const a = sub.bess?.config_A || {};
+      const b = sub.bess?.config_B || {};
+      const rec = sub.bess?.recommendation || 'Config B';
+      const comps = sub.components || {};
+      const mods = sub.modifiers || {};
+      const modProduct = Object.values(mods).reduce((p, v) => p * v, 1);
+
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>Investment Report — ${sub.name}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@400;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; color:#2c2420; padding:40px; max-width:800px; margin:0 auto; line-height:1.6; }
+  h1 { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:0.3rem; }
+  h2 { font-family:'Playfair Display',serif; font-size:1.4rem; margin:2rem 0 0.8rem; border-bottom:2px solid #941914; padding-bottom:0.3rem; color:#941914; }
+  h3 { font-size:1rem; font-weight:700; margin:1.2rem 0 0.5rem; }
+  .subtitle { color:#8a7e76; font-size:1rem; margin-bottom:0.5rem; }
+  .meta { color:#8a7e76; font-size:0.85rem; margin-bottom:2rem; }
+  .kpi-row { display:flex; gap:1.5rem; margin:1rem 0; }
+  .kpi { flex:1; background:#f5f0ed; border-radius:8px; padding:1rem; text-align:center; }
+  .kpi-label { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px; color:#8a7e76; font-weight:700; }
+  .kpi-val { font-family:'Playfair Display',serif; font-size:1.6rem; margin-top:0.3rem; }
+  table { width:100%; border-collapse:collapse; margin:0.8rem 0; }
+  th,td { padding:0.5rem 0.8rem; text-align:left; border-bottom:1px solid #e8e3df; font-size:0.9rem; }
+  th { background:#f5f0ed; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.3px; }
+  .badge { display:inline-block; padding:0.2rem 0.6rem; border-radius:12px; font-size:0.75rem; font-weight:700; text-transform:uppercase; }
+  .badge-high { background:rgba(170,66,52,0.1); color:#aa4234; }
+  .badge-medium { background:rgba(184,134,58,0.1); color:#b8863a; }
+  .badge-low { background:rgba(93,133,99,0.1); color:#5d8563; }
+  .badge-critical { background:rgba(148,25,20,0.1); color:#941914; }
+  .badge-flagged { background:rgba(170,66,52,0.1); color:#aa4234; }
+  .badge-normal { background:rgba(93,133,99,0.1); color:#5d8563; }
+  .footer { margin-top:3rem; padding-top:1rem; border-top:1px solid #e8e3df; font-size:0.8rem; color:#8a7e76; }
+  .narrative { background:#f5f0ed; border-left:4px solid #b8863a; padding:1rem 1.5rem; margin:1rem 0; border-radius:0 8px 8px 0; }
+  @media print { body { padding:20px; } .no-print { display:none; } }
+</style></head><body>
+<div style="display:flex;justify-content:space-between;align-items:start;">
+  <div>
+    <h1>${sub.name}</h1>
+    <div class="subtitle">${sub.province}, ${sub.region} · ${sub.voltage_kv} kV</div>
+    <div class="meta">Generated ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · SSI-ENN BESS Valuation Platform</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-size:0.72rem;text-transform:uppercase;color:#8a7e76;font-weight:700;">CONFIDENTIAL</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#941914;">Altinium Invest</div>
+  </div>
+</div>
+
+<h2>SSI Score Profile</h2>
+<div class="kpi-row">
+  <div class="kpi"><div class="kpi-label">R_FINAL</div><div class="kpi-val">${sub.R_median.toFixed(3)}</div></div>
+  <div class="kpi"><div class="kpi-label">Classification</div><div class="kpi-val"><span class="badge badge-${sub.classification.toLowerCase()}">${sub.classification}</span></div></div>
+  <div class="kpi"><div class="kpi-label">CI Width</div><div class="kpi-val">${sub.CI_width ? sub.CI_width.toFixed(3) : '—'}</div></div>
+  <div class="kpi"><div class="kpi-label">Fleet Percentile</div><div class="kpi-val">${sub.fleet_percentile ? (sub.fleet_percentile*100).toFixed(0)+'th' : '—'}</div></div>
+</div>
+
+<h3>Component Breakdown</h3>
+<table>
+  <tr><th>Component</th><th>Weight</th><th>Value</th><th>% of Ceiling</th></tr>
+  ${['C','V','I','E','S','T'].map(k => {
+    const w = {C:0.30,V:0.10,I:0.25,E:0.10,S:0.20,T:0.05}[k];
+    const v = comps[k] || 0;
+    const pct = w > 0 ? (v/w*100).toFixed(0) : '—';
+    return '<tr><td><b>'+k+'</b></td><td>'+(w*100)+'%</td><td>'+v.toFixed(4)+'</td><td>'+pct+'%</td></tr>';
+  }).join('')}
+</table>
+
+<h3>Contextual Modifiers</h3>
+<table>
+  <tr><th>Modifier</th><th>Value</th><th>Effect</th></tr>
+  ${[{k:'R3',n:'Consequence'},{k:'R4',n:'Graph Criticality'},{k:'R6',n:'Restoration'},{k:'R7',n:'Digital Readiness'}].map(m => {
+    const v = mods[m.k] || 1;
+    const eff = v > 1 ? 'Amplifies +'+(((v-1)*100).toFixed(1))+'%' : v < 1 ? 'Attenuates '+(((v-1)*100).toFixed(1))+'%' : 'Neutral';
+    return '<tr><td><b>'+m.k+'</b> '+m.n+'</td><td>'+v.toFixed(3)+'</td><td>'+eff+'</td></tr>';
+  }).join('')}
+  <tr style="font-weight:700;border-top:2px solid #e8e3df;"><td>Combined</td><td>${modProduct.toFixed(3)}</td><td>${modProduct > 1 ? 'Net amplification' : 'Net attenuation'} ${((modProduct-1)*100).toFixed(1)}%</td></tr>
+</table>
+
+<h2>BESS Value Stack</h2>
+<table>
+  <tr><th>Metric</th><th>Config A (4.9 MW)</th><th>Config B (9.9 MW)</th></tr>
+  <tr><td>V_DNO</td><td>€${(a.V_DNO_M||0).toFixed(2)}M</td><td>€${(b.V_DNO_M||0).toFixed(2)}M</td></tr>
+  <tr><td>V_Community</td><td>€${(a.V_Community_M||0).toFixed(2)}M</td><td>€${(b.V_Community_M||0).toFixed(2)}M</td></tr>
+  <tr><td>V_RO</td><td>€${(a.V_RO_M||0).toFixed(2)}M</td><td>€${(b.V_RO_M||0).toFixed(2)}M</td></tr>
+  <tr style="font-weight:700;"><td>Total Value</td><td>€${((a.V_DNO_M||0)+(a.V_Community_M||0)+(a.V_RO_M||0)).toFixed(2)}M</td><td>€${((b.V_DNO_M||0)+(b.V_Community_M||0)+(b.V_RO_M||0)).toFixed(2)}M</td></tr>
+  <tr><td>CAPEX</td><td>€3.50M</td><td>€7.00M</td></tr>
+  <tr style="font-weight:700;color:#941914;"><td>NPV</td><td>€${(a.NPV_M||0).toFixed(2)}M</td><td>€${(b.NPV_M||0).toFixed(2)}M</td></tr>
+  <tr><td>IRR</td><td>${(a.IRR_pct||0).toFixed(1)}%</td><td>${(b.IRR_pct||0).toFixed(1)}%</td></tr>
+  <tr><td>Payback</td><td>${(a.Payback_yr||0).toFixed(1)} years</td><td>${(b.Payback_yr||0).toFixed(1)} years</td></tr>
+</table>
+<p style="margin-top:0.8rem;font-weight:700;color:#5d8563;">Recommendation: ${rec}</p>
+
+${pred ? `
+<h2>Neural Network Analysis</h2>
+<div class="kpi-row">
+  <div class="kpi"><div class="kpi-label">NN Recommendation</div><div class="kpi-val">${pred.nn_recommendation}</div><div style="font-size:0.8rem;color:#8a7e76;">${(pred.nn_recommendation_confidence*100).toFixed(1)}% confidence</div></div>
+  <div class="kpi"><div class="kpi-label">Predicted NPV</div><div class="kpi-val">€${pred.nn_npv_predicted_M.toFixed(2)}M</div><div style="font-size:0.8rem;color:${Math.abs(pred.nn_npv_residual_M)>1?'#aa4234':'#5d8563'};">${pred.nn_npv_residual_M>=0?'+':''}${pred.nn_npv_residual_M.toFixed(2)}M vs computed</div></div>
+  <div class="kpi"><div class="kpi-label">Predicted Band</div><div class="kpi-val"><span class="badge badge-${pred.nn_band_predicted.toLowerCase()}">${pred.nn_band_predicted}</span></div><div style="font-size:0.8rem;color:${pred.nn_band_correct?'#5d8563':'#aa4234'};">${pred.nn_band_correct?'Matches':'Differs'}</div></div>
+  <div class="kpi"><div class="kpi-label">Anomaly</div><div class="kpi-val"><span class="badge badge-${pred.nn_anomaly_flag?'flagged':'normal'}">${pred.nn_anomaly_flag?'FLAGGED':'Normal'}</span></div>${pred.nn_anomaly_flag?'<div style="font-size:0.8rem;color:#aa4234;">'+pred.nn_anomaly_type.replace('_',' ')+'</div>':''}</div>
+</div>` : ''}
+
+<h2>Investment Narrative</h2>
+<div class="narrative"><p>${document.getElementById('narrative-text').textContent}</p></div>
+
+<div class="footer">
+  <p>This report was generated from the SSI-ENN BESS Valuation Platform. SSI v4.0 scoring methodology.</p>
+  <p>© ${new Date().getFullYear()} Altinium Invest S.r.L. All Rights Reserved. Confidential — not for distribution.</p>
+</div>
+
+<div class="no-print" style="text-align:center;margin-top:2rem;">
+  <button onclick="window.print()" style="padding:0.7rem 2rem;background:#941914;color:white;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;">Print / Save as PDF</button>
+</div>
+</body></html>`;
+
+      const w = window.open('', '_blank');
+      w.document.write(html);
+      w.document.close();
     }
 
     // ─── NN INSIGHTS (per substation) ───

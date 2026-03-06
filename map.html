@@ -53,6 +53,8 @@
           <option value="irr">IRR</option>
           <option value="npv">NPV</option>
           <option value="priority">Investment Priority</option>
+          <option value="anomaly">NN Anomaly</option>
+          <option value="confidence">NN Confidence</option>
         </select>
       </div>
       <div class="filter-bar-item filter-bar-search">
@@ -131,10 +133,14 @@
     // Map bounds (Italy)
     const LAT_MIN = 36.5, LAT_MAX = 47.1, LON_MIN = 6.6, LON_MAX = 18.5;
 
+    // NN predictions (loaded async)
+    let nnPreds = {};
+
     async function initMap() {
       const [loaded] = await Promise.all([
         engine.loadData('data.json?v=6'),
-        fetch('grid-geo.json?v=6').then(r => r.json()).then(d => { GEO = d; }).catch(() => {})
+        fetch('grid-geo.json?v=6').then(r => r.json()).then(d => { GEO = d; }).catch(() => {}),
+        fetch('nn_predictions.json?v=6').then(r => r.json()).then(d => { delete d._meta; nnPreds = d; }).catch(() => {})
       ]);
       if (!loaded) {
         document.querySelector('main').innerHTML = '<div class="container"><p style="color: red;">Error loading data</p></div>';
@@ -341,13 +347,41 @@
           else if (priority <= 3) color = '#b8863a';
           else if (priority <= 4) color = '#aa4234';
           else color = '#941914';
+        } else if (mapState.colorMode === 'anomaly') {
+          const id = sub.substation_id || sub.id || sub.name;
+          const pred = nnPreds[id];
+          if (pred && pred.nn_anomaly_flag) {
+            const t = pred.nn_anomaly_type;
+            if (t === 'multi_signal') color = '#941914';
+            else if (t === 'npv_outlier') color = '#aa4234';
+            else if (t === 'rec_mismatch') color = '#b8863a';
+            else color = '#8a7e76';
+          } else {
+            color = '#d4cdc8';
+          }
+        } else if (mapState.colorMode === 'confidence') {
+          const id = sub.substation_id || sub.id || sub.name;
+          const pred = nnPreds[id];
+          const conf = pred ? pred.nn_recommendation_confidence : 0.5;
+          if (conf >= 0.95) color = '#5d8563';
+          else if (conf >= 0.85) color = '#b8863a';
+          else if (conf >= 0.70) color = '#aa4234';
+          else color = '#941914';
+        }
+
+        // Anomaly mode: enlarge flagged dots
+        let drawRadius = radius;
+        if (mapState.colorMode === 'anomaly') {
+          const id = sub.substation_id || sub.id || sub.name;
+          const pred = nnPreds[id];
+          if (pred && pred.nn_anomaly_flag) drawRadius = 5;
         }
 
         // Draw dot with slight opacity for overlap
         ctx.globalAlpha = 0.8;
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.arc(x, y, drawRadius, 0, Math.PI * 2);
         ctx.fill();
         ctx.globalAlpha = 1.0;
 
@@ -656,6 +690,23 @@
           <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> 3 (Medium)</div>
           <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> 4 (High)</div>
           <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> 5 (Critical)</div>
+        `;
+      } else if (mapState.colorMode === 'anomaly') {
+        html += 'NN ANOMALY</div>';
+        html += `
+          <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> Multi-signal</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> NPV outlier</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> Rec mismatch</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #8a7e76;"></span> Statistical</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #d4cdc8;"></span> Normal</div>
+        `;
+      } else if (mapState.colorMode === 'confidence') {
+        html += 'NN CONFIDENCE</div>';
+        html += `
+          <div class="legend-item"><span class="legend-dot" style="background-color: #5d8563;"></span> ≥ 95%</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #b8863a;"></span> 85–95%</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #aa4234;"></span> 70–85%</div>
+          <div class="legend-item"><span class="legend-dot" style="background-color: #941914;"></span> &lt; 70%</div>
         `;
       }
 

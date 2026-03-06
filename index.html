@@ -59,6 +59,29 @@
       </div>
     </div>
 
+    <!-- NN Model Health -->
+    <div id="nn-health-card" style="display:none;margin-bottom:2rem;">
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h4 style="margin-bottom:0.3rem;font-size:1.1rem;">Neural Network Status</h4>
+            <p style="margin-bottom:0;font-size:0.85rem;" id="nn-health-summary"></p>
+          </div>
+          <div style="display:flex;gap:2rem;align-items:center;">
+            <div style="text-align:center;">
+              <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--warm-grey);font-weight:600;">Anomalies</div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--terracotta);" id="nn-health-anomalies">—</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--warm-grey);font-weight:600;">Avg Confidence</div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--sage);" id="nn-health-conf">—</div>
+            </div>
+            <a href="intelligence.html" style="font-size:0.9rem;font-weight:600;">View details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Band Distribution -->
     <div class="card" style="margin-bottom:2rem;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
@@ -125,11 +148,27 @@
     }
 
     async function init() {
+      let nnData = null;
       const [loaded] = await Promise.all([
         engine.loadData('data.json?v=6'),
-        fetch('grid-geo.json?v=6').then(r => r.json()).then(d => { GEO = d; }).catch(() => {})
+        fetch('grid-geo.json?v=6').then(r => r.json()).then(d => { GEO = d; }).catch(() => {}),
+        fetch('nn_predictions.json?v=6').then(r => r.json()).then(d => { nnData = d; }).catch(() => {})
       ]);
       if (!loaded) return;
+
+      // Populate NN health card
+      if (nnData && nnData._meta) {
+        const meta = nnData._meta;
+        delete nnData._meta;
+        const confs = Object.values(nnData).map(p => p.nn_recommendation_confidence);
+        const avgConf = confs.length ? (confs.reduce((a,b) => a+b, 0) / confs.length * 100).toFixed(1) : '—';
+        document.getElementById('nn-health-anomalies').textContent = meta.total_anomalies;
+        document.getElementById('nn-health-conf').textContent = avgConf + '%';
+        document.getElementById('nn-health-summary').textContent =
+          '4 models scoring ' + meta.total_scored.toLocaleString() + ' substations · ' +
+          meta.total_anomalies + ' anomalies flagged (' + meta.anomaly_pct.toFixed(1) + '% of fleet)';
+        document.getElementById('nn-health-card').style.display = 'block';
+      }
 
       const kpis = engine.computeKPIs();
 
