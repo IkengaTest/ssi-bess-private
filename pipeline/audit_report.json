@@ -1,0 +1,1040 @@
+{
+  "execution_metadata": {
+    "pipeline_version": "1.0.0",
+    "start_time": "2026-03-06T17:34:22.430124Z",
+    "end_time": "2026-03-06T17:34:29.660305Z",
+    "duration_sec": 7.2,
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-94-generic-x86_64-with-glibc2.35"
+  },
+  "data_sources": {
+    "total_registered": 25,
+    "fetched_live": 2,
+    "embedded": 23,
+    "failed": 0,
+    "per_source": [
+      {
+        "source_name": "ssi_substations",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 1257.5,
+        "hash_sha256": "87310b2b74da538e9bd5482b644ae38e80b1c9953ed354bd6f4d6b8319a3ba50",
+        "row_count": 4293,
+        "timestamp": "2026-03-06T17:34:23.821361",
+        "from_cache": false
+      },
+      {
+        "source_name": "grid_geometry",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 189.4,
+        "hash_sha256": "6024ea360cfb9c9c007208681b6158de40e3e0eebc269816cbfeb52786ea9d02",
+        "row_count": 14221,
+        "timestamp": "2026-03-06T17:34:24.096732",
+        "from_cache": false
+      },
+      {
+        "source_name": "arera_continuity",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096803",
+        "from_cache": false
+      },
+      {
+        "source_name": "arera_voltage",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096809",
+        "from_cache": false
+      },
+      {
+        "source_name": "ispra_flood",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096812",
+        "from_cache": false
+      },
+      {
+        "source_name": "ispra_landslide",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096816",
+        "from_cache": false
+      },
+      {
+        "source_name": "copernicus_heatwave",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096820",
+        "from_cache": false
+      },
+      {
+        "source_name": "osm_infrastructure",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096824",
+        "from_cache": false
+      },
+      {
+        "source_name": "arera_thermal",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096827",
+        "from_cache": false
+      },
+      {
+        "source_name": "terna_load",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096830",
+        "from_cache": false
+      },
+      {
+        "source_name": "eea_corrosion",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096834",
+        "from_cache": false
+      },
+      {
+        "source_name": "ispra_hydrogeo",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096838",
+        "from_cache": false
+      },
+      {
+        "source_name": "istat_gdp",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096841",
+        "from_cache": false
+      },
+      {
+        "source_name": "arera_voll",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096844",
+        "from_cache": false
+      },
+      {
+        "source_name": "gse_der",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096848",
+        "from_cache": false
+      },
+      {
+        "source_name": "gse_transition",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096851",
+        "from_cache": false
+      },
+      {
+        "source_name": "copernicus_cmip6",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096855",
+        "from_cache": false
+      },
+      {
+        "source_name": "oipe_energy_poverty",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096858",
+        "from_cache": false
+      },
+      {
+        "source_name": "osm_topology",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096862",
+        "from_cache": false
+      },
+      {
+        "source_name": "arera_caidi",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096865",
+        "from_cache": false
+      },
+      {
+        "source_name": "ingv_seismic",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096869",
+        "from_cache": false
+      },
+      {
+        "source_name": "desi_digital",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096872",
+        "from_cache": false
+      },
+      {
+        "source_name": "academic_fleet",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096877",
+        "from_cache": false
+      },
+      {
+        "source_name": "trajectory_inputs",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096927",
+        "from_cache": false
+      },
+      {
+        "source_name": "bess_specifications",
+        "success": true,
+        "error": null,
+        "fetch_time_ms": 0,
+        "hash_sha256": "embedded",
+        "row_count": 0,
+        "timestamp": "2026-03-06T17:34:24.096935",
+        "from_cache": false
+      }
+    ]
+  },
+  "validation": {
+    "total_records": 4293,
+    "valid_records": 4293,
+    "invalid_records": 0,
+    "error_count": 0,
+    "warning_count": 1744,
+    "data_quality_score": 100.0,
+    "completeness": {
+      "substation_id": 1.0,
+      "name": 1.0,
+      "lat": 1.0,
+      "lon": 1.0,
+      "voltage_kv": 1.0,
+      "region": 1.0,
+      "province": 1.0,
+      "R_median": 1.0,
+      "R_P5": 1.0,
+      "R_P95": 1.0,
+      "R_base_median": 1.0,
+      "CI_width": 1.0,
+      "classification": 1.0,
+      "fleet_percentile": 1.0,
+      "confidence_tier": 1.0,
+      "components.C": 1.0,
+      "components.V": 1.0,
+      "components.I": 1.0,
+      "components.E": 1.0,
+      "components.S": 1.0,
+      "components.T": 1.0,
+      "modifiers.R3": 1.0,
+      "modifiers.R4": 1.0,
+      "modifiers.R6": 1.0,
+      "modifiers.R7": 1.0
+    },
+    "errors": [],
+    "warnings": [
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.665 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 11,
+        "substation_id": "Sasol Italy_15147"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.343 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 24,
+        "substation_id": "ENEL_100"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.660 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 42,
+        "substation_id": "A2A_10905"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.657 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 53,
+        "substation_id": "ENEL_10980"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.663 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 67,
+        "substation_id": "Terna S.p.A._22726"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.334 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 71,
+        "substation_id": "Fri El Montemurro_14601"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.692 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 76,
+        "substation_id": "Terna S.p.A._22222"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.349 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 91,
+        "substation_id": "Enel Distribuzione_9097"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.673 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 96,
+        "substation_id": "A2A_10909"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.693 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 99,
+        "substation_id": "ENEL_14009"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.694 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 111,
+        "substation_id": "Enel Distribuzione_10861"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.331 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 112,
+        "substation_id": "TERNA_21475"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.673 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 124,
+        "substation_id": "Enel Distribuzione_26468"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.655 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 125,
+        "substation_id": "R.F.I._31059"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.663 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 131,
+        "substation_id": "e-distribuzione S.p.A._9700"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.650 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 133,
+        "substation_id": "Acciaierie di Sicilia_15155"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.673 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 136,
+        "substation_id": "Agip Petroli_10500"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.343 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 138,
+        "substation_id": "Sevel_8761"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.330 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 146,
+        "substation_id": "TERNA_24062"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.331 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 148,
+        "substation_id": "ENEL_9198"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.651 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 154,
+        "substation_id": "TERNA_26029"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.324 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 157,
+        "substation_id": "BG Italia_14757"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.335 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 161,
+        "substation_id": "RFI_9074"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.660 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 164,
+        "substation_id": "Terna S.p.A._32806"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.341 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 184,
+        "substation_id": "Wind Farm Umberto Avino_26419"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.651 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 190,
+        "substation_id": "TERNA_33157"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.663 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 193,
+        "substation_id": "Enel Distribuzione_9085"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.318 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 214,
+        "substation_id": "e-distribuzione S.p.A._15184"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.338 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 220,
+        "substation_id": "ENEL_16431"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.316 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 221,
+        "substation_id": "ENEL_24861"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.302 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 240,
+        "substation_id": "TERNA_16425"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.303 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 246,
+        "substation_id": "Colacem_7498"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.674 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 255,
+        "substation_id": "Enel Distribuzione_15136"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.339 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 256,
+        "substation_id": "Enel Distribuzione_8348"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.350 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 273,
+        "substation_id": "TERNA_25308"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.336 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 276,
+        "substation_id": "RFI_13280"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.658 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 277,
+        "substation_id": "SER_26445"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.317 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 283,
+        "substation_id": "ENEL_18583"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.701 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 284,
+        "substation_id": "TERNA_10887"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.349 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 300,
+        "substation_id": "Enel Produzione_10131"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.343 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 316,
+        "substation_id": "RFI_10619"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.288 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 317,
+        "substation_id": "Enel Distribuzione_9088"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.708 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 318,
+        "substation_id": "Terna S.p.A._8354"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.348 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 335,
+        "substation_id": "Enel Distribuzione_9096"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.346 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 341,
+        "substation_id": "Enel Distribuzione_10534"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.341 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 342,
+        "substation_id": "Terna S.p.A._8304"
+      },
+      {
+        "field": "classification",
+        "value": "High",
+        "rule": "consistency",
+        "message": "R_median=0.660 should be \"Critical\", got \"High\"",
+        "severity": "warning",
+        "row_index": 348,
+        "substation_id": "Enel Distribuzione_8002"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.336 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 350,
+        "substation_id": "CRE Project_14598"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.315 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 355,
+        "substation_id": "Flabrum_25848"
+      },
+      {
+        "field": "classification",
+        "value": "Medium",
+        "rule": "consistency",
+        "message": "R_median=0.318 should be \"Low\", got \"Medium\"",
+        "severity": "warning",
+        "row_index": 360,
+        "substation_id": "TERNA_19330"
+      }
+    ]
+  },
+  "bess_computation": {
+    "total_computed": 4293,
+    "config_a_median_npv": -0.69,
+    "config_b_median_npv": -1.39,
+    "config_b_median_irr": 3.0,
+    "config_b_total_npv": -625.77,
+    "config_b_recommended_pct": 37.8,
+    "band_distribution": {
+      "High": 814,
+      "Medium": 2896,
+      "Low": 583
+    },
+    "region_distribution": {
+      "Sardegna": 145,
+      "Sicilia": 308,
+      "Calabria": 106,
+      "Puglia": 238,
+      "Campania": 231,
+      "Basilicata": 116,
+      "Molise": 236,
+      "Abruzzo": 115,
+      "Toscana": 319,
+      "Liguria": 191,
+      "Lazio": 215,
+      "Piemonte": 279,
+      "Marche": 89,
+      "Umbria": 94,
+      "Emilia-Romagna": 298,
+      "Friuli Venezia Giulia": 214,
+      "Lombardia": 632,
+      "Trentino-Alto Adige": 143,
+      "Veneto": 213,
+      "Valle d'Aosta": 111
+    },
+    "priority_distribution": {
+      "1": 2933,
+      "2": 369,
+      "3": 380,
+      "4": 388,
+      "5": 223
+    },
+    "seed_base": 42
+  },
+  "reproducibility": {
+    "git_commit": "491379624dad",
+    "config_hash": "ac0e7fa00148411a",
+    "numpy_seed": 42,
+    "deterministic": true
+  },
+  "data_source_registry": [
+    {
+      "name": "ssi_substations",
+      "section": "A",
+      "provider": "Ikenga SSI Index",
+      "status": "live",
+      "url": "https://ikengassiindex.github.io/ssi-data.json"
+    },
+    {
+      "name": "grid_geometry",
+      "section": "A",
+      "provider": "Ikenga SSI Index",
+      "status": "live",
+      "url": "https://ikengassiindex.github.io/grid-geo.json"
+    },
+    {
+      "name": "arera_continuity",
+      "section": "A",
+      "provider": "ARERA",
+      "status": "embedded",
+      "variables": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ]
+    },
+    {
+      "name": "arera_voltage",
+      "section": "A",
+      "provider": "ARERA TIQE",
+      "status": "embedded",
+      "variables": [
+        "V1",
+        "V2"
+      ]
+    },
+    {
+      "name": "ispra_flood",
+      "section": "A",
+      "provider": "ISPRA IdroGeo",
+      "status": "embedded",
+      "variables": [
+        "I1"
+      ]
+    },
+    {
+      "name": "ispra_landslide",
+      "section": "A",
+      "provider": "ISPRA IFFI",
+      "status": "embedded",
+      "variables": [
+        "I2"
+      ]
+    },
+    {
+      "name": "copernicus_heatwave",
+      "section": "A",
+      "provider": "Copernicus CDS ERA5",
+      "status": "embedded",
+      "variables": [
+        "I3"
+      ]
+    },
+    {
+      "name": "osm_infrastructure",
+      "section": "A",
+      "provider": "OpenStreetMap",
+      "status": "embedded",
+      "variables": [
+        "I4",
+        "I6"
+      ]
+    },
+    {
+      "name": "arera_thermal",
+      "section": "A",
+      "provider": "IEEE C57.91 / ERA5 / Terna",
+      "status": "embedded",
+      "variables": [
+        "I5"
+      ]
+    },
+    {
+      "name": "terna_load",
+      "section": "A",
+      "provider": "Terna Open Data",
+      "status": "embedded",
+      "variables": [
+        "I7"
+      ]
+    },
+    {
+      "name": "eea_corrosion",
+      "section": "A",
+      "provider": "EEA Air Quality",
+      "status": "embedded",
+      "variables": [
+        "I8"
+      ]
+    },
+    {
+      "name": "ispra_hydrogeo",
+      "section": "A",
+      "provider": "ISPRA Hydrogeology",
+      "status": "embedded",
+      "variables": [
+        "I9"
+      ]
+    },
+    {
+      "name": "istat_gdp",
+      "section": "A",
+      "provider": "Eurostat / ISTAT",
+      "status": "embedded",
+      "variables": [
+        "E1"
+      ]
+    },
+    {
+      "name": "arera_voll",
+      "section": "A",
+      "provider": "ARERA / CEER",
+      "status": "embedded",
+      "variables": [
+        "E2"
+      ]
+    },
+    {
+      "name": "gse_der",
+      "section": "A",
+      "provider": "GSE Atlaimpianti",
+      "status": "embedded",
+      "variables": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "name": "gse_transition",
+      "section": "A",
+      "provider": "GSE / Terna / ENEA",
+      "status": "embedded",
+      "variables": [
+        "T1"
+      ]
+    },
+    {
+      "name": "copernicus_cmip6",
+      "section": "A.M",
+      "provider": "Copernicus CDS CMIP6",
+      "status": "phase2",
+      "variables": [
+        "R2"
+      ]
+    },
+    {
+      "name": "oipe_energy_poverty",
+      "section": "A.M",
+      "provider": "OIPE / MEF",
+      "status": "phase2",
+      "variables": [
+        "R3"
+      ]
+    },
+    {
+      "name": "osm_topology",
+      "section": "A.M",
+      "provider": "OSM Overpass",
+      "status": "phase2",
+      "variables": [
+        "R4"
+      ]
+    },
+    {
+      "name": "arera_caidi",
+      "section": "A.M",
+      "provider": "ARERA TIQE",
+      "status": "phase2",
+      "variables": [
+        "R6a"
+      ]
+    },
+    {
+      "name": "ingv_seismic",
+      "section": "A.M",
+      "provider": "INGV MPS04",
+      "status": "phase2",
+      "variables": [
+        "R6b"
+      ]
+    },
+    {
+      "name": "desi_digital",
+      "section": "A.M",
+      "provider": "EU DESI / Eurostat",
+      "status": "phase2",
+      "variables": [
+        "R7"
+      ]
+    },
+    {
+      "name": "academic_fleet",
+      "section": "B",
+      "provider": "Derived (ARERA tail)",
+      "status": "embedded",
+      "variables": [
+        "entropy",
+        "DSRR",
+        "fragility",
+        "CPIndex",
+        "Jensen",
+        "DER_coupling"
+      ]
+    },
+    {
+      "name": "trajectory_inputs",
+      "section": "C",
+      "provider": "PNIEC / GSE / Terna / GME",
+      "status": "embedded",
+      "variables": [
+        "C.1-C.10"
+      ]
+    },
+    {
+      "name": "bess_specifications",
+      "section": "D",
+      "provider": "Plan of Work v11",
+      "status": "config",
+      "variables": [
+        "D.1-D.5"
+      ]
+    }
+  ]
+}
