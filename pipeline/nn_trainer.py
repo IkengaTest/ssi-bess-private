@@ -1,16 +1,16 @@
 """
-SSI-ENN BESS — Neural Network Training Module (v3 — BS/Actuarial/Cannibalization)
-===================================================================================
-Four models trained on 4,293 Italian substations with expanded 32-feature set:
+SSI-ENN BESS — Neural Network Training Module (v3.1 — + Nodal Pricing Scenario)
+==================================================================================
+Four models trained on 4,293 Italian substations with expanded 35-feature set:
   1. BESS Recommender   — Config A vs B (MLP, confirmed optimal)
   2. NPV Regressor      — Config B NPV (MLP 512-256-128, upgraded)
   3. Band Predictor     — Low/Medium/High/Critical (RandomForest, 100% acc)
   4. Anomaly Detector   — 3-residual IsolationForest (rec + NPV + band)
 
-v3 enhancements (from v2):
-  - Feature expansion: 22 → 32 features (+10 enrichment features)
-  - New features: CRS, BESS_SAT, bs_composite, tvar_95, pad_bps,
-    wacc_adjusted, exposure_index, revenue_haircut_pct, tail_ratio, gpd_xi
+v3.1 enhancements (from v3):
+  - Feature expansion: 32 → 35 features (+3 nodal pricing scenario features)
+  - New features: crs_nodal, crs_uplift_pct, congestion_factor
+  - Nodal features from cannibalization.py v1.1 nodal_pricing_scenario()
   - All enrichment features derived from black_swan.py, cannibalization.py, actuarial.py
 """
 
@@ -61,8 +61,15 @@ ENRICHMENT_FEATURES = [
     'gpd_xi',                 # GPD shape parameter (tail heaviness)
 ]
 
+# v3.1: Nodal pricing scenario features
+NODAL_FEATURES = [
+    'crs_nodal',              # CRS under nodal pricing scenario [0, 1]
+    'crs_uplift_pct',         # CRS improvement from zonal → nodal (%)
+    'congestion_factor',      # Zone/node congestion factor [0, 1]
+]
+
 ALL_FEATURES = (GEOGRAPHIC_FEATURES + SSI_SCORE_FEATURES + COMPONENT_FEATURES +
-                MODIFIER_FEATURES + SOCIO_FEATURES + ENRICHMENT_FEATURES)
+                MODIFIER_FEATURES + SOCIO_FEATURES + ENRICHMENT_FEATURES + NODAL_FEATURES)
 
 BAND_MAP = {'Low': 0, 'Medium': 1, 'High': 2, 'Critical': 3}
 BAND_NAMES = ['Low', 'Medium', 'High', 'Critical']
@@ -135,6 +142,10 @@ class FeatureEngineer:
                 'pad_bps': act.get('pad_bps', 75.0),
                 'wacc_adjusted': act.get('wacc_adjusted', 0.052),
                 'gpd_xi': act.get('gpd_xi', 0.25),
+                # v3.1: Nodal pricing scenario
+                'crs_nodal': cann.get('nodal_scenario', {}).get('crs_nodal', 0.50),
+                'crs_uplift_pct': cann.get('nodal_scenario', {}).get('crs_uplift_pct', 0.0),
+                'congestion_factor': cann.get('nodal_scenario', {}).get('congestion_factor', 0.40),
                 # Targets
                 'recommendation': 1 if bess.get('recommendation') == 'Config B' else 0,
                 'priority': bess.get('investment_priority', 5),

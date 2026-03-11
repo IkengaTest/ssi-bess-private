@@ -176,6 +176,31 @@
         </div>
       </div>
 
+      <!-- v3.1: Nodal Pricing Scenario -->
+      <div class="section-label" style="margin-top:2rem;">Nodal Pricing Scenario <span style="font-size:0.65rem;background:#e8f8f0;padding:2px 6px;border-radius:3px;color:#1a6b4a;margin-left:0.5rem;">NEW v3.1</span></div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin:1rem 0 1.5rem;">
+        <div class="kpi-card" style="border-left:3px solid #1a6b4a;">
+          <div class="kpi-label">CRS (Nodal)</div>
+          <div class="kpi-value" id="enr-crs-nodal" style="font-size:1.4rem;color:#1a6b4a;"></div>
+          <div class="kpi-unit" id="enr-crs-nodal-tier"></div>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid #0e7490;">
+          <div class="kpi-label">CRS Uplift</div>
+          <div class="kpi-value" id="enr-crs-uplift" style="font-size:1.4rem;color:#0e7490;"></div>
+          <div class="kpi-unit">Zonal → Nodal improvement</div>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid #6c3483;">
+          <div class="kpi-label">Congestion Factor</div>
+          <div class="kpi-value" id="enr-congestion" style="font-size:1.4rem;color:#6c3483;"></div>
+          <div class="kpi-unit" id="enr-haircut-nodal"></div>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid #b7950b;">
+          <div class="kpi-label">NPV Δ (Option F)</div>
+          <div class="kpi-value" id="enr-npv-nodal" style="font-size:1.4rem;color:#b7950b;"></div>
+          <div class="kpi-unit">Probability-weighted option value</div>
+        </div>
+      </div>
+
       <!-- Narrative -->
       <div class="narrative-block" id="narrative-block">
         <p id="narrative-text"></p>
@@ -653,6 +678,25 @@
       // Exposure
       const exp = cann.exposure_index || 0;
       document.getElementById('enr-exposure').textContent = exp.toFixed(4);
+
+      // v3.1: Nodal Pricing Scenario
+      const nodal = cann.nodal_scenario || {};
+      const crsNodal = nodal.crs_nodal || crs;
+      document.getElementById('enr-crs-nodal').textContent = (crsNodal * 100).toFixed(1) + '%';
+      const nodalTier = nodal.crs_nodal_tier || crsTier;
+      const nodalTierColor = nodalTier === 'Resilient' ? '#27ae60' : nodalTier === 'Exposed' ? '#e74c3c' : '#f39c12';
+      document.getElementById('enr-crs-nodal-tier').innerHTML = `<span style="color:${nodalTierColor};font-weight:600">${nodalTier}</span>`;
+
+      const uplift = nodal.crs_uplift_pct || 0;
+      document.getElementById('enr-crs-uplift').textContent = '+' + uplift.toFixed(1) + '%';
+
+      const cf = nodal.congestion_factor || 0;
+      document.getElementById('enr-congestion').textContent = (cf * 100).toFixed(0) + '%';
+      const hcNodal = nodal.haircut_nodal_pct || 0;
+      document.getElementById('enr-haircut-nodal').textContent = `Haircut (nodal): ${hcNodal.toFixed(1)}%`;
+
+      const npvDelta = nodal.npv_delta_M || 0;
+      document.getElementById('enr-npv-nodal').textContent = '€' + npvDelta.toFixed(3) + 'M';
     }
 
     function drawNarrative(sub) {

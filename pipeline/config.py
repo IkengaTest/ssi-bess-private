@@ -180,6 +180,12 @@ CANNIBALIZATION = {
     'beta_spread': 4.0,       # Spread compression coefficient
     'kappa_cann': 0.25,       # PAD loading for cannibalization
     'projection_years': 10,   # Forward saturation projection horizon
+    # Nodal pricing scenario (v1.1)
+    'nodal_transition_prob': 0.06,   # Annual probability of zonal → nodal
+    'psi_congestion': 0.30,          # Congestion boost to λ_R7
+    'eta_crs_uplift': 0.15,          # CRS uplift from congestion
+    'zonal_to_nodal_r1_shift': 0.40, # Fraction of R1 → R7 under nodal
+    'nodal_option_discount': 0.92,   # Risk-adjusted PV factor
 }
 
 # Black Swan enrichment — see black_swan.py for full documentation
@@ -225,6 +231,13 @@ ENRICHMENT_DATA_SOURCES = {
         'variables': ['BESS_SAT_forward', 'growth_trajectory'],
         'status': 'phase1_defaults',
         'description': 'Forward BESS saturation from national energy plan',
+    },
+    # CN.4 — Terna Congestion Data (nodal pricing scenario)
+    'terna_congestion': {
+        'provider': 'Terna / GME',
+        'variables': ['congestion_rents_per_zone', 'congestion_hours'],
+        'status': 'phase1_defaults',
+        'description': 'Congestion rent data per zone (Phase 2: per node from Terna GRTN)',
     },
     # BS.1 — Copernicus ERA5 Extremes
     'copernicus_extremes': {

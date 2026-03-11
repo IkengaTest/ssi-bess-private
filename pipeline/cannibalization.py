@@ -1,13 +1,21 @@
 """
-SSI-ENN BESS — Cannibalization Resilience Module (v1.0)
+SSI-ENN BESS — Cannibalization Resilience Module (v1.1)
 =========================================================
 Implements the locality-adjusted cannibalization framework:
 
-  Family 4 — Cannibalization (8 enrichments: CANN-P1-1 → CANN-P3-2)
+  Family 4 — Cannibalization (8 + 4 enrichments: CANN-P1-1 → CANN-P3-2 + NODAL-1 → NODAL-4)
 
 Core insight: cannibalization is structurally asymmetric.
   - System-level active power services (arbitrage, aFRR, capacity market) are fully exposed
   - Local reactive power / PQaaS services are immune — reactive power cannot be transported
+
+v1.1 — Nodal Pricing Scenario Extension:
+  Models the zonal → nodal transition as a regime switch affecting:
+  - BESS_SAT granularity (zone-level → node-level)
+  - Revenue weight redistribution (R1→R7 shift)
+  - Congestion-dependent locality immunity (λ_nodal > λ_zonal for congested nodes)
+  - CRS uplift under nodal pricing (structural improvement for local services)
+  Connects to Option F in LSMC framework and BS-F2-1 regime shift enrichment.
 
 Key formulas:
   BESS_SAT(z)   = BESS_MW_installed(z) / Peak_Load(z)
@@ -18,10 +26,16 @@ Key formulas:
   PAD_CANN      = PAD_base × (1 + κ_cann × (1−CRS))          — Cannibalization PAD
   RPD_growth    = RPD_base × (1 + α_NL × NL_growth + α_CC × ClimateStress)
 
+  NODAL-1: BESS_SAT_nodal  = BESS_MW_node / Load_node         — Node-level saturation
+  NODAL-2: λ_R7_nodal(n)   = λ_R7_base + ψ × CF(n)           — Congestion-boosted immunity
+  NODAL-3: CRS_nodal(s)    = CRS_zonal(s) × (1 + η × ΔCF)   — Nodal CRS adjustment
+  NODAL-4: NPV_nodal_delta = V_RO × P(nodal) × E[CRS_uplift] — Option F integration
+
 Data sources (zero new data for Phase 1 — all from Terna + ARERA):
   CN.1  Terna BESS Registry    → BESS_MW_installed per zone
   CN.2  ARERA Revenue Data     → Revenue stack weights
   CN.3  Terna Grid Plan        → Forward saturation (PNIEC trajectories)
+  CN.4  Terna Congestion Data  → Congestion rents per zone (Phase 2: per node)
 """
 
 import logging
@@ -98,6 +112,18 @@ class CannibalizationConfig:
 
     # Forward projection (years ahead for saturation forecasts)
     projection_years: int = 10
+
+    # ── Nodal pricing scenario parameters ──
+    # Probability of zonal → nodal transition (annual, Poisson arrival)
+    nodal_transition_prob: float = 0.06   # ~6%/yr → ~45% within 10 years
+    # Congestion factor boost to λ_R7 under nodal pricing
+    psi_congestion: float = 0.30          # λ_R7_nodal = λ_base + ψ×CF(node)
+    # CRS uplift coefficient from revenue redistribution
+    eta_crs_uplift: float = 0.15          # CRS_nodal = CRS_zonal × (1 + η×ΔCF)
+    # Revenue weight shift: fraction of R1 that moves to R7 under nodal
+    zonal_to_nodal_r1_shift: float = 0.40 # 40% of arbitrage → LMP premium
+    # Discount factor for optionality (connects to Option F)
+    nodal_option_discount: float = 0.92   # Risk-adjusted present value factor
 
     # Zone definitions — Italian bidding zones → Terna zones
     zone_map: Dict[str, str] = field(default_factory=lambda: {
@@ -386,6 +412,291 @@ def compute_rpd_growth(
 
 
 # ══════════════════════════════════════════════════════════════════════
+#  NODAL PRICING SCENARIO (CANN-NODAL-1 → CANN-NODAL-4)
+# ══════════════════════════════════════════════════════════════════════
+#
+#  Italy currently operates a 6-zone bidding system. The EU Clean Energy
+#  Package and ACER guidance push toward nodal/locational marginal pricing.
+#  A zonal → nodal transition would fundamentally restructure cannibalization:
+#
+#    1. BESS saturation becomes node-specific (not zone-wide)
+#    2. Congested nodes gain natural moats (congestion rent ≈ locational premium)
+#    3. Revenue migrates from R1 (arbitrage) → R7 (LMP premium)
+#    4. CRS improves structurally for well-sited BESS (congested locations)
+#
+#  These functions model the regime switch as a scenario overlay on the
+#  base zonal framework, producing delta metrics that integrate with
+#  Option F (LSMC) in the Real Options pricing layer.
+
+# Zone-level congestion factors — proxy for nodal price divergence
+# Calibrated from Terna 2024 congestion rent data per zone (€M/year)
+# Higher CF → more internal congestion → larger benefit from nodal pricing
+_ZONE_CONGESTION_FACTORS = {
+    'Nord':        0.25,   # Moderate — well-meshed, but N→S bottleneck
+    'Centro-Nord': 0.35,   # Higher — Toscana renewables vs Rome demand
+    'Centro-Sud':  0.45,   # High — structural N→S congestion, Campania load
+    'Sud':         0.55,   # Very high — wind curtailment, weak interconnectors
+    'Sicilia':     0.70,   # Highest — island, limited HVDC capacity
+    'Sardegna':    0.65,   # Very high — island, wind surplus
+}
+
+
+def compute_nodal_saturation(
+    bess_mw_node: float,
+    load_mw_node: float,
+) -> float:
+    """NODAL-1: BESS_SAT_nodal(n) = BESS_MW_node / Load_node
+
+    Under nodal pricing, saturation becomes node-specific rather than
+    zone-wide. A single congested node may have zero BESS (low saturation,
+    high value) while the zone average is moderate.
+
+    Phase 1: estimates node-level saturation by distributing zone BESS
+    proportionally to load, then applying a congestion-weighted adjustment.
+    Phase 2: will use Terna's granular node-level registry data.
+
+    Args:
+        bess_mw_node: Estimated BESS MW at this node (or zone pro-rata)
+        load_mw_node: Estimated peak load at this node
+
+    Returns:
+        Node-level saturation ratio [0, ∞)
+    """
+    if load_mw_node <= 0:
+        log.warning("Node load ≤ 0, returning 0.0 nodal saturation")
+        return 0.0
+    return bess_mw_node / load_mw_node
+
+
+def compute_nodal_lambda(
+    lambda_base: float,
+    congestion_factor: float,
+    psi: float = DEFAULT_CONFIG.psi_congestion,
+) -> float:
+    """NODAL-2: λ_R7_nodal(n) = λ_base + ψ × CF(n)
+
+    Under nodal pricing, locational marginal price premium (R7)
+    becomes congestion-dependent. Nodes with high congestion factors
+    see their R7 locality parameter INCREASE — making revenue at those
+    nodes more immune to system-wide cannibalization.
+
+    Intuition: at a congested node, the LMP diverges from the system
+    price precisely because power cannot flow freely. This congestion
+    creates a natural moat — additional BESS elsewhere cannot arbitrage
+    the congestion away (unlike system-level arbitrage).
+
+    Args:
+        lambda_base: Base R7 locality factor (0.50 in current model)
+        congestion_factor: Node/zone congestion factor [0, 1]
+        psi: Congestion boost coefficient (default 0.30)
+
+    Returns:
+        Adjusted locality factor, capped at 0.95
+    """
+    lambda_nodal = lambda_base + psi * congestion_factor
+    return min(0.95, lambda_nodal)  # Cap below PQaaS (truly local)
+
+
+def compute_nodal_crs(
+    crs_zonal: float,
+    congestion_factor: float,
+    eta: float = DEFAULT_CONFIG.eta_crs_uplift,
+    revenue_shift: float = DEFAULT_CONFIG.zonal_to_nodal_r1_shift,
+) -> float:
+    """NODAL-3: CRS_nodal(s) = CRS_zonal × (1 + η × CF) + shift_effect
+
+    Two mechanisms boost CRS under nodal pricing:
+      1. Direct congestion uplift: high-CF nodes see λ improvements
+      2. Revenue redistribution: fraction of R1 (λ=0.05) migrates to
+         R7 (λ=0.50+), improving weighted average CRS
+
+    The shift_effect models how R1→R7 migration improves CRS:
+      ΔCF = congestion_factor (proxy for price divergence)
+      shift_effect = revenue_shift × (λ_R7 − λ_R1) × ΔCF
+
+    Args:
+        crs_zonal: Current zonal CRS [0, 1]
+        congestion_factor: Zone/node congestion factor [0, 1]
+        eta: CRS uplift coefficient
+        revenue_shift: Fraction of R1 moving to R7
+
+    Returns:
+        Nodal-adjusted CRS [0, 1]
+    """
+    # Direct congestion uplift
+    direct_uplift = eta * congestion_factor
+
+    # Revenue redistribution effect
+    # R1 λ = 0.05, R7 λ_base = 0.50 → Δλ = 0.45
+    lambda_delta = 0.45
+    shift_effect = revenue_shift * lambda_delta * congestion_factor * 0.25  # 0.25 = R1 weight
+
+    crs_nodal = crs_zonal * (1.0 + direct_uplift) + shift_effect
+    return min(1.0, round(crs_nodal, 4))
+
+
+def compute_nodal_revenue_weights(
+    base_weights: Optional[Dict[str, float]] = None,
+    shift_fraction: float = DEFAULT_CONFIG.zonal_to_nodal_r1_shift,
+) -> Dict[str, float]:
+    """Revenue weight redistribution under nodal pricing.
+
+    Under nodal pricing, wholesale arbitrage (R1) partially transforms
+    into locational marginal price premium (R7). The shift captures:
+    - Arbitrage spreads compress as zonal price→nodal price
+    - LMP premium emerges at congested nodes
+    - Net: revenue becomes more locational, less system-wide
+
+    Args:
+        base_weights: Current revenue weights (default: DEFAULT_REVENUE_WEIGHTS)
+        shift_fraction: Fraction of R1 weight migrating to R7
+
+    Returns:
+        Adjusted revenue weights dict
+    """
+    weights = dict(base_weights or DEFAULT_REVENUE_WEIGHTS)
+    r1_transfer = weights.get('R1_arbitrage', 0.25) * shift_fraction
+    weights['R1_arbitrage'] = weights.get('R1_arbitrage', 0.25) - r1_transfer
+    weights['R7_LMP_premium'] = weights.get('R7_LMP_premium', 0.05) + r1_transfer
+    return weights
+
+
+def compute_nodal_npv_delta(
+    v_ro_base: float,
+    crs_zonal: float,
+    crs_nodal: float,
+    transition_prob: float = DEFAULT_CONFIG.nodal_transition_prob,
+    discount: float = DEFAULT_CONFIG.nodal_option_discount,
+) -> Dict[str, float]:
+    """NODAL-4: NPV_nodal_delta — Option F integration value.
+
+    The NPV uplift from a potential zonal → nodal transition, priced
+    as a probability-weighted option value:
+
+      NPV_delta = V_RO × P(nodal) × E[CRS_uplift] × discount
+
+    where CRS_uplift = (CRS_nodal − CRS_zonal) / CRS_zonal
+
+    This integrates with Option F (Market Evolution) in the LSMC
+    framework: the existing Option F prices LMP emergence as a
+    Poisson arrival; this function provides the cannibalization-specific
+    component of that option value.
+
+    Args:
+        v_ro_base: Base real options value (€M)
+        crs_zonal: CRS under current zonal pricing
+        crs_nodal: CRS under nodal pricing scenario
+        transition_prob: Annual probability of zonal→nodal switch
+        discount: Risk-adjusted PV factor
+
+    Returns:
+        Dict with npv_delta, crs_uplift_pct, annualised_option_value
+    """
+    if crs_zonal <= 0:
+        crs_uplift_pct = 0.0
+    else:
+        crs_uplift_pct = ((crs_nodal - crs_zonal) / crs_zonal) * 100.0
+
+    npv_delta = v_ro_base * transition_prob * (crs_uplift_pct / 100.0) * discount
+    annualised = npv_delta * transition_prob  # Expected annual value
+
+    return {
+        'npv_delta_M': round(npv_delta, 4),
+        'crs_uplift_pct': round(crs_uplift_pct, 2),
+        'annualised_option_M': round(annualised, 6),
+        'transition_prob': transition_prob,
+    }
+
+
+def nodal_pricing_scenario(
+    substation: dict,
+    crs_zonal: float,
+    bess_sat_zonal: float,
+    zone: str,
+    config: CannibalizationConfig = DEFAULT_CONFIG,
+) -> Dict:
+    """Full nodal pricing scenario assessment for one substation.
+
+    Computes all NODAL-1 through NODAL-4 metrics, returning a dict
+    suitable for merging into the cannibalization enrichment output.
+
+    Args:
+        substation: Substation dict from data.json
+        crs_zonal: Current CRS under zonal pricing
+        bess_sat_zonal: Current zone-level BESS saturation
+        zone: Bidding zone name
+        config: Cannibalization config
+
+    Returns:
+        Dict with all nodal scenario metrics
+    """
+    cf = _ZONE_CONGESTION_FACTORS.get(zone, 0.40)
+
+    # NODAL-1: Node-level saturation estimate
+    # Phase 1 heuristic: distribute zone saturation proportionally,
+    # but nodes in high-congestion zones have LOWER effective saturation
+    # (congestion limits BESS deployment at the node)
+    bess_sat_nodal = bess_sat_zonal * (1.0 - 0.3 * cf)  # Congestion reduces effective SAT
+
+    # NODAL-2: Congestion-boosted locality factors
+    lambda_r7_nodal = compute_nodal_lambda(
+        LOCALITY_FACTORS['R7_LMP_premium'], cf, config.psi_congestion,
+    )
+
+    # NODAL-3: CRS under nodal pricing
+    crs_nodal = compute_nodal_crs(
+        crs_zonal, cf, config.eta_crs_uplift, config.zonal_to_nodal_r1_shift,
+    )
+
+    # Revenue weights under nodal pricing
+    weights_nodal = compute_nodal_revenue_weights(
+        shift_fraction=config.zonal_to_nodal_r1_shift,
+    )
+    crs_from_weights = compute_crs(weights_nodal)
+
+    # NODAL-4: Option value delta (connects to LSMC Option F)
+    v_ro_base = substation.get('V_RO_M', 0.5)
+    npv_result = compute_nodal_npv_delta(
+        v_ro_base, crs_zonal, crs_nodal,
+        config.nodal_transition_prob, config.nodal_option_discount,
+    )
+
+    # Revenue haircut under nodal (lower because CRS is higher)
+    total_base_nodal = 1.0
+    total_adj_nodal = 0.0
+    for stream, weight in weights_nodal.items():
+        lf = LOCALITY_FACTORS.get(stream, 0.50)
+        # Use nodal λ for R7
+        if stream == 'R7_LMP_premium':
+            lf = lambda_r7_nodal
+        adj = compute_revenue_haircut(
+            weight, lf, bess_sat_nodal,
+            config.delta, config.x_crit, config.gamma,
+        )
+        total_adj_nodal += adj
+    haircut_nodal_pct = (1.0 - total_adj_nodal / total_base_nodal) * 100 if total_base_nodal > 0 else 0.0
+
+    # CRS tier under nodal
+    crs_nodal_tier = classify_crs(crs_nodal)
+
+    return {
+        'congestion_factor': round(cf, 3),
+        'bess_sat_nodal': round(bess_sat_nodal, 4),
+        'lambda_r7_nodal': round(lambda_r7_nodal, 3),
+        'crs_nodal': crs_nodal,
+        'crs_nodal_tier': crs_nodal_tier,
+        'crs_uplift_pct': npv_result['crs_uplift_pct'],
+        'crs_from_shifted_weights': round(crs_from_weights, 4),
+        'haircut_nodal_pct': round(haircut_nodal_pct, 2),
+        'npv_delta_M': npv_result['npv_delta_M'],
+        'annualised_option_M': npv_result['annualised_option_M'],
+        'transition_prob': npv_result['transition_prob'],
+        'r1_weight_nodal': round(weights_nodal.get('R1_arbitrage', 0), 4),
+        'r7_weight_nodal': round(weights_nodal.get('R7_LMP_premium', 0), 4),
+    }
+
+
+# ══════════════════════════════════════════════════════════════════════
 #  SUBSTATION-LEVEL ENRICHMENT
 # ══════════════════════════════════════════════════════════════════════
 
@@ -412,6 +723,9 @@ class CannibalizationResult:
     # Derived features for NN
     crs_x_ssi: float               # CRS × R_median interaction
     exposure_index: float           # (1 - CRS) × BESS_SAT — compound exposure
+
+    # Nodal pricing scenario
+    nodal_scenario: Optional[Dict] = field(default_factory=dict)
 
 
 def enrich_substation(
@@ -487,6 +801,9 @@ def enrich_substation(
     crs_x_ssi = crs * r_median
     exposure_index = (1.0 - crs) * bess_sat
 
+    # ── Nodal pricing scenario ──
+    nodal = nodal_pricing_scenario(substation, crs, bess_sat, zone, config)
+
     return CannibalizationResult(
         substation_id=sid,
         zone=zone,
@@ -501,6 +818,7 @@ def enrich_substation(
         rpd_growth_factor=round(rpd_factor, 4),
         crs_x_ssi=round(crs_x_ssi, 4),
         exposure_index=round(exposure_index, 6),
+        nodal_scenario=nodal,
     )
 
 
@@ -544,6 +862,7 @@ def enrich_fleet(
             'rpd_growth_factor': result.rpd_growth_factor,
             'crs_x_ssi': result.crs_x_ssi,
             'exposure_index': result.exposure_index,
+            'nodal_scenario': result.nodal_scenario,
         }
         results.append(result)
 
@@ -564,6 +883,24 @@ def enrich_fleet(
         for tier in ['Resilient', 'Mixed', 'Exposed']:
             count = tiers.get(tier, 0)
             pct = 100 * count / len(results)
+            print(f"    {tier:12s} {count:5,} ({pct:5.1f}%)")
+
+        # Nodal scenario summary
+        nodal_crs = [r.nodal_scenario.get('crs_nodal', 0) for r in results]
+        nodal_uplift = [r.nodal_scenario.get('crs_uplift_pct', 0) for r in results]
+        nodal_haircut = [r.nodal_scenario.get('haircut_nodal_pct', 0) for r in results]
+        print(f"\n  ── Nodal Pricing Scenario ──")
+        print(f"  CRS_nodal (median):   {np.median(nodal_crs):.3f}")
+        print(f"  CRS uplift:           {np.median(nodal_uplift):.1f}% (median)")
+        print(f"  Haircut_nodal:        {np.median(nodal_haircut):.2f}% (median)")
+        nodal_tiers = {}
+        for r in results:
+            t = r.nodal_scenario.get('crs_nodal_tier', 'Mixed')
+            nodal_tiers[t] = nodal_tiers.get(t, 0) + 1
+        print(f"  CRS Tiers (nodal):")
+        for tier in ['Resilient', 'Mixed', 'Exposed']:
+            count = nodal_tiers.get(tier, 0)
+            pct = 100 * count / len(results) if results else 0
             print(f"    {tier:12s} {count:5,} ({pct:5.1f}%)")
 
     return substations

@@ -23,7 +23,7 @@ t0 = time.time()
 
 # ── Step 1: Load existing data.json ──
 print(f"\n{'='*70}")
-print(f"  SSI-ENN BESS — Enrichment + Training Pipeline (v3)")
+print(f"  SSI-ENN BESS — Enrichment + Training Pipeline (v3.1 + Nodal)")
 print(f"{'='*70}")
 print(f"\n  Loading {DATA_FILE}...")
 with open(DATA_FILE) as f:
@@ -44,7 +44,7 @@ print(f"  data.json: {len(substations):,} records ({size_mb:.1f} MB)")
 
 # ── Step 4: Train NN models ──
 print(f"\n{'='*70}")
-print(f"  Starting NN Training (v3 — 32 features)")
+print(f"  Starting NN Training (v3.1 — 35 features)")
 print(f"{'='*70}")
 
 from pipeline.nn_trainer import NeuralNetworkTrainer
