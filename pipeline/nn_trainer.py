@@ -1,18 +1,17 @@
 """
-SSI-ENN BESS — Neural Network Training Module (v2 — Refined)
-=============================================================
-Four models trained on 4,293 Italian substations:
+SSI-ENN BESS — Neural Network Training Module (v3 — BS/Actuarial/Cannibalization)
+===================================================================================
+Four models trained on 4,293 Italian substations with expanded 32-feature set:
   1. BESS Recommender   — Config A vs B (MLP, confirmed optimal)
   2. NPV Regressor      — Config B NPV (MLP 512-256-128, upgraded)
   3. Band Predictor     — Low/Medium/High/Critical (RandomForest, 100% acc)
   4. Anomaly Detector   — 3-residual IsolationForest (rec + NPV + band)
 
-Refinements from diagnostic pass:
-  - Model 1: MLP(128,64,32) confirmed as best; added feature importance
-  - Model 2: Upgraded to MLP(512,256,128) for marginal R² gain
-  - Model 3: Switched from MLP to RandomForest (100% test accuracy)
-  - Model 4: 3-residual inputs + anomaly type classification
-  - All: added per-region performance tracking
+v3 enhancements (from v2):
+  - Feature expansion: 22 → 32 features (+10 enrichment features)
+  - New features: CRS, BESS_SAT, bs_composite, tvar_95, pad_bps,
+    wacc_adjusted, exposure_index, revenue_haircut_pct, tail_ratio, gpd_xi
+  - All enrichment features derived from black_swan.py, cannibalization.py, actuarial.py
 """
 
 import json
@@ -48,7 +47,22 @@ COMPONENT_FEATURES = ['comp_C', 'comp_V', 'comp_I', 'comp_E', 'comp_S', 'comp_T'
 MODIFIER_FEATURES = ['mod_R3', 'mod_R4', 'mod_R6', 'mod_R7']
 SOCIO_FEATURES = ['V_socio', 'EP_rate_region', 'E2_local']
 
-ALL_FEATURES = GEOGRAPHIC_FEATURES + SSI_SCORE_FEATURES + COMPONENT_FEATURES + MODIFIER_FEATURES + SOCIO_FEATURES
+# v3: Enrichment features from black_swan, cannibalization, actuarial modules
+ENRICHMENT_FEATURES = [
+    'crs',                    # Cannibalization Resilience Score [0, 1]
+    'bess_sat',               # BESS zonal saturation ratio
+    'exposure_index',         # (1 - CRS) × BESS_SAT — compound exposure
+    'revenue_haircut_pct',    # Total revenue haircut from cannibalization (%)
+    'bs_composite',           # Black Swan composite risk score [0, 1]
+    'tvar_95',                # Tail Value-at-Risk @ 95%
+    'tail_ratio',             # (TVaR - median) / median
+    'pad_bps',                # Prudential Adequacy Discount (basis points)
+    'wacc_adjusted',          # Risk-adjusted WACC
+    'gpd_xi',                 # GPD shape parameter (tail heaviness)
+]
+
+ALL_FEATURES = (GEOGRAPHIC_FEATURES + SSI_SCORE_FEATURES + COMPONENT_FEATURES +
+                MODIFIER_FEATURES + SOCIO_FEATURES + ENRICHMENT_FEATURES)
 
 BAND_MAP = {'Low': 0, 'Medium': 1, 'High': 2, 'Critical': 3}
 BAND_NAMES = ['Low', 'Medium', 'High', 'Critical']
@@ -73,6 +87,9 @@ class FeatureEngineer:
             socio = s.get('socio_economic', {})
             bess = s.get('bess', {})
             cfg_b = bess.get('config_B', {})
+            cann = s.get('cannibalization', {})
+            bs = s.get('black_swan', {})
+            act = s.get('actuarial', {})
 
             row = {
                 'substation_id': s.get('substation_id', ''),
@@ -104,6 +121,20 @@ class FeatureEngineer:
                 'V_socio': socio.get('V_socio', 0),
                 'EP_rate_region': socio.get('EP_rate_region', 0),
                 'E2_local': socio.get('E2_local', 0),
+                # v3: Enrichment features
+                # Cannibalization
+                'crs': cann.get('crs', 0.50),
+                'bess_sat': cann.get('bess_sat', 0.05),
+                'exposure_index': cann.get('exposure_index', 0.0),
+                'revenue_haircut_pct': cann.get('revenue_haircut_pct', 0.0),
+                # Black Swan
+                'bs_composite': bs.get('bs_composite', 0.0),
+                # Actuarial
+                'tvar_95': act.get('tvar_95', 0.0),
+                'tail_ratio': act.get('tail_ratio', 0.0),
+                'pad_bps': act.get('pad_bps', 75.0),
+                'wacc_adjusted': act.get('wacc_adjusted', 0.052),
+                'gpd_xi': act.get('gpd_xi', 0.25),
                 # Targets
                 'recommendation': 1 if bess.get('recommendation') == 'Config B' else 0,
                 'priority': bess.get('investment_priority', 5),
@@ -115,7 +146,7 @@ class FeatureEngineer:
         return pd.DataFrame(rows)
 
     def get_feature_matrix(self) -> np.ndarray:
-        """Full 22-feature matrix."""
+        """Full 32-feature matrix (22 base + 10 enrichment)."""
         return self.df[ALL_FEATURES].fillna(0).values.astype(np.float64)
 
     def get_target(self, name: str) -> np.ndarray:
@@ -675,14 +706,26 @@ class NeuralNetworkTrainer:
             print(f"{'='*70}")
 
         self.metrics['_meta'] = {
-            'version': 2,
+            'version': 3,
             'n_substations': len(self.df),
             'n_features': self.X.shape[1],
             'n_train': len(self.train_idx),
             'n_test': len(self.test_idx),
             'duration_s': round(duration, 2),
             'random_state': self.random_state,
+            'feature_groups': {
+                'geographic': len(GEOGRAPHIC_FEATURES),
+                'ssi_scores': len(SSI_SCORE_FEATURES),
+                'components': len(COMPONENT_FEATURES),
+                'modifiers': len(MODIFIER_FEATURES),
+                'socio': len(SOCIO_FEATURES),
+                'enrichment': len(ENRICHMENT_FEATURES),
+            },
             'refinements': [
+                'v3: Feature expansion 22 → 32 (+10 enrichment features)',
+                'v3: Added CRS, BESS_SAT, exposure_index from cannibalization.py',
+                'v3: Added bs_composite from black_swan.py',
+                'v3: Added tvar_95, tail_ratio, pad_bps, wacc_adjusted, gpd_xi from actuarial.py',
                 'Model 1: MLP(128,64,32) confirmed, added feature importance + confusion matrix',
                 'Model 2: Upgraded to MLP(512,256,128), added quartile MAE + bias tracking',
                 'Model 3: Switched to RandomForest (100% accuracy vs 98.6% MLP)',

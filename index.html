@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SSI-ENN BESS — Overview</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <nav class="topnav"></nav>
@@ -126,8 +126,8 @@
 
   <footer class="footer"></footer>
 
-  <script src="bess-engine.js?v=6"></script>
-  <script src="nav.js?v=6"></script>
+  <script src="bess-engine.js?v=7"></script>
+  <script src="nav.js?v=7"></script>
   <script>
     let GEO = null; // Grid line geometry
 
@@ -150,9 +150,9 @@
     async function init() {
       let nnData = null;
       const [loaded] = await Promise.all([
-        engine.loadData('data.json?v=6'),
-        fetch('grid-geo.json?v=6').then(r => r.json()).then(d => { GEO = d; }).catch(() => {}),
-        fetch('nn_predictions.json?v=6').then(r => r.json()).then(d => { nnData = d; }).catch(() => {})
+        engine.loadData('data.json?v=7'),
+        fetch('grid-geo.json?v=7').then(r => r.json()).then(d => { GEO = d; }).catch(() => {}),
+        fetch('nn_predictions.json?v=7').then(r => r.json()).then(d => { nnData = d; }).catch(() => {})
       ]);
       if (!loaded) return;
 

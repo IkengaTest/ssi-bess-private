@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SSI-ENN BESS — Intelligence</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <nav class="topnav"></nav>
@@ -131,6 +131,48 @@
         <div id="nn-comparison-card" style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;">
           <h4 style="margin-bottom:1rem;font-size:1.1rem;">Model vs Computed Comparison</h4>
           <div id="nn-comparison-rows"></div>
+        </div>
+      </div>
+
+      <!-- v3: Risk & Resilience Enrichments -->
+      <div class="section-label" style="margin-top:2rem;">Risk & Resilience Enrichments</div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin:1rem 0 0.5rem;">
+        <div class="kpi-card">
+          <div class="kpi-label">Cannibalization Resilience</div>
+          <div class="kpi-value" id="enr-crs" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit" id="enr-crs-tier"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">BESS Saturation</div>
+          <div class="kpi-value" id="enr-sat" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit" id="enr-haircut"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Black Swan Composite</div>
+          <div class="kpi-value" id="enr-bs" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit" id="enr-bs-detail"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Actuarial PAD</div>
+          <div class="kpi-value" id="enr-pad" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit" id="enr-wacc"></div>
+        </div>
+      </div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin:0.5rem 0 1.5rem;">
+        <div class="kpi-card">
+          <div class="kpi-label">TVaR @95%</div>
+          <div class="kpi-value" id="enr-tvar" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit" id="enr-tvar-detail"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">GPD Tail Shape (ξ)</div>
+          <div class="kpi-value" id="enr-gpd" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit">Tail heaviness parameter</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Exposure Index</div>
+          <div class="kpi-value" id="enr-exposure" style="font-size:1.4rem;"></div>
+          <div class="kpi-unit">(1−CRS) × BESS_SAT</div>
         </div>
       </div>
 
@@ -263,20 +305,20 @@
 
   <footer class="footer"></footer>
 
-  <script src="bess-engine.js?v=6"></script>
-  <script src="nav.js?v=6"></script>
+  <script src="bess-engine.js?v=7"></script>
+  <script src="nav.js?v=7"></script>
   <script>
     let selectedSub = null;
     let nnPredictions = null;
     let nnMeta = null;
 
     async function init() {
-      const loaded = await engine.loadData('data.json?v=6');
+      const loaded = await engine.loadData('data.json?v=7');
       if (!loaded) return;
 
       // Load NN predictions
       try {
-        const resp = await fetch('nn_predictions.json?v=6');
+        const resp = await fetch('nn_predictions.json?v=7');
         const raw = await resp.json();
         nnMeta = raw._meta || null;
         delete raw._meta;
@@ -343,6 +385,7 @@
       drawConfigs(sub);
       drawRecommendation(sub);
       drawNNInsights(sub);
+      drawEnrichments(sub);
       drawNarrative(sub);
 
       document.getElementById('profile-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -567,6 +610,51 @@
     }
 
     // ─── NARRATIVE ───
+    // ─── ENRICHMENT INSIGHTS (v3) ───
+    function drawEnrichments(sub) {
+      const cann = sub.cannibalization || {};
+      const bs = sub.black_swan || {};
+      const act = sub.actuarial || {};
+
+      // Cannibalization
+      const crs = cann.crs != null ? cann.crs : 0.50;
+      document.getElementById('enr-crs').textContent = (crs * 100).toFixed(1) + '%';
+      const crsTier = cann.crs_tier || (crs >= 0.60 ? 'Resilient' : crs >= 0.30 ? 'Mixed' : 'Exposed');
+      const crsTierColor = crsTier === 'Resilient' ? '#27ae60' : crsTier === 'Exposed' ? '#e74c3c' : '#f39c12';
+      document.getElementById('enr-crs-tier').innerHTML = `<span style="color:${crsTierColor};font-weight:600">${crsTier}</span>`;
+
+      const sat = cann.bess_sat != null ? cann.bess_sat : 0.05;
+      document.getElementById('enr-sat').textContent = (sat * 100).toFixed(1) + '%';
+      const haircut = cann.revenue_haircut_pct || 0;
+      document.getElementById('enr-haircut').textContent = `Revenue haircut: ${haircut.toFixed(1)}%`;
+
+      // Black Swan
+      const bsComp = bs.bs_composite || 0;
+      document.getElementById('enr-bs').textContent = (bsComp * 100).toFixed(1) + '%';
+      const f1 = ((bs.bs_f1_weather || 0) * 100).toFixed(0);
+      const f2 = ((bs.bs_f2_regulatory || 0) * 100).toFixed(0);
+      document.getElementById('enr-bs-detail').textContent = `Weather ${f1}% · Regulatory ${f2}%`;
+
+      // Actuarial
+      const pad = act.pad_bps || 75;
+      document.getElementById('enr-pad').textContent = pad.toFixed(0) + ' bps';
+      const wacc = act.wacc_adjusted || 0.052;
+      document.getElementById('enr-wacc').textContent = `WACC: ${(wacc * 100).toFixed(2)}%`;
+
+      // TVaR
+      const tvar = act.tvar_95 || 0;
+      document.getElementById('enr-tvar').textContent = tvar.toFixed(4);
+      const tailRatio = act.tail_ratio || 0;
+      document.getElementById('enr-tvar-detail').textContent = `Tail ratio: ${tailRatio.toFixed(3)}`;
+
+      // GPD
+      document.getElementById('enr-gpd').textContent = (act.gpd_xi || 0.25).toFixed(3);
+
+      // Exposure
+      const exp = cann.exposure_index || 0;
+      document.getElementById('enr-exposure').textContent = exp.toFixed(4);
+    }
+
     function drawNarrative(sub) {
       const comps = sub.components || {};
       const weights = { C: 0.30, V: 0.10, I: 0.25, E: 0.10, S: 0.20, T: 0.05 };

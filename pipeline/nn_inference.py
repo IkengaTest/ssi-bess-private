@@ -1,7 +1,8 @@
 """
-SSI-ENN BESS — Neural Network Inference Module (v2)
+SSI-ENN BESS — Neural Network Inference Module (v3)
 ====================================================
 Load trained models and score all substations with predictions.
+v3: 32-feature set with BS/Actuarial/Cannibalization enrichments.
 
 Outputs:
   - nn_predictions.json: Complete per-substation predictions with confidence scores
@@ -209,6 +210,7 @@ class NeuralNetworkInference:
 
         self.meta = {
             'timestamp': datetime.utcnow().isoformat() + 'Z',
+            'version': 3,
             'total_scored': len(self.substations),
             'total_anomalies': n_anomalies,
             'anomaly_pct': round(100 * n_anomalies / len(self.substations), 2),
@@ -220,6 +222,7 @@ class NeuralNetworkInference:
                 'scaler': 'StandardScaler',
             },
             'feature_count': self.X.shape[1],
+            'enrichments': ['black_swan', 'cannibalization', 'actuarial'],
             'duration_s': round(duration, 2),
         }
 

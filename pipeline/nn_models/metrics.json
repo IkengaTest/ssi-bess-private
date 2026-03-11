@@ -1,58 +1,58 @@
 {
   "bess_recommender": {
-    "accuracy_train": 0.940458902120244,
-    "accuracy_test": 0.9388235294117647,
-    "precision_test": 0.9285714285714286,
-    "recall_test": 0.9115853658536586,
-    "f1_test": 0.92,
-    "roc_auc_test": 0.9867710961592375,
+    "accuracy_train": 0.9352309032820215,
+    "accuracy_test": 0.9235294117647059,
+    "precision_test": 0.939799331103679,
+    "recall_test": 0.8567073170731707,
+    "f1_test": 0.8963317384370016,
+    "roc_auc_test": 0.9771925520979349,
     "confusion_matrix": {
-      "tn": 499,
-      "fp": 23,
-      "fn": 29,
-      "tp": 299
+      "tn": 504,
+      "fp": 18,
+      "fn": 47,
+      "tp": 281
     },
-    "n_uncertain": 52,
+    "n_uncertain": 59,
     "top_features": [
       {
-        "feature": "R_P5",
-        "importance": 0.0336
-      },
-      {
-        "feature": "fleet_percentile",
-        "importance": 0.0298
-      },
-      {
-        "feature": "R_median",
-        "importance": 0.0241
-      },
-      {
-        "feature": "R_P95",
-        "importance": 0.0147
+        "feature": "comp_C",
+        "importance": 0.0144
       },
       {
         "feature": "R_base_median",
-        "importance": 0.014
+        "importance": 0.0095
       },
       {
-        "feature": "V_socio",
-        "importance": 0.0132
+        "feature": "R_median",
+        "importance": 0.0089
       },
       {
-        "feature": "comp_C",
-        "importance": 0.0114
+        "feature": "R_P95",
+        "importance": 0.0088
       },
       {
-        "feature": "EP_rate_region",
-        "importance": 0.0108
+        "feature": "R_P5",
+        "importance": 0.0084
       },
       {
-        "feature": "lon",
-        "importance": 0.0082
+        "feature": "tail_ratio",
+        "importance": 0.0076
       },
       {
         "feature": "mod_R7",
-        "importance": 0.0078
+        "importance": 0.0076
+      },
+      {
+        "feature": "bs_composite",
+        "importance": 0.0069
+      },
+      {
+        "feature": "tvar_95",
+        "importance": 0.0055
+      },
+      {
+        "feature": "V_socio",
+        "importance": 0.0055
       }
     ],
     "per_region": {
@@ -98,18 +98,18 @@
       },
       "Lombardia": {
         "n": 126,
-        "accuracy": 0.9921,
-        "errors": 1
+        "accuracy": 0.9206,
+        "errors": 10
       },
       "Marche": {
         "n": 17,
-        "accuracy": 0.9412,
-        "errors": 1
+        "accuracy": 1.0,
+        "errors": 0
       },
       "Molise": {
         "n": 47,
-        "accuracy": 0.8936,
-        "errors": 5
+        "accuracy": 0.8723,
+        "errors": 6
       },
       "Piemonte": {
         "n": 55,
@@ -118,8 +118,8 @@
       },
       "Puglia": {
         "n": 47,
-        "accuracy": 0.9362,
-        "errors": 3
+        "accuracy": 0.9149,
+        "errors": 4
       },
       "Sardegna": {
         "n": 29,
@@ -133,8 +133,8 @@
       },
       "Toscana": {
         "n": 63,
-        "accuracy": 0.9048,
-        "errors": 6
+        "accuracy": 0.873,
+        "errors": 8
       },
       "Trentino-Alto Adige": {
         "n": 28,
@@ -153,173 +153,173 @@
       },
       "Veneto": {
         "n": 42,
-        "accuracy": 0.9048,
-        "errors": 4
+        "accuracy": 0.881,
+        "errors": 5
       }
     },
-    "epochs": 26
+    "epochs": 23
   },
   "npv_regressor": {
-    "mae_train": 0.35482032719412404,
-    "mae_test": 0.37609164031451425,
-    "rmse_test": 0.5306715974222418,
-    "r2_train": 0.9837136673123614,
-    "r2_test": 0.9825750899334997,
-    "spearman_corr": 0.9894469690054342,
-    "bias": -0.0224,
+    "mae_train": 0.36162878750611843,
+    "mae_test": 0.3820640652353989,
+    "rmse_test": 0.5351672506438642,
+    "r2_train": 0.9834735882103767,
+    "r2_test": 0.98227860460531,
+    "spearman_corr": 0.9893955492588962,
+    "bias": -0.04,
     "quartile_mae": {
-      "Q1": 0.1651,
-      "Q2": 0.2694,
-      "Q3": 0.4092,
-      "Q4": 0.6602
+      "Q1": 0.1945,
+      "Q2": 0.2657,
+      "Q3": 0.3999,
+      "Q4": 0.6678
     },
-    "n_err_gt_1M": 62,
-    "n_err_gt_2M": 4,
+    "n_err_gt_1M": 59,
+    "n_err_gt_2M": 5,
     "top_features": [
       {
+        "feature": "bs_composite",
+        "importance": 0.0451
+      },
+      {
         "feature": "R_P5",
-        "importance": 0.1283
+        "importance": 0.0428
       },
       {
-        "feature": "R_median",
-        "importance": 0.0837
-      },
-      {
-        "feature": "R_P95",
-        "importance": 0.0764
+        "feature": "tvar_95",
+        "importance": 0.0356
       },
       {
         "feature": "fleet_percentile",
-        "importance": 0.0495
+        "importance": 0.0244
       },
       {
-        "feature": "V_socio",
-        "importance": 0.0093
+        "feature": "R_median",
+        "importance": 0.0224
       },
       {
-        "feature": "mod_R3",
-        "importance": 0.0065
+        "feature": "R_P95",
+        "importance": 0.0141
       },
       {
         "feature": "EP_rate_region",
-        "importance": 0.0047
+        "importance": 0.0084
       },
       {
-        "feature": "comp_V",
-        "importance": 0.0018
+        "feature": "mod_R3",
+        "importance": 0.0056
       },
       {
-        "feature": "comp_E",
-        "importance": 0.0017
+        "feature": "V_socio",
+        "importance": 0.0049
       },
       {
         "feature": "mod_R7",
-        "importance": 0.0016
+        "importance": 0.0018
       }
     ],
     "per_region": {
       "Abruzzo": {
         "n": 23,
-        "mae": 0.5229,
-        "r2": 0.8743
+        "mae": 0.4637,
+        "r2": 0.8905
       },
       "Basilicata": {
         "n": 23,
-        "mae": 0.4321,
-        "r2": 0.7203
+        "mae": 0.4037,
+        "r2": 0.7398
       },
       "Calabria": {
         "n": 21,
-        "mae": 0.6457,
-        "r2": 0.9154
+        "mae": 0.6657,
+        "r2": 0.9142
       },
       "Campania": {
         "n": 46,
-        "mae": 0.7715,
-        "r2": 0.731
+        "mae": 0.7815,
+        "r2": 0.7183
       },
       "Emilia-Romagna": {
         "n": 59,
-        "mae": 0.213,
-        "r2": 0.8835
+        "mae": 0.2349,
+        "r2": 0.8645
       },
       "Friuli Venezia Giulia": {
         "n": 42,
-        "mae": 0.1742,
-        "r2": 0.8408
+        "mae": 0.1738,
+        "r2": 0.8152
       },
       "Lazio": {
         "n": 43,
-        "mae": 0.3718,
-        "r2": 0.8056
+        "mae": 0.3921,
+        "r2": 0.7928
       },
       "Liguria": {
         "n": 38,
-        "mae": 0.2352,
-        "r2": 0.9153
+        "mae": 0.2303,
+        "r2": 0.9169
       },
       "Lombardia": {
         "n": 126,
-        "mae": 0.2231,
-        "r2": 0.9627
+        "mae": 0.2424,
+        "r2": 0.9564
       },
       "Marche": {
         "n": 17,
-        "mae": 0.2512,
-        "r2": 0.9157
+        "mae": 0.2298,
+        "r2": 0.932
       },
       "Molise": {
         "n": 47,
-        "mae": 0.5349,
-        "r2": 0.8804
+        "mae": 0.5355,
+        "r2": 0.8822
       },
       "Piemonte": {
         "n": 55,
-        "mae": 0.2963,
+        "mae": 0.2966,
         "r2": 0.8869
       },
       "Puglia": {
         "n": 47,
-        "mae": 0.6622,
-        "r2": 0.924
+        "mae": 0.6466,
+        "r2": 0.9268
       },
       "Sardegna": {
         "n": 29,
-        "mae": 0.5712,
-        "r2": 0.8414
+        "mae": 0.5839,
+        "r2": 0.8332
       },
       "Sicilia": {
         "n": 61,
-        "mae": 0.6275,
-        "r2": 0.8286
+        "mae": 0.6258,
+        "r2": 0.8267
       },
       "Toscana": {
         "n": 63,
-        "mae": 0.3318,
-        "r2": 0.9388
+        "mae": 0.3411,
+        "r2": 0.9349
       },
       "Trentino-Alto Adige": {
         "n": 28,
-        "mae": 0.1156,
-        "r2": -0.6258
+        "mae": 0.1314,
+        "r2": -0.8206
       },
       "Umbria": {
         "n": 18,
-        "mae": 0.278,
-        "r2": 0.8921
+        "mae": 0.2857,
+        "r2": 0.8936
       },
       "Valle d'Aosta": {
         "n": 22,
-        "mae": 0.1189,
-        "r2": 0.8701
+        "mae": 0.1687,
+        "r2": 0.7945
       },
       "Veneto": {
         "n": 42,
-        "mae": 0.293,
-        "r2": 0.9418
+        "mae": 0.3012,
+        "r2": 0.9405
       }
     },
-    "epochs": 40
+    "epochs": 37
   },
   "band_predictor": {
     "accuracy_train": 1.0,
@@ -368,44 +368,44 @@
     "naive_total_wrong": 345,
     "top_features": [
       {
-        "feature": "fleet_percentile",
-        "importance": 0.2443
-      },
-      {
         "feature": "R_median",
-        "importance": 0.2281
+        "importance": 0.2111
       },
       {
-        "feature": "R_P95",
-        "importance": 0.1556
+        "feature": "fleet_percentile",
+        "importance": 0.1672
+      },
+      {
+        "feature": "bs_composite",
+        "importance": 0.1485
       },
       {
         "feature": "R_P5",
-        "importance": 0.1459
+        "importance": 0.109
+      },
+      {
+        "feature": "R_P95",
+        "importance": 0.1065
+      },
+      {
+        "feature": "tvar_95",
+        "importance": 0.0686
       },
       {
         "feature": "R_base_median",
-        "importance": 0.056
+        "importance": 0.0431
       },
       {
         "feature": "comp_C",
-        "importance": 0.048
+        "importance": 0.0374
       },
       {
         "feature": "CI_width",
-        "importance": 0.0338
+        "importance": 0.0199
       },
       {
         "feature": "comp_S",
-        "importance": 0.0338
-      },
-      {
-        "feature": "lat",
-        "importance": 0.0136
-      },
-      {
-        "feature": "comp_E",
-        "importance": 0.0089
+        "importance": 0.0187
       }
     ],
     "per_region": {
@@ -516,14 +516,14 @@
     "n_anomalies": 215,
     "pct_anomalies": 5.01,
     "residual_dimensions": 3,
-    "mean_rec_residual": 0.0599,
-    "mean_npv_residual_M": 0.359,
-    "std_npv_residual_M": 0.3723,
+    "mean_rec_residual": 0.0671,
+    "mean_npv_residual_M": 0.3657,
+    "std_npv_residual_M": 0.3713,
     "mean_band_residual": 0.0,
     "anomaly_types": {
-      "multi_signal": 23,
-      "npv_outlier": 64,
-      "rec_mismatch": 128
+      "multi_signal": 21,
+      "npv_outlier": 82,
+      "rec_mismatch": 112
     },
     "band_distribution": {
       "Low": {
@@ -532,14 +532,14 @@
         "rate_pct": 0.0
       },
       "Medium": {
-        "n_anomalies": 153,
+        "n_anomalies": 137,
         "n_total": 2896,
-        "rate_pct": 5.3
+        "rate_pct": 4.7
       },
       "High": {
-        "n_anomalies": 62,
+        "n_anomalies": 78,
         "n_total": 814,
-        "rate_pct": 7.6
+        "rate_pct": 9.6
       },
       "Critical": {
         "n_anomalies": 0,
@@ -547,7 +547,7 @@
         "rate_pct": 0.0
       }
     },
-    "n_high_value_targets": 74,
+    "n_high_value_targets": 90,
     "top_anomalies": [
       {
         "substation_id": "e-distribuzione S.p.A._17272",
@@ -556,7 +556,7 @@
         "anomaly_score": 1.0,
         "anomaly_type": "multi_signal",
         "rec_residual": 1,
-        "npv_residual_M": 2.5772,
+        "npv_residual_M": 2.5448,
         "band_residual": 0,
         "R_median": 0.5199
       },
@@ -564,10 +564,10 @@
         "substation_id": "ENEL_33204",
         "region": "Molise",
         "classification": "Medium",
-        "anomaly_score": 0.9821,
+        "anomaly_score": 0.9843,
         "anomaly_type": "multi_signal",
         "rec_residual": 1,
-        "npv_residual_M": 2.2041,
+        "npv_residual_M": 2.1562,
         "band_residual": 0,
         "R_median": 0.4588
       },
@@ -575,111 +575,111 @@
         "substation_id": "Terna_11333",
         "region": "Sardegna",
         "classification": "Medium",
-        "anomaly_score": 0.9651,
+        "anomaly_score": 0.9742,
         "anomaly_type": "multi_signal",
         "rec_residual": 1,
-        "npv_residual_M": 2.0987,
+        "npv_residual_M": 2.112,
         "band_residual": 0,
         "R_median": 0.4512
-      },
-      {
-        "substation_id": "ENEL_13749",
-        "region": "Lazio",
-        "classification": "Medium",
-        "anomaly_score": 0.9475,
-        "anomaly_type": "multi_signal",
-        "rec_residual": 1,
-        "npv_residual_M": 2.0138,
-        "band_residual": 0,
-        "R_median": 0.4612
       },
       {
         "substation_id": "e-distribuzione S.p.A._7220",
         "region": "Abruzzo",
         "classification": "Medium",
-        "anomaly_score": 0.9374,
+        "anomaly_score": 0.9427,
         "anomaly_type": "multi_signal",
         "rec_residual": 1,
-        "npv_residual_M": 1.9442,
+        "npv_residual_M": 1.9798,
         "band_residual": 0,
         "R_median": 0.4604
+      },
+      {
+        "substation_id": "Barberini_26322",
+        "region": "Abruzzo",
+        "classification": "Medium",
+        "anomaly_score": 0.9203,
+        "anomaly_type": "multi_signal",
+        "rec_residual": 1,
+        "npv_residual_M": 1.7272,
+        "band_residual": 0,
+        "R_median": 0.4656
+      },
+      {
+        "substation_id": "ENEL_13749",
+        "region": "Lazio",
+        "classification": "Medium",
+        "anomaly_score": 0.9197,
+        "anomaly_type": "multi_signal",
+        "rec_residual": 1,
+        "npv_residual_M": 1.7197,
+        "band_residual": 0,
+        "R_median": 0.4612
       },
       {
         "substation_id": "Enel Distribuzione_10890",
         "region": "Calabria",
         "classification": "High",
-        "anomaly_score": 0.9367,
+        "anomaly_score": 0.8992,
         "anomaly_type": "npv_outlier",
         "rec_residual": 0,
-        "npv_residual_M": 2.5893,
+        "npv_residual_M": 2.565,
         "band_residual": 0,
         "R_median": 0.602
-      },
-      {
-        "substation_id": "SER_26445",
-        "region": "Sicilia",
-        "classification": "High",
-        "anomaly_score": 0.9334,
-        "anomaly_type": "npv_outlier",
-        "rec_residual": 0,
-        "npv_residual_M": 2.4076,
-        "band_residual": 0,
-        "R_median": 0.6576
       },
       {
         "substation_id": "Enel Distribuzione_10357",
         "region": "Puglia",
         "classification": "High",
-        "anomaly_score": 0.9334,
+        "anomaly_score": 0.8972,
         "anomaly_type": "npv_outlier",
         "rec_residual": 0,
-        "npv_residual_M": 2.385,
+        "npv_residual_M": 2.41,
         "band_residual": 0,
         "R_median": 0.6053
       },
       {
-        "substation_id": "Enel Distribuzione_10356",
-        "region": "Puglia",
+        "substation_id": "Enel Distribuzione_10650",
+        "region": "Sicilia",
         "classification": "High",
-        "anomaly_score": 0.9287,
+        "anomaly_score": 0.8933,
         "anomaly_type": "npv_outlier",
         "rec_residual": 0,
-        "npv_residual_M": 2.3576,
+        "npv_residual_M": 2.3761,
         "band_residual": 0,
-        "R_median": 0.5511
+        "R_median": 0.5568
       },
       {
-        "substation_id": "TERNA_31919",
+        "substation_id": "Enel Distribuzione_25875",
         "region": "Campania",
         "classification": "High",
-        "anomaly_score": 0.9254,
+        "anomaly_score": 0.8895,
         "anomaly_type": "npv_outlier",
         "rec_residual": 0,
-        "npv_residual_M": 2.3425,
+        "npv_residual_M": 2.3634,
         "band_residual": 0,
-        "R_median": 0.6191
+        "R_median": 0.5354
       }
     ],
     "region_rates": {
       "Abruzzo": {
-        "n_anomalies": 9,
+        "n_anomalies": 12,
         "n_total": 115,
-        "rate_pct": 7.8
+        "rate_pct": 10.4
       },
       "Basilicata": {
-        "n_anomalies": 18,
+        "n_anomalies": 12,
         "n_total": 116,
-        "rate_pct": 15.5
+        "rate_pct": 10.3
       },
       "Calabria": {
-        "n_anomalies": 10,
+        "n_anomalies": 11,
         "n_total": 106,
-        "rate_pct": 9.4
+        "rate_pct": 10.4
       },
       "Campania": {
-        "n_anomalies": 15,
+        "n_anomalies": 18,
         "n_total": 231,
-        "rate_pct": 6.5
+        "rate_pct": 7.8
       },
       "Emilia-Romagna": {
         "n_anomalies": 0,
@@ -692,49 +692,49 @@
         "rate_pct": 0.0
       },
       "Lazio": {
-        "n_anomalies": 32,
+        "n_anomalies": 27,
         "n_total": 215,
-        "rate_pct": 14.9
+        "rate_pct": 12.6
       },
       "Liguria": {
-        "n_anomalies": 10,
+        "n_anomalies": 4,
         "n_total": 191,
-        "rate_pct": 5.2
+        "rate_pct": 2.1
       },
       "Lombardia": {
-        "n_anomalies": 5,
+        "n_anomalies": 13,
         "n_total": 632,
-        "rate_pct": 0.8
+        "rate_pct": 2.1
       },
       "Marche": {
-        "n_anomalies": 2,
+        "n_anomalies": 1,
         "n_total": 89,
-        "rate_pct": 2.2
+        "rate_pct": 1.1
       },
       "Molise": {
-        "n_anomalies": 23,
+        "n_anomalies": 20,
         "n_total": 236,
-        "rate_pct": 9.7
+        "rate_pct": 8.5
       },
       "Piemonte": {
-        "n_anomalies": 11,
+        "n_anomalies": 8,
         "n_total": 279,
-        "rate_pct": 3.9
+        "rate_pct": 2.9
       },
       "Puglia": {
-        "n_anomalies": 19,
+        "n_anomalies": 25,
         "n_total": 238,
-        "rate_pct": 8.0
+        "rate_pct": 10.5
       },
       "Sardegna": {
-        "n_anomalies": 8,
+        "n_anomalies": 7,
         "n_total": 145,
-        "rate_pct": 5.5
+        "rate_pct": 4.8
       },
       "Sicilia": {
-        "n_anomalies": 22,
+        "n_anomalies": 27,
         "n_total": 308,
-        "rate_pct": 7.1
+        "rate_pct": 8.8
       },
       "Toscana": {
         "n_anomalies": 19,
@@ -747,9 +747,9 @@
         "rate_pct": 0.0
       },
       "Umbria": {
-        "n_anomalies": 6,
+        "n_anomalies": 4,
         "n_total": 94,
-        "rate_pct": 6.4
+        "rate_pct": 4.3
       },
       "Valle d'Aosta": {
         "n_anomalies": 0,
@@ -757,21 +757,33 @@
         "rate_pct": 0.0
       },
       "Veneto": {
-        "n_anomalies": 6,
+        "n_anomalies": 7,
         "n_total": 213,
-        "rate_pct": 2.8
+        "rate_pct": 3.3
       }
     }
   },
   "_meta": {
-    "version": 2,
+    "version": 3,
     "n_substations": 4293,
-    "n_features": 22,
+    "n_features": 32,
     "n_train": 3443,
     "n_test": 850,
-    "duration_s": 12.57,
+    "duration_s": 13.84,
     "random_state": 42,
+    "feature_groups": {
+      "geographic": 3,
+      "ssi_scores": 6,
+      "components": 6,
+      "modifiers": 4,
+      "socio": 3,
+      "enrichment": 10
+    },
     "refinements": [
+      "v3: Feature expansion 22 \u2192 32 (+10 enrichment features)",
+      "v3: Added CRS, BESS_SAT, exposure_index from cannibalization.py",
+      "v3: Added bs_composite from black_swan.py",
+      "v3: Added tvar_95, tail_ratio, pad_bps, wacc_adjusted, gpd_xi from actuarial.py",
       "Model 1: MLP(128,64,32) confirmed, added feature importance + confusion matrix",
       "Model 2: Upgraded to MLP(512,256,128), added quartile MAE + bias tracking",
       "Model 3: Switched to RandomForest (100% accuracy vs 98.6% MLP)",

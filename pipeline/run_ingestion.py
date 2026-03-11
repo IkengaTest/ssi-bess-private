@@ -49,6 +49,9 @@ from pipeline.data_loader import MultiSourceLoader
 from pipeline.data_validator import DataValidator
 from pipeline.bess_valuator import valuate_fleet, classify_band
 from pipeline.audit_trail import AuditTrail
+from pipeline.black_swan import enrich_fleet as bs_enrich_fleet
+from pipeline.cannibalization import enrich_fleet as cann_enrich_fleet
+from pipeline.actuarial import enrich_fleet as act_enrich_fleet
 
 
 def remap_modifiers(modifiers: dict) -> dict:
@@ -183,6 +186,27 @@ def run_pipeline(use_cache=True, strict=False, compute_bess=True,
     else:
         if verbose:
             print("\n  Skipping BESS computation (--no-bess)")
+
+    # ── STEP 6a: Black Swan enrichment ──
+    try:
+        substations = bs_enrich_fleet(substations, verbose=verbose)
+    except Exception as e:
+        if verbose:
+            print(f"  Black Swan enrichment skipped: {e}")
+
+    # ── STEP 6b: Cannibalization enrichment ──
+    try:
+        substations = cann_enrich_fleet(substations, verbose=verbose)
+    except Exception as e:
+        if verbose:
+            print(f"  Cannibalization enrichment skipped: {e}")
+
+    # ── STEP 6c: Actuarial enrichment (depends on cannibalization CRS) ──
+    try:
+        substations = act_enrich_fleet(substations, verbose=verbose)
+    except Exception as e:
+        if verbose:
+            print(f"  Actuarial enrichment skipped: {e}")
 
     # Record computation in audit
     audit.record_computation(substations)

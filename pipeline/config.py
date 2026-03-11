@@ -170,6 +170,85 @@ BESS_VALIDATION = {
     'Payback_yr':    {'min': 1.0, 'max': 25.0},
 }
 
+# ─────────────────────────── Enrichment Module Config ───────────────────────────
+
+# Cannibalization enrichment — see cannibalization.py for full documentation
+CANNIBALIZATION = {
+    'x_crit': 0.20,           # Critical BESS saturation threshold
+    'gamma': 2.0,             # Saturation curve exponent (convex)
+    'delta': 0.60,            # Maximum revenue haircut at full saturation
+    'beta_spread': 4.0,       # Spread compression coefficient
+    'kappa_cann': 0.25,       # PAD loading for cannibalization
+    'projection_years': 10,   # Forward saturation projection horizon
+}
+
+# Black Swan enrichment — see black_swan.py for full documentation
+BLACK_SWAN = {
+    'compound_climate_weight': 0.15,
+    'regime_shift_prob': 0.08,
+    'supply_disruption_prob': 0.05,
+    'commodity_spike_multiplier': 2.0,
+    'rate_shock_bps': 200.0,
+}
+
+# Actuarial enrichment — see actuarial.py for full documentation
+ACTUARIAL = {
+    'tvar_alpha': 0.95,
+    'pad_base_bps': 75.0,
+    'kappa_tail': 0.30,
+    'kappa_ci': 0.15,
+    'kappa_cann': 0.25,
+    'gpd_xi_prior': 0.25,
+    'wacc_base': 0.052,
+}
+
+# ─────────────────────────── Data Sources (enrichment) ───────────────────────────
+
+ENRICHMENT_DATA_SOURCES = {
+    # CN.1 — Terna BESS Registry
+    'terna_bess_registry': {
+        'provider': 'Terna Open Data',
+        'variables': ['BESS_MW_installed', 'zone_peak_load'],
+        'status': 'phase1_defaults',
+        'description': 'Installed BESS capacity per zone (defaults until API available)',
+    },
+    # CN.2 — ARERA Revenue Stack
+    'arera_revenue_stack': {
+        'provider': 'ARERA / GME',
+        'variables': ['revenue_weights_per_stream'],
+        'status': 'phase1_defaults',
+        'description': 'Revenue stack weights per ancillary service',
+    },
+    # CN.3 — Terna Grid Plan (PNIEC)
+    'terna_grid_plan': {
+        'provider': 'Terna / PNIEC',
+        'variables': ['BESS_SAT_forward', 'growth_trajectory'],
+        'status': 'phase1_defaults',
+        'description': 'Forward BESS saturation from national energy plan',
+    },
+    # BS.1 — Copernicus ERA5 Extremes
+    'copernicus_extremes': {
+        'provider': 'Copernicus CDS',
+        'variables': ['heat_score', 'drought_score', 'fire_score'],
+        'status': 'phase2',
+        'description': 'Extreme weather indices for compound climate stress',
+    },
+    # BS.2 — ECB Monetary Policy
+    'ecb_rates': {
+        'provider': 'ECB / Eurostat',
+        'variables': ['policy_rate', 'spread_history'],
+        'status': 'phase2',
+        'description': 'Interest rate history for financing shock scenarios',
+    },
+    # ACT.1 — ARERA TIQE Tails
+    'arera_tiqe_tails': {
+        'provider': 'ARERA TIQE',
+        'variables': ['continuity_tail_distribution'],
+        'status': 'phase2',
+        'description': 'Continuity metric tail distributions for GPD fitting',
+    },
+}
+
 # ─────────────────────────── Cache Settings ───────────────────────────
 
 CACHE_TTL_HOURS = 24
