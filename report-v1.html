@@ -461,7 +461,7 @@
 
     <p>The <strong>SSI Index v4.0</strong> scores 4,293 Italian distribution substations across six dimensions &mdash; Congestion (C), Voltage (V), Intermittency (I), Economic fabric (E), DER Saturation (S), and Transition trajectory (T) &mdash; answering a single question: <em>how stressed is this substation?</em></p>
 
-    <p>The <strong>SSI Enhanced Neural Network (SSI-ENN)</strong> extends that measurement into a valuation platform. For every scored substation, it answers two further questions: what is a BESS worth at this location &mdash; to the distribution network operator, to the local community, and to the asset owner? And what is the real-option value of that investment over a 25-year horizon?</p>
+    <p>The <strong>SSI Enhanced Neural Network (SSI-ENN)</strong> extends that measurement into a valuation platform. For every scored substation, it answers two further questions: what is a BESS worth at this location &mdash; to the distribution network operator, to the local community, and to the asset owner? And what is the real-option value of that investment over a 30-year horizon?</p>
 
     <div style="display:flex; gap:8px; margin:20px 0">
       <div style="flex:1; background:var(--cream-deep); border-radius:8px; padding:16px; text-align:center; border-top:3px solid var(--crimson)">
@@ -485,11 +485,11 @@
       <div style="flex:1; background:var(--cream-deep); border-radius:8px; padding:16px; text-align:center; border-top:3px solid var(--sage)">
         <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--warm-grey); font-weight:500">Layer 4</div>
         <div style="font-size:13px; font-weight:600; color:var(--ink); margin:6px 0">Forward Trajectory</div>
-        <div style="font-size:10px; color:var(--text-light)">25-year Monte Carlo &bull; Climate escalation &bull; Regulatory paths</div>
+        <div style="font-size:10px; color:var(--text-light)">30-year Monte Carlo &bull; Climate escalation &bull; Regulatory paths</div>
       </div>
     </div>
 
-    <p>For CP Fiumetorto, the engine ingested 20 sub-metrics across 6 SSI components from 15 verified public data sources, applied 4 multiplicative modifiers (R3, R4, R6, R7) through the modifier chain, and propagated uncertainty through a 20&times;20 Gaussian copula correlation matrix (190 unique dependency pairs, including tail-dependent Clayton mixture for joint-extreme events). The Monte Carlo engine executed 10,000 iterations, each passing a correlated sub-metric draw through the full valuation stack &mdash; 5 DNO value components (D1&ndash;D5), 5 community welfare components (W1&ndash;W5), 10 merchant revenue streams (R1&ndash;R10), and 6 real options (A&ndash;F) &mdash; performing approximately 71 million arithmetic operations and producing 91 output data points with calibrated P5/P50/P95 uncertainty bounds.</p>
+    <p>For CP Fiumetorto, the engine ingested 20 sub-metrics across 6 SSI components from 15 verified public data sources, applied 4 multiplicative modifiers (R3, R4, R6, R7) through the modifier chain, and propagated uncertainty through a 20&times;20 Gaussian copula correlation matrix (190 unique dependency pairs, including tail-dependent Clayton mixture for joint-extreme events). The Monte Carlo engine executed 10,000 iterations, each passing a correlated sub-metric draw through the full valuation stack &mdash; 5 DNO value components (D1&ndash;D5), 5 community welfare components (W1&ndash;W5), 11 revenue streams (R1&ndash;R11, v27 standard), and 6 real options (A&ndash;F) &mdash; performing approximately 71 million arithmetic operations and producing 91 output data points with calibrated P5/P50/P95 uncertainty bounds.</p>
 
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin:16px 0">
       <div style="background:var(--cream-deep); border-radius:8px; padding:12px; text-align:center">
@@ -545,7 +545,7 @@
     <h3>Executive Summary</h3>
     <p>This report presents a detailed stakeholder value analysis for a Config B battery energy storage system (9.9 MW / 39.6 MWh, 4-hour duration) at Cabina Primaria Fiumetorto in south-eastern Sicily. The substation ranks in the 99.1st percentile of the Italian fleet by SSI score (0.580), reflecting severe grid stress driven primarily by congestion (C = 0.319) and intermittent overload conditions (I = 0.109, E = 0.103).</p>
 
-    <p>The analysis decomposes total project value of <strong>&euro;35.20M</strong> across three stakeholder dimensions &mdash; the Distribution System Operator (DSO), the local community, and the asset owner &mdash; and maps the 25-year revenue projection of <strong>&euro;57.38M</strong> to underlying market mechanisms and regulatory instruments.</p>
+    <p>The analysis decomposes total project value of <strong>&euro;35.20M</strong> across three stakeholder dimensions &mdash; the Distribution System Operator (DSO), the local community, and the asset owner &mdash; and maps the 30-year revenue projection of <strong>&euro;57.38M</strong> to underlying market mechanisms and regulatory instruments.</p>
 
     <div class="kpi-row">
       <div class="kpi-card">
@@ -556,7 +556,7 @@
       <div class="kpi-card">
         <div class="label">Net Present Value</div>
         <div class="value" style="color:var(--accent)">&euro;10.92M</div>
-        <div class="unit">25-year horizon</div>
+        <div class="unit">30-year horizon</div>
       </div>
       <div class="kpi-card">
         <div class="label">IRR</div>
@@ -596,7 +596,7 @@
           <tr><td>Unit CAPEX</td><td class="num">~&euro;707/kW</td></tr>
           <tr><td>Technology</td><td class="num">Li-ion NMC/LFP</td></tr>
           <tr><td>Degradation</td><td class="num">0.8% p.a.</td></tr>
-          <tr><td>Evaluation horizon</td><td class="num">25 years</td></tr>
+          <tr><td>Evaluation horizon</td><td class="num">30 years</td></tr>
         </table>
       </div>
       <div>
@@ -925,31 +925,53 @@
 
       <div class="divider"></div>
 
-      <h4 style="font-size:15px">DSO Value Mechanisms</h4>
-      <p>V<sub>DSO</sub> = &euro;28.27M quantifies the <strong>non-cash avoided-cost benefit</strong> that the BESS delivers to the distribution network. No revenue flows to the DSO &mdash; all market revenue (R1&ndash;R10, totalling &euro;57.38M) accrues to the BESS investor. The DSO's direct financial uplift is limited to three mechanisms:</p>
+      <h4 style="font-size:15px">DSO Value Components (D1&ndash;D5)</h4>
+      <p>V<sub>DSO</sub> = &euro;28.27M quantifies the <strong>non-cash avoided-cost benefit</strong> that the BESS delivers to the distribution network, computed as the 30-year NPV of four monetised components (D1&ndash;D4) at regulated WACC, per the Plan of Work v27 (Section 0.4.1). No revenue flows to the DSO &mdash; all market revenue (R1&ndash;R11, totalling &euro;57.38M per v27 standard) accrues to the BESS investor. D5 is a qualitative flag, excluded from the NPV sum.</p>
 
       <table class="sub-table">
         <thead>
           <tr>
-            <th>Mechanism</th>
+            <th>Code</th>
+            <th>Component</th>
             <th>Description</th>
             <th class="num">Estimated Value</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="bold">Grid Fee Deferral</td>
-            <td>Avoided network reinforcement CAPEX (transformer upgrade, new HV/MV feeders) over a 5&ndash;10 year deferral window. ARERA benchmark per substation.</td>
+            <td class="bold" style="color:var(--dso-color)">D1</td>
+            <td class="bold">Investment Deferral</td>
+            <td>Avoided network reinforcement CAPEX (transformer upgrade, new HV/MV feeders) over a 5&ndash;10 year deferral window. The BESS absorbs load growth and DER surplus that would otherwise trigger the investment. ARERA benchmark per substation.</td>
             <td class="num bold">&euro;3&ndash;8M</td>
           </tr>
           <tr>
-            <td class="bold">Power Quality Bonus/Malus</td>
-            <td>Improved SAIDI/SAIFI metrics shifting the DSO's ARERA regulatory incentive position. BESS reduces outage frequency and duration through fast-response islanding and voltage support.</td>
-            <td class="num">Regulatory position improvement</td>
+            <td class="bold" style="color:var(--dso-color)">D2</td>
+            <td class="bold">Congestion Relief</td>
+            <td>Avoided DER curtailment value. The BESS absorbs excess renewable generation during peak solar hours and re-dispatches during evening ramps, preserving wholesale revenue and renewable subsidy income that would otherwise be lost. Dominant component at high-S substations like Fiumetorto (S1 Dimovski &gt; 0.7).</td>
+            <td class="num bold">Included in V<sub>DSO</sub></td>
           </tr>
           <tr>
+            <td class="bold" style="color:var(--dso-color)">D3</td>
+            <td class="bold">Loss Reduction</td>
+            <td>I&sup2;R loss savings from peak shaving. Reducing peak current by &Delta;I yields quadratic loss reduction: at 20% peak reduction, losses fall by 36%. Config B (9.9 MW) typically delivers 2.5&ndash;4&times; Config A's D3 due to the quadratic relationship.</td>
+            <td class="num bold">Included in V<sub>DSO</sub></td>
+          </tr>
+          <tr>
+            <td class="bold" style="color:var(--dso-color)">D4</td>
+            <td class="bold">Voltage Support</td>
+            <td>Avoided EN 50160 voltage violations through reactive-power injection (STATCOM mode, available even when battery is empty) plus emerging reactive-power service value. BESS mitigates 60&ndash;95% of voltage exceedances at Config B scale.</td>
+            <td class="num bold">Included in V<sub>DSO</sub></td>
+          </tr>
+          <tr>
+            <td style="color:var(--warm-grey)">D5</td>
+            <td style="color:var(--warm-grey)">Fault Level Contribution</td>
+            <td style="color:var(--warm-grey)">Qualitative flag (not monetised). Grid-forming inverters provide programmable fault current (up to 1.5&times; rated for 150&ndash;200ms), improving protection coordination on weak radial feeders. Flagged where SSI I4 &lt; 0.3 and I6 &lt; 0.15.</td>
+            <td class="num" style="color:var(--warm-grey)"><em>Flag only</em></td>
+          </tr>
+          <tr style="border-top:1px dashed var(--card-border)">
+            <td></td>
             <td class="bold">ESG Value Uplift</td>
-            <td>Sustainability and resilience value accruing to the DSO's regulatory and stakeholder positioning. To be defined and modelled in future iterations.</td>
+            <td>Sustainability and resilience value accruing to the DSO's regulatory and stakeholder positioning. To be defined and modelled in future iterations. <em>Not in v27 D1&ndash;D5 framework &mdash; additional Altinium metric.</em></td>
             <td class="num" style="color:var(--warm-grey)"><em>TBD</em></td>
           </tr>
         </tbody>
@@ -958,7 +980,7 @@
       <p style="margin-top:16px">For a Sicilian node like Fiumetorto, where congestion (C = 0.319) is the dominant SSI component and renewable curtailment is structural, the BESS acts as a congestion valve &mdash; absorbing excess generation during peak solar hours and re-dispatching during evening ramps. This congestion relief is the primary driver of the DSO's avoided-cost value.</p>
 
       <div class="highlight-box">
-        <strong>DSO investment signal:</strong> Grid interconnection at Fiumetorto serves the distribution network interest by deferring network reinforcement (avoided CAPEX of &euro;3&ndash;8M) and enabling structural congestion management through proven, scalable dispatch mechanisms. The DSO benefits from deferred infrastructure spend and improved regulatory performance without direct expenditure, while the BESS investor captures all market revenue through the ten revenue streams detailed in the <a href="#owner" style="color:var(--dso-color); font-weight:600">Asset Owner</a> section.
+        <strong>DSO investment signal:</strong> Grid interconnection at Fiumetorto serves the distribution network interest across all four monetised D-components: deferring network reinforcement (D1, avoided CAPEX &euro;3&ndash;8M), absorbing structural congestion (D2, dominant at this high-S node), reducing I&sup2;R losses (D3), and providing voltage support (D4). The DSO benefits from deferred infrastructure spend and improved regulatory performance without direct expenditure, while the BESS investor captures all market revenue through the eight active revenue streams (v27 R-codes) detailed in the <a href="#owner" style="color:var(--dso-color); font-weight:600">Asset Owner</a> section.
       </div>
     </div>
   </div>
@@ -1017,7 +1039,7 @@
         <tr><td>Social valuation (SCC)</td><td class="num">&euro;0.25&ndash;0.37M/yr</td></tr>
         <tr><td>Physical metric</td><td class="num">~2,100&ndash;3,100 tCO&sub2;/yr avoided</td></tr>
       </table>
-      <p style="font-size:12px; color:var(--text-light); margin-top:8px">W2 declines gradually over 25 years as Italy's grid decarbonises (MEF falls from ~0.38 to ~0.10 tCO&sub2;/MWh by 2050 per PNIEC trajectory).</p>
+      <p style="font-size:12px; color:var(--text-light); margin-top:8px">W2 declines gradually over 30 years as Italy's grid decarbonises (MEF falls from ~0.38 to ~0.10 tCO&sub2;/MWh by 2050 per PNIEC trajectory).</p>
     </div>
 
     <!-- W3 -->
@@ -1079,12 +1101,12 @@
         <div style="background:var(--cream); border:1px solid var(--bronze); border-radius:8px; padding:16px">
           <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:8px">Aggregate Catalytic Employment Estimate</div>
           <table class="sub-table" style="font-size:12px; margin:8px 0; width:100%">
-            <tr style="background:var(--cream-deep)"><td style="font-weight:600">Channel</td><td style="font-weight:600">Mechanism</td><td class="num" style="font-weight:600">Induced FTEs (25yr)</td></tr>
+            <tr style="background:var(--cream-deep)"><td style="font-weight:600">Channel</td><td style="font-weight:600">Mechanism</td><td class="num" style="font-weight:600">Induced FTEs (30yr)</td></tr>
             <tr><td>Reliability-enabled attraction</td><td>Higher firm entry from reduced outage exposure</td><td class="num">8&ndash;25</td></tr>
             <tr><td>Digital economy enablement</td><td>Agritech, edge compute, smart manufacturing</td><td class="num">10&ndash;20</td></tr>
             <tr><td>Congestion/cost relief</td><td>Lower energy costs sustain existing &amp; new SMEs</td><td class="num">5&ndash;12</td></tr>
             <tr><td>Energy services ecosystem</td><td>Monitoring, maintenance, engineering firms</td><td class="num">5&ndash;15</td></tr>
-            <tr style="border-top:2px solid var(--bronze); font-weight:700; color:var(--bronze)"><td colspan="2">Total catalytic FTEs (cumulative, 25-year)</td><td class="num bold">28&ndash;72</td></tr>
+            <tr style="border-top:2px solid var(--bronze); font-weight:700; color:var(--bronze)"><td colspan="2">Total catalytic FTEs (cumulative, 30-year)</td><td class="num bold">28&ndash;72</td></tr>
           </table>
         </div>
       </div>
@@ -1143,7 +1165,7 @@
           <div style="font-size:11px; color:var(--text-light)">W4 = &Sigma; P_hazard &times; L_loss &times; M_mitigation &times; [1 + &gamma;_T2 &times; (t/10)]</div>
         </div>
       </div>
-      <p style="font-size:13px">W4 is an actuarial insurance value &mdash; the annual premium equivalent of the protection the BESS provides during extreme weather events. For Fiumetorto, the key hazards are heat-waves (I3 = significant in Sicilia, &gamma; &asymp; 0.20&ndash;0.30 per decade under SSP2-4.5) and, to a lesser extent, flood exposure (I1). The climate escalation term [1 + &gamma; &times; (t/10)] means W4 grows substantially over the 25-year life &mdash; by Year 20, annual W4 may be 40&ndash;60% higher than Year 1.</p>
+      <p style="font-size:13px">W4 is an actuarial insurance value &mdash; the annual premium equivalent of the protection the BESS provides during extreme weather events. For Fiumetorto, the key hazards are heat-waves (I3 = significant in Sicilia, &gamma; &asymp; 0.20&ndash;0.30 per decade under SSP2-4.5) and, to a lesser extent, flood exposure (I1). The climate escalation term [1 + &gamma; &times; (t/10)] means W4 grows substantially over the 30-year life &mdash; by Year 20, annual W4 may be 40&ndash;60% higher than Year 1.</p>
       <p style="font-size:12px; color:var(--text-light)">Config B mitigation factor: M_heat &asymp; 0.4&ndash;1.0 (4-hour duration can bridge most heat-related transformer derating events). The BESS provides backup during the exact conditions when the network is most stressed &mdash; summer heat-waves that simultaneously increase demand (cooling load) and reduce grid capacity (thermal derating).</p>
     </div>
 
@@ -1231,7 +1253,7 @@
     </div>
 
     <div class="highlight-box" style="background:var(--community-light); border-color:#d2b4de">
-      <strong>Community investment thesis:</strong> The &euro;3.92M V<sub>Community</sub> captures a moderate-to-strong social case. Sicily's structural energy poverty (15%), high social vulnerability (V_socio = 0.76), and low base employment create a context where each &euro;1 of BESS investment generates disproportionate welfare uplift. The W3 employment impact is particularly compelling: beyond 53&ndash;84 direct FTE-years (construction + O&amp;M), the BESS&rsquo;s operational presence catalyses an additional 28&ndash;72 induced FTEs through reliability-enabled business attraction, digital-economy enablement, and energy-services ecosystem growth &mdash; a total employment footprint of 81&ndash;156 FTEs in a province with 14.2% unemployment. As the W5 (communications resilience) component grows with climate escalation and digital dependency, the community value case strengthens over the asset's 25-year life &mdash; today's &euro;3.92M is likely conservative relative to the full W1&ndash;W5 stack as data granularity improves.
+      <strong>Community investment thesis:</strong> The &euro;3.92M V<sub>Community</sub> captures a moderate-to-strong social case. Sicily's structural energy poverty (15%), high social vulnerability (V_socio = 0.76), and low base employment create a context where each &euro;1 of BESS investment generates disproportionate welfare uplift. The W3 employment impact is particularly compelling: beyond 53&ndash;84 direct FTE-years (construction + O&amp;M), the BESS&rsquo;s operational presence catalyses an additional 28&ndash;72 induced FTEs through reliability-enabled business attraction, digital-economy enablement, and energy-services ecosystem growth &mdash; a total employment footprint of 81&ndash;156 FTEs in a province with 14.2% unemployment. As the W5 (communications resilience) component grows with climate escalation and digital dependency, the community value case strengthens over the asset's 30-year life &mdash; today's &euro;3.92M is likely conservative relative to the full W1&ndash;W5 stack as data granularity improves.
     </div>
   </div>
 
@@ -1330,123 +1352,114 @@
 
       <div class="divider"></div>
 
-      <h4 style="font-size:15px">Investor Revenue Streams &mdash; Complete 25-Year Projection</h4>
-      <p>All ten revenue streams accrue to the BESS investor, totalling <strong>&euro;57.38M</strong> over the 25-year asset life. Five streams are earned through direct grid-services participation (enabled by the network value the BESS creates), while five are pure merchant plays driven by market price dynamics.</p>
+      <h4 style="font-size:15px">Investor Revenue Streams &mdash; Complete 30-Year Projection (v27 Standard)</h4>
+      <p>Eight revenue streams are active for Fiumetorto, classified per the Plan of Work v27 (Section 0.4.4) dispatch hierarchy: <strong>Contracted</strong> (availability products, R1 + R2 + R11), <strong>Market</strong> (dispatch-optimised, R3 + R4 + R5 + R7), and <strong>Emerging</strong> (R8). All accrue to the BESS investor, totalling <strong>&euro;57.38M</strong> over the 30-year asset life. R9 (LMP) and R10 (PQaaS) are zero in the base case and enter through Option&nbsp;F (real options).</p>
 
       <table class="sub-table">
         <thead>
           <tr>
             <th>Stream</th>
-            <th>Code</th>
-            <th>Type</th>
+            <th>v27</th>
+            <th>Tier</th>
             <th>Description</th>
-            <th class="num">25yr Value</th>
-            <th class="num">% of Total</th>
+            <th class="num">30yr Value</th>
+            <th class="num">%</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="bold">MSD &mdash; Dispatching Services</td>
+            <td class="bold">Wholesale Arbitrage</td>
+            <td>R4</td>
+            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+            <td>Day-ahead (MGP, &euro;10.13M) + intraday (MI, &euro;4.94M) price optimisation</td>
+            <td class="num bold">&euro;15.07M</td>
+            <td class="num">26.3%</td>
+          </tr>
+          <tr>
+            <td class="bold">Replacement Reserve (aFRR/mFRR)</td>
             <td>R3</td>
-            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Grid-services</span></td>
-            <td>Balancing and dispatching services market participation</td>
+            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+            <td>MSD dispatching &mdash; balancing and replacement reserve activation</td>
             <td class="num bold">&euro;14.71M</td>
             <td class="num">25.6%</td>
           </tr>
           <tr>
-            <td class="bold">MGP &mdash; Day-Ahead Market</td>
+            <td class="bold">Frequency Response (FCR/FFR)</td>
             <td>R2</td>
-            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Merchant</span></td>
-            <td>Energy arbitrage on the Mercato del Giorno Prima</td>
-            <td class="num bold">&euro;10.13M</td>
-            <td class="num">17.7%</td>
-          </tr>
-          <tr>
-            <td class="bold">Ancillary Services</td>
-            <td>R5</td>
-            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Grid-services</span></td>
-            <td>Frequency regulation, voltage support, black start capability</td>
+            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Contracted</span></td>
+            <td>Continuous frequency regulation, voltage support, black start capability</td>
             <td class="num bold">&euro;9.14M</td>
             <td class="num">15.9%</td>
           </tr>
           <tr>
-            <td class="bold">Fuel Nexus Premium</td>
-            <td>R8</td>
-            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Merchant</span></td>
-            <td>Gas-to-power spread capture and fuel cost avoidance</td>
+            <td class="bold">DSO Flexibility</td>
+            <td>R5</td>
+            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+            <td>Congestion relief (&euro;1.54M) + network deferral payment (&euro;4.27M) from DSO procurement</td>
+            <td class="num bold">&euro;5.81M</td>
+            <td class="num">10.1%</td>
+          </tr>
+          <tr>
+            <td class="bold">Fuel Nexus / Self-Consumption</td>
+            <td>R7</td>
+            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+            <td>Gas-to-power spread capture and renewable self-consumption optimisation</td>
             <td class="num">&euro;5.12M</td>
             <td class="num">8.9%</td>
           </tr>
           <tr>
-            <td class="bold">MI &mdash; Intraday Market</td>
-            <td>R4</td>
-            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Merchant</span></td>
-            <td>Intraday price optimisation and balancing position</td>
-            <td class="num">&euro;4.94M</td>
-            <td class="num">8.6%</td>
-          </tr>
-          <tr>
-            <td class="bold">CRS Uplift</td>
-            <td>R7</td>
-            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Grid-services</span></td>
-            <td>Capacity remuneration scheme uplift payments</td>
+            <td class="bold">CRS</td>
+            <td>R11</td>
+            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Contracted</span></td>
+            <td>Communications Resilience Service &mdash; telco backup, NIS2 resilience-as-a-service</td>
             <td class="num">&euro;4.55M</td>
             <td class="num">7.9%</td>
           </tr>
           <tr>
-            <td class="bold">Grid Fee Deferral</td>
-            <td>R9</td>
-            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Grid-services</span></td>
-            <td>Network reinforcement deferral and grid access charges</td>
-            <td class="num">&euro;4.27M</td>
-            <td class="num">7.4%</td>
-          </tr>
-          <tr>
-            <td class="bold">MACSE &mdash; Zonal Premium</td>
+            <td class="bold">Capacity Market</td>
             <td>R1</td>
-            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Merchant</span></td>
-            <td>Macro-area corrective service export mechanism</td>
+            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Contracted</span></td>
+            <td>MACSE zonal availability payment (&euro;30&ndash;75/kW/year, Italy CM auction)</td>
             <td class="num">&euro;2.13M</td>
             <td class="num">3.7%</td>
           </tr>
           <tr>
-            <td class="bold">Congestion Relief</td>
-            <td>R6</td>
-            <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Grid-services</span></td>
-            <td>Zonal price differential capture from congestion management</td>
-            <td class="num">&euro;1.54M</td>
-            <td class="num">2.7%</td>
-          </tr>
-          <tr>
-            <td class="bold">Embedded Benefits</td>
-            <td>R10</td>
-            <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Merchant</span></td>
-            <td>Avoided transmission charges and embedded generation benefits</td>
+            <td class="bold">Embedded Network Benefits</td>
+            <td>R8</td>
+            <td><span class="tag" style="background:#f5f0e8; color:var(--warm-grey); font-size:10px">Emerging</span></td>
+            <td>Avoided transmission charges and local flexibility value (emerging per v27)</td>
             <td class="num">&euro;0.84M</td>
             <td class="num">1.5%</td>
           </tr>
           <tr class="subtotal">
-            <td colspan="4"><strong>Total Investor Revenue (R1&ndash;R10)</strong></td>
+            <td colspan="4"><strong>Total Investor Revenue (R1&ndash;R5 + R7 + R8 + R11)</strong></td>
             <td class="num">&euro;57.38M</td>
             <td class="num">100%</td>
           </tr>
         </tbody>
       </table>
 
-      <div class="grid-2" style="margin-top:16px">
-        <div style="background:var(--dso-light); border-radius:8px; padding:14px; text-align:center">
-          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--dso-color); font-weight:600">Grid-Services Revenue</div>
-          <div style="font-size:24px; font-weight:700; color:var(--dso-color); margin:4px 0">&euro;34.21M</div>
-          <div style="font-size:11px; color:var(--text-light)">59.6% &bull; R3 + R5 + R6 + R7 + R9</div>
+      <div style="display:flex; gap:12px; margin-top:16px">
+        <div style="flex:1; background:var(--dso-light); border-radius:8px; padding:14px; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--dso-color); font-weight:600">Contracted Revenue</div>
+          <div style="font-size:22px; font-weight:700; color:var(--dso-color); margin:4px 0">&euro;15.82M</div>
+          <div style="font-size:11px; color:var(--text-light)">27.6% &bull; R1 + R2 + R11</div>
         </div>
-        <div style="background:var(--owner-light); border-radius:8px; padding:14px; text-align:center">
-          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--owner-color); font-weight:600">Merchant Revenue</div>
-          <div style="font-size:24px; font-weight:700; color:var(--owner-color); margin:4px 0">&euro;23.17M</div>
-          <div style="font-size:11px; color:var(--text-light)">40.4% &bull; R1 + R2 + R4 + R8 + R10</div>
+        <div style="flex:1; background:var(--owner-light); border-radius:8px; padding:14px; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--owner-color); font-weight:600">Market Revenue</div>
+          <div style="font-size:22px; font-weight:700; color:var(--owner-color); margin:4px 0">&euro;40.71M</div>
+          <div style="font-size:11px; color:var(--text-light)">70.9% &bull; R3 + R4 + R5 + R7</div>
+        </div>
+        <div style="flex:1; background:#f5f0e8; border-radius:8px; padding:14px; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--warm-grey); font-weight:600">Emerging Revenue</div>
+          <div style="font-size:22px; font-weight:700; color:var(--warm-grey); margin:4px 0">&euro;0.84M</div>
+          <div style="font-size:11px; color:var(--text-light)">1.5% &bull; R8</div>
         </div>
       </div>
 
-      <p style="margin-top:16px">The MSD stream (R3 = &euro;14.71M) is the single largest revenue source, reflecting Terna's growing reliance on battery dispatching in congested zones. Day-ahead arbitrage (R2 = &euro;10.13M) is the largest merchant stream, enabled by Sicily's pronounced solar duck curve. The Fuel Nexus premium (R8 = &euro;5.12M) captures the growing disconnect between marginal gas-fired generation cost and BESS operating cost as the energy transition progresses.</p>
+      <p style="font-size:11px; color:var(--text-light); margin-top:12px"><strong>v27 mapping note:</strong> R-codes follow the Plan of Work v27 (Section 0.4.4) functional taxonomy. Italian market platforms map as: MACSE &rarr; R1, FCR/FFR &rarr; R2, MSD &rarr; R3, MGP+MI &rarr; R4, Congestion Relief + Grid Fee Deferral &rarr; R5, Fuel Nexus &rarr; R7, Embedded Benefits &rarr; R8, CRS &rarr; R11. R6 (not applicable at this site), R9 (LMP), and R10 (PQaaS) are zero in the base case; R9/R10 contribute via Option&nbsp;F real options premium.</p>
+
+      <p style="margin-top:16px">Wholesale arbitrage (R4 = &euro;15.07M) is the largest single stream after merging day-ahead (MGP) and intraday (MI) price optimisation per v27, enabled by Sicily's pronounced solar duck curve. Replacement reserve (R3 = &euro;14.71M, MSD dispatching) reflects Terna's growing reliance on battery dispatching in congested zones. Market-tier streams dominate at 70.9%, consistent with Fiumetorto's high-congestion profile where price spreads are structural rather than episodic.</p>
 
       <div class="divider"></div>
 
@@ -1496,7 +1509,7 @@
       <p>The narrow P5&ndash;P95 range of &euro;4.40M (relative to a &euro;21.94M mean) confirms exceptionally low variance, reflected in the Sharpe ratio of 16.63. Even at the 5th percentile stress scenario, the Monte Carlo NPV (&euro;19.90M) remains substantially positive &mdash; there is no plausible scenario in which this asset destroys value.</p>
 
       <div class="highlight-box" style="background:var(--owner-light); border-color:#f0d9a0">
-        <strong>Owner investment signal:</strong> With an IRR of 18.9% (3.6&times; the WACC hurdle), a 5-year payback, and a Sharpe ratio of 16.63, this is a top-tier risk-adjusted BESS investment. The owner captures &euro;23.17M in direct merchant revenue against a &euro;7.0M CAPEX &mdash; a 3.3&times; lifetime revenue multiple on invested capital.
+        <strong>Owner investment signal:</strong> With an IRR of 18.9% (3.6&times; the WACC hurdle), a 5-year payback, and a Sharpe ratio of 16.63, this is a top-tier risk-adjusted BESS investment. The owner captures &euro;57.38M in total revenue (contracted &euro;15.82M + market &euro;40.71M + emerging &euro;0.84M) against a &euro;7.0M CAPEX &mdash; an 8.2&times; lifetime revenue multiple on invested capital.
       </div>
     </div>
   </div>
@@ -1504,104 +1517,88 @@
   <!-- ═══════════ SECTION 7: REVENUE WATERFALL ═══════════ -->
   <div class="section" id="revenue">
     <div class="section-num">Section 7</div>
-    <h3>Revenue Architecture &mdash; Complete 25-Year Projection</h3>
-    <p>The ten revenue streams produce a total lifetime revenue of <strong>&euro;57.38M</strong> against a &euro;7.00M CAPEX, implying an 8.2&times; gross revenue multiple. The streams are mapped below by magnitude and stakeholder alignment.</p>
+    <h3>Revenue Architecture &mdash; Complete 30-Year Projection (v27 Standard)</h3>
+    <p>Eight active revenue streams (v27 R-codes) produce a total lifetime revenue of <strong>&euro;57.38M</strong> against a &euro;7.00M CAPEX, implying an 8.2&times; gross revenue multiple. R9 (LMP) and R10 (PQaaS) are zero in the base case; their value enters through Option&nbsp;F. Streams are classified by v27 dispatch tier.</p>
 
     <table class="sub-table" style="margin-top:20px">
       <thead>
         <tr>
-          <th style="width:30px">#</th>
+          <th style="width:30px">v27</th>
           <th>Revenue Stream</th>
-          <th>Stakeholder</th>
-          <th class="num">25yr (&euro;M)</th>
+          <th>Tier</th>
+          <th class="num">30yr (&euro;M)</th>
           <th class="num">%</th>
           <th style="width:220px">Magnitude</th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <td>R4</td>
+          <td class="bold">Wholesale Arbitrage (MGP + MI)</td>
+          <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+          <td class="num bold">15.07</td>
+          <td class="num">26.3%</td>
+          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:100%"></div></td>
+        </tr>
+        <tr>
           <td>R3</td>
-          <td class="bold">MSD Dispatching</td>
-          <td><span class="tag tag-blue">DSO</span></td>
+          <td class="bold">Replacement Reserve (MSD)</td>
+          <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
           <td class="num bold">14.71</td>
           <td class="num">25.6%</td>
-          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:100%"></div></td>
+          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:97.6%"></div></td>
         </tr>
         <tr>
           <td>R2</td>
-          <td class="bold">MGP Day-Ahead</td>
-          <td><span class="tag tag-high">Owner</span></td>
-          <td class="num bold">10.13</td>
-          <td class="num">17.7%</td>
-          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:68.9%"></div></td>
+          <td class="bold">Frequency Response (FCR/FFR)</td>
+          <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Contracted</span></td>
+          <td class="num">9.14</td>
+          <td class="num">15.9%</td>
+          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:60.7%"></div></td>
         </tr>
         <tr>
           <td>R5</td>
-          <td class="bold">Ancillary Services</td>
-          <td><span class="tag tag-blue">DSO</span></td>
-          <td class="num">9.14</td>
-          <td class="num">15.9%</td>
-          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:62.1%"></div></td>
-        </tr>
-        <tr>
-          <td>R8</td>
-          <td>Fuel Nexus</td>
-          <td><span class="tag tag-high">Owner</span></td>
-          <td class="num">5.12</td>
-          <td class="num">8.9%</td>
-          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:34.8%"></div></td>
-        </tr>
-        <tr>
-          <td>R4</td>
-          <td>MI Intraday</td>
-          <td><span class="tag tag-high">Owner</span></td>
-          <td class="num">4.94</td>
-          <td class="num">8.6%</td>
-          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:33.6%"></div></td>
+          <td class="bold">DSO Flexibility</td>
+          <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+          <td class="num">5.81</td>
+          <td class="num">10.1%</td>
+          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:38.6%"></div></td>
         </tr>
         <tr>
           <td>R7</td>
-          <td>CRS Uplift</td>
-          <td><span class="tag tag-blue">DSO</span></td>
-          <td class="num">4.55</td>
-          <td class="num">7.9%</td>
-          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:30.9%"></div></td>
+          <td>Fuel Nexus / Self-Consumption</td>
+          <td><span class="tag" style="background:var(--owner-light); color:var(--owner-color); font-size:10px">Market</span></td>
+          <td class="num">5.12</td>
+          <td class="num">8.9%</td>
+          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:34.0%"></div></td>
         </tr>
         <tr>
-          <td>R9</td>
-          <td>Grid Fee Deferral</td>
-          <td><span class="tag tag-blue">DSO</span></td>
-          <td class="num">4.27</td>
-          <td class="num">7.4%</td>
-          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:29.0%"></div></td>
+          <td>R11</td>
+          <td>CRS</td>
+          <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Contracted</span></td>
+          <td class="num">4.55</td>
+          <td class="num">7.9%</td>
+          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:30.2%"></div></td>
         </tr>
         <tr>
           <td>R1</td>
-          <td>MACSE Zonal</td>
-          <td><span class="tag tag-high">Owner</span></td>
+          <td>Capacity Market (MACSE)</td>
+          <td><span class="tag" style="background:var(--dso-light); color:var(--dso-color); font-size:10px">Contracted</span></td>
           <td class="num">2.13</td>
           <td class="num">3.7%</td>
-          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:14.5%"></div></td>
+          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:14.1%"></div></td>
         </tr>
         <tr>
-          <td>R6</td>
-          <td>Congestion Relief</td>
-          <td><span class="tag tag-blue">DSO</span></td>
-          <td class="num">1.54</td>
-          <td class="num">2.7%</td>
-          <td><div style="background:var(--dso-color); height:16px; border-radius:3px; width:10.5%"></div></td>
-        </tr>
-        <tr>
-          <td>R10</td>
-          <td>Embedded Benefits</td>
-          <td><span class="tag tag-high">Owner</span></td>
+          <td>R8</td>
+          <td>Embedded Network Benefits</td>
+          <td><span class="tag" style="background:#f5f0e8; color:var(--warm-grey); font-size:10px">Emerging</span></td>
           <td class="num">0.84</td>
           <td class="num">1.5%</td>
-          <td><div style="background:var(--owner-color); height:16px; border-radius:3px; width:5.7%"></div></td>
+          <td><div style="background:var(--warm-grey); height:16px; border-radius:3px; width:5.6%"></div></td>
         </tr>
         <tr class="subtotal">
           <td></td>
-          <td colspan="2"><strong>Total Revenue (25yr)</strong></td>
+          <td colspan="2"><strong>Total Revenue (30yr)</strong></td>
           <td class="num">&euro;57.38M</td>
           <td class="num">100%</td>
           <td></td>
@@ -1609,16 +1606,21 @@
       </tbody>
     </table>
 
-    <div class="grid-2" style="margin-top:24px">
-      <div style="background:var(--dso-light); border-radius:10px; padding:20px; text-align:center">
-        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--dso-color); font-weight:600">Grid-Services Revenue (investor)</div>
-        <div style="font-size:32px; font-weight:700; color:var(--dso-color); margin:8px 0">&euro;34.21M</div>
-        <div style="font-size:13px; color:var(--text-light)">59.6% &bull; R3 + R5 + R6 + R7 + R9</div>
+    <div style="display:flex; gap:12px; margin-top:24px">
+      <div style="flex:1; background:var(--dso-light); border-radius:10px; padding:20px; text-align:center">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--dso-color); font-weight:600">Contracted Revenue</div>
+        <div style="font-size:28px; font-weight:700; color:var(--dso-color); margin:8px 0">&euro;15.82M</div>
+        <div style="font-size:13px; color:var(--text-light)">27.6% &bull; R1 + R2 + R11</div>
       </div>
-      <div style="background:var(--owner-light); border-radius:10px; padding:20px; text-align:center">
-        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--owner-color); font-weight:600">Merchant Revenue (investor)</div>
-        <div style="font-size:32px; font-weight:700; color:var(--owner-color); margin:8px 0">&euro;23.17M</div>
-        <div style="font-size:13px; color:var(--text-light)">40.4% &bull; R1 + R2 + R4 + R8 + R10</div>
+      <div style="flex:1; background:var(--owner-light); border-radius:10px; padding:20px; text-align:center">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--owner-color); font-weight:600">Market Revenue</div>
+        <div style="font-size:28px; font-weight:700; color:var(--owner-color); margin:8px 0">&euro;40.71M</div>
+        <div style="font-size:13px; color:var(--text-light)">70.9% &bull; R3 + R4 + R5 + R7</div>
+      </div>
+      <div style="flex:1; background:#f5f0e8; border-radius:10px; padding:20px; text-align:center">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--warm-grey); font-weight:600">Emerging Revenue</div>
+        <div style="font-size:28px; font-weight:700; color:var(--warm-grey); margin:8px 0">&euro;0.84M</div>
+        <div style="font-size:13px; color:var(--text-light)">1.5% &bull; R8</div>
       </div>
     </div>
   </div>
@@ -1654,7 +1656,7 @@
 
     <div class="risk-callout">
       <h5>Regulatory Risk: Elevated (0.650)</h5>
-      <p style="font-size:13px">The primary tail risk for this asset is regulatory change. Italy's BESS framework &mdash; particularly MSD participation rules, CRS eligibility criteria, and MACSE zonal mechanisms &mdash; is still evolving. A material tightening of MSD access or reduction in CRS uplift rates could compress grid-services revenue by 15&ndash;25%. This risk is partially mitigated by the asset's structural congestion relief role, which provides value regardless of the specific market mechanism used to remunerate it.</p>
+      <p style="font-size:13px">The primary tail risk for this asset is regulatory change. Italy's BESS framework &mdash; particularly MSD participation rules, CRS eligibility criteria, and MACSE zonal mechanisms &mdash; is still evolving. A material tightening of MSD access or reduction in CRS rates could compress contracted and market-tier revenue by 15&ndash;25%. This risk is partially mitigated by the asset's structural congestion relief role, which provides value regardless of the specific market mechanism used to remunerate it.</p>
     </div>
 
     <h4 style="font-size:15px; margin-top:24px; color:var(--primary)">Cannibalization &amp; Saturation</h4>
@@ -1688,9 +1690,9 @@
           <td style="font-size:12px">V<sub>DSO</sub> &euro;28.27M + V<sub>Community</sub> &euro;3.92M + V<sub>RO</sub> &euro;3.00M</td>
         </tr>
         <tr>
-          <td class="bold">25yr Revenue</td>
+          <td class="bold">30yr Revenue</td>
           <td class="num bold" style="font-size:16px">&euro;57.38M</td>
-          <td style="font-size:12px">Grid-services &euro;34.21M (59.6%) + Merchant &euro;23.17M (40.4%) &mdash; all accrues to investor</td>
+          <td style="font-size:12px">Contracted &euro;15.82M (27.6%) + Market &euro;40.71M (70.9%) + Emerging &euro;0.84M (1.5%) &mdash; all accrues to investor</td>
         </tr>
         <tr>
           <td class="bold">NPV / IRR / Payback</td>
@@ -1710,7 +1712,7 @@
       </table>
     </div>
 
-    <p>CP Fiumetorto represents a network-value-led BESS opportunity where the DSO benefit alone (&euro;28.27M) exceeds total CAPEX by a factor of 4&times;. The community dimension adds &euro;3.92M in monetised social welfare across five components (W1&ndash;W5) &mdash; from reliability improvement and carbon displacement to local employment creation and catastrophic communications resilience. The asset owner captures &euro;23.17M in direct merchant revenue with a Sharpe ratio of 16.63. Cyber-physical risk (CPIndex +9.1% for Sicilia, NIS2 compliance 2026&ndash;2028) adds a forward-looking dimension: the BESS serves not just as a merchant asset but as a cyber-resilience anchor for the local digital economy. The primary downside risk remains regulatory evolution, partially hedged by the asset's structural congestion relief role and growing NIS2-driven demand for resilience-as-a-service.</p>
+    <p>CP Fiumetorto represents a network-value-led BESS opportunity where the DSO benefit alone (&euro;28.27M) exceeds total CAPEX by a factor of 4&times;. The community dimension adds &euro;3.92M in monetised social welfare across five components (W1&ndash;W5) &mdash; from reliability improvement and carbon displacement to local employment creation and catastrophic communications resilience. The asset owner captures &euro;57.38M in total revenue (contracted &euro;15.82M + market &euro;40.71M + emerging &euro;0.84M) with a Sharpe ratio of 16.63. Cyber-physical risk (CPIndex +9.1% for Sicilia, NIS2 compliance 2026&ndash;2028) adds a forward-looking dimension: the BESS serves not just as a merchant asset but as a cyber-resilience anchor for the local digital economy. The primary downside risk remains regulatory evolution, partially hedged by the asset's structural congestion relief role and growing NIS2-driven demand for resilience-as-a-service.</p>
   </div>
 
   <!-- ═══════════ APPENDIX A: ACRONYMS ═══════════ -->
@@ -1726,7 +1728,7 @@
       <p><strong>CMIP6</strong> &mdash; Coupled Model Intercomparison Project Phase 6 (climate projections)</p>
       <p><strong>CP</strong> &mdash; Cabina Primaria (primary substation)</p>
       <p><strong>CPIndex</strong> &mdash; Cyber-Physical Risk Index</p>
-      <p><strong>CRS</strong> &mdash; Communications Resilience Service (R7 revenue stream)</p>
+      <p><strong>CRS</strong> &mdash; Communications Resilience Service (R11 per v27)</p>
       <p><strong>DER</strong> &mdash; Distributed Energy Resource</p>
       <p><strong>DESI</strong> &mdash; Digital Economy and Society Index</p>
       <p><strong>DSO / DNO</strong> &mdash; Distribution System Operator / Distribution Network Operator</p>
@@ -1754,7 +1756,7 @@
       <p><strong>PNRR</strong> &mdash; Piano Nazionale di Ripresa e Resilienza (National Recovery and Resilience Plan)</p>
       <p><strong>PUN</strong> &mdash; Prezzo Unico Nazionale (national single price, Italian wholesale market)</p>
       <p><strong>PV</strong> &mdash; Photovoltaic</p>
-      <p><strong>R1&ndash;R10</strong> &mdash; Revenue streams 1&ndash;10 (see Section 7)</p>
+      <p><strong>R1&ndash;R11</strong> &mdash; Revenue streams per v27 standard: R1 Capacity Market, R2 FCR/FFR, R3 aFRR/mFRR, R4 Arbitrage, R5 DSO Flexibility, R7 Fuel Nexus, R8 Embedded Benefits, R11 CRS. R6/R9/R10 zero in base case (see Section 7)</p>
       <p><strong>SAIDI</strong> &mdash; System Average Interruption Duration Index</p>
       <p><strong>SCADA</strong> &mdash; Supervisory Control and Data Acquisition</p>
       <p><strong>SCC</strong> &mdash; Social Cost of Carbon</p>
@@ -1856,7 +1858,7 @@
         </tr>
         <tr>
           <td style="font-weight:600">Project life</td>
-          <td>25 years</td>
+          <td>30 years</td>
           <td>LFP cell degradation to 70% beginning-of-life capacity assumed at year 12&ndash;15, with one mid-life augmentation (partial cell replacement) included in TCO. Inverter replacement at year 12. Civil infrastructure and grid connection are 30+ year assets.</td>
           <td>Extending to 30yr adds ~&euro;1.5M NPV</td>
         </tr>
