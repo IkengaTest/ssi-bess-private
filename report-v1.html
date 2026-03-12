@@ -879,6 +879,16 @@
       </div>
     </div>
 
+    <!-- V_ESG supplementary card -->
+    <div style="margin:16px 0">
+      <div class="kpi-card" style="border:2px dashed var(--sage); background:rgba(93,133,99,0.04); max-width:340px">
+        <div class="label" style="color:var(--sage)">V<sub>ESG</sub> &mdash; Supplementary</div>
+        <div class="value" style="color:var(--sage)">&euro;12.9M</div>
+        <div class="unit">Central estimate (range &euro;7.9&ndash;18.0M) &bull; Not in V<sub>Total</sub></div>
+        <div style="font-size:10px; color:var(--text-light); margin-top:6px">E1 Avoided Carbon &euro;10.6M + E2 Greenium &euro;0.12M + E3 Social &euro;2.2M</div>
+      </div>
+    </div>
+
     <!-- Stacked proportion bar -->
     <div style="margin:20px 0">
       <div style="display:flex; height:36px; border-radius:8px; overflow:hidden; font-size:12px; font-weight:600; color:white">
@@ -891,9 +901,15 @@
         <div style="width:11.1%; text-align:center">11.1%</div>
         <div style="width:8.5%; text-align:center">8.5%</div>
       </div>
+      <div style="display:flex; height:12px; border-radius:4px; overflow:hidden; margin-top:6px; border:1px dashed var(--sage)">
+        <div style="width:82%; background:rgba(93,133,99,0.15); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--sage); font-weight:600">E1 82%</div>
+        <div style="width:1%; background:rgba(184,134,58,0.15)"></div>
+        <div style="width:17%; background:rgba(148,25,20,0.10); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--dso-color); font-weight:600">E3 17%</div>
+      </div>
+      <div style="font-size:10px; color:var(--text-light); text-align:center; margin-top:2px">V<sub>ESG</sub> composition (supplementary &mdash; reported separately)</div>
     </div>
 
-    <p>The dominance of V<sub>DSO</sub> reflects Fiumetorto's extreme grid criticality: with R<sub>median</sub> at 0.6641, the substation sits in the 83rd percentile of the normalisation window (0.25&ndash;0.75), driving V<sub>DSO</sub> to &euro;28.27M against a Config B ceiling of &euro;30.0M. This is a network-value-led investment case, where community and optionality benefits reinforce an already compelling DSO proposition.</p>
+    <p>The dominance of V<sub>DSO</sub> reflects Fiumetorto's extreme grid criticality: with R<sub>median</sub> at 0.6641, the substation sits in the 83rd percentile of the normalisation window (0.25&ndash;0.75), driving V<sub>DSO</sub> to &euro;28.27M against a Config B ceiling of &euro;30.0M. This is a network-value-led investment case, where community and optionality benefits reinforce an already compelling DSO proposition. The supplementary V<sub>ESG</sub> (&euro;12.9M central) adds a fourth dimension: the socio-economic externality value that is invisible to conventional NPV analysis but critical for EU Taxonomy alignment, SFDR PAI reporting, and ESG-linked financing.</p>
   </div>
 
   <!-- ═══════════ SECTION 4: DSO VALUE ═══════════ -->
@@ -969,10 +985,28 @@
             <td class="num" style="color:var(--warm-grey)"><em>Flag only</em></td>
           </tr>
           <tr style="border-top:1px dashed var(--card-border)">
+            <td style="color:var(--sage); font-weight:700">E1</td>
+            <td class="bold">Avoided Carbon Externality</td>
+            <td>Shadow value of CO<sub>2</sub> displaced by the BESS shifting load from marginal fossil plant (CCGT, ~0.38 tCO<sub>2</sub>/MWh) to stored renewables. Monetised at three carbon-price scenarios: EU ETS floor (~&euro;75/tCO<sub>2</sub>), mid-point (~&euro;125), EPA SCC ceiling (~&euro;175). Source: ISPRA marginal EF &times; ICE Endex EUA / EPA SCC. <em>See &sect;0.4.1a (v27a).</em></td>
+            <td class="num bold" style="color:var(--sage)">&euro;6.4&ndash;14.8M</td>
+          </tr>
+          <tr>
+            <td style="color:var(--bronze); font-weight:700">E2</td>
+            <td class="bold">Green Financing Premium</td>
+            <td>NPV of WACC reduction from EU Taxonomy alignment (Climate Delegated Act, Activity 4.10). Debt greenium 3&ndash;15 bps + equity CoE reduction 10&ndash;30 bps = blended 15&ndash;25 bps. Source: Amundi/CBI green bond pricing, MSCI ESG &amp; CoC study.</td>
+            <td class="num bold" style="color:var(--bronze)">&euro;0.07&ndash;0.18M</td>
+          </tr>
+          <tr>
+            <td style="color:var(--dso-color); font-weight:700">E3</td>
+            <td class="bold">Social &amp; Community Co-benefit</td>
+            <td>Avoided air pollution damage (EEA ExternE: NO<sub>x</sub> ~&euro;15k/t, PM<sub>2.5</sub> ~&euro;40k/t) + incremental VOLL (ACER/CEER methodology, Italy ~&euro;10&ndash;15k/MWh) + skills-transfer employment premium (IRENA factors). Residual values only &mdash; base employment and carbon in W3 and E1 respectively.</td>
+            <td class="num bold" style="color:var(--dso-color)">&euro;1.4&ndash;3.0M</td>
+          </tr>
+          <tr style="border-top:1px solid var(--card-border); background:rgba(93,133,99,0.06)">
             <td></td>
-            <td class="bold">ESG Value Uplift</td>
-            <td>Sustainability and resilience value accruing to the DSO's regulatory and stakeholder positioning. To be defined and modelled in future iterations. <em>Not in v27 D1&ndash;D5 framework &mdash; additional Altinium metric.</em></td>
-            <td class="num" style="color:var(--warm-grey)"><em>TBD</em></td>
+            <td class="bold">V<sub>ESG</sub> Total</td>
+            <td>Supplementary metric &mdash; not added to V<sub>DSO</sub>. Independently auditable against published regulatory sources (ISPRA, EU ETS, EPA, EEA, ACER, IRENA). Subject to ISAE 3000 limited assurance. <em>Not in v27 D1&ndash;D5 framework &mdash; additional Altinium metric per v27a (&sect;0.4.1a).</em></td>
+            <td class="num bold" style="color:var(--sage); font-size:15px">&euro;7.9&ndash;18.0M</td>
           </tr>
         </tbody>
       </table>
@@ -980,7 +1014,7 @@
       <p style="margin-top:16px">For a Sicilian node like Fiumetorto, where congestion (C = 0.319) is the dominant SSI component and renewable curtailment is structural, the BESS acts as a congestion valve &mdash; absorbing excess generation during peak solar hours and re-dispatching during evening ramps. This congestion relief is the primary driver of the DSO's avoided-cost value.</p>
 
       <div class="highlight-box">
-        <strong>DSO investment signal:</strong> Grid interconnection at Fiumetorto serves the distribution network interest across all four monetised D-components: deferring network reinforcement (D1, avoided CAPEX &euro;3&ndash;8M), absorbing structural congestion (D2, dominant at this high-S node), reducing I&sup2;R losses (D3), and providing voltage support (D4). The DSO benefits from deferred infrastructure spend and improved regulatory performance without direct expenditure, while the BESS investor captures all market revenue through the eight active revenue streams (v27 R-codes) detailed in the <a href="#owner" style="color:var(--dso-color); font-weight:600">Asset Owner</a> section.
+        <strong>DSO investment signal:</strong> Grid interconnection at Fiumetorto serves the distribution network interest across all four monetised D-components: deferring network reinforcement (D1, avoided CAPEX &euro;3&ndash;8M), absorbing structural congestion (D2, dominant at this high-S node), reducing I&sup2;R losses (D3), and providing voltage support (D4). The DSO benefits from deferred infrastructure spend and improved regulatory performance without direct expenditure, while the BESS investor captures all market revenue through the eight active revenue streams (v27 R-codes) detailed in the <a href="#owner" style="color:var(--dso-color); font-weight:600">Asset Owner</a> section. Beyond the regulated framework, the ESG Value Uplift (V<sub>ESG</sub> &euro;7.9&ndash;18.0M, per v27a &sect;0.4.1a) quantifies the broader socio-economic externality: avoided carbon at shadow prices (E1), Taxonomy-linked financing premium (E2), and residual social co-benefits (E3) &mdash; reported as a supplementary metric alongside V<sub>DSO</sub>.
       </div>
     </div>
   </div>
@@ -1024,22 +1058,22 @@
       </div>
     </div>
 
-    <!-- W2 -->
+    <!-- W2 (REVISED v27a — physical metric primary) -->
     <div style="background:white; border:1px solid #e8e0f0; border-left:4px solid var(--community-color); border-radius:8px; padding:24px; margin:16px 0">
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
         <div style="background:var(--community-color); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">W2</div>
         <div>
-          <div style="font-size:15px; font-weight:700; color:var(--community-color)">Carbon Displacement</div>
-          <div style="font-size:11px; color:var(--text-light)">W2 = E_displaced &times; MEF &times; SCC</div>
+          <div style="font-size:15px; font-weight:700; color:var(--community-color)">Carbon Displacement <span style="font-size:10px; background:rgba(93,133,99,0.12); color:var(--sage); padding:2px 6px; border-radius:3px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; margin-left:6px">Revised v27a</span></div>
+          <div style="font-size:11px; color:var(--text-light)">W2 = Q<sub>disp</sub> &times; MEF<sub>marginal</sub> &ensp;[tCO<sub>2</sub>/yr &mdash; physical metric]</div>
         </div>
       </div>
-      <p style="font-size:13px">By absorbing renewable curtailment during peak solar hours and re-dispatching during evening ramps, the 39.6 MWh BESS displaces marginal gas-fired generation (CCGT at ~0.38 tCO&sub2;/MWh). Estimated annual displacement: ~5,500&ndash;8,200 MWh, avoiding ~2,100&ndash;3,100 tCO&sub2;/year. Valued at the EU ETS price (~&euro;65&ndash;80/tCO&sub2;) and social cost of carbon (~&euro;120/tCO&sub2;), this produces a dual valuation:</p>
-      <table class="sub-table" style="max-width:500px">
-        <tr><td>Market valuation (ETS)</td><td class="num">&euro;0.14&ndash;0.25M/yr</td></tr>
-        <tr><td>Social valuation (SCC)</td><td class="num">&euro;0.25&ndash;0.37M/yr</td></tr>
-        <tr><td>Physical metric</td><td class="num">~2,100&ndash;3,100 tCO&sub2;/yr avoided</td></tr>
+      <p style="font-size:13px">By absorbing renewable curtailment during peak solar hours and re-dispatching during evening ramps, the 39.6 MWh BESS displaces marginal gas-fired generation (CCGT at ~0.38 tCO<sub>2</sub>/MWh). Estimated annual displacement: ~5,500&ndash;8,200 MWh across all dispatch modes (curtailment absorption, arbitrage, frequency response), avoiding <strong>~2,100&ndash;3,100 tCO<sub>2</sub>/year</strong>.</p>
+      <table class="sub-table" style="max-width:560px">
+        <tr><td style="font-weight:600">Physical metric (primary)</td><td class="num bold">~2,100&ndash;3,100 tCO<sub>2</sub>/yr</td></tr>
+        <tr><td>30-year cumulative avoidance</td><td class="num">~45,000&ndash;70,000 tCO<sub>2</sub></td></tr>
+        <tr style="border-top:1px dashed var(--card-border)"><td style="color:var(--text-light)">Monetary valuation (memo)</td><td class="num" style="color:var(--text-light)">See E1 (&euro;6.4&ndash;14.8M NPV)</td></tr>
       </table>
-      <p style="font-size:12px; color:var(--text-light); margin-top:8px">W2 declines gradually over 30 years as Italy's grid decarbonises (MEF falls from ~0.38 to ~0.10 tCO&sub2;/MWh by 2050 per PNIEC trajectory).</p>
+      <p style="font-size:12px; color:var(--text-light); margin-top:10px"><strong>v27a restructuring:</strong> W2 now reports the <em>physical</em> metric only (tCO<sub>2</sub>/yr) &mdash; the primary metric for EU Taxonomy substantial-contribution evidence, SFDR PAI Indicator 1, and local government climate-action plans. All <em>monetary</em> carbon valuation has been consolidated into <strong>E1 (Avoided Carbon Externality)</strong> within the V<sub>ESG</sub> framework (&sect;0.4.1a) to eliminate double-counting between the Community and ESG stacks. W2 declines gradually over 30 years as Italy&rsquo;s grid decarbonises (MEF falls from ~0.38 to ~0.10 tCO<sub>2</sub>/MWh by 2050 per PNIEC trajectory).</p>
     </div>
 
     <!-- W3 -->
@@ -1990,7 +2024,7 @@
       </table>
     </div>
 
-    <p>CP Fiumetorto represents a network-value-led BESS opportunity where the DSO benefit alone (&euro;28.27M) exceeds total CAPEX by a factor of 4&times;. The community dimension adds &euro;3.92M in monetised social welfare across five components (W1&ndash;W5) &mdash; from reliability improvement and carbon displacement to local employment creation and catastrophic communications resilience. The asset owner captures &euro;57.38M in total revenue (contracted &euro;15.82M + market &euro;40.71M + emerging &euro;0.84M) with a Sharpe ratio of 16.63. Cyber-physical risk (CPIndex +9.1% for Sicilia, NIS2 compliance 2026&ndash;2028) adds a forward-looking dimension: the BESS serves not just as a merchant asset but as a cyber-resilience anchor for the local digital economy. The primary downside risk remains regulatory evolution, partially hedged by the asset's structural congestion relief role and growing NIS2-driven demand for resilience-as-a-service.</p>
+    <p>CP Fiumetorto represents a network-value-led BESS opportunity where the DSO benefit alone (&euro;28.27M) exceeds total CAPEX by a factor of 4&times;. The community dimension adds &euro;3.92M in monetised social welfare across five components (W1&ndash;W5), with W2 now reporting physical carbon displacement (~2,100&ndash;3,100 tCO<sub>2</sub>/yr) as the primary metric for EU Taxonomy and SFDR compliance. The asset owner captures &euro;57.38M in total revenue (contracted &euro;15.82M + market &euro;40.71M + emerging &euro;0.84M) with a Sharpe ratio of 16.63. The new V<sub>ESG</sub> framework (v27a, &sect;0.4.1a) adds a fourth valuation dimension: &euro;12.9M central estimate (&euro;7.9&ndash;18.0M range) of socio-economic externality value across avoided carbon (E1, &euro;10.6M), green financing premium (E2, &euro;0.12M), and social co-benefits (E3, &euro;2.2M) &mdash; grounded in EU ETS/EPA SCC carbon pricing, ISPRA marginal emission factors, EEA ExternE air quality damage costs, and ACER/CEER VOLL methodology. Cyber-physical risk (CPIndex +9.1% for Sicilia, NIS2 compliance 2026&ndash;2028) adds a forward-looking dimension: the BESS serves not just as a merchant asset but as a cyber-resilience anchor for the local digital economy. The primary downside risk remains regulatory evolution, partially hedged by the asset's structural congestion relief role and growing NIS2-driven demand for resilience-as-a-service.</p>
   </div>
 
   <!-- ═══════════ APPENDIX A: ACRONYMS ═══════════ -->
@@ -2010,6 +2044,10 @@
       <p><strong>DER</strong> &mdash; Distributed Energy Resource</p>
       <p><strong>DESI</strong> &mdash; Digital Economy and Society Index</p>
       <p><strong>DSO / DNO</strong> &mdash; Distribution System Operator / Distribution Network Operator</p>
+      <p><strong>E1</strong> &mdash; Avoided Carbon Externality (V<sub>ESG</sub> component, &sect;0.4.1a). Shadow value of displaced fossil CO<sub>2</sub>.</p>
+      <p><strong>E2</strong> &mdash; Green Financing Premium (V<sub>ESG</sub> component). WACC reduction from EU Taxonomy alignment.</p>
+      <p><strong>E3</strong> &mdash; Social &amp; Community Co-benefit (V<sub>ESG</sub> component). Air quality, VOLL, skills-transfer residuals.</p>
+      <p><strong>EEA</strong> &mdash; European Environment Agency</p>
       <p><strong>EP</strong> &mdash; Energy Poverty (rate, %)</p>
       <p><strong>ETS</strong> &mdash; Emissions Trading System (EU)</p>
       <p><strong>FTE</strong> &mdash; Full-Time Equivalent (employment measure)</p>
@@ -2044,11 +2082,12 @@
       <p><strong>SSP2-4.5</strong> &mdash; Shared Socioeconomic Pathway 2, RCP 4.5 (moderate climate scenario)</p>
       <p><strong>TCO</strong> &mdash; Total Cost of Ownership</p>
       <p><strong>TVaR</strong> &mdash; Tail Value at Risk</p>
-      <p><strong>V<sub>Community</sub></strong> &mdash; Community welfare value (W1&ndash;W5 aggregated)</p>
-      <p><strong>V<sub>DSO</sub></strong> &mdash; Distribution network operator value</p>
+      <p><strong>V<sub>Community</sub></strong> &mdash; Community welfare value (W1 + W3 + W4 + W5 NPV; W2 physical tCO<sub>2</sub>/yr)</p>
+      <p><strong>V<sub>DSO</sub></strong> &mdash; Distribution network operator value (D1&ndash;D4 NPV; D5 flag)</p>
+      <p><strong>V<sub>ESG</sub></strong> &mdash; ESG Value Uplift (E1 + E2 + E3). Supplementary metric per v27a &sect;0.4.1a. Not added to V<sub>DSO</sub>.</p>
       <p><strong>V<sub>RO</sub></strong> &mdash; Real option / asset owner value</p>
       <p><strong>VoLL</strong> &mdash; Value of Lost Load (&euro;/kWh)</p>
-      <p><strong>W1&ndash;W5</strong> &mdash; Community value components: Reliability (W1), Carbon (W2), Economic Impact (W3), Resilience Insurance (W4), Communications Resilience (W5)</p>
+      <p><strong>W1&ndash;W5</strong> &mdash; Community value components: Reliability (W1), Carbon Displacement (W2, physical tCO<sub>2</sub>/yr &mdash; monetary in E1), Economic Impact (W3), Resilience Insurance (W4), Communications Resilience (W5)</p>
       <p><strong>WACC</strong> &mdash; Weighted Average Cost of Capital</p>
     </div>
   </div>
@@ -2081,7 +2120,14 @@
         <tr><td>ISPRA / IRI Scores</td><td>Hydrogeological risk (flood, landslide) per municipality</td><td>2021</td><td>2021 update</td></tr>
         <tr><td>IRENA (BESS Employment)</td><td>FTE/MW employment factors, cost curves, degradation models</td><td>2023&ndash;2024</td><td>Jun 2024</td></tr>
         <tr><td>BNEF / LCOS</td><td>BESS CAPEX benchmarks, balance-of-system costs, degradation</td><td>2024</td><td>Q4 2024</td></tr>
-        <tr><td>EU ETS / ICE ECX</td><td>Carbon price futures</td><td>2024&ndash;2035 curve</td><td>Jan 2025</td></tr>
+        <tr><td>EU ETS / ICE ECX</td><td>Carbon price futures (E1 floor scenario)</td><td>2024&ndash;2035 curve</td><td>Jan 2025</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>US EPA Social Cost of Carbon</td><td>SCC at 2% discount rate (E1 ceiling scenario)</td><td>2023 update</td><td>Nov 2023</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>ISPRA (R-404/2024)</td><td>Grid marginal emission factor (E1, W2 physical tCO<sub>2</sub>)</td><td>2023 data</td><td>Oct 2024</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>EEA ExternE / NEEDS</td><td>Air pollution damage costs: NO<sub>x</sub>, PM<sub>2.5</sub>, SO<sub>2</sub> (E3)</td><td>2023 update</td><td>2023</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>ACER/CEER VOLL Methodology</td><td>Value of Lost Load, Italy-specific (E3)</td><td>2022</td><td>2022</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>Amundi / CBI Green Bond Pricing</td><td>Debt greenium &amp; equity CoE reduction (E2)</td><td>H2 2024</td><td>Dec 2024</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>MSCI ESG &amp; Cost of Capital</td><td>Equity CoE reduction from ESG score improvement (E2)</td><td>2023&ndash;2025</td><td>2025</td></tr>
+        <tr style="background:rgba(93,133,99,0.06)"><td>EU Taxonomy Compass</td><td>Climate Delegated Act, Activity 4.10 alignment criteria</td><td>2023 (amended 2025)</td><td>2025</td></tr>
         <tr><td>ENISA / NIS2 Registry</td><td>Cyber-physical risk indicators, essential entity classification</td><td>2023&ndash;2025</td><td>Oct 2024</td></tr>
         <tr><td>Min. Salute / ARERA</td><td>Critical infrastructure register (hospitals, transport, data centres)</td><td>2023</td><td>2023</td></tr>
         <tr><td>Agcom / OFCOM IT</td><td>Telecom base station density, OLT locations, backup battery specs</td><td>2023</td><td>Sep 2023</td></tr>
@@ -2166,9 +2212,9 @@
         </tr>
         <tr>
           <td style="font-weight:600">Carbon price trajectory</td>
-          <td>EU ETS forward curve + SCC</td>
-          <td>W2 valued at social cost of carbon (&euro;80&ndash;150/tCO<sub>2</sub>e, EU Commission central range) applied to displaced marginal emissions. Merchant carbon not modelled as a separate revenue stream.</td>
-          <td>&plusmn;&euro;30/tCO<sub>2</sub>e shifts W2 by ~&plusmn;20%</td>
+          <td>EU ETS floor / Mid-point / EPA SCC ceiling</td>
+          <td>Three-scenario framework (v27a): ETS spot ~&euro;75/tCO<sub>2</sub> (floor), mid-point ~&euro;125, EPA SCC ~&euro;175 (ceiling). Drives E1 (Avoided Carbon Externality) in V<sub>ESG</sub>. W2 now reports physical tCO<sub>2</sub>/yr only &mdash; monetary carbon valuation consolidated in E1 to prevent double-counting.</td>
+          <td>&plusmn;&euro;50/tCO<sub>2</sub> shifts E1 by ~&plusmn;&euro;3.4M (30yr NPV)</td>
         </tr>
         <tr>
           <td style="font-weight:600">Climate escalation (SSP2-4.5)</td>
