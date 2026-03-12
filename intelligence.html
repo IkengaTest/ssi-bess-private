@@ -228,7 +228,37 @@
       <div style="display:flex;gap:1.5rem;margin:0.5rem 0 1.5rem;font-size:0.72rem;color:#6b7280;">
         <span>R_conv trajectory: <strong>2024</strong> 58% → <strong>2030</strong> 42% → <strong>2035</strong> 25% → <strong>2050</strong> 5%</span>
         <span>Annual shock probability: <strong>8.7%</strong></span>
-        <span>Features: <strong>38</strong> (v3.2)</span>
+        <span>Features: <strong>38</strong> (v3.3)</span>
+      </div>
+
+      <!-- v3.3: Monte Carlo Revenue Engine -->
+      <div class="section-label" style="margin-top:2rem;">Monte Carlo Revenue Engine <span style="font-size:0.65rem;background:#d1fae5;padding:2px 6px;border-radius:3px;color:#065f46;margin-left:0.5rem;">NEW v3.3</span></div>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-green">
+          <div class="kpi-value" id="mc-npv-median">€20.94M</div>
+          <div class="kpi-label">NPV Median (Config B)</div>
+          <div class="kpi-unit">200 paths × 25yr × 8,760h</div>
+        </div>
+        <div class="kpi-card kpi-green">
+          <div class="kpi-value" id="mc-irr-median">26.8%</div>
+          <div class="kpi-label">IRR Median</div>
+          <div class="kpi-unit">Vectorised binary search</div>
+        </div>
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-value" id="mc-sharpe">15.98</div>
+          <div class="kpi-label">Sharpe Ratio</div>
+          <div class="kpi-unit">NPV mean / NPV std</div>
+        </div>
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-value" id="mc-npv-range">€18.9M – €23.6M</div>
+          <div class="kpi-label">NPV P5 – P95 Range</div>
+          <div class="kpi-unit">90% confidence interval</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;margin:0.5rem 0 1.5rem;font-size:0.72rem;color:#6b7280;">
+        <span>Revenue: aFRR <strong>25.4%</strong> | FCR <strong>18.1%</strong> | CM <strong>15.8%</strong></span>
+        <span>NN v3.3: R² <strong>0.8887</strong> | AUC <strong>0.9855</strong></span>
+        <span>Fleet MC: <strong>124.4s</strong> (zone cache)</span>
       </div>
 
       <!-- Narrative -->

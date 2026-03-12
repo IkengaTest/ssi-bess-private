@@ -1,11 +1,18 @@
 """
-SSI-ENN BESS — Neural Network Training Module (v3.2 — + Fuel-Electricity Nexus)
+SSI-ENN BESS — Neural Network Training Module (v3.3 — Monte Carlo Targets)
 ==================================================================================
-Four models trained on 4,293 Italian substations with expanded 38-feature set:
+Four models trained on 4,293 Italian substations with 38-feature set + MC targets:
   1. BESS Recommender   — Config A vs B (MLP, confirmed optimal)
-  2. NPV Regressor      — Config B NPV (MLP 512-256-128, upgraded)
+  2. NPV Regressor      — Config B NPV P50 from Monte Carlo (MLP 512-256-128)
   3. Band Predictor     — Low/Medium/High/Critical (RandomForest, 100% acc)
   4. Anomaly Detector   — 3-residual IsolationForest (rec + NPV + band)
+
+v3.3 enhancements (from v3.2):
+  - BREAKING: NPV target switched from ad-hoc formula → MC-derived P50
+  - NPV Regressor now predicts mc_results.npv.npv_P50 (stochastic, calibrated)
+  - Additional MC-derived targets available: npv_P5, npv_P95, irr_median, sharpe_ratio
+  - Breaks circular dependency: Layer 3 NN no longer trains on Layer 2 formula outputs
+  - MC engine: OU jump-diffusion prices × 10 revenue streams × 200 paths × 25 years
 
 v3.2 enhancements (from v3.1):
   - Feature expansion: 35 → 38 features (+3 fuel-electricity nexus features)
@@ -112,6 +119,7 @@ class FeatureEngineer:
             cann = s.get('cannibalization', {})
             bs = s.get('black_swan', {})
             act = s.get('actuarial', {})
+            mc = s.get('mc_results', {})
 
             row = {
                 'substation_id': s.get('substation_id', ''),
@@ -165,12 +173,20 @@ class FeatureEngineer:
                 'fuel_shock_exposure': bs.get('fuel_nexus', {}).get('fuel_shock_exposure', 0.0),
                 'bess_fuel_upside': bs.get('fuel_nexus', {}).get('bess_fuel_upside', 0.0),
                 'decarb_discount': bs.get('fuel_nexus', {}).get('decarb_discount', 0.45),
-                # Targets
+                # Targets — v3.3: MC-derived targets (break circular dependency)
                 'recommendation': 1 if bess.get('recommendation') == 'Config B' else 0,
                 'priority': bess.get('investment_priority', 5),
                 'classification': s.get('classification', 'Medium'),
-                'npv_b': cfg_b.get('NPV_M', 0),
-                'irr_b': cfg_b.get('IRR_pct', 0),
+                # Legacy formula-derived targets (kept for comparison)
+                'npv_b_formula': cfg_b.get('NPV_M', 0),
+                'irr_b_formula': cfg_b.get('IRR_pct', 0),
+                # MC-derived targets (primary for v3.3)
+                'npv_b': mc.get('npv', {}).get('npv_P50', cfg_b.get('NPV_M', 0)),
+                'npv_P5': mc.get('npv', {}).get('npv_P5', 0),
+                'npv_P95': mc.get('npv', {}).get('npv_P95', 0),
+                'irr_b': mc.get('irr', {}).get('irr_median', cfg_b.get('IRR_pct', 0)),
+                'sharpe_ratio': mc.get('risk', {}).get('sharpe_ratio', 0),
+                'npv_positive_pct': mc.get('npv', {}).get('npv_positive_pct', 0),
             }
             rows.append(row)
         return pd.DataFrame(rows)
@@ -272,7 +288,7 @@ class NeuralNetworkTrainer:
             n_train, n_test = len(self.train_idx), len(self.test_idx)
             n_regions = self.df['region'].nunique()
             print(f"\n{'='*70}")
-            print(f"  SSI-ENN BESS — Neural Network Training (v2 Refined)")
+            print(f"  SSI-ENN BESS — Neural Network Training (v3.3 — MC Targets)")
             print(f"{'='*70}")
             print(f"  Substations : {len(substations):,}")
             print(f"  Features    : {self.X.shape[1]}")
@@ -736,13 +752,16 @@ class NeuralNetworkTrainer:
             print(f"{'='*70}")
 
         self.metrics['_meta'] = {
-            'version': 3,
+            'version': 3.3,
             'n_substations': len(self.df),
             'n_features': self.X.shape[1],
             'n_train': len(self.train_idx),
             'n_test': len(self.test_idx),
             'duration_s': round(duration, 2),
             'random_state': self.random_state,
+            'target_source': 'monte_carlo',
+            'mc_paths': 200,
+            'mc_horizon_years': 25,
             'feature_groups': {
                 'geographic': len(GEOGRAPHIC_FEATURES),
                 'ssi_scores': len(SSI_SCORE_FEATURES),
@@ -750,14 +769,21 @@ class NeuralNetworkTrainer:
                 'modifiers': len(MODIFIER_FEATURES),
                 'socio': len(SOCIO_FEATURES),
                 'enrichment': len(ENRICHMENT_FEATURES),
+                'nodal': len(NODAL_FEATURES),
+                'fuel_nexus': len(FUEL_NEXUS_FEATURES),
             },
             'refinements': [
                 'v3: Feature expansion 22 → 32 (+10 enrichment features)',
                 'v3: Added CRS, BESS_SAT, exposure_index from cannibalization.py',
                 'v3: Added bs_composite from black_swan.py',
                 'v3: Added tvar_95, tail_ratio, pad_bps, wacc_adjusted, gpd_xi from actuarial.py',
+                'v3.1: Added 3 nodal pricing features (crs_nodal, crs_uplift_pct, congestion_factor)',
+                'v3.2: Added 3 fuel nexus features (fuel_shock_exposure, bess_fuel_upside, decarb_discount)',
+                'v3.3: NPV target switched from ad-hoc formula → MC-derived P50',
+                'v3.3: MC engine: OU jump-diffusion × 10 revenue streams × 200 paths × 25 years',
+                'v3.3: Breaks circular dependency — NN no longer trains on formula outputs',
                 'Model 1: MLP(128,64,32) confirmed, added feature importance + confusion matrix',
-                'Model 2: Upgraded to MLP(512,256,128), added quartile MAE + bias tracking',
+                'Model 2: Upgraded to MLP(512,256,128), now predicts MC NPV P50',
                 'Model 3: Switched to RandomForest (100% accuracy vs 98.6% MLP)',
                 'Model 4: 3-residual inputs (rec+NPV+band), anomaly type classification',
             ],
