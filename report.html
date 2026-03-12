@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BESS Config B — Stakeholder Value Report | CP Fiumetorto</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
-<style>
+
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
   :root {
     --cream: #faf6f5;
@@ -284,6 +283,7 @@
     .cover { break-after: page; }
   }
 
+
   /* ── Tab Navigation ── */
   .tab-bar {
     background: var(--ink);
@@ -324,12 +324,8 @@
   .tab-bar button[data-tab="dno"].active { border-bottom-color: var(--crimson); }
   .tab-bar button[data-tab="community"].active { border-bottom-color: var(--bronze); }
   .tab-bar button[data-tab="investor"].active { border-bottom-color: var(--sage); }
-
-  /* View panels */
   .view-panel { display: none; }
   .view-panel.active { display: block; }
-
-  /* Smooth scroll to top on tab switch */
   html { scroll-behavior: smooth; }
 
 </style>
@@ -337,6 +333,7 @@
 <body>
 <div class="page">
 
+<!-- COVER -->
   <div class="cover">
     <div style="display:flex; justify-content:space-between; align-items:flex-start">
       <div style="flex:1">
@@ -358,13 +355,17 @@
   </div>
 
   <!-- TABLE OF CONTENTS -->
-  <div id="toc-card" style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:20px 24px; margin-bottom:0">
+  <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:20px 24px; margin-bottom:0">
     <span style="font-size:10px; font-weight:500; letter-spacing:1.2px; text-transform:uppercase; color:var(--warm-grey)">Report Sections</span>
     <div style="display:grid; grid-template-columns:1fr; gap:6px; margin-top:14px; font-size:13px">
       <a href="#" onclick="switchTab('exec'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--terracotta); font-weight:600; margin-right:8px">1</span> Executive Summary</a>
       <a href="#" onclick="switchTab('dno'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--crimson); font-weight:600; margin-right:8px">2</span> Value to DNO &mdash; Grid Interconnection Support</a>
       <a href="#" onclick="switchTab('community'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--bronze); font-weight:600; margin-right:8px">3</span> Value to Community &mdash; PLA Permit &amp; Licence Support</a>
       <a href="#" onclick="switchTab('investor'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--sage); font-weight:600; margin-right:8px">4</span> Value to Investor &mdash; Project Acquisition Support</a>
+      <a href="#cyber" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--warm-grey); font-weight:600; margin-right:8px">5</span> Cyber Risk Exposure</a>
+      <a href="#app-a" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--warm-grey); font-weight:600; margin-right:8px">A</span> Acronyms &amp; Glossary</a>
+      <a href="#app-b" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--warm-grey); font-weight:600; margin-right:8px">B</span> Data Sources &amp; Vintage</a>
+      <a href="#app-c" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--warm-grey); font-weight:600; margin-right:8px">C</span> Key Assumptions</a>
     </div>
   </div>
 
@@ -378,7 +379,7 @@
 
   <!-- VIEW: EXECUTIVE SUMMARY -->
   <div class="view-panel active" id="view-exec">
-  <!-- SECTION 1: EXECUTIVE SUMMARY -->
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
   <div class="section" id="exec">
     <div class="section-num">Section 1</div>
     <h3>Executive Summary</h3>
@@ -490,16 +491,14 @@
       <strong>Investment thesis:</strong> Fiumetorto's extreme grid criticality (R<sub>median</sub> = 0.6641, Classification: High) generates outsized DSO value, while Sicily's elevated energy poverty rate (15.0%) ensures meaningful community benefit. The 18.9% IRR with a 5-year payback comfortably clears the 5.2% WACC hurdle, and Monte Carlo simulation confirms robust returns with a Sharpe ratio of 16.63.
     </div>
   </div>
-
   </div>
 
   <!-- VIEW: VALUE TO DNO -->
   <div class="view-panel" id="view-dno">
-  <!-- SECTION 2: VALUE TO DNO -->
+<!-- SECTION 2: VALUE TO DNO -->
   <div class="section-divider dso" style="page-break-before:always">
     <span>Section 2: Value to DNO &mdash; Grid Interconnection Support</span>
   </div>
-
 
   <div class="section" id="dno">
     <div class="audience-tag">FOR: Distribution System Operator / Terna / Regulatory Authorities</div>
@@ -778,16 +777,14 @@
       <strong>DSO investment signal:</strong> The &euro;28.27M V<sub>DSO</sub> implies that for every &euro;1 of CAPEX, the network receives &euro;4.04 in avoided-cost value over the asset's life. Grid Fee Deferral (R9 = &euro;4.27M) alone recovers 61% of the initial investment, before considering any merchant or ancillary revenue. Grid interconnection at Fiumetorto serves the distribution network interest by deferring €3–8M of network reinforcement and enabling structural congestion management through proven, scalable dispatch mechanisms.
     </div>
   </div>
-
   </div>
 
   <!-- VIEW: VALUE TO COMMUNITY -->
   <div class="view-panel" id="view-community">
-  <!-- SECTION 3: VALUE TO COMMUNITY -->
+<!-- SECTION 3: VALUE TO COMMUNITY -->
   <div class="section-divider community" style="page-break-before:always">
     <span>Section 3: Value to Community — PLA Permit & Licence Support</span>
   </div>
-
 
   <div class="section" id="community">
     <div class="audience-tag">FOR: Municipal & Regional Authorities / Environmental Agencies</div>
@@ -1156,16 +1153,14 @@
       <strong>Community investment signal:</strong> The €3.92M V<sub>Community</sub> captures a moderate-to-strong social case. Sicily's 15% energy poverty, social vulnerability score of 0.76 (upper quartile), and 14.2% unemployment create a context where each €1 of BESS investment generates disproportionate welfare uplift. The 81–156 total employment footprint (direct + catalytic) is material for a province this size. As W4 (resilience) and W5 (communications) grow with climate escalation and digital dependency, the community value strengthens over the asset's 25-year life. Granting PLA is in the community's interest and avoids grounds for recourse.
     </div>
   </div>
-
   </div>
 
   <!-- VIEW: VALUE TO INVESTOR -->
   <div class="view-panel" id="view-investor">
-  <!-- SECTION 4: VALUE TO INVESTOR -->
+<!-- SECTION 4: VALUE TO INVESTOR -->
   <div class="section-divider investor" style="page-break-before:always">
     <span>Section 4: Value to Investor — Project Acquisition Support</span>
   </div>
-
 
   <div class="section" id="investor">
     <div class="audience-tag">FOR: Institutional Investors / Infrastructure Funds / Private Equity</div>
@@ -1413,11 +1408,10 @@
       <strong>Investor investment signal:</strong> With an IRR of 18.9% (3.6× the WACC hurdle), a 5-year payback, and a Sharpe ratio of 16.63, this is a top-tier risk-adjusted BESS investment. The investor acquires €35.20M in total stakeholder value creation (DSO €28.27M + Community €3.92M + Real Options €3.0M) while capturing €23.17M in direct merchant revenue. The narrow Monte Carlo P5–P95 band confirms low downside risk. Regulatory risk (elevated at 0.650) is partially hedged by the asset's structural congestion relief role and growing NIS2-driven demand for resilience infrastructure.
     </div>
   </div>
-
   </div>
 
   <!-- CYBER RISK (always visible) -->
-  <!-- SECTION 5b: CYBER RISK EXPOSURE -->
+<!-- SECTION 5b: CYBER RISK EXPOSURE -->
   <div class="section-divider" style="page-break-before:always; border-color:var(--warm-grey)">
     <span style="color:var(--ink)">Section 5: Cyber Risk Exposure</span>
   </div>
@@ -1486,8 +1480,8 @@
     </div>
   </div>
 
-
-  <!-- APPENDIX A -->
+  <!-- APPENDICES (always visible) -->
+<!-- APPENDIX A -->
   <div class="section" id="app-a" style="border-top:2px solid var(--card-border); padding-top:32px">
     <div class="section-num">Appendix A</div>
     <h3>Acronyms &amp; Glossary</h3>
@@ -1634,11 +1628,9 @@
     </table>
   </div>
 
-
-
 </div><!-- close .page -->
 
-  <!-- FOOTER -->
+<!-- FOOTER -->
   <footer style="background:#2c2420; color:#b5aca5; padding:48px clamp(2rem, 8vw, 6rem) 32px; border-top:1px solid rgba(255,255,255,0.04); font-family:'DM Sans', sans-serif">
     <div style="max-width:860px; margin:0 auto">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:40px; margin-bottom:32px">
@@ -1665,27 +1657,21 @@
     </div>
   </footer>
 
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-bar button').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
+  });
+  document.querySelectorAll('.view-panel').forEach(function(panel) {
+    panel.classList.toggle('active', panel.id === 'view-' + tab);
+  });
+  document.getElementById('tab-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(function() { drawAllRadars(); }, 50);
+}
+</script>
 
-
-  <!-- TAB SWITCHING + RADAR CHART JAVASCRIPT -->
+<!-- RADAR CHART JAVASCRIPT -->
   <script>
-  // ── Tab Navigation ──
-  function switchTab(tab) {
-    // Update buttons
-    document.querySelectorAll('.tab-bar button').forEach(function(btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
-    });
-    // Update panels
-    document.querySelectorAll('.view-panel').forEach(function(panel) {
-      panel.classList.toggle('active', panel.id === 'view-' + tab);
-    });
-    // Scroll to tab bar
-    document.getElementById('tab-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Redraw radar charts after panel becomes visible
-    setTimeout(function() { drawAllRadars(); }, 50);
-  }
-
-  // ── Radar Charts ──
   (function(){
     const keys = ['C','V','I','E','S','T'];
     const labels = ['Continuity','Voltage','Infra.','Economic','Saturation','Transition'];
@@ -1698,7 +1684,6 @@
     function drawRadar(canvasId, data, bandColor, ghostData) {
       const c = document.getElementById(canvasId);
       if (!c) return;
-      // Skip if canvas is not visible (hidden tab)
       if (c.offsetParent === null) return;
       const dpr = window.devicePixelRatio || 1;
       const size = 280;
@@ -1714,6 +1699,7 @@
       function pt(i, r) { return [centerX + Math.cos(angle(i)) * r, centerY + Math.sin(angle(i)) * r]; }
       function norm(k, v) { return Math.min(v / weights[k], 1); }
 
+      // Background rings
       cx.strokeStyle = 'rgba(44,36,32,0.06)';
       cx.lineWidth = 0.5;
       for (let ring = 1; ring <= 4; ring++) {
@@ -1726,6 +1712,7 @@
         cx.stroke();
       }
       
+      // Axis lines
       cx.strokeStyle = 'rgba(44,36,32,0.08)';
       cx.lineWidth = 0.5;
       for (let i = 0; i < n; i++) {
@@ -1736,6 +1723,7 @@
         cx.stroke();
       }
 
+      // Fleet median polygon
       cx.beginPath();
       for (let i = 0; i <= n; i++) {
         const k=keys[i%n];
@@ -1750,6 +1738,7 @@
       cx.stroke();
       cx.setLineDash([]);
 
+      // Ghost polygon (before outline on after chart)
       if (ghostData) {
         cx.beginPath();
         for (let i = 0; i <= n; i++) {
@@ -1764,6 +1753,7 @@
         cx.setLineDash([]);
       }
 
+      // Main polygon
       cx.beginPath();
       for (let i = 0; i <= n; i++) {
         const k=keys[i%n];
@@ -1776,6 +1766,7 @@
       cx.lineWidth = 2;
       cx.stroke();
 
+      // Data points
       for (let i = 0; i < n; i++) {
         const k=keys[i];
         const [x,y]=pt(i, radius*norm(k, data[k]));
@@ -1788,6 +1779,7 @@
         cx.stroke();
       }
       
+      // Labels
       cx.font = '500 10px "DM Sans", sans-serif';
       cx.textBaseline = 'middle';
       for (let i = 0; i < n; i++) {
@@ -1797,6 +1789,7 @@
         cx.fillText(labels[i], x, y);
       }
       
+      // Legend
       const ly = size + 12;
       cx.setLineDash([4,3]);
       cx.strokeStyle='rgba(138,126,118,0.5)';
@@ -1812,17 +1805,15 @@
       cx.fillText('Fleet median', size/2-26, ly);
     }
 
-    // Draw all visible radars
+    // Draw all 6 canvases
     window.drawAllRadars = function() {
       drawRadar('radar-before-dno', before, '#941914', null);
-      drawRadar('radar-after-dno', after, '#5d8563', before);
-      drawRadar('radar-before-community', before, '#941914', null);
-      drawRadar('radar-after-community', after, '#b8863a', before);
-      drawRadar('radar-before-investor', before, '#941914', null);
-      drawRadar('radar-after-investor', after, '#5d8563', before);
+    drawRadar('radar-after-dno', after, '#5d8563', before);
+    drawRadar('radar-before-community', before, '#941914', null);
+    drawRadar('radar-after-community', after, '#b8863a', before);
+    drawRadar('radar-before-investor', before, '#941914', null);
+    drawRadar('radar-after-investor', after, '#5d8563', before);
     };
-
-    // Initial draw
     drawAllRadars();
   })();
   </script>
