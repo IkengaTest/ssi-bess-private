@@ -1,0 +1,11 @@
+{
+  "version": 3.5,
+  "duration_s": 333.88,
+  "modules": [
+    "config_a",
+    "sensitivity",
+    "stress",
+    "drift",
+    "ensemble"
+  ]
+}

@@ -1,20 +1,23 @@
 """
-SSI-ENN BESS — Neural Network Inference Module (v3.4)
+SSI-ENN BESS — Neural Network Inference Module (v3.5)
 ======================================================
 Load trained models and score all substations with predictions.
-v3.4: 7-model pipeline with multi-target, revenue streams, conformal, SHAP.
+v3.5: 7-model pipeline + Config A regressor, sensitivity, ensemble uncertainty.
 
 Outputs:
   - nn_predictions.json: Complete per-substation predictions
 
 Models used:
   1. BESS Recommender       (MLP) → Config A/B classification + probability
-  2. Multi-Target Regressor (MLP) → NPV P5/P50/P95 + IRR + Sharpe
+  2. Multi-Target Regressor (MLP) → NPV P5/P50/P95 + IRR + Sharpe (Config B)
   3. Band Predictor         (RF)  → Low/Medium/High/Critical classification
   4. Anomaly Detector       (IF)  → Anomaly flags and types
   5. Revenue Predictor      (MLP) → R1–R10 percentage decomposition
   6. Conformal Intervals          → 90% coverage NPV bounds
   7. SHAP Explainability          → Per-substation feature attributions
+  8. Config A Regressor     (MLP) → NPV_A P5/P50/P95 + IRR_A + Sharpe_A
+  9. Sensitivity data             → Per-substation Jacobian top drivers
+ 10. Ensemble Uncertainty         → Epistemic vs aleatoric decomposition
 """
 
 import json
@@ -44,6 +47,9 @@ BASE_DIR = PIPELINE_DIR.parent
 class NeuralNetworkInference:
     """Load models and score all substations."""
 
+    # Config A target labels (parallel to Config B)
+    CONFIG_A_LABELS = ['NPV_A P5', 'NPV_A P50', 'NPV_A P95', 'IRR_A', 'Sharpe_A']
+
     def __init__(self, data_file: Path, models_dir: Path, verbose: bool = True):
         self.verbose = verbose
         self.t0 = time.time()
@@ -52,7 +58,7 @@ class NeuralNetworkInference:
 
         if self.verbose:
             print(f"\n{'='*70}")
-            print(f"  SSI-ENN BESS — Neural Network Inference (v3.4)")
+            print(f"  SSI-ENN BESS — Neural Network Inference (v3.5)")
             print(f"{'='*70}")
             print(f"  Data file       : {self.data_file}")
             print(f"  Models dir      : {self.models_dir}")
@@ -89,10 +95,11 @@ class NeuralNetworkInference:
         self.band_predictor = joblib.load(self.models_dir / 'band_predictor.pkl')
         self.anomaly_detector = joblib.load(self.models_dir / 'anomaly_detector.pkl')
 
-        # v3.4: New models
+        # v3.4: Revenue predictor
         rev_path = self.models_dir / 'revenue_predictor.pkl'
         self.revenue_predictor = joblib.load(rev_path) if rev_path.exists() else None
 
+        # v3.4: Conformal intervals
         conf_path = self.models_dir / 'conformal.json'
         if conf_path.exists():
             with open(conf_path) as f:
@@ -100,6 +107,7 @@ class NeuralNetworkInference:
         else:
             self.conformal = None
 
+        # v3.4: SHAP explainability
         shap_path = self.models_dir / 'shap_values.json'
         if shap_path.exists():
             with open(shap_path) as f:
@@ -107,18 +115,50 @@ class NeuralNetworkInference:
         else:
             self.shap_data = None
 
+        # v3.5: Config A regressor
+        cfg_a_path = self.models_dir / 'config_a_regressor.pkl'
+        self.config_a_regressor = joblib.load(cfg_a_path) if cfg_a_path.exists() else None
+
+        # v3.5: Sensitivity data (Jacobian)
+        sens_path = self.models_dir / 'sensitivity.json'
+        if sens_path.exists():
+            with open(sens_path) as f:
+                self.sensitivity_data = json.load(f)
+        else:
+            self.sensitivity_data = None
+
+        # v3.5: Ensemble uncertainty
+        ens_path = self.models_dir / 'ensemble_uncertainty.json'
+        if ens_path.exists():
+            with open(ens_path) as f:
+                self.ensemble_data = json.load(f)
+        else:
+            self.ensemble_data = None
+
+        # v3.5: Stress results (fleet-level, not per-substation)
+        stress_path = self.models_dir / 'stress_results.json'
+        if stress_path.exists():
+            with open(stress_path) as f:
+                self.stress_data = json.load(f)
+        else:
+            self.stress_data = None
+
         if self.verbose:
-            print(f"    bess_recommender.pkl   (MLP)")
-            print(f"    npv_regressor.pkl      (MultiOutput MLP)")
-            print(f"    band_predictor.pkl     (RandomForest)")
-            print(f"    anomaly_detector.pkl   (IsolationForest)")
-            print(f"    revenue_predictor.pkl  ({'loaded' if self.revenue_predictor else 'not found'})")
-            print(f"    conformal.json         ({'loaded' if self.conformal else 'not found'})")
-            print(f"    shap_values.json       ({'loaded' if self.shap_data else 'not found'})")
-            print(f"    scaler.pkl             (StandardScaler)")
+            print(f"    bess_recommender.pkl     (MLP)")
+            print(f"    npv_regressor.pkl        (MultiOutput MLP)")
+            print(f"    band_predictor.pkl       (RandomForest)")
+            print(f"    anomaly_detector.pkl     (IsolationForest)")
+            print(f"    revenue_predictor.pkl    ({'loaded' if self.revenue_predictor else 'not found'})")
+            print(f"    conformal.json           ({'loaded' if self.conformal else 'not found'})")
+            print(f"    shap_values.json         ({'loaded' if self.shap_data else 'not found'})")
+            print(f"    config_a_regressor.pkl   ({'loaded' if self.config_a_regressor else 'not found'})")
+            print(f"    sensitivity.json         ({'loaded' if self.sensitivity_data else 'not found'})")
+            print(f"    ensemble_uncertainty.json ({'loaded' if self.ensemble_data else 'not found'})")
+            print(f"    stress_results.json      ({'loaded' if self.stress_data else 'not found'})")
+            print(f"    scaler.pkl               (StandardScaler)")
 
     def score_all(self) -> dict:
-        """Score all substations with all 4 models."""
+        """Score all substations with all models."""
         if self.verbose:
             print(f"\n  Scoring {len(self.substations):,} substations...")
 
@@ -135,7 +175,7 @@ class NeuralNetworkInference:
         rec_confidence = rec_proba[np.arange(len(rec_proba)), rec_pred]
 
         # ═══════════════════════════════════════════════════════════════
-        # Model 2: Multi-Target Regressor (v3.4: 5 targets)
+        # Model 2: Multi-Target Regressor (Config B — 5 targets)
         # ═══════════════════════════════════════════════════════════════
 
         multi_pred = self.npv_regressor.predict(X_scaled)
@@ -150,6 +190,24 @@ class NeuralNetworkInference:
             npv_pred = multi_pred if multi_pred.ndim == 1 else multi_pred.ravel()
             npv_p5_pred = npv_p95_pred = irr_pred = sharpe_pred = None
             is_multi_target = False
+
+        # ═══════════════════════════════════════════════════════════════
+        # Model 8: Config A Multi-Target Regressor (v3.5)
+        # ═══════════════════════════════════════════════════════════════
+
+        if self.config_a_regressor is not None:
+            cfg_a_pred = self.config_a_regressor.predict(X_scaled)
+            if cfg_a_pred.ndim == 2 and cfg_a_pred.shape[1] >= 5:
+                npv_a_p5 = cfg_a_pred[:, 0]
+                npv_a_p50 = cfg_a_pred[:, 1]
+                npv_a_p95 = cfg_a_pred[:, 2]
+                irr_a = cfg_a_pred[:, 3]
+                sharpe_a = cfg_a_pred[:, 4]
+                has_config_a = True
+            else:
+                has_config_a = False
+        else:
+            has_config_a = False
 
         # ═══════════════════════════════════════════════════════════════
         # Model 5: Revenue Stream Predictor (v3.4)
@@ -259,12 +317,27 @@ class NeuralNetworkInference:
                 'nn_anomaly_type': anomaly_type,
             }
 
-            # v3.4: Multi-target outputs
+            # v3.4: Multi-target outputs (Config B)
             if is_multi_target:
                 pred_entry['nn_npv_P5_M'] = round(float(npv_p5_pred[i]), 4)
                 pred_entry['nn_npv_P95_M'] = round(float(npv_p95_pred[i]), 4)
                 pred_entry['nn_irr_pct'] = round(float(irr_pred[i]), 2)
                 pred_entry['nn_sharpe'] = round(float(sharpe_pred[i]), 3)
+
+            # v3.5: Config A multi-target outputs
+            if has_config_a:
+                pred_entry['nn_config_a'] = {
+                    'npv_P5_M': round(float(npv_a_p5[i]), 4),
+                    'npv_P50_M': round(float(npv_a_p50[i]), 4),
+                    'npv_P95_M': round(float(npv_a_p95[i]), 4),
+                    'irr_pct': round(float(irr_a[i]), 2),
+                    'sharpe': round(float(sharpe_a[i]), 3),
+                }
+                # Delta NPV: B − A (positive = B dominates)
+                if is_multi_target:
+                    pred_entry['nn_delta_npv_BA_M'] = round(
+                        float(npv_pred[i] - npv_a_p50[i]), 4
+                    )
 
             # v3.4: Revenue stream decomposition
             if rev_pred is not None:
@@ -282,6 +355,24 @@ class NeuralNetworkInference:
             if self.shap_data and substation_id in self.shap_data.get('per_substation', {}):
                 pred_entry['nn_shap_drivers'] = self.shap_data['per_substation'][substation_id]['top_drivers']
 
+            # v3.5: Sensitivity (Jacobian top drivers)
+            if self.sensitivity_data:
+                per_sub = self.sensitivity_data.get('per_substation', {})
+                if substation_id in per_sub:
+                    pred_entry['nn_sensitivity_drivers'] = per_sub[substation_id]
+
+            # v3.5: Ensemble uncertainty
+            if self.ensemble_data:
+                per_sub = self.ensemble_data.get('per_substation', {})
+                if substation_id in per_sub:
+                    ens = per_sub[substation_id]
+                    pred_entry['nn_uncertainty'] = {
+                        'epistemic_pct': ens['epistemic_pct'],
+                        'uncertainty_type': ens['uncertainty_type'],
+                        'ensemble_std_M': ens['ensemble_std_M'],
+                        'ensemble_mean_M': ens['ensemble_mean_M'],
+                    }
+
             self.predictions[substation_id] = pred_entry
 
         # ═══════════════════════════════════════════════════════════════
@@ -293,19 +384,33 @@ class NeuralNetworkInference:
 
         self.meta = {
             'timestamp': datetime.utcnow().isoformat() + 'Z',
-            'version': 3.4,
+            'version': 3.5,
             'total_scored': len(self.substations),
             'total_anomalies': n_anomalies,
             'anomaly_pct': round(100 * n_anomalies / len(self.substations), 2),
             'models': {
                 'bess_recommender': 'MLPClassifier(128,64,32)',
-                'multi_target_regressor': 'MultiOutput MLP(512,256,128) × 5 targets',
+                'multi_target_regressor_B': 'MultiOutput MLP(512,256,128) × 5 targets',
+                'multi_target_regressor_A': 'MultiOutput MLP(512,256,128) × 5 targets' if self.config_a_regressor else 'N/A',
                 'band_predictor': 'RandomForestClassifier(200)',
                 'anomaly_detector': 'IsolationForest(200, contamination=0.05)',
                 'revenue_predictor': 'MultiOutput MLP(256,128,64) × 10 streams' if self.revenue_predictor else 'N/A',
                 'conformal': f'Split conformal (q̂={self.conformal["q_hat"]:.4f}M)' if self.conformal else 'N/A',
                 'shap': f'{self.shap_data["n_explained"]} substations explained' if self.shap_data else 'N/A',
+                'sensitivity': f'{self.sensitivity_data["metrics"]["n_substations"]} substations' if self.sensitivity_data else 'N/A',
+                'ensemble': f'{self.ensemble_data["metrics"]["n_models"]} bootstrap models' if self.ensemble_data else 'N/A',
             },
+            'advanced_modules': {
+                'config_a': bool(self.config_a_regressor),
+                'sensitivity': bool(self.sensitivity_data),
+                'stress_testing': bool(self.stress_data),
+                'drift_monitoring': True,
+                'ensemble_uncertainty': bool(self.ensemble_data),
+            },
+            'stress_summary': {
+                'pass_rate': self.stress_data['pass_rate'],
+                'stress_stable': self.stress_data['stress_stable'],
+            } if self.stress_data else None,
             'feature_count': self.X.shape[1],
             'enrichments': ['black_swan', 'cannibalization', 'actuarial', 'monte_carlo'],
             'duration_s': round(duration, 2),

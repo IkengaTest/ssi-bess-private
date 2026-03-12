@@ -1,0 +1,7164 @@
+{
+  "metrics": {
+    "n_substations": 500,
+    "n_features": 38,
+    "epsilon": 0.01,
+    "top_sensitivities": [
+      {
+        "feature": "bs_composite",
+        "mean_abs_sensitivity": 2.3476,
+        "direction": "negative"
+      },
+      {
+        "feature": "mod_R3",
+        "mean_abs_sensitivity": 2.2134,
+        "direction": "positive"
+      },
+      {
+        "feature": "mod_R4",
+        "mean_abs_sensitivity": 1.9375,
+        "direction": "negative"
+      },
+      {
+        "feature": "congestion_factor",
+        "mean_abs_sensitivity": 1.9068,
+        "direction": "negative"
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "mean_abs_sensitivity": 1.8967,
+        "direction": "negative"
+      },
+      {
+        "feature": "crs_nodal",
+        "mean_abs_sensitivity": 1.6388,
+        "direction": "negative"
+      },
+      {
+        "feature": "exposure_index",
+        "mean_abs_sensitivity": 1.4442,
+        "direction": "negative"
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "mean_abs_sensitivity": 1.3973,
+        "direction": "negative"
+      },
+      {
+        "feature": "bess_sat",
+        "mean_abs_sensitivity": 1.2219,
+        "direction": "negative"
+      },
+      {
+        "feature": "mod_R7",
+        "mean_abs_sensitivity": 0.9921,
+        "direction": "positive"
+      },
+      {
+        "feature": "fleet_percentile",
+        "mean_abs_sensitivity": 0.8822,
+        "direction": "positive"
+      },
+      {
+        "feature": "fuel_shock_exposure",
+        "mean_abs_sensitivity": 0.6657,
+        "direction": "positive"
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "mean_abs_sensitivity": 0.6593,
+        "direction": "positive"
+      },
+      {
+        "feature": "V_socio",
+        "mean_abs_sensitivity": 0.5618,
+        "direction": "positive"
+      },
+      {
+        "feature": "EP_rate_region",
+        "mean_abs_sensitivity": 0.5507,
+        "direction": "positive"
+      }
+    ],
+    "per_substation_count": 500
+  },
+  "global": [
+    {
+      "feature": "bs_composite",
+      "mean_abs_sensitivity": 2.3476,
+      "direction": "negative"
+    },
+    {
+      "feature": "mod_R3",
+      "mean_abs_sensitivity": 2.2134,
+      "direction": "positive"
+    },
+    {
+      "feature": "mod_R4",
+      "mean_abs_sensitivity": 1.9375,
+      "direction": "negative"
+    },
+    {
+      "feature": "congestion_factor",
+      "mean_abs_sensitivity": 1.9068,
+      "direction": "negative"
+    },
+    {
+      "feature": "crs_uplift_pct",
+      "mean_abs_sensitivity": 1.8967,
+      "direction": "negative"
+    },
+    {
+      "feature": "crs_nodal",
+      "mean_abs_sensitivity": 1.6388,
+      "direction": "negative"
+    },
+    {
+      "feature": "exposure_index",
+      "mean_abs_sensitivity": 1.4442,
+      "direction": "negative"
+    },
+    {
+      "feature": "revenue_haircut_pct",
+      "mean_abs_sensitivity": 1.3973,
+      "direction": "negative"
+    },
+    {
+      "feature": "bess_sat",
+      "mean_abs_sensitivity": 1.2219,
+      "direction": "negative"
+    },
+    {
+      "feature": "mod_R7",
+      "mean_abs_sensitivity": 0.9921,
+      "direction": "positive"
+    },
+    {
+      "feature": "fleet_percentile",
+      "mean_abs_sensitivity": 0.8822,
+      "direction": "positive"
+    },
+    {
+      "feature": "fuel_shock_exposure",
+      "mean_abs_sensitivity": 0.6657,
+      "direction": "positive"
+    },
+    {
+      "feature": "bess_fuel_upside",
+      "mean_abs_sensitivity": 0.6593,
+      "direction": "positive"
+    },
+    {
+      "feature": "V_socio",
+      "mean_abs_sensitivity": 0.5618,
+      "direction": "positive"
+    },
+    {
+      "feature": "EP_rate_region",
+      "mean_abs_sensitivity": 0.5507,
+      "direction": "positive"
+    }
+  ],
+  "per_substation": {
+    "A2A_8855": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4049
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1169
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0937
+      }
+    ],
+    "Enel Distribuzione_10332": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5994
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4832
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3734
+      }
+    ],
+    "e-distribuzione S.p.A._13467": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0786
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0257
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0134
+      }
+    ],
+    "Enel_13183": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3051
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0265
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0
+      }
+    ],
+    "e-distribuzione S.p.A._7473": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1085
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0653
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9597
+      }
+    ],
+    "Barberini_26322": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2407
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3783
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.3521
+      }
+    ],
+    "retipi\u00f9_11171": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0537
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0451
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9844
+      }
+    ],
+    "Enel Distribuzione_15169": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5485
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.333
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3116
+      }
+    ],
+    "e-distribuzione S.p.A._8232": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3578
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2303
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.138
+      }
+    ],
+    "Terna S.p.A._33265": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.6111
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3971
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.3786
+      }
+    ],
+    "Enel Distribuzione_10630": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6565
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.1992
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.1945
+      }
+    ],
+    "Enel Distribuzione_9754": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9584
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9229
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8625
+      }
+    ],
+    "Enel Distribuzione_7911": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2724
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2078
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1229
+      }
+    ],
+    "Acea Distribuzione_25935": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3211
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8002
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6661
+      }
+    ],
+    "Acea Distribuzione_8306": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3991
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8876
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6081
+      }
+    ],
+    "ENEL_29755": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.7108
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5056
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4035
+      }
+    ],
+    "RFI_10155": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3949
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.306
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2279
+      }
+    ],
+    "e-distribuzione S.p.A._22177": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1682
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7657
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6729
+      }
+    ],
+    "Enel Distribuzione_9184": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7403
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9631
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7303
+      }
+    ],
+    "A2A_10909": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.0882
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6735
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.629
+      }
+    ],
+    "ENEL_25710": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.7684
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5549
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.351
+      }
+    ],
+    "Lucchini_7993": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.258
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1993
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9451
+      }
+    ],
+    "TERNA_10450": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3152
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1196
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1104
+      }
+    ],
+    "ENEL_17000": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7599
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1274
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9133
+      }
+    ],
+    "Enel Distribuzione_9061": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6866
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9024
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7678
+      }
+    ],
+    "e-distribuzione S.p.A._10960": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1699
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7327
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.7313
+      }
+    ],
+    "A2A_10013": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1828
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0205
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9536
+      }
+    ],
+    "Enel Distribuzione_7184": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1839
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9954
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8913
+      }
+    ],
+    "BG Italia_14757": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.5074
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.1209
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.0224
+      }
+    ],
+    "Centro Energia_10374": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0796
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0388
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0034
+      }
+    ],
+    "Oxon Italia_10072": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3479
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2797
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.236
+      }
+    ],
+    "Terna S.p.A._25811": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5681
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3338
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3158
+      }
+    ],
+    "RFI_8647": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4802
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2773
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.269
+      }
+    ],
+    "Enel Distribuzione_7209": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2175
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0291
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9879
+      }
+    ],
+    "TERNA_32817": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7251
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8667
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7612
+      }
+    ],
+    "ENEL_4110": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0604
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.8468
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8167
+      }
+    ],
+    "Cofely Italia_26534": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4054
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3399
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2116
+      }
+    ],
+    "Terna S.p.A._10236": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3217
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2661
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1357
+      }
+    ],
+    "AIR Mezzolombardo_7720": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8557
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6728
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.306
+      }
+    ],
+    "Enel Distribuzione_9898": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1564
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0839
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0601
+      }
+    ],
+    "Enel Distribuzione_13775": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3732
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.146
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9859
+      }
+    ],
+    "Enel Distribuzione_13783": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.7027
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.6275
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2905
+      }
+    ],
+    "Acea Distribuzione_25934": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.5127
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7769
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.5046
+      }
+    ],
+    "Enel Produzione_7799": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5784
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5143
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.292
+      }
+    ],
+    "RFI_10299": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1857
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7459
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6444
+      }
+    ],
+    "Terna S.p.A._9191": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7605
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2258
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.0933
+      }
+    ],
+    "Enel Distribuzione_9718": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3381
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1829
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1822
+      }
+    ],
+    "Enel Distribuzione_20997": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9476
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.8738
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.6735
+      }
+    ],
+    "TERNA_36917": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.859
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6344
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.238
+      }
+    ],
+    "e-distribuzione S.p.A._6876": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7725
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2755
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.1261
+      }
+    ],
+    "e-distribuzione S.p.A._7316": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.137
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0752
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0646
+      }
+    ],
+    "ENEL_12346": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.199
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0771
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0631
+      }
+    ],
+    "TERNA_1370": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1827
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0919
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9141
+      }
+    ],
+    "C&T Termoli_10347": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7084
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2451
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.0424
+      }
+    ],
+    "Terna S.p.A._7332": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3348
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0196
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.7102
+      }
+    ],
+    "Terna_32220": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6623
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.9248
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9175
+      }
+    ],
+    "Enel Distribuzione_6953": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.596
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3682
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2951
+      }
+    ],
+    "Terna S.p.A._7331": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0596
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0235
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.932
+      }
+    ],
+    "Enel Distribuzione_10647": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1977
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7664
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6656
+      }
+    ],
+    "Enel Distribuzione_14454": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6729
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5538
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5313
+      }
+    ],
+    "Enel Distribuzione_10682": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.65
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3178
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2503
+      }
+    ],
+    "Terna S.p.A._13307": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2715
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6834
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6125
+      }
+    ],
+    "TERNA_30615": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.636
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.6222
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3144
+      }
+    ],
+    "Terna S.p.A._13692": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2835
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9858
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9405
+      }
+    ],
+    "RFI_22735": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.3814
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3627
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2314
+      }
+    ],
+    "Terna_30593": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.5377
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0748
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.9734
+      }
+    ],
+    "ENEL_5736": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0967
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.7774
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.7428
+      }
+    ],
+    "Enel Distribuzione_8045": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3175
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1594
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9423
+      }
+    ],
+    "RFI_6887": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.9095
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8009
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.7881
+      }
+    ],
+    "Enel Distribuzione_25881": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7357
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9172
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7952
+      }
+    ],
+    "Enel Distribuzione_7197": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2371
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0378
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0045
+      }
+    ],
+    "Enel Distribuzione_11039": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.178
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.8126
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8113
+      }
+    ],
+    "Enel Distribuzione_13851": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1542
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1334
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.996
+      }
+    ],
+    "Enel Distribuzione_8269": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2636
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1514
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9699
+      }
+    ],
+    "Acciaierie Cividale_7204": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2856
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0032
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9744
+      }
+    ],
+    "Terna S.p.A._8354": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.0036
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6786
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6073
+      }
+    ],
+    "Enel Distribuzione_9081": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.3721
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0348
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8673
+      }
+    ],
+    "e-distribuzione S.p.A._10643": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.4816
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.2128
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.0477
+      }
+    ],
+    "e-distribuzione S.p.A._0": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2831
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2279
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0045
+      }
+    ],
+    "TERNA_7733": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1425
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1266
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0382
+      }
+    ],
+    "RFI_13577": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2634
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1578
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0625
+      }
+    ],
+    "RFI_10388": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3453
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3318
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1503
+      }
+    ],
+    "Enel Distribuzione_8404": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5923
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5346
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3654
+      }
+    ],
+    "e-distribuzione S.p.A._96": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0746
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0104
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8718
+      }
+    ],
+    "RFI_18139": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.0875
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6678
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.5911
+      }
+    ],
+    "ENEL_9282": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2136
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1912
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9789
+      }
+    ],
+    "Enel Distribuzione_11220": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1147
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0483
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9746
+      }
+    ],
+    "Terna S.p.A._7441": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1868
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9408
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9295
+      }
+    ],
+    "Terna S.p.A._10210": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.361
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.5726
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.3682
+      }
+    ],
+    "RFI_8103": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3394
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2558
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0044
+      }
+    ],
+    "TERNA_13144": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5892
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1307
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.998
+      }
+    ],
+    "e-distribuzione S.p.A._5": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2953
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0004
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9789
+      }
+    ],
+    "Enel Distribuzione_8992": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0975
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0256
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0203
+      }
+    ],
+    "Enel Distribuzione_11043": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0155
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9885
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9678
+      }
+    ],
+    "TERNA_33186": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6065
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9001
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.6255
+      }
+    ],
+    "Igat_9018": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7002
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2331
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.1739
+      }
+    ],
+    "Terna_13411": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0346
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -2.8661
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.803
+      }
+    ],
+    "Terna S.p.A._8365": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6005
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3521
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3048
+      }
+    ],
+    "Unareti S.p.A._6972": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.2408
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0991
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0549
+      }
+    ],
+    "Enel Distribuzione_21069": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0941
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0682
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.039
+      }
+    ],
+    "TERNA_37711": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5872
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5058
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3477
+      }
+    ],
+    "TERNA_33228": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3927
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.094
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9472
+      }
+    ],
+    "Enel Distribuzione_7357": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0955
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0298
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.02
+      }
+    ],
+    "ENEL_8391": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5706
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9182
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7448
+      }
+    ],
+    "Enel Distribuzione_8928": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2723
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0261
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9752
+      }
+    ],
+    "Enel Distribuzione_10703": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6837
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.28
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2728
+      }
+    ],
+    "Laminazione Sottile_25870": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7931
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9459
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7643
+      }
+    ],
+    "e-distribuzione S.p.A._32743": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.9341
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5197
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.4802
+      }
+    ],
+    "RFI_10896": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.7001
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2459
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2177
+      }
+    ],
+    "Enel Distribuzione_7212": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1943
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0028
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.982
+      }
+    ],
+    "e-distribuzione S.p.A._9761": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5532
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.2254
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.22
+      }
+    ],
+    "TERNA_16998": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7117
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1925
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.06
+      }
+    ],
+    "ENEL_31636": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6211
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.9571
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9052
+      }
+    ],
+    "ENEL_29756": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4598
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4566
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3039
+      }
+    ],
+    "TERNA_29761": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5568
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4856
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4295
+      }
+    ],
+    "Terna_27902": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5329
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4843
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.423
+      }
+    ],
+    "TERNA_10513": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6444
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4324
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3671
+      }
+    ],
+    "Terna_7087": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0641
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8886
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8867
+      }
+    ],
+    "Terna S.p.A._26025": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5468
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.288
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2568
+      }
+    ],
+    "Enel Distribuzione_8407": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.7064
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.6422
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4222
+      }
+    ],
+    "Enel Distribuzione_8254": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7787
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.6008
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.4823
+      }
+    ],
+    "Terna S.p.A._26036": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6408
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3468
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3227
+      }
+    ],
+    "e-distribuzione S.p.A._7465": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.5119
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6279
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.5547
+      }
+    ],
+    "ENEL_7119": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2361
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1212
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0578
+      }
+    ],
+    "RFI_8586": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2617
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2295
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1405
+      }
+    ],
+    "e-distribuzione S.p.A._25793": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5775
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.517
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3904
+      }
+    ],
+    "RFI_13844": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3226
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0697
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.984
+      }
+    ],
+    "ENEL_10743": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0254
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9785
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.8706
+      }
+    ],
+    "Enel Produzione_9862": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.7812
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.6631
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.359
+      }
+    ],
+    "TERNA_10049": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.0344
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7226
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6511
+      }
+    ],
+    "RFI_8388": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6702
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8718
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.8523
+      }
+    ],
+    "e-distribuzione S.p.A._6980": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5977
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2302
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.1193
+      }
+    ],
+    "ENEL_8514": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2108
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0712
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0662
+      }
+    ],
+    "Dolomiti Energia_122": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8571
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6869
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.2702
+      }
+    ],
+    "TERNA_36562": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3549
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2029
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0509
+      }
+    ],
+    "Terna S.p.A._7245": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1913
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.969
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9548
+      }
+    ],
+    "Enel Distribuzione_10693": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6076
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2014
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2009
+      }
+    ],
+    "TERNA_21432": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2652
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.0127
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.9403
+      }
+    ],
+    "Enel Distribuzione_7795": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.821
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4718
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1784
+      }
+    ],
+    "Enel Distribuzione_14845": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.231
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.765
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.597
+      }
+    ],
+    "e-distribuzione S.p.A._8519": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.356
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.138
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0442
+      }
+    ],
+    "Sorgenia_20531": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.8008
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2273
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9827
+      }
+    ],
+    "Enel Produzione_9844": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.128
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9921
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9293
+      }
+    ],
+    "Terna S.p.A._8794": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6395
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7879
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7136
+      }
+    ],
+    "Enel Produzione_7955": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6558
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.4826
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.4719
+      }
+    ],
+    "TERNA_11393": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0818
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9938
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8403
+      }
+    ],
+    "Enel Green Power_9646": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4634
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3396
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.058
+      }
+    ],
+    "Enel Distribuzione_7180": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1669
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9845
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9224
+      }
+    ],
+    "Enel Produzione_13095": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0715
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9768
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9753
+      }
+    ],
+    "ENEL_30705": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5423
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.381
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2385
+      }
+    ],
+    "Agusta_11132": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1643
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1484
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0741
+      }
+    ],
+    "NLMK Verona_9815": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1312
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0937
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0704
+      }
+    ],
+    "TERNA_16990": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7675
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.205
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.1437
+      }
+    ],
+    "TERNA_31918": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6498
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8063
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.6975
+      }
+    ],
+    "e-distribuzione S.p.A._8941": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.6031
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5534
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2059
+      }
+    ],
+    "RFI_13308": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6172
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2745
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2574
+      }
+    ],
+    "e-distribuzione S.p.A._31097": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.8352
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.6234
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.465
+      }
+    ],
+    "TERNA_30582": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1918
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1193
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1028
+      }
+    ],
+    "Enel Distribuzione_10296": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1187
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1024
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9246
+      }
+    ],
+    "Terna S.p.A._32729": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5337
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3513
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3158
+      }
+    ],
+    "Acea Distribuzione_8375": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2898
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9049
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6447
+      }
+    ],
+    "TERNA_7714": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.8987
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2648
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -2.1665
+      }
+    ],
+    "e-distribuzione S.p.A._15178": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3697
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.89
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6666
+      }
+    ],
+    "Enel Distribuzione_25864": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7086
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9407
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.8481
+      }
+    ],
+    "Enel Distribuzione_10182": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3309
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9957
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9367
+      }
+    ],
+    "Hera_9275": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.4016
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1527
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1103
+      }
+    ],
+    "Enel Produzione_11337": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.7049
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5841
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4918
+      }
+    ],
+    "RFI_9926": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.192
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0248
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0179
+      }
+    ],
+    "Enel Distribuzione_11340": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.6062
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5709
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.56
+      }
+    ],
+    "RFI_10730": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6517
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4532
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3437
+      }
+    ],
+    "Enel Distribuzione_11578": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6584
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3133
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.047
+      }
+    ],
+    "Italgen_9903": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2361
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.2245
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2053
+      }
+    ],
+    "Calabria Solar_13415": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2566
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7087
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6162
+      }
+    ],
+    "RFI_87": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3791
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7413
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.5815
+      }
+    ],
+    "RFI_10608": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.4295
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.1561
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.156
+      }
+    ],
+    "TERNA_24996": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.0326
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.8677
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7283
+      }
+    ],
+    "Tirreno Power_7775": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3406
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1699
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1365
+      }
+    ],
+    "Dolomiti Energia_36625": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2733
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1381
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0113
+      }
+    ],
+    "Enel Distribuzione_8671": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4326
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.259
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1799
+      }
+    ],
+    "Sogin_14874": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5832
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7338
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.6992
+      }
+    ],
+    "ENEL_11609": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8357
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.672
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.269
+      }
+    ],
+    "Agrolinz Melamin Italia_8371": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.265
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1379
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0502
+      }
+    ],
+    "TERNA_11022": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5474
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8282
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.6614
+      }
+    ],
+    "Enipower_20967": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0399
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.8903
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8648
+      }
+    ],
+    "Enel Distribuzione_9319": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1528
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1266
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9608
+      }
+    ],
+    "e-distribuzione S.p.A._7154": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3122
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.3614
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -2.3555
+      }
+    ],
+    "Parmalat_13583": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1289
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0974
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9899
+      }
+    ],
+    "Enel Distribuzione_10659": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6364
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.224
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.1683
+      }
+    ],
+    "Enel Distribuzione_10666": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5652
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2443
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2175
+      }
+    ],
+    "Enel_10133": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4097
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3914
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.3593
+      }
+    ],
+    "Enel_27038": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1902
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5917
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.5809
+      }
+    ],
+    "Enel Distribuzione_11634": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.0759
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7352
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.5703
+      }
+    ],
+    "Enel Distribuzione_11241": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0688
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0675
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9383
+      }
+    ],
+    "Enel Distribuzione_8468": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1009
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0986
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0978
+      }
+    ],
+    "TERNA_26228": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.2443
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2276
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.211
+      }
+    ],
+    "Enel Distribuzione_8009": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2518
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2293
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.05
+      }
+    ],
+    "TERNA_37958": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2195
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.037
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9924
+      }
+    ],
+    "Eisackwerk_9384": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8716
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6725
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.2901
+      }
+    ],
+    "SE Hydropower_6906": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.9037
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6422
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.3084
+      }
+    ],
+    "Enel Distribuzione_9176": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.5708
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4201
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.3524
+      }
+    ],
+    "TERNA_10022": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1887
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0806
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0281
+      }
+    ],
+    "TERNA_2009": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2764
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1489
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1095
+      }
+    ],
+    "A2A_8778": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0988
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0857
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0575
+      }
+    ],
+    "Acea Distribuzione_25944": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3512
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.6461
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.5669
+      }
+    ],
+    "e-distribuzione S.p.A._13410": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2997
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2456
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0933
+      }
+    ],
+    "e-distribuzione S.p.A._8131": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5283
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1996
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1078
+      }
+    ],
+    "Dolomiti Energia_22238": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.4479
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7286
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.6803
+      }
+    ],
+    "TERNA_21487": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2207
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.8556
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8443
+      }
+    ],
+    "TERNA_21290": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.8192
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6019
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3797
+      }
+    ],
+    "RFI_7943": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3292
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1553
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0852
+      }
+    ],
+    "Wind Farm Umberto Avino_26419": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.641
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2495
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.0496
+      }
+    ],
+    "TERNA_23189": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.747
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6233
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5238
+      }
+    ],
+    "Enel Distribuzione_9447": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1301
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0211
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0106
+      }
+    ],
+    "Unareti_33635": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1771
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1714
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.061
+      }
+    ],
+    "Unareti_12175": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1781
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0767
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0598
+      }
+    ],
+    "e-distribuzione S.p.A._8707": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2731
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0961
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.8168
+      }
+    ],
+    "e-distribuzione S.p.A._15029": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.3675
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8619
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6648
+      }
+    ],
+    "Enel Distribuzione_10472": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1574
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6677
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6217
+      }
+    ],
+    "Enel Distribuzione_7302": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1553
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9772
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9368
+      }
+    ],
+    "Enel Distribuzione_10447": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.6157
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3899
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2699
+      }
+    ],
+    "Enel Produzione_13715": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.4008
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1332
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0598
+      }
+    ],
+    "TERNA_16996": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.8108
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1407
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8908
+      }
+    ],
+    "Enel Distribuzione_8443": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.206
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.3313
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2543
+      }
+    ],
+    "ENEL_37710": [
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5967
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.5735
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.3369
+      }
+    ],
+    "Enel Produzione_10109": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4949
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.6895
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.5169
+      }
+    ],
+    "Acea Distribuzione_7758": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4188
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.6144
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.4937
+      }
+    ],
+    "e-distribuzione S.p.A._8383": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1113
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.71
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6476
+      }
+    ],
+    "Fri-El_17262": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.5403
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4234
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3877
+      }
+    ],
+    "Edipower_13420": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5538
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4574
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3325
+      }
+    ],
+    "Terna S.p.A._8049": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.092
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7579
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6522
+      }
+    ],
+    "Terna S.p.A._10723": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6836
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.4444
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3029
+      }
+    ],
+    "e-distribuzione S.p.A._8438": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.292
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9553
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9448
+      }
+    ],
+    "Ferriere Nord_7164": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1154
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0509
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9575
+      }
+    ],
+    "Enel Distribuzione_9590": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5223
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4882
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4526
+      }
+    ],
+    "Deval_7898": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7416
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5385
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.4758
+      }
+    ],
+    "Enel Distribuzione_7189": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9543
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9442
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9165
+      }
+    ],
+    "ENEL_26528": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.437
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1387
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0975
+      }
+    ],
+    "Arcelor_13784": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4864
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3376
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3223
+      }
+    ],
+    "e-distribuzione S.p.A._4410": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9595
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.811
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7686
+      }
+    ],
+    "Enel Distribuzione_11484": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.7162
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1186
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.018
+      }
+    ],
+    "Edison_7324": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1081
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0659
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9947
+      }
+    ],
+    "Enel Distribuzione_8841": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2342
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1554
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0728
+      }
+    ],
+    "Enel Distribuzione_8136": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7328
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5252
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.4946
+      }
+    ],
+    "ENEL_34649": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0444
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0157
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9695
+      }
+    ],
+    "ASM Terni_26535": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5823
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.252
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1779
+      }
+    ],
+    "Enel Distribuzione_9117": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2854
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0474
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9764
+      }
+    ],
+    "TERNA_20767": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2359
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.9065
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8492
+      }
+    ],
+    "Terna S.p.A._10558": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6096
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3042
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2715
+      }
+    ],
+    "AEM Torino Distribuzione_6977": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5365
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0198
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9331
+      }
+    ],
+    "Bipan_7134": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9368
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.838
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.6833
+      }
+    ],
+    "Enel Distribuzione_8128": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5633
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0355
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0105
+      }
+    ],
+    "EP Produzione_23108": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9724
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8729
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.855
+      }
+    ],
+    "Enel Distribuzione_10243": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.9349
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7456
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5208
+      }
+    ],
+    "ENEL_12041": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2207
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1809
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1225
+      }
+    ],
+    "RFI_25873": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5928
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.6813
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.6694
+      }
+    ],
+    "RFI_9553": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1526
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.3004
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -2.2685
+      }
+    ],
+    "Enel Produzione_2": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2069
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1039
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9716
+      }
+    ],
+    "RFI_33780": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6695
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9552
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.8904
+      }
+    ],
+    "TERNA_9004": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5486
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3043
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.0084
+      }
+    ],
+    "Enel_10789": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4908
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7375
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.5951
+      }
+    ],
+    "Enel Distribuzione_17275": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5204
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.4721
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3402
+      }
+    ],
+    "Enel Distribuzione_9845": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2733
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0839
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0804
+      }
+    ],
+    "TERNA_35600": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0616
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0414
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9299
+      }
+    ],
+    "Enel Distribuzione_8364": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.7057
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2611
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.212
+      }
+    ],
+    "Enel Distribuzione_7779": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3677
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0948
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8848
+      }
+    ],
+    "ENEL_16431": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5817
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1744
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.1026
+      }
+    ],
+    "e-distribuzione S.p.A._9042": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5419
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.306
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2889
+      }
+    ],
+    "Enel Distribuzione_114": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3084
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2269
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.017
+      }
+    ],
+    "Terna S.p.A._11451": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6159
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8907
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.6194
+      }
+    ],
+    "RFI_14913": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5781
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7651
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.6977
+      }
+    ],
+    "AEM Torino Distribuzione_8013": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3025
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1753
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9133
+      }
+    ],
+    "TERNA_32084": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6445
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2296
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9947
+      }
+    ],
+    "Enel Distribuzione_10358": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2325
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8434
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6945
+      }
+    ],
+    "Siba Depuratore Milano_11141": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2008
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0985
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0163
+      }
+    ],
+    "Enel Produzione_11026": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6624
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8866
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.6612
+      }
+    ],
+    "Terna S.p.A._7159": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6056
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2813
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.1956
+      }
+    ],
+    "Cira_9021": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6879
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.0016
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.8087
+      }
+    ],
+    "Enel Distribuzione_9283": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6152
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.9181
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7839
+      }
+    ],
+    "Enel Distribuzione_7402": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1004
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9754
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9547
+      }
+    ],
+    "Terna_7865": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4317
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2473
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1454
+      }
+    ],
+    "E2I Energie Speciali_8698": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5996
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.9492
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7715
+      }
+    ],
+    "Enel Distribuzione_25834": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1919
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0156
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9531
+      }
+    ],
+    "Ecopower Ambrosiana_9941": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2459
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0759
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9857
+      }
+    ],
+    "TERNA_29437": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5629
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2523
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1831
+      }
+    ],
+    "TERNA_10226": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.7526
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.4816
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.4158
+      }
+    ],
+    "Enel Distribuzione_10624": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.5241
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.1091
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.0069
+      }
+    ],
+    "Enel Distribuzione_7093": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4375
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8134
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6283
+      }
+    ],
+    "Enel Distribuzione_11069": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6991
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9374
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.8163
+      }
+    ],
+    "Enel Distribuzione_7673": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7022
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5132
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.3964
+      }
+    ],
+    "RFI_21031": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2192
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9994
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.8608
+      }
+    ],
+    "ACS Dobfar_21751": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4514
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7659
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6837
+      }
+    ],
+    "e-distribuzione S.p.A._10255": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5794
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5429
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2438
+      }
+    ],
+    "ACSM Primiero_9311": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8751
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6768
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.2733
+      }
+    ],
+    "Italgen_7279": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3437
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9118
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.7922
+      }
+    ],
+    "Terna_9426": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5147
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3154
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2351
+      }
+    ],
+    "TERNA_22182": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4797
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.6151
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.5378
+      }
+    ],
+    "Enel Distribuzione_10650": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4567
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3778
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2972
+      }
+    ],
+    "Terna S.p.A._25767": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.4722
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.1565
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.0619
+      }
+    ],
+    "RFI_21096": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.137
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1015
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0356
+      }
+    ],
+    "Terna_8580": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9932
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.9341
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.8587
+      }
+    ],
+    "Acea Distribuzione_7503": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4329
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.5296
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.4887
+      }
+    ],
+    "Terna S.p.A._33229": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2688
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0563
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9953
+      }
+    ],
+    "Fiat_13996": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.4891
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8139
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7838
+      }
+    ],
+    "RFI_10062": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5491
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5401
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4079
+      }
+    ],
+    "RFI_7855": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.276
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1961
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9442
+      }
+    ],
+    "Terna S.p.A._7223": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.8673
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8664
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.7995
+      }
+    ],
+    "e-distribuzione S.p.A._8251": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6947
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.4917
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.4666
+      }
+    ],
+    "ENEL_24446": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.8186
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5988
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5862
+      }
+    ],
+    "e-distribuzione S.p.A._10099": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3143
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2213
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9969
+      }
+    ],
+    "Enel Distribuzione_13324": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.4982
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4899
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4774
+      }
+    ],
+    "Enel Distribuzione_52": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.269
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7741
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.6514
+      }
+    ],
+    "Acea Distribuzione_25948": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.404
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.5124
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.5036
+      }
+    ],
+    "Enel Distribuzione_10652": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6527
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4587
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3708
+      }
+    ],
+    "Enel Distribuzione_20": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.5837
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0263
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.7204
+      }
+    ],
+    "Enel Distribuzione_10669": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6888
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2001
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.1811
+      }
+    ],
+    "e-distribuzione S.p.A._9242": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2751
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0447
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0007
+      }
+    ],
+    "Terna S.p.A._27650": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3131
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0662
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0387
+      }
+    ],
+    "Enel Distribuzione_10068": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2061
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.18
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0631
+      }
+    ],
+    "e-distribuzione S.p.A._11212": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1723
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1708
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1055
+      }
+    ],
+    "Enel Produzione_10975": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2602
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.6943
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.4153
+      }
+    ],
+    "Enel Distribuzione_8786": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.225
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9704
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -2.8327
+      }
+    ],
+    "ENEL_35125": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2737
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1223
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0977
+      }
+    ],
+    "Terna_13610": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1077
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0828
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0818
+      }
+    ],
+    "TERNA_16953": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5891
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2187
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.09
+      }
+    ],
+    "Acciaierie Beltrame_8028": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.198
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1907
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9053
+      }
+    ],
+    "Enel Produzione_7869": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.7885
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5215
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1924
+      }
+    ],
+    "SECA_13785": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5429
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3807
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3098
+      }
+    ],
+    "TERNA_21347": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1557
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7482
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6729
+      }
+    ],
+    "Edipower_9409": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3691
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9993
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9834
+      }
+    ],
+    "Enel Distribuzione_10698": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4898
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3855
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3253
+      }
+    ],
+    "Terna S.p.A._10686": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5531
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3276
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.267
+      }
+    ],
+    "ENEL_26327": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2428
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.115
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.8765
+      }
+    ],
+    "Terna S.p.A._8372": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.599
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3607
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3551
+      }
+    ],
+    "Terna_7344": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1755
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.139
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0215
+      }
+    ],
+    "Enel Distribuzione_10257": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2363
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1796
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.118
+      }
+    ],
+    "e-distribuzione S.p.A._21128": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2031
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1459
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1456
+      }
+    ],
+    "e-distribuzione S.p.A._33774": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3236
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2361
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9855
+      }
+    ],
+    "ENEL_16987": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.4926
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.9505
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8495
+      }
+    ],
+    "Enel Distribuzione_10671": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1561
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.07
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0687
+      }
+    ],
+    "e-distribuzione S.p.A._19513": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5339
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.4055
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3853
+      }
+    ],
+    "TERNA_12148": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.043
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9274
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9199
+      }
+    ],
+    "e-distribuzione S.p.A._32744": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6435
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4452
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3562
+      }
+    ],
+    "Enel Green Power_9967": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5952
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.479
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2023
+      }
+    ],
+    "Terna S.p.A._31782": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6268
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2135
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.1843
+      }
+    ],
+    "Air Liquide_57": [
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1391
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0602
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0447
+      }
+    ],
+    "ENEL_32712": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4883
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3501
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2397
+      }
+    ],
+    "ENEL_36162": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4882
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2597
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2279
+      }
+    ],
+    "Enel Distribuzione_8080": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3386
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2052
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9094
+      }
+    ],
+    "Enel Distribuzione_9669": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3977
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.247
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1364
+      }
+    ],
+    "ENEL_33046": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2147
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0041
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8955
+      }
+    ],
+    "Terna S.p.A._8795": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6163
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7453
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.6968
+      }
+    ],
+    "Enel Distribuzione_8408": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3603
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2749
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1981
+      }
+    ],
+    "Buzzi Unicem_11343": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.486
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4822
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4502
+      }
+    ],
+    "Sorgenia_26404": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7015
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9117
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.8113
+      }
+    ],
+    "Terna_8098": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.444
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.406
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.3109
+      }
+    ],
+    "SCA Hygiene Products_10152": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.646
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4877
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3755
+      }
+    ],
+    "Enel Distribuzione_11318": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6478
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3022
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2176
+      }
+    ],
+    "Enel Produzione_21536": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.432
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2676
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2642
+      }
+    ],
+    "Enel Distribuzione_8034": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4285
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1379
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0755
+      }
+    ],
+    "RFI_21744": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.689
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2539
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.0109
+      }
+    ],
+    "Edipower_8360": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5675
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4024
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3709
+      }
+    ],
+    "Zanussi_9408": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3053
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1627
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0373
+      }
+    ],
+    "Enel Distribuzione_10636": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5175
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2273
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.1844
+      }
+    ],
+    "Enel Distribuzione_22568": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7146
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8748
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7323
+      }
+    ],
+    "Enel Distribuzione_8142": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1433
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.101
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0811
+      }
+    ],
+    "Enel Distribuzione_7852": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3559
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1511
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9107
+      }
+    ],
+    "TERNA_2155": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0082
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.837
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.7605
+      }
+    ],
+    "Trinacria eolica_26470": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6558
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.1853
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.1454
+      }
+    ],
+    "Italgen_10829": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2345
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6841
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6031
+      }
+    ],
+    "Enel Distribuzione_9550": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5775
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.492
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3868
+      }
+    ],
+    "Enel Distribuzione_12138": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.291
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3644
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.3183
+      }
+    ],
+    "Enel Produzione_8444": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2588
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.7309
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.4309
+      }
+    ],
+    "TERNA_21469": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1937
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7149
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.5978
+      }
+    ],
+    "Ecobat Industrie_26006": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2084
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1988
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0926
+      }
+    ],
+    "Enel Distribuzione_9557": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2364
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.4381
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3937
+      }
+    ],
+    "e-distribuzione S.p.A._9104": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1831
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6794
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.5344
+      }
+    ],
+    "Seledison_9366": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8138
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6009
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.3004
+      }
+    ],
+    "Enel Distribuzione_54": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.295
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -2.3191
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.3129
+      }
+    ],
+    "Terna S.p.A._8303": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.6398
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0749
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.9022
+      }
+    ],
+    "Green Energy_22210": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7153
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.993
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7214
+      }
+    ],
+    "TERNA_6277": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.226
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1928
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9414
+      }
+    ],
+    "e-distribuzione S.p.A._10211": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3755
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.6413
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.6218
+      }
+    ],
+    "Sapio_25830": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.169
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1105
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0816
+      }
+    ],
+    "Sageter Energia_11085": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0796
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0505
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0117
+      }
+    ],
+    "Enel Distribuzione_8139": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2326
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0429
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.8662
+      }
+    ],
+    "Alenia Aeronautica_11848": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6978
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.9439
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8283
+      }
+    ],
+    "Enel Distribuzione_8259": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4564
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2086
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9611
+      }
+    ],
+    "TERNA_20097": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.305
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0151
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8494
+      }
+    ],
+    "Enel Distribuzione_8193": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5003
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.035
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0021
+      }
+    ],
+    "E.D.A._9826": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1574
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0395
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9144
+      }
+    ],
+    "Nylstar_7327": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2289
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1657
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9864
+      }
+    ],
+    "e-distribuzione S.p.A._15152": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3149
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.4328
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3865
+      }
+    ],
+    "RFI_10761": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.55
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.401
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3493
+      }
+    ],
+    "Enel Distribuzione_26423": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5779
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7869
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.726
+      }
+    ],
+    "Enel Distribuzione_21068": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0335
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9574
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8665
+      }
+    ],
+    "Florim Ceramiche_10571": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1786
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9941
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8718
+      }
+    ],
+    "TERNA_32715": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.522
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0553
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.0109
+      }
+    ],
+    "Enel Distribuzione_10076": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.135
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0272
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0017
+      }
+    ],
+    "Enel Distribuzione_11482": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.676
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2541
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1405
+      }
+    ],
+    "TERNA_13908": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2169
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0268
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8808
+      }
+    ],
+    "TERNA_26726": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1304
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1248
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9604
+      }
+    ],
+    "Enel Distribuzione_7251": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2016
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.157
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1358
+      }
+    ],
+    "Enel Distribuzione_7846": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3621
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2252
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9927
+      }
+    ],
+    "RFI_7787": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3618
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2278
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0519
+      }
+    ],
+    "Iren Energia_10996": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.741
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5462
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.4069
+      }
+    ],
+    "Enel Produzione_9864": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.625
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4289
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4258
+      }
+    ],
+    "RFI_9914": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1844
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0658
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0491
+      }
+    ],
+    "Enel Distribuzione_9782": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5029
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3342
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0227
+      }
+    ],
+    "Terna S.p.A._7144": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1665
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6082
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5892
+      }
+    ],
+    "Enel Distribuzione_9981": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3661
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.724
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.5603
+      }
+    ],
+    "RFI_7984": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4534
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3179
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2381
+      }
+    ],
+    "TERNA_32618": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.695
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.5948
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4374
+      }
+    ],
+    "Enel Distribuzione_10539": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2327
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7777
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6975
+      }
+    ],
+    "TERNA_13269": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2113
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0883
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9894
+      }
+    ],
+    "Enel Distribuzione_10412": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0663
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0135
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.013
+      }
+    ],
+    "Enel Distribuzione_6936": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.7114
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4299
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.4135
+      }
+    ],
+    "Enel Distribuzione_22559": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2562
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.4847
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.4779
+      }
+    ],
+    "Compagnia Valdostana Acque_7891": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7083
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5361
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.4294
+      }
+    ],
+    "Terna_7254": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5833
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2761
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.082
+      }
+    ],
+    "Fiat_8044": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1509
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1035
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9591
+      }
+    ],
+    "Enel Distribuzione_9183": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6955
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9305
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.8284
+      }
+    ],
+    "Enel Produzione_7122": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7678
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3594
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.0981
+      }
+    ],
+    "Polynt_9269": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0336
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9396
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9279
+      }
+    ],
+    "Acea Distribuzione_7500": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3546
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.6196
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.5231
+      }
+    ],
+    "Enel Distribuzione_8661": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2465
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8517
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.7425
+      }
+    ],
+    "ENAS_11357": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.5578
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4538
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4287
+      }
+    ],
+    "Areti_25951": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3545
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.4973
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.4729
+      }
+    ],
+    "ENEL_19254": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2399
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.7503
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6624
+      }
+    ],
+    "Enel Distribuzione_21789": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.5243
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0543
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.0003
+      }
+    ],
+    "e-distribuzione S.p.A._8999": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3667
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0938
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.9614
+      }
+    ],
+    "INRETE S.p.A._10735": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2526
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2276
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8064
+      }
+    ],
+    "Iltainox_11146": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0659
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0543
+      }
+    ],
+    "Winbis_22208": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5736
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.8134
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.7183
+      }
+    ],
+    "TERNA_30174": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5453
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4795
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.2797
+      }
+    ],
+    "Industria Cementi Rossi_9437": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0566
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9484
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -2.9222
+      }
+    ],
+    "Enel Distribuzione_25926": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4827
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.293
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.2533
+      }
+    ],
+    "e-distribuzione S.p.A._10862": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6873
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.6162
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.5152
+      }
+    ],
+    "e-distribuzione S.p.A._8390": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.127
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.6158
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5021
+      }
+    ],
+    "e-distribuzione S.p.A._17272": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.5398
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.458
+      },
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.3519
+      }
+    ],
+    "Terna_13436": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.957
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.309
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -2.1416
+      }
+    ],
+    "Terna_10230": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3074
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1765
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0726
+      }
+    ],
+    "Imi Sud_14007": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6449
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.914
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.8031
+      }
+    ],
+    "RFI_7978": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3251
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2048
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0774
+      }
+    ],
+    "TERNA_7797": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.5366
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4642
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2121
+      }
+    ],
+    "RFI_6975": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4707
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.5486
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.3531
+      }
+    ],
+    "RFI_9343": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.851
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6662
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.2818
+      }
+    ],
+    "e-distribuzione S.p.A._10292": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0925
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0864
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0837
+      }
+    ],
+    "TERNA_13383": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.6122
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1941
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0917
+      }
+    ],
+    "ENEL_6510": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.3318
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1615
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9489
+      }
+    ],
+    "Terna S.p.A._7493": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2813
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.8267
+      }
+    ],
+    "TERNA_31610": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.5164
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0492
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.9994
+      }
+    ],
+    "Enel Produzione_8050": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7238
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5459
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.4473
+      }
+    ],
+    "Enel Produzione_25784": [
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7748
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -1.612
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5318
+      }
+    ],
+    "Terna S.p.A._7278": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0004
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9866
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9392
+      }
+    ],
+    "e-distribuzione S.p.A._9917": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.07
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0493
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9804
+      }
+    ],
+    "Enel Distribuzione_10626": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.6412
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.1196
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.9129
+      }
+    ],
+    "Euratom_11121": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.7741
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5614
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -1.4429
+      }
+    ],
+    "e-distribuzione S.p.A._13566": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.563
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.2267
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1861
+      }
+    ],
+    "ENEL_668": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0619
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.835
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.7344
+      }
+    ],
+    "Enel Distribuzione_9799": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2895
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0447
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9932
+      }
+    ],
+    "ENEL_35183": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2727
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1837
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.13
+      }
+    ],
+    "Enel Distribuzione_7295": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2511
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1953
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0975
+      }
+    ],
+    "e-distribuzione S.p.A._11227": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1947
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.1358
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0003
+      }
+    ],
+    "e-distribuzione S.p.A._10267": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.6428
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3716
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.1731
+      }
+    ],
+    "Enel Distribuzione_10288": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.5762
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3874
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.324
+      }
+    ],
+    "Enel Distribuzione_7161": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0891
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.901
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.885
+      }
+    ],
+    "Enel Produzione_10286": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3433
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1853
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9758
+      }
+    ],
+    "e-distribuzione S.p.A._6938": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.4913
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3831
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.3663
+      }
+    ],
+    "RFI_13442": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6498
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.1594
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1512
+      }
+    ],
+    "TERNA_31901": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6828
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1289
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.0357
+      }
+    ],
+    "Windsol_10738": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.3383
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.3172
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.3082
+      }
+    ],
+    "Enel Distribuzione_20534": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.4469
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7049
+      },
+      {
+        "feature": "bess_sat",
+        "dNPV_per_unit": -1.691
+      }
+    ],
+    "Enel Distribuzione_11198": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4842
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2619
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.201
+      }
+    ],
+    "Enel Distribuzione_9151": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.2984
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.8592
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.7886
+      }
+    ],
+    "TERNA_6686": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.0614
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -2.9024
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.8236
+      }
+    ],
+    "Enel Produzione_8477": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.2267
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.1006
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.0255
+      }
+    ],
+    "RFI_13264": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.2813
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9566
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.952
+      }
+    ],
+    "RFI_7224": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.4349
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.719
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.5307
+      }
+    ],
+    "Ahlstrom Turin_8033": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3814
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0984
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9239
+      }
+    ],
+    "Terna S.p.A._8792": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6502
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.2438
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -2.0685
+      }
+    ],
+    "Fiat_8012": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.331
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1737
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0899
+      }
+    ],
+    "Enel Distribuzione_8090": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.802
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.5995
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.4416
+      }
+    ],
+    "TERNA_31442": [
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.8587
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.5789
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.4198
+      }
+    ],
+    "Aem Cremona_9907": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3095
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9096
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -2.8618
+      }
+    ],
+    "Enel Distribuzione_9188": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.6839
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.9443
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.8397
+      }
+    ],
+    "Enel Distribuzione_7725": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.4347
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2859
+      },
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -3.237
+      }
+    ],
+    "Enel Distribuzione_25912": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5877
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.336
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.3065
+      }
+    ],
+    "Colacem_9131": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.1861
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.6057
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.5541
+      }
+    ],
+    "Enel Distribuzione_8138": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.4014
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.143
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0539
+      }
+    ],
+    "Enel Distribuzione_7169": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1141
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 2.9028
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.7816
+      }
+    ],
+    "Set Distribuzione_116": [
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -1.8344
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -1.6121
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -1.2867
+      }
+    ],
+    "Enel Distribuzione_11105": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2011
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.102
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -3.0871
+      }
+    ],
+    "RFI_10517": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.5776
+      },
+      {
+        "feature": "EP_rate_region",
+        "dNPV_per_unit": 1.2915
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.2637
+      }
+    ],
+    "ENEL_32813": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.7084
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -2.1819
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -2.0399
+      }
+    ],
+    "Enel Distribuzione_13345": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -1.6293
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.3139
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 1.296
+      }
+    ],
+    "Terna S.p.A._27160": [
+      {
+        "feature": "mod_R7",
+        "dNPV_per_unit": -2.4268
+      },
+      {
+        "feature": "bess_fuel_upside",
+        "dNPV_per_unit": 2.0544
+      },
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 1.9404
+      }
+    ],
+    "Enel Distribuzione_10094": [
+      {
+        "feature": "revenue_haircut_pct",
+        "dNPV_per_unit": -2.5781
+      },
+      {
+        "feature": "mod_R4",
+        "dNPV_per_unit": -1.7689
+      },
+      {
+        "feature": "exposure_index",
+        "dNPV_per_unit": -1.7509
+      }
+    ],
+    "RFI_8217": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.3921
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.1404
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.0543
+      }
+    ],
+    "Unareti S.p.A._11097": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.2278
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "dNPV_per_unit": -2.9397
+      },
+      {
+        "feature": "crs_nodal",
+        "dNPV_per_unit": -2.7905
+      }
+    ],
+    "Aamaie_7998": [
+      {
+        "feature": "mod_R3",
+        "dNPV_per_unit": 3.5328
+      },
+      {
+        "feature": "congestion_factor",
+        "dNPV_per_unit": -3.3351
+      },
+      {
+        "feature": "bs_composite",
+        "dNPV_per_unit": -3.1866
+      }
+    ]
+  }
+}

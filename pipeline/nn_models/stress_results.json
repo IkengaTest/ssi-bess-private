@@ -1,0 +1,58 @@
+{
+  "n_scenarios": 5,
+  "n_pass": 5,
+  "pass_rate": 100.0,
+  "scenarios": {
+    "gas_crisis": {
+      "description": "Prolonged gas supply disruption \u2014 higher risk metrics dominate",
+      "base_median_M": 20.9704,
+      "stressed_median_M": 17.0765,
+      "delta_pct": -18.57,
+      "actual_direction": "negative",
+      "expected_direction": "mixed",
+      "direction_ok": true,
+      "n_extreme_moves": 3786
+    },
+    "rapid_decarbonisation": {
+      "description": "Accelerated EU 2035 targets achieved by 2030",
+      "base_median_M": 20.9704,
+      "stressed_median_M": 19.6356,
+      "delta_pct": -6.36,
+      "actual_direction": "negative",
+      "expected_direction": "negative",
+      "direction_ok": true,
+      "n_extreme_moves": 2212
+    },
+    "grid_congestion_spike": {
+      "description": "Massive renewable buildout + congestion + saturation",
+      "base_median_M": 20.9704,
+      "stressed_median_M": 14.2097,
+      "delta_pct": -32.24,
+      "actual_direction": "negative",
+      "expected_direction": "mixed",
+      "direction_ok": true,
+      "n_extreme_moves": 3737
+    },
+    "regulatory_collapse": {
+      "description": "Capacity market suspended, FCR rules changed",
+      "base_median_M": 20.9704,
+      "stressed_median_M": 13.4157,
+      "delta_pct": -36.03,
+      "actual_direction": "negative",
+      "expected_direction": "negative",
+      "direction_ok": true,
+      "n_extreme_moves": 4006
+    },
+    "perfect_storm": {
+      "description": "Gas crisis + grid congestion + high saturation + regulatory risk",
+      "base_median_M": 20.9704,
+      "stressed_median_M": 14.8403,
+      "delta_pct": -29.23,
+      "actual_direction": "negative",
+      "expected_direction": "negative",
+      "direction_ok": true,
+      "n_extreme_moves": 3839
+    }
+  },
+  "stress_stable": true
+}
