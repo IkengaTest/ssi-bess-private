@@ -1,0 +1,3422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSI-ENN Plan of Work v27a — Technical Appendices</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&display=swap');
+
+  :root {
+    --crimson: #941914;
+    --terracotta: #aa4234;
+    --sage: #5d8563;
+    --bronze: #b8863a;
+    --ink: #2c2420;
+    --warm-grey: #8a7e76;
+    --bg: #f7f4f1;
+    --card-bg: #ffffff;
+    --card-border: #e8e2dc;
+    --text: #2c2420;
+    --text-light: #6b5f56;
+    --highlight-bg: #faf6f0;
+    --teal: #0e7490;
+    --purple: #6c3483;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 14.5px;
+  }
+
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* Header */
+  .doc-header {
+    border-bottom: 3px solid var(--crimson);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  .doc-header .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    background: rgba(148,25,20,0.08);
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+  }
+  .doc-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .doc-header .subtitle {
+    font-size: 15px;
+    color: var(--text-light);
+  }
+  .doc-header .meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--warm-grey);
+  }
+
+  /* Sections */
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 56px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 28px 0 10px;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--terracotta);
+    margin: 20px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  p { margin-bottom: 14px; }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .card.formula { border-left: 4px solid var(--sage); background: #f8faf8; }
+  .card.regulatory { border-left: 4px solid var(--crimson); }
+  .card.data { border-left: 4px solid var(--bronze); }
+  .card.warning { border-left: 4px solid var(--terracotta); background: #fdf8f6; }
+  .card.teal { border-left: 4px solid var(--teal); background: #f0fafb; }
+  .card.purple { border-left: 4px solid var(--purple); background: #faf5fd; }
+
+  /* Formula blocks */
+  .formula-block {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    background: var(--highlight-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    overflow-x: auto;
+    line-height: 2;
+  }
+  .formula-block .main {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .formula-block .sub {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  thead th {
+    background: var(--ink);
+    color: #fff;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--card-border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--highlight-bg); }
+  td.code { font-family: 'Courier New', monospace; font-weight: 600; white-space: nowrap; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td .source-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .tag-reg { background: rgba(148,25,20,0.08); color: var(--crimson); }
+  .tag-market { background: rgba(93,133,99,0.10); color: var(--sage); }
+  .tag-academic { background: rgba(184,134,58,0.10); color: var(--bronze); }
+  .tag-custom { background: rgba(44,36,32,0.08); color: var(--ink); }
+  .tag-teal { background: rgba(14,116,144,0.10); color: var(--teal); }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--highlight-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+
+  /* Component grid */
+  .component-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .component-grid.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .component-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .component-card .code-label {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .component-card .name {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .component-card .desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* Appendix divider */
+  .appendix-divider {
+    margin: 60px 0 40px;
+    padding: 20px 0;
+    border-top: 3px double var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .appendix-divider .app-label {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .appendix-divider .app-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .appendix-divider .app-ref {
+    font-size: 12px;
+    color: var(--warm-grey);
+    margin-top: 4px;
+  }
+
+  /* TOC */
+  .toc-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 24px 0 40px;
+    columns: 2;
+    column-gap: 28px;
+  }
+  .toc-box a {
+    display: block;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--card-border);
+    break-inside: avoid;
+  }
+  .toc-box a:hover { color: var(--crimson); }
+  .toc-box a .toc-code {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--crimson);
+    margin-right: 6px;
+  }
+  .toc-box a.toc-section {
+    font-weight: 700;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--card-border);
+    border-bottom: none;
+  }
+
+  /* Footer */
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px solid var(--card-border);
+    font-size: 12px;
+    color: var(--warm-grey);
+  }
+
+  sup { font-size: 10px; }
+  em.def { color: var(--sage); font-style: normal; font-weight: 600; }
+  strong.crimson { color: var(--crimson); }
+  strong.sage { color: var(--sage); }
+  strong.bronze { color: var(--bronze); }
+  strong.teal { color: var(--teal); }
+  a { color: var(--crimson); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .page { padding: 0; max-width: 100%; }
+    .appendix-divider { break-before: page; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="tag">SSI-ENN Technical Appendices &mdash; v27a Companion</div>
+  <h1>Plan of Work v27a &mdash; Technical Deep Dives</h1>
+  <p class="subtitle">Comprehensive Methodology Notes: Formula Derivations, Regulatory Foundations, Auditable Data Sources &amp; Validation Frameworks for All Major SSI-ENN Components</p>
+  <p class="meta">Altinium Invest &middot; Ikenga Infrastructure &middot; Working Draft &middot; March 2026 &middot; Appendices A&ndash;I</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<h2>Contents</h2>
+
+<div class="toc-box">
+  <a class="toc-section" href="#appA"><span class="toc-code">A</span> SSI v4.0 Scoring Methodology</a>
+  <a href="#appA1"><span class="toc-code">A.1</span> Six-Component Taxonomy (C, V, I, E, S, T)</a>
+  <a href="#appA2"><span class="toc-code">A.2</span> Sub-Metric Definitions &amp; Scoring</a>
+  <a href="#appA3"><span class="toc-code">A.3</span> Normalisation &amp; Aggregation</a>
+  <a href="#appA4"><span class="toc-code">A.4</span> Academic Scoring Frameworks</a>
+  <a href="#appA5"><span class="toc-code">A.5</span> Validation Framework</a>
+  <a href="#appA6"><span class="toc-code">A.6</span> Auditable Data Sources</a>
+
+  <a class="toc-section" href="#appB"><span class="toc-code">B</span> DNO Value Stack (D1&ndash;D5)</a>
+  <a href="#appB1"><span class="toc-code">B.1</span> Regulatory Basis (ARERA)</a>
+  <a href="#appB2"><span class="toc-code">B.2</span> D1 Investment Deferral</a>
+  <a href="#appB3"><span class="toc-code">B.3</span> D2 Congestion Relief</a>
+  <a href="#appB4"><span class="toc-code">B.4</span> D3 Loss Reduction</a>
+  <a href="#appB5"><span class="toc-code">B.5</span> D4 Voltage Support</a>
+  <a href="#appB6"><span class="toc-code">B.6</span> D5 Fault Level Contribution</a>
+  <a href="#appB7"><span class="toc-code">B.7</span> Cross-Reference &amp; Validation</a>
+
+  <a class="toc-section" href="#appC"><span class="toc-code">C</span> Community Value Stack (W1&ndash;W5)</a>
+  <a href="#appC1"><span class="toc-code">C.1</span> Social Discount Rate</a>
+  <a href="#appC2"><span class="toc-code">C.2</span> W1 Reliability Improvement</a>
+  <a href="#appC3"><span class="toc-code">C.3</span> W2 Carbon Displacement (Physical)</a>
+  <a href="#appC4"><span class="toc-code">C.4</span> W3 Local Economic Impact</a>
+  <a href="#appC5"><span class="toc-code">C.5</span> W4 Energy Poverty / Resilience</a>
+  <a href="#appC6"><span class="toc-code">C.6</span> W5 Digital Infrastructure</a>
+  <a href="#appC7"><span class="toc-code">C.7</span> Aggregation &amp; Double-Counting</a>
+
+  <a class="toc-section" href="#appD"><span class="toc-code">D</span> Revenue Architecture (R1&ndash;R11)</a>
+  <a href="#appD1"><span class="toc-code">D.1</span> Italian Market Design</a>
+  <a href="#appD2"><span class="toc-code">D.2</span> Revenue Stream Catalogue</a>
+  <a href="#appD3"><span class="toc-code">D.3</span> Cross-Country Availability</a>
+  <a href="#appD4"><span class="toc-code">D.4</span> Dispatch Optimisation</a>
+
+  <a class="toc-section" href="#appE"><span class="toc-code">E</span> Total Cost of Ownership</a>
+  <a href="#appE1"><span class="toc-code">E.1</span> CAPEX Model</a>
+  <a href="#appE2"><span class="toc-code">E.2</span> OPEX Model</a>
+  <a href="#appE3"><span class="toc-code">E.3</span> Degradation &amp; Augmentation</a>
+  <a href="#appE4"><span class="toc-code">E.4</span> WACC &amp; NPV Bridge</a>
+
+  <a class="toc-section" href="#appF"><span class="toc-code">F</span> Real Options Framework (A&ndash;F)</a>
+  <a href="#appF1"><span class="toc-code">F.1</span> Longstaff-Schwartz LSM</a>
+  <a href="#appF2"><span class="toc-code">F.2</span> Option Catalogue</a>
+  <a href="#appF3"><span class="toc-code">F.3</span> Stochastic Processes</a>
+  <a href="#appF4"><span class="toc-code">F.4</span> Validation &amp; Convergence</a>
+
+  <a class="toc-section" href="#appG"><span class="toc-code">G</span> Neural Network Architecture</a>
+  <a href="#appG1"><span class="toc-code">G.1</span> Ensemble Design (GBT + DNN)</a>
+  <a href="#appG2"><span class="toc-code">G.2</span> Feature Engineering &amp; Multi-Task Heads</a>
+  <a href="#appG3"><span class="toc-code">G.3</span> Uncertainty &amp; Transfer Learning</a>
+  <a href="#appG4"><span class="toc-code">G.4</span> Validation &amp; Monitoring</a>
+
+  <a class="toc-section" href="#appH"><span class="toc-code">H</span> Advanced Risk Modules</a>
+  <a href="#appH1"><span class="toc-code">H.1</span> Black Swan (BS-F1&ndash;F4)</a>
+  <a href="#appH2"><span class="toc-code">H.2</span> Actuarial Catastrophe Pricing</a>
+  <a href="#appH3"><span class="toc-code">H.3</span> Cannibalization Resilience</a>
+  <a href="#appH4"><span class="toc-code">H.4</span> Nodal Pricing Scenario</a>
+
+  <a class="toc-section" href="#appI"><span class="toc-code">I</span> Monte Carlo Engine &amp; Gaussian Copula</a>
+  <a href="#appI1"><span class="toc-code">I.1</span> Copula Methodology</a>
+  <a href="#appI2"><span class="toc-code">I.2</span> Revenue MC Engine</a>
+  <a href="#appI3"><span class="toc-code">I.3</span> Convergence &amp; Variance Reduction</a>
+  <a href="#appI4"><span class="toc-code">I.4</span> Sensitivity Analysis</a>
+</div>
+
+<div class="card warning">
+  <strong>Document scope:</strong> These appendices provide the full methodological deep-dive for every formula-driven section of the SSI-ENN Plan of Work v27a. Each appendix follows the same structure: problem statement, regulatory/market foundations, formula architecture with variable tables, validation framework, and auditable data sources with vintage requirements. The companion document <em>ESG Value Uplift &mdash; Quantification Framework</em> (Appendix J) covers &sect;0.4.1a (E1&ndash;E3) and is published separately.
+</div>
+
+<!-- APPENDIX A: SSI v4.0 Scoring Methodology -->
+<div class="appendix-divider">
+  <h2>APPENDIX A &ensp; SSI v4.0 Scoring Methodology</h2>
+  <p class="subtitle">Substation Stress Index Taxonomy, Scoring, Copula, and Data Architecture for BESS Valuation</p>
+  <p class="meta">Reference: Plan of Work v27a §0.3.1–0.3.3, §0.3.8 &middot; Altinium Invest / Ikenga Infrastructure</p>
+</div>
+
+<!-- PROBLEM STATEMENT -->
+<h3>A.1 &ensp; Problem Statement: Substation-Level Scoring for BESS Investment</h3>
+
+<p>The BESS valuation model requires a <strong>quantitative, auditable measure of grid stress at the substation level</strong> that serves three purposes: (i) identify where BESS provides maximum avoided-cost value to the DNO (D1–D5 stack), (ii) identify where BESS provides maximum resilience and social value to the community (W1–W5 stack), and (iii) support real options pricing by measuring the underlying state variables that trigger value changes (option exercise boundaries).</p>
+
+<p>The SSI v4.0 (Substation Stress Index) provides this measure. It is a composite score constructed from 20 sub-metrics across six components, each independently sourced from regulatory or market-practice data. The SSI is normalized to [0, 1] where 1 indicates maximum stress / maximum BESS opportunity.</p>
+
+<div class="card warning">
+  <strong>Design principle:</strong> The SSI is <em>not</em> a prediction model — it does not forecast which substations will fail. Rather, it measures current/observable grid stress conditions that drive BESS value. The SSI feeds deterministically into the valuation formulae; uncertainty comes from Monte Carlo sampling of the SSI components' marginal distributions and their dependence structure via the Gaussian Copula.
+</div>
+
+<!-- THE 6-COMPONENT TAXONOMY -->
+<h3>A.2 &ensp; The Six-Component Taxonomy</h3>
+
+<p>Each component captures a distinct dimension of substation health. Deficiencies in any component create investment opportunities for BESS.</p>
+
+<div class="component-grid">
+  <div class="component-card" style="border-left: 4px solid #aa4234">
+    <div class="code-label" style="color:#aa4234">C</div>
+    <div class="name">Continuity (Supply Reliability)</div>
+    <div class="desc">How often and for how long customers experience interruptions. Measured by SAIDI (duration), SAIFI (frequency), MAIFI (momentary), and planned outage ratio. Higher = worse reliability.</div>
+  </div>
+  <div class="component-card" style="border-left: 4px solid #6b5f5f">
+    <div class="code-label" style="color:#6b5f5f">V</div>
+    <div class="name">Voltage Quality</div>
+    <div class="desc">Compliance with EN 50160 voltage dip thresholds. Measured by V1 (dip frequency) and V2 (dip severity, depth × duration). Higher = worse voltage stability.</div>
+  </div>
+  <div class="component-card" style="border-left: 4px solid #c85a54">
+    <div class="code-label" style="color:#c85a54">I</div>
+    <div class="name">Infrastructure Risk</div>
+    <div class="desc">Physical vulnerability from climate hazards (flood, landslide, heat-wave), asset age, network topology, thermal stress, and corrosion. Nine sub-metrics. Higher = greater climate exposure and infrastructure vulnerability.</div>
+  </div>
+  <div class="component-card" style="border-left: 4px solid #b8863a">
+    <div class="code-label" style="color:#b8863a">E</div>
+    <div class="name">Economic Profile</div>
+    <div class="desc">Regional GDP per capita and customer-mix-weighted Value of Lost Load. Contextual variables that modulate the economic impact of outages and the opportunity cost of capital.</div>
+  </div>
+  <div class="component-card" style="border-left: 4px solid #5d8563">
+    <div class="code-label" style="color:#5d8563">S</div>
+    <div class="name">DER Saturation</div>
+    <div class="desc">Distributed energy resource penetration stress. Measured by Dimovski ratio (DER capacity ÷ transformer rating), reverse power flow hours, and critical load presence. Higher = greater congestion and voltage rise risk.</div>
+  </div>
+  <div class="component-card" style="border-left: 4px solid #2c9d9e">
+    <div class="code-label" style="color:#2c9d9e">T</div>
+    <div class="name">Transition Trajectory</div>
+    <div class="desc">Energy-transition stress from electrification (EVs, heat pumps) and DER growth. Composite of DER penetration ratio, output variability, and EV charging burden. Higher = greater transition strain.</div>
+  </div>
+</div>
+
+<h4>Sub-Metric Registry (20 Metrics)</h4>
+
+<table>
+  <thead><tr><th>Component</th><th>ID</th><th>Sub-Metric</th><th>Unit</th><th>Polarity</th><th>Source (Italy)</th></tr></thead>
+  <tbody>
+    <tr style="background:#eaf2f8">
+      <td rowspan="4" style="font-weight:700;color:#aa4234">C</td>
+      <td class="code">C1</td>
+      <td>SAIDI — System Average Interruption Duration Index</td>
+      <td>min/cust/yr</td>
+      <td>↑ worse</td>
+      <td>ARERA annual quality determinations</td>
+    </tr>
+    <tr style="background:#eaf2f8">
+      <td class="code">C2</td>
+      <td>SAIFI — System Average Interruption Frequency Index</td>
+      <td>interruptions/cust/yr</td>
+      <td>↑ worse</td>
+      <td>ARERA</td>
+    </tr>
+    <tr style="background:#eaf2f8">
+      <td class="code">C3</td>
+      <td>MAIFI — Momentary Average Interruption Frequency Index</td>
+      <td>momentary/cust/yr</td>
+      <td>↑ worse</td>
+      <td>ARERA / E-Distribuzione</td>
+    </tr>
+    <tr style="background:#eaf2f8">
+      <td class="code">C4</td>
+      <td>Planned outage ratio — scheduled maintenance share of SAIDI</td>
+      <td>% of SAIDI</td>
+      <td>↑ worse</td>
+      <td>ARERA + DSO open data</td>
+    </tr>
+    <tr>
+      <td rowspan="2" style="font-weight:700;color:#6b5f5f">V</td>
+      <td class="code">V1</td>
+      <td>Voltage dip frequency — EN 50160 exceedance events</td>
+      <td>events/yr</td>
+      <td>↑ worse</td>
+      <td>ARERA TIQE + E-Distribuzione PQ</td>
+    </tr>
+    <tr>
+      <td class="code">V2</td>
+      <td>Voltage dip severity — residual voltage × duration product (depth × ms)</td>
+      <td>severity index</td>
+      <td>↑ worse</td>
+      <td>ARERA TIQE event logs</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td rowspan="9" style="font-weight:700;color:#c85a54">I</td>
+      <td class="code">I1</td>
+      <td>Flood hazard IRI — annualised probability × exposure × vulnerability</td>
+      <td>IRI score [0–1]</td>
+      <td>↑ worse</td>
+      <td>ISPRA IdroGeo, EU Floods Directive</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I2</td>
+      <td>Landslide hazard IRI — gravitational mass movement risk</td>
+      <td>IRI score [0–1]</td>
+      <td>↑ worse</td>
+      <td>ISPRA IFFI inventory</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I3</td>
+      <td>Heat-wave hazard IRI — frequency × intensity × duration</td>
+      <td>IRI score [0–1]</td>
+      <td>↑ worse</td>
+      <td>Copernicus ERA5, CMIP6 SSP2-4.5</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I4</td>
+      <td>Infrastructure density — substations/km² (redundancy proxy)</td>
+      <td>substations/km²</td>
+      <td>↓ better (higher = redundancy)</td>
+      <td>SSI registry + ISTAT boundaries</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I5</td>
+      <td>Thermal stress — IEEE C57.91 hot-spot temperature model</td>
+      <td>°C / normalized [0–1]</td>
+      <td>↑ worse</td>
+      <td>ERA5 temperature + Terna load profiles</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I6</td>
+      <td>Substation density — network redundancy</td>
+      <td>substations/km²</td>
+      <td>↓ better</td>
+      <td>SSI registry + ISTAT boundaries</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I7</td>
+      <td>Load stress ratio — peak load ÷ transformer rated capacity</td>
+      <td>ratio [0–1]</td>
+      <td>↑ worse</td>
+      <td>Terna Open Data + E-Distribuzione ratings</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I8</td>
+      <td>Air quality corrosion — PM₂.₅, NO₂, Cl deposition (ISO 9223)</td>
+      <td>corrosion index [0–1]</td>
+      <td>↑ worse</td>
+      <td>EEA Air Quality + ISPRA coastal data</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">I9</td>
+      <td>Hydrogeological risk — combined flood + landslide exposure</td>
+      <td>risk index [0–1]</td>
+      <td>↑ worse</td>
+      <td>ISPRA IdroGEO + IFFI inventories</td>
+    </tr>
+    <tr>
+      <td rowspan="2" style="font-weight:700;color:#b8863a">E</td>
+      <td class="code">E1</td>
+      <td>Regional GDP per capita (NUTS-3, PPS)</td>
+      <td>€/capita</td>
+      <td>Contextual</td>
+      <td>Eurostat [nama_10r_3gdp] + ISTAT</td>
+    </tr>
+    <tr>
+      <td class="code">E2</td>
+      <td>Customer-mix-weighted Value of Lost Load</td>
+      <td>€/kWh unserved</td>
+      <td>↑ higher VoLL</td>
+      <td>ARERA + CEPA/London Economics</td>
+    </tr>
+    <tr style="background:#e8f8f0">
+      <td rowspan="3" style="font-weight:700;color:#5d8563">S</td>
+      <td class="code">S1</td>
+      <td>Dimovski ratio — DER capacity ÷ transformer rated capacity</td>
+      <td>ratio [0–∞)</td>
+      <td>↑ worse (high stress)</td>
+      <td>GSE Atlaimpianti + E-Distribuzione</td>
+    </tr>
+    <tr style="background:#e8f8f0">
+      <td class="code">S2</td>
+      <td>Reverse power flow occurrence — % of hours with generation > demand</td>
+      <td>% of hours/year</td>
+      <td>↑ worse</td>
+      <td>GSE + ARERA load curves + PVGIS</td>
+    </tr>
+    <tr style="background:#e8f8f0">
+      <td class="code">S3</td>
+      <td>Critical infrastructure presence (hospitals, data centres, transport)</td>
+      <td>categorical {0, 0.5, 1.0}</td>
+      <td>↑ worse (critical load)</td>
+      <td>Min. Salute registry + ARERA</td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#2c9d9e">T</td>
+      <td class="code">T1</td>
+      <td>DER Stress Index — composite of DER penetration, variability, EV load</td>
+      <td>composite score [0–1]</td>
+      <td>↑ worse (transition stress)</td>
+      <td>GSE + ENTSO-E + ENEA RAEE</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- NORMALISATION & AGGREGATION -->
+<h3>A.3 &ensp; Normalisation and Component Aggregation</h3>
+
+<p>Raw sub-metrics span heterogeneous units (minutes, ratios, €/kWh, climate indices). All metrics are normalised to [0, 1] using the empirical cumulative distribution function (CDF) across the Italian fleet of 39,234 substations.</p>
+
+<div class="formula-block">
+  <div class="main">x̃<sub>m,j</sub> = F<sub>m</sub>(x<sub>m,j</sub>)</div>
+  <div class="sub">where F<sub>m</sub> is the empirical CDF of metric m. Each substation's metric value is mapped to its percentile rank within the fleet distribution. This produces a uniform [0, 1] distribution for every metric regardless of its original distribution shape (SAIDI is right-skewed with fat tails; Dimovski ratios are log-normal; IRI scores are zero-inflated).</div>
+</div>
+
+<h4>Polarity Alignment</h4>
+
+<p>Metrics where <em>higher values indicate worse grid health</em> (C1, C2, C3, C4, V1, V2, I1, I2, I3, I5, I7, I8, I9, S1, S2, S3, T1) are used as-is after normalization: x̃ ≈ 1 means high stress. Metrics where higher values indicate <em>better</em> health (I4, I6 — substation density, higher = more redundancy) are inverted: x̃' = 1 − x̃, so 1 consistently represents maximum stress across all dimensions.</p>
+
+<h4>Component Aggregation Weights</h4>
+
+<div class="formula-block">
+  <div class="main">R<sub>base</sub> = 0.30·C + 0.10·V + 0.25·I + 0.10·E + 0.20·S + 0.05·T</div>
+  <div class="sub">where each component is the weighted average of its sub-metrics (normalized). Weights calibrated by Sobol global sensitivity analysis on Phase 1+2 valuation outputs: which sub-metrics explain the most variance in final BESS valuations?</div>
+</div>
+
+<table>
+  <thead><tr><th>Component</th><th>Intra-Component Weights</th><th>Top-Level Weight</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr style="background:#eaf2f8">
+      <td><strong>C</strong> Continuity</td>
+      <td>w_C1=0.40, w_C2=0.30, w_C3=0.15, w_C4=0.15</td>
+      <td>0.30</td>
+      <td>Duration (C1/SAIDI) drives economic loss; frequency (C2/SAIFI) captures disruption; momentary and planned outages each 0.15</td>
+    </tr>
+    <tr>
+      <td><strong>V</strong> Voltage</td>
+      <td>V1 frequency + V2 severity (composite, γ=0.50)</td>
+      <td>0.10</td>
+      <td>Severity-weighted composite; single metric with weight 1.00</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td><strong>I</strong> Infrastructure</td>
+      <td>w_I1=0.12, w_I2=0.09, w_I3=0.15, w_I4=0.12, w_I5=0.12, w_I6=0.12, w_I7=0.10, w_I8=0.08, w_I9=0.10</td>
+      <td>0.25</td>
+      <td>Heat-wave (I3) weighted highest (steepest CMIP6 escalation); I1–I3 weights adaptive via R2 modifier; I5–I9 baseline weights</td>
+    </tr>
+    <tr>
+      <td><strong>E</strong> Economic</td>
+      <td>w_E1=0.55, w_E2=0.45</td>
+      <td>0.10</td>
+      <td>Regional GDP (E1) weighted higher; E2 VoLL enriched with innovation metrics (+10% boost potential)</td>
+    </tr>
+    <tr style="background:#e8f8f0">
+      <td><strong>S</strong> DER Saturation</td>
+      <td>w_S1=0.75, w_S2=0.125, w_S3=0.125</td>
+      <td>0.20</td>
+      <td>S1 (Dimovski) dominates (75%); S2 and S3 categorical with zero MC variance, reduced to 5% deterministic</td>
+    </tr>
+    <tr>
+      <td><strong>T</strong> Transition</td>
+      <td>α_DER=0.50, α_VAR=0.30, α_EV=0.20 (composite)</td>
+      <td>0.05</td>
+      <td>Single composite metric; σ_total ≈ 28% from variance in sub-components</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- GAUSSIAN COPULA MONTE CARLO -->
+<h3>A.4 &ensp; Gaussian Copula and Monte Carlo Engine</h3>
+
+<p>SSI components are not independent. A substation with poor continuity (high C) often also has poor voltage quality (high V), aged infrastructure (high I5), and is located in a rural area with high DER penetration (high S). Ignoring these dependencies produces incorrect joint probability distributions and systematic valuation errors.</p>
+
+<h4>Copula Construction (Sklar's Theorem)</h4>
+
+<div class="formula-block">
+  <div class="main">F(x₁, ..., x₂₀) = C(F₁(x₁), ..., F₂₀(x₂₀); Σ)</div>
+  <div class="sub">Any joint distribution of 20 sub-metrics can be decomposed into marginal distributions F<sub>m</sub> (one per metric) and a copula C that captures the dependence structure. The Gaussian Copula uses a multivariate normal dependence structure parameterized by correlation matrix Σ.</div>
+</div>
+
+<h4>Construction Steps</h4>
+
+<table>
+  <thead><tr><th>Step</th><th>Operation</th><th>Method</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Marginal modelling</strong></td>
+      <td>Each sub-metric's distribution across 39,234 substations</td>
+      <td>Non-parametric empirical CDF (no normality assumption imposed)</td>
+    </tr>
+    <tr>
+      <td><strong>2. Uniform transform</strong></td>
+      <td>x̃<sub>m,j</sub> = F<sub>m</sub>(x<sub>m,j</sub>) → U[0,1]</td>
+      <td>Normalised score from Section A.3</td>
+    </tr>
+    <tr>
+      <td><strong>3. Gaussian transform</strong></td>
+      <td>z<sub>m,j</sub> = Φ⁻¹(x̃<sub>m,j</sub>)</td>
+      <td>Inverse normal CDF maps uniform to standard normal</td>
+    </tr>
+    <tr>
+      <td><strong>4. Correlation estimation</strong></td>
+      <td>Σ ∈ ℝ²⁰ˣ²⁰ estimated from z-score matrix</td>
+      <td>Kendall's tau rank correlation (robust to outliers), converted to Pearson via ρ = sin(π·τ/2). Validated for positive-definiteness.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Monte Carlo Simulation</h4>
+
+<div class="formula-block">
+  <div class="main">For k = 1, ..., 10,000: z^(k) ~ N(0, Σ) → ũ^(k) = Φ(z^(k)) → x^(k) = F⁻¹(ũ^(k))</div>
+  <div class="sub">Each iteration draws a correlated profile respecting observed marginal distributions and inter-metric dependencies. The 10,000 sample is sufficient for P10/P90 convergence to ±2% (validated by bootstrap).</div>
+</div>
+
+<h4>Tail-Dependent Copula Extension</h4>
+
+<p>The standard Gaussian Copula has <em>zero</em> tail dependence — the probability that two variables are simultaneously extreme does not increase in the tails. This is unrealistic for grid infrastructure, where extreme events cluster. A severe heat-wave (I3 tail) simultaneously causes SAIDI spikes (C1 tail), voltage instability (V1/V2 tail), and DER curtailment (S2 tail).</p>
+
+<div class="formula-block">
+  <div class="main">C<sub>tail</sub> = (1 − α) · C<sub>Gaussian</sub>(Σ) + α · C<sub>Clayton</sub>(θ)</div>
+  <div class="sub">Clayton copula with lower-tail dependence coefficient λ<sub>L</sub> = 2^(-1/θ) > 0. The mixing weight α is calibrated from historical data: during extreme events (C1 > 95th percentile), what is the conditional probability that V, I, and S simultaneously exceed their respective 90th percentiles? This tail probability determines α and θ.</div>
+</div>
+
+<div class="card formula">
+  <strong>Why tail dependence matters for BESS valuation:</strong> The highest BESS value occurs precisely during simultaneous multi-dimensional grid stress. The community impact of inaction is most severe when electricity, voltage, infrastructure, and DER all deteriorate together. A Gaussian-only copula underestimates both frequency and severity of multi-dimensional events, systematically undervaluing W4 (resilience insurance), W5 (communications cascade), and R11 (CRS). The tail-dependent extension produces wider confidence bands (P10–P90) and higher tail-risk-weighted expected values — the financially conservative adjustment for investment-grade analysis.
+</div>
+
+<!-- MODIFIERS R2-R7 -->
+<h3>A.5 &ensp; Modifiers R2–R7 and Compound Risk</h3>
+
+<p>After computing R_base, six multiplicative modifiers adjust the base score. These modifiers can individually range from 0.70 to 1.40, and compound to a total range of [0.499, 2.534] — meaning modifiers can halve or more than double a substation's risk score.</p>
+
+<table>
+  <thead><tr><th>Modifier</th><th>Type</th><th>Range</th><th>Formula</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>R2</strong> Adaptive IRI + Climate Trajectory</td>
+      <td>Weight redistribution (I-component internal)</td>
+      <td>Internal</td>
+      <td>IRI_forward = IRI_current × (1 + λ × Δ_climate), λ=0.15. Redistributes I1–I3 weight to I4/I6 when local IRI is negligible.</td>
+      <td>Copernicus CMIP6 SSP2-4.5</td>
+    </tr>
+    <tr>
+      <td><strong>R3</strong> Consequence + Energy Poverty</td>
+      <td>Multiplicative</td>
+      <td>[0.70, 1.30]</td>
+      <td>C_mult = 0.70 + 0.60/(1+e^{−4z}), z = β_pop × log₂(pop) + β_load × log₂(GWh) + β_vuln × V_socio</td>
+      <td>OIPE LIHC · ISTAT · MEF · ISPRA</td>
+    </tr>
+    <tr>
+      <td><strong>R4</strong> Graph Criticality</td>
+      <td>Multiplicative</td>
+      <td>[0.80, 1.40]</td>
+      <td>F_topo = base_factor(degree) × (1 + 0.10 × BC_pctl + 0.15 × is_bridge). Five-factor topology: clustering coeff., eigenvector centrality, spectral gap.</td>
+      <td>OSM Overpass API power graph; Terna topology</td>
+    </tr>
+    <tr>
+      <td><strong>R5</strong> Asymmetric CI</td>
+      <td>Diagnostic</td>
+      <td>n/a</td>
+      <td>Reports R_median, R_P5, R_P95, skewness, P_critical from MC output</td>
+      <td>MC simulation</td>
+    </tr>
+    <tr>
+      <td><strong>R6a</strong> Restoration Speed</td>
+      <td>Multiplicative</td>
+      <td>[0.90, 1.10]</td>
+      <td>R6_rest = sigmoid_bounded(CAIDI_local / CAIDI_med)</td>
+      <td>ARERA TIQE</td>
+    </tr>
+    <tr>
+      <td><strong>R6b</strong> Seismic Hazard</td>
+      <td>Multiplicative</td>
+      <td>[1.00, 1.25]</td>
+      <td>R6_seis = clip(1.0 + 0.60 × max(0, PGA_g − 0.05)). Zone 1 (Calabria): +16.6%; Zone 4 (Sardegna): 0%.</td>
+      <td>INGV MPS04 · OPCM 3274/2003</td>
+    </tr>
+    <tr>
+      <td><strong>R7</strong> Cyber-Exposure</td>
+      <td>Multiplicative</td>
+      <td>[0.99, 1.05]</td>
+      <td>R7 = clip(DESI_base + urban_adj + HV_bonus + noise). 556 unique values across 4,293 substations.</td>
+      <td>DESI / Eurostat regional</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>Compound modifier calculation:</strong> Max = 1.35 × 1.30 × 1.10 × 1.25 × 1.05 = <strong>2.534</strong>. Min = 0.80 × 0.70 × 0.90 × 1.00 × 0.99 = <strong>0.499</strong>. Modifiers enter as additional feature dimensions in Layer 2 valuation and Layer 3 neural network training.
+</div>
+
+<!-- ACADEMIC FRAMEWORKS -->
+<h3>A.6 &ensp; Academic Scoring Frameworks and Validation</h3>
+
+<p>Six peer-reviewed methodological enrichments strengthen the SSI framework and validate it against academic literature on infrastructure risk and resilience.</p>
+
+<h4>Framework 1: Birkmann Vulnerability Methodology</h4>
+
+<p>Birkmann (2006) defines vulnerability as the combination of exposure, sensitivity, and adaptive capacity. The I-component (Infrastructure Risk) is aligned with this framework:</p>
+
+<div class="card regulatory">
+  <strong>Exposure</strong> (where the hazard occurs): IRI sub-component P(hazard_h | location_j) from ISPRA/Copernicus maps<br>
+  <strong>Sensitivity</strong> (how much damage if exposed): asset age (I5), construction standard, utility-dependent systems<br>
+  <strong>Adaptive Capacity</strong> (ability to respond): I4/I6 (network density/redundancy) — higher density = more options to reroute, more parallel paths<br>
+  <strong>VIM</strong> = (Exposure × Sensitivity) / Adaptive Capacity
+</div>
+
+<h4>Framework 2: DSRR Multiplicative Risk Model</h4>
+
+<p>The DSRR (Disaster Risk Reduction) framework defines disaster risk as the multiplicative combination of hazard, exposure, vulnerability, and coping capacity:</p>
+
+<div class="formula-block">
+  <div class="main">Risk = Hazard × Exposure × Vulnerability × (1 / Coping Capacity)</div>
+  <div class="sub">Applied to SSI: Hazard = I1/I2/I3 (climate indices). Exposure = N_customers × infrastructure intensity. Vulnerability = asset age (I5) + lack of redundancy (low I4/I6). Coping Capacity = emergency response speed (R6a) + network meshing (I6) + backup systems (islanding capability for CRS/W5).</div>
+</div>
+
+<h4>Framework 3: Lognormal Fragility Curves</h4>
+
+<p>Each infrastructure asset (transformer, cable, substation switchgear) has a fragility curve — the probability of exceeding a damage state given an intensity measure (IM). BESS value is highest at substations where assets have fragility curves clustering at observed stress levels.</p>
+
+<h4>Framework 4: ASCE 41 Seismic Demand/Capacity Ratio</h4>
+
+<p>The demand-capacity ratio (D/C) from ASCE 41 (seismic assessment) is adapted to multi-hazard assessment:</p>
+
+<div class="formula-block">
+  <div class="main">D/C = (Σ stress_i) / (Σ capacity_i)</div>
+  <div class="sub">Demand = current stress (C + V + I3 + T1 composite). Capacity = network resilience (I4 + I6 + backup systems + R6a restoration speed). D/C > 1 indicates overstress; BESS adds capacity.</div>
+</div>
+
+<h4>Validation Framework</h4>
+
+<p>Each SSI output passes four validation gates before use in valuation:</p>
+
+<table>
+  <thead><tr><th style="width:12%">Gate</th><th style="width:25%">Test</th><th style="width:20%">Applied To</th><th>Method</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">V1</td>
+      <td><strong>Regulatory Grounding</strong></td>
+      <td>All 20 sub-metrics</td>
+      <td>Each metric must trace to a published regulation (ARERA, EU directives, ISPRA, CEER) or validated academic methodology. No purely proprietary inputs.</td>
+    </tr>
+    <tr>
+      <td class="code">V2</td>
+      <td><strong>Distributional Reasonableness</strong></td>
+      <td>All components</td>
+      <td>Each component's distribution across the 39,234 substations is tested for shape (histogram, Q-Q plot) and tail behavior. Extreme values are validated: are the top 1% of scores at known stress points?</td>
+    </tr>
+    <tr>
+      <td class="code">V3</td>
+      <td><strong>Cross-Metric Correlation</strong></td>
+      <td>Correlation matrix Σ</td>
+      <td>Pairwise Kendall tau correlations are validated against domain logic. High C-V correlation (poor reliability ↔ poor voltage) should be moderate (~0.5–0.7); high C-I correlation should be weak (~0.2–0.4 — reliability and climate hazard are independent). Outlier correlations flagged.</td>
+    </tr>
+    <tr>
+      <td class="code">V4</td>
+      <td><strong>Sensitivity to Parameters</strong></td>
+      <td>Monte Carlo output</td>
+      <td>Tornado analysis: vary each input parameter ±1 std. dev. and measure impact on P50 output. Top 5 drivers identified. Compare to prior expectations — any surprise?</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- AUDITABLE DATA SOURCES -->
+<h3>A.7 &ensp; Auditable Data Sources and Vintage Requirements</h3>
+
+<p>Complete registry of every input variable consumed by the SSI framework. Each row specifies the variable, its destination in downstream layers, authoritative sources (Italy vs. EU), temporal and spatial resolution, and refresh frequency.</p>
+
+<table>
+  <thead><tr><th>Input Variable</th><th>Feeds Into (D/W/Options)</th><th>Source (IT)</th><th>Resolution</th><th>Vintage/Refresh</th><th>Access</th></tr></thead>
+  <tbody>
+    <tr style="background:#eaf2f8">
+      <td colspan="6" style="font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.75rem;color:#aa4234">Continuity &amp; Voltage Quality</td>
+    </tr>
+    <tr>
+      <td class="code">SAIDI (C1)</td>
+      <td>D1, W1, R1</td>
+      <td>ARERA annual quality determinations</td>
+      <td>Territory class (3 tiers: alta/media/bassa concentrazione)</td>
+      <td>Annual (T)</td>
+      <td><a href="https://www.arera.it">arera.it</a></td>
+    </tr>
+    <tr>
+      <td class="code">SAIFI (C2)</td>
+      <td>D1, W1</td>
+      <td>ARERA</td>
+      <td>Territory class</td>
+      <td>Annual (T)</td>
+      <td>ARERA</td>
+    </tr>
+    <tr>
+      <td class="code">MAIFI (C3)</td>
+      <td>D4 (PQ proxy)</td>
+      <td>ARERA / E-Distribuzione open data</td>
+      <td>Territory class where available; estimated from C2 ratio</td>
+      <td>Annual (T)</td>
+      <td>ARERA / EDI</td>
+    </tr>
+    <tr>
+      <td class="code">Voltage dip logs (V1, V2)</td>
+      <td>D4, R10</td>
+      <td>ARERA TIQE + E-Distribuzione PQ monitoring</td>
+      <td>Substation (partial); territory class aggregate</td>
+      <td>Annual (T)</td>
+      <td>ARERA TIQE portal</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td colspan="6" style="font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.75rem;color:#c85a54">Infrastructure Risk &amp; Climate</td>
+    </tr>
+    <tr>
+      <td class="code">Flood hazard maps (I1)</td>
+      <td>W4, W5, T2</td>
+      <td>ISPRA IdroGeo; EU Floods Directive maps</td>
+      <td>~10m raster → substation point query</td>
+      <td>5-yearly (EU FD cycle) — next update 2025</td>
+      <td><a href="https://www.isprambiente.gov.it">ISPRA</a></td>
+    </tr>
+    <tr>
+      <td class="code">Landslide inventory (I2)</td>
+      <td>W4</td>
+      <td>ISPRA IFFI (Inventario Fenomeni Franosi)</td>
+      <td>~25m raster</td>
+      <td>5-yearly — last update 2023</td>
+      <td>ISPRA</td>
+    </tr>
+    <tr>
+      <td class="code">Heat-wave frequency/intensity/duration (I3)</td>
+      <td>W4, W5, degradation, T2</td>
+      <td>Copernicus CDS ERA5 reanalysis (historical); CMIP6 SSP2-4.5 (forward)</td>
+      <td>0.25° grid (~25 km) → point interpolation</td>
+      <td>Annual reanalysis update; decadal CMIP6 projections</td>
+      <td><a href="https://cds.climate.copernicus.eu/">Copernicus CDS</a></td>
+    </tr>
+    <tr>
+      <td class="code">Substation registry (I4, I6)</td>
+      <td>D1, D5, topology scoring</td>
+      <td>SSI v4.0 substation registry + E-Distribuzione grid map</td>
+      <td>Substation-level GPS coordinates + service area polygons</td>
+      <td>Static (updated on new connections, ~quarterly)</td>
+      <td>Internal SSI database + EDI open data</td>
+    </tr>
+    <tr>
+      <td class="code">Asset age (I5)</td>
+      <td>D1, vulnerability modifier for I1–I3</td>
+      <td>E-Distribuzione asset register; ARERA investment data</td>
+      <td>Substation-level (partial coverage in IT)</td>
+      <td>Annual (asset register updated quarterly)</td>
+      <td>EDI confidential / ARERA reports</td>
+    </tr>
+    <tr style="background:#e8f8f0">
+      <td colspan="6" style="font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:0.75rem;color:#5d8563">Economic &amp; DER Saturation</td>
+    </tr>
+    <tr>
+      <td class="code">GDP per capita (E1)</td>
+      <td>W3 multipliers, E2 context</td>
+      <td>ISTAT provincial accounts; Eurostat NUTS-3</td>
+      <td>Provincial (NUTS-3)</td>
+      <td>Annual (T+18 months lag for ISTAT)</td>
+      <td><a href="https://ec.europa.eu/eurostat">Eurostat</a> / <a href="https://www.istat.it">ISTAT</a></td>
+    </tr>
+    <tr>
+      <td class="code">VoLL by sector (E2)</td>
+      <td>D1, W1, W4, W5</td>
+      <td>ARERA VoLL estimates; CEPA/London Economics cross-check</td>
+      <td>National (sector-differentiated: residential/commercial/industrial/critical)</td>
+      <td>3–5 yearly (next ARERA update 2026)</td>
+      <td>ARERA / CEER</td>
+    </tr>
+    <tr>
+      <td class="code">DER installations (S1, S2)</td>
+      <td>D2, D3, R5, R7, R9</td>
+      <td>GSE Atlaimpianti (incentive-level DER register)</td>
+      <td>Installation-level GPS → substation aggregate</td>
+      <td>Monthly snapshot; aggregated quarterly to substation</td>
+      <td><a href="https://www.gse.it">GSE Atlaimpianti portal</a></td>
+    </tr>
+    <tr>
+      <td class="code">Transformer ratings (S1)</td>
+      <td>S1 denominator, D1–D4, load stress</td>
+      <td>E-Distribuzione asset register</td>
+      <td>Substation-level (kVA per unit)</td>
+      <td>Static (updated on reinforcement, ~quarterly)</td>
+      <td>EDI confidential / estimated from peak load</td>
+    </tr>
+    <tr>
+      <td class="code">Load profiles (S2, D3)</td>
+      <td>D2, D3 (loss calc), curtailment estimation</td>
+      <td>ARERA typical load curves by territory class; Terna zone-level</td>
+      <td>Territory class; zonal aggregates for Terna</td>
+      <td>Annual update; Terna daily transparency</td>
+      <td>ARERA / <a href="https://www.terna.it">Terna Transparency</a></td>
+    </tr>
+    <tr>
+      <td class="code">Solar irradiance (S2)</td>
+      <td>D2 (curtailment estimation)</td>
+      <td>PVGIS (JRC); ERA5 surface solar radiation</td>
+      <td>~1 km (PVGIS); 0.25° (ERA5)</td>
+      <td>Static (climatological); annual reanalysis update</td>
+      <td><a href="https://pvgis.ec.europa.eu/">PVGIS</a> / Copernicus</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card data">
+  <strong>Variable count in Layer 1:</strong> 42 primary data variables per substation. After feature engineering, these expand to 20 SSI sub-metrics + geographic features + market features + regulatory features ≈ 50–80 input features per substation depending on data availability tier. Italian dataset has richest feature density; non-Italian countries start with fewer features (national aggregates substitute for sub-national data), and the NN (Phase 3) is trained to handle progressive feature sparsity.
+</div>
+
+<!-- DATA POINT CATALOGUE SUMMARY -->
+<h3>A.8 &ensp; Data Point Catalogue Summary and Auditability</h3>
+
+<p>The SSI framework consumes 42 primary data variables from 35+ distinct authoritative sources across four categories: regulatory (ARERA, ISPRA, INGV), market (GME, Terna, GSE), academic (JRC, Copernicus, IRENA), and proprietary (E-Distribuzione, SSI registry).</p>
+
+<h4>Vintage Rules for Audit Trail</h4>
+
+<table>
+  <thead><tr><th>Rule</th><th>Requirement</th><th>Impact</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>T-3 Maximum Age</strong></td>
+      <td>No input may be older than 3 years from report date</td>
+      <td>SAIDI (annual) acceptable if current; CMIP6 (decadal) acceptable through 2030; asset age data (3–5yr lag) flagged for staleness</td>
+    </tr>
+    <tr>
+      <td><strong>Most Recent Vintage Priority</strong></td>
+      <td>If multiple vintage available, use the most recent</td>
+      <td>Example: ISPRA 2023 EF_marginal (pub. Oct 2024) preferred over JRC 2022 (pub. 2024). Cross-checks still computed.</td>
+    </tr>
+    <tr>
+      <td><strong>Source Transparency</strong></td>
+      <td>Each input must cite its source, vintage date, and URL</td>
+      <td>Enables independent verification; traceability for regulators and auditors</td>
+    </tr>
+    <tr>
+      <td><strong>Null Value Protocol</strong></td>
+      <td>If a required input is missing, the metric is estimated via nearest-neighbour or regression</td>
+      <td>Estimation method documented; uncertainty propagated through Monte Carlo with wider confidence bands</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card warning">
+  <strong>Audit readiness:</strong> The complete SSI calculation is auditable to source documents. Every P50 result (median across 10,000 iterations) can be traced back to specific ARERA determinations, ISPRA reports, or E-Distribuzione datasets, with timestamps and URLs. This is the foundation of the "investment-grade" label — an auditor can independently verify any SSI output by consulting the source documents.
+</div>
+
+---
+
+<!-- APPENDIX B: DNO Value Stack (D1–D5) -->
+<div class="appendix-divider">
+  <h2>APPENDIX B &ensp; DNO Value Stack: D1–D5 Formulae and Validation</h2>
+  <p class="subtitle">Distribution Network Operator Avoided-Cost Components and Regulatory Basis</p>
+  <p class="meta">Reference: Plan of Work v27a §0.4.1 &middot; Altinium Invest / Ikenga Infrastructure</p>
+</div>
+
+<!-- REGULATORY BASIS -->
+<h3>B.1 &ensp; Regulatory Basis: ARERA Framework and TOTEX Incentives</h3>
+
+<p>The DNO value stack is grounded in the ARERA (Autorità di Regolazione per Energia Reti e Ambiente) regulatory framework. ARERA Resolution 574/2014/R/eel established the second regulatory period (2016–2021) with explicit TOTEX efficiency incentives. The third period (2022–2027, current) continues and strengthens these incentives.</p>
+
+<div class="card regulatory">
+  <strong>ARERA Regulatory Framework:</strong> DNOs are incentivized to minimize total expenditure (TOTEX = CAPEX + OPEX) subject to quality and resilience standards. BESS investments that defer or avoid conventional reinforcement reduce DNO TOTEX and improve efficiency scores. This creates a direct channel for BESS value to the DNO: avoided CAPEX flows through to improved regulatory returns.<br><br>
+  <strong>Key documents:</strong> ARERA Deliberation 222/2015 (TOTEX mechanisms), 300/2015/R/eel (quality standards), and periodic updates to the Tariff Regulation for the Distribution of Electricity.
+</div>
+
+<!-- D1: INVESTMENT DEFERRAL -->
+<h3>B.2 &ensp; D1 — Investment Deferral</h3>
+
+<p>D1 quantifies the NPV benefit of postponing conventional network reinforcement (transformer upgrade, line rebuild, new substation) that would otherwise be triggered by load growth or DER saturation.</p>
+
+<div class="formula-block">
+  <div class="main">D1<sub>j,c</sub>(t) = C<sub>reinf,j</sub> × [1/(1+WACC)^t₀ − 1/(1+WACC)^(t₀ + Δt<sub>c</sub>)] × (1+WACC)^t</div>
+  <div class="sub">where C_reinf,j is the reinforcement cost at substation j, t₀ is the baseline trigger year (without BESS), and Δt_c is the deferral duration provided by config c.</div>
+</div>
+
+<h4>Components Detailed</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">C<sub>reinf,j</sub></td>
+      <td>Estimated reinforcement cost at substation j (€)</td>
+      <td>ARERA published average costs by territory class + topology correction factor for I6 (meshing ratio). Typical range: €0.3–2.5M depending on scheme scope and location.</td>
+      <td>€1.2M (median, Italia)</td>
+    </tr>
+    <tr>
+      <td class="code">t₀</td>
+      <td>Baseline reinforcement trigger year (without BESS)</td>
+      <td>Earlier of: (a) T1 trajectory → when S1 Dimovski crosses hosting-capacity threshold (0.7–1.0), or (b) I5 age → when assets reach EOL (~40–50 yr for MV transformers)</td>
+      <td>Year 5–7 for DER-stressed; Year 10–15 for age-driven</td>
+    </tr>
+    <tr>
+      <td class="code">Δt<sub>c</sub></td>
+      <td>Deferral duration provided by config c (years)</td>
+      <td>BESS capacity (P_rated,c) divided by annual growth rate (ΔP_growth,j). Sub-linear relationship: higher growth requires higher BESS ratio to defer proportionally. Config A typically 1.5–2.5 yr; Config B 2.0–4.0 yr.</td>
+      <td>Config A: 2.0 yr; Config B: 3.5 yr</td>
+    </tr>
+    <tr>
+      <td class="code">WACC</td>
+      <td>Regulated weighted average cost of capital</td>
+      <td>Country-specific regulatory determination. Italy ARERA 2022–2027: ~5.5% real pre-tax. Reflects equity cost (~8–10%) and debt cost (~3–4%), with D/E ≈ 70:30.</td>
+      <td>5.5% (Italy)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Annualised Form</h4>
+
+<div class="formula-block">
+  <div class="main">D1<sub>annual,j,c</sub> = D1<sub>j,c</sub>(NPV) / Σ_{t=1}^{30} 1/(1+r)^t</div>
+  <div class="sub">Converts the lump-sum deferral benefit into an equivalent annual value for comparability with other D-components. Typical D1_annual: €50–200k/year depending on C_reinf and Δt.</div>
+</div>
+
+<h4>Double-Counting Protocol: D1 vs W1</h4>
+
+<p>Both D1 (DNO avoided cost) and W1 (community reliability value) derive from the same physical phenomenon — improved reliability. D1 captures the DNO's perspective (avoided regulatory penalty cost), while W1 captures the social perspective (customer willingness-to-pay for uninterrupted supply). The overlap correction:</p>
+
+<div class="formula-block">
+  <div class="main">D1<sub>adjusted</sub> = D1<sub>base</sub> × [1 − overlap_fraction]</div>
+  <div class="sub">Overlap fraction depends on the regulatory regime. UK Ofgem IIS: high overlap (~30–50%, DNO penalties reflect customer damage). Continental Europe: low overlap (~10–25%, DNO penalties often do not fully reflect social VoLL). Italian ARERA: ~15–20% (light incentive regime).</div>
+</div>
+
+<!-- D2: CONGESTION RELIEF -->
+<h3>B.3 &ensp; D2 — Congestion Relief (Avoided Curtailment)</h3>
+
+<p>D2 quantifies the value of avoiding DER curtailment by absorbing excess generation during reverse-power-flow hours.</p>
+
+<div class="formula-block">
+  <div class="main">D2<sub>j,c</sub>(t) = E<sub>curtailed,j</sub>(t) × min(1, E<sub>BESS,c</sub> / E<sub>curtailed,j</sub>(t)) × [P<sub>wholesale</sub>(t) + P<sub>subsidy</sub>(t)]</div>
+  <div class="sub">D2 is the product of: (a) annual curtailed energy at the substation (MWh), (b) fraction mitigated by BESS (capped at 100%), and (c) the value of each MWh avoided (€/MWh).</div>
+</div>
+
+<h4>Key Components</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">E<sub>curtailed,j</sub>(t)</td>
+      <td>Annual curtailed DER energy at substation j (MWh/yr)</td>
+      <td>Estimated from S1 (Dimovski ratio) and S2 (RPF hours). For S1 > 0.7, curtailment begins. E_curtailed = E_available(t) × min(1, (S1_j(t) − threshold) / capacity). Growth modelled as E_curtailed(t) = E_0 × [S1(t) / S1(0)]^β, β ≈ 2.0–3.0 (nonlinear above hosting capacity).</td>
+      <td>~2,000–8,000 MWh/yr depending on S1</td>
+    </tr>
+    <tr>
+      <td class="code">E<sub>BESS,c</sub></td>
+      <td>Daily BESS energy throughput for curtailment absorption (MWh/yr)</td>
+      <td>P_rated,c × duration × η(t) × 365 days. Config A: ≤7,154 MWh/yr at BoL. Config B: ≤14,454 MWh/yr. Reduced by other dispatch obligations (capacity market, frequency response).</td>
+      <td>Config A: 5,500 MWh/yr; Config B: 11,000 MWh/yr</td>
+    </tr>
+    <tr>
+      <td class="code">P<sub>wholesale</sub>(t)</td>
+      <td>Wholesale electricity price (€/MWh)</td>
+      <td>GME Italy historical data (2015–2024): avg ~€50–100/MWh with high volatility. Modelled as mean-reverting process with Markov regime shifts (normal/high/crisis). Stochastic in Monte Carlo.</td>
+      <td>€75/MWh (2024 ref); escalates +1.5%/yr</td>
+    </tr>
+    <tr>
+      <td class="code">P<sub>subsidy</sub>(t)</td>
+      <td>Renewable support premium forgone due to curtailment (€/MWh)</td>
+      <td>Applicable only where DER operator loses incentive payments. Italy: Conto Energia FiT (legacy, declining), FER1 auctions (newer, ~€50–80/MWh). Declining over time as schemes expire. German EEG, Spanish RD 960/2020 applicable in respective countries.</td>
+      <td>€20–50/MWh (declining post-2030)</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- D3: LOSS REDUCTION -->
+<h3>B.4 &ensp; D3 — Loss Reduction</h3>
+
+<p>D3 quantifies savings from reduced network losses due to BESS peak-shaving. Losses scale with current squared (I²R), so even modest peak reduction yields substantial loss savings.</p>
+
+<div class="formula-block">
+  <div class="main">D3<sub>j,c</sub>(t) = E<sub>throughput,j</sub>(t) × LF<sub>j</sub> × [1 − (1 − ΔI/I<sub>peak,j</sub>)²] × P<sub>wholesale</sub>(t) × MLF<sub>j</sub></div>
+  <div class="sub">Key insight: the quadratic term [1 − (1 − ΔI/I_peak)²] produces disproportionate savings. Reducing peak current by 20% reduces I²R losses by 36% — Config B's D3 is typically 2.5–4× Config A's, not merely 2×.</div>
+</div>
+
+<h4>Key Components</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">E<sub>throughput,j</sub></td>
+      <td>Annual energy throughput at substation j (MWh)</td>
+      <td>Estimated from territory class demand patterns (ARERA) + sectoral mix (residential/commercial/industrial, from ISTAT census). Range: 20,000–80,000 MWh/yr for typical MV substations.</td>
+      <td>~45,000 MWh/yr (median)</td>
+    </tr>
+    <tr>
+      <td class="code">LF<sub>j</sub></td>
+      <td>Feeder loss factor at substation j (%)</td>
+      <td>Estimated from I6 topology (longer radial feeders → higher losses), I4 density (sparse → long feeders), and published DNO loss data. Italian distribution: 4.5–6.5% national avg; substation-level LF_j: 2–10% depending on feeder length/configuration.</td>
+      <td>5.5% (median IT)</td>
+    </tr>
+    <tr>
+      <td class="code">ΔI/I<sub>peak,j</sub></td>
+      <td>Fractional peak current reduction from BESS peak-shaving</td>
+      <td>ΔI = P_BESS,c / (√3 × V_MV × cos φ). For Config A (4.9 MW @ 20 kV): typical ΔI/I_peak ≈ 8–25%. Config B: 15–45%. Depends on transformer rating and power factor.</td>
+      <td>Config A: 15%; Config B: 30%</td>
+    </tr>
+    <tr>
+      <td class="code">MLF<sub>j</sub></td>
+      <td>Marginal loss factor at substation j</td>
+      <td>Published by Terna for transmission nodes; estimated at distribution via network models. MLF > 1 at end-of-feeder (above-average losses); MLF < 1 near primary (below-average). Typical range: 0.8–1.3.</td>
+      <td>1.05 (median)</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- D4: VOLTAGE SUPPORT -->
+<h3>B.5 &ensp; D4 — Voltage Support (Reactive Power & EN 50160 Compliance)</h3>
+
+<p>D4 captures two distinct values: (i) avoided EN 50160 voltage exceedance penalties, and (ii) emerging revenue from reactive power provision.</p>
+
+<div class="formula-block">
+  <div class="main">D4<sub>j,c</sub>(t) = N<sub>violations,j</sub>(t) × (1 − ρ<sub>BESS,c</sub>) × C<sub>penalty,j</sub> + Q<sub>BESS,c</sub> × P<sub>reactive</sub>(t)</div>
+  <div class="sub">First term: penalty avoidance. Second term: reactive power service revenue (currently €0 in most markets; modelled as emerging via Option F).</div>
+</div>
+
+<h4>Component 1: Avoided Voltage Violations</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">N<sub>violations,j</sub></td>
+      <td>Count of EN 50160 voltage exceedances per year</td>
+      <td>From SSI V1_j (voltage dip frequency). EN 50160 requires 95% of 10-min mean RMS values within ±10% of declared voltage. N_violations = count of weeks exceeding 5% non-compliance threshold.</td>
+      <td>~5–50 violation events/yr depending on V1</td>
+    </tr>
+    <tr>
+      <td class="code">ρ<sub>BESS,c</sub></td>
+      <td>Fraction of violations mitigated by BESS reactive injection</td>
+      <td>Depends on: (a) BESS inverter rating (full capacity available for reactive power even at empty state — STATCOM mode), (b) electrical distance (how far from point of violation), (c) violation cause (active imbalance vs. harmonic — BESS can address former, struggles with latter). Typical: 0.4–0.8 for Config A; 0.6–0.95 for Config B.</td>
+      <td>Config A: 0.60; Config B: 0.80</td>
+    </tr>
+    <tr>
+      <td class="code">C<sub>penalty,j</sub></td>
+      <td>Cost per violation event (€)</td>
+      <td>In regulated systems (UK IIS, ARERA TIQE), DNOs face explicit penalties for exceeding voltage-quality thresholds. In non-penalty systems, estimated from CEER willingness-to-pay surveys. Range: €500–5,000 per violation depending on severity and customer count.</td>
+      <td>€1,500/violation (IT)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Component 2: Reactive Power Service (Emerging Revenue)</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">Q<sub>BESS,c</sub></td>
+      <td>Reactive power capability of the BESS inverter (MVAr)</td>
+      <td>Equal to full inverter rating when operating in STATCOM mode with no active-power dispatch. Config A: 4.9 MVAr; Config B: 9.9 MVAr. Reduced during charge/discharge by Q = √(S² − P²).</td>
+      <td>Config A: 4.9 MVAr; Config B: 9.9 MVAr</td>
+    </tr>
+    <tr>
+      <td class="code">P<sub>reactive</sub></td>
+      <td>Price of reactive power service (€/MVAr-h)</td>
+      <td>Currently €0 in most EU markets (reactive power is mandated but uncompensated). Modelled as emerging revenue under Option F. UK TNUoS reactive charges: ~£2–5/MVAr-h at constrained nodes (reference). Assumed to emerge in Italy/continental EU by 2030–2035.</td>
+      <td>€0/MVAr-h (base case); €3–5 (Option F, post-2032)</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- D5: FAULT LEVEL -->
+<h3>B.6 &ensp; D5 — Fault Level Contribution (Qualitative Flag)</h3>
+
+<p>D5 is reported as a <em>qualitative flag</em>, not monetized in the base case. Modern grid-forming BESS inverters can provide programmable fault current (up to 1.5× rated current for 150–200 ms), improving protection relay coordination on weak feeders.</p>
+
+<div class="formula-block">
+  <div class="main">D5<sub>j,c</sub> = 𝟙[I4_j < θ<sub>density</sub> AND I6_j < θ<sub>mesh</sub>] × FLAG</div>
+  <div class="sub">Binary flag: substation qualifies for fault-level contribution when both density (I4) and meshing (I6) fall below thresholds, indicating a weak feeder where added fault current improves protection coordination.</div>
+</div>
+
+<h4>Thresholds and Interpretation</h4>
+
+<table>
+  <thead><tr><th>Threshold</th><th>Value</th><th>Interpretation</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>θ<sub>density</sub></td>
+      <td>0.3 substations/km²</td>
+      <td>Below this, substations are sparse; feeders are long; fault levels are low → BESS fault current beneficial</td>
+    </tr>
+    <tr>
+      <td>θ<sub>mesh</sub></td>
+      <td>0.15 (meshing ratio)</td>
+      <td>Below this, feeder is radial (no alternative path); lack of loop current for protection → BESS fault current addresses coordination gap</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card regulatory">
+  <strong>Regulatory alignment:</strong> Modern grid codes (UK ENA EREC G99 Issue 6, Germany VDE-AR-N 4110) increasingly require grid-forming inverters to provide programmable fault current. This is becoming a technical baseline rather than an add-on. D5 is reported but not yet monetised in any European market. As standards mature and markets implement fault-current procurement, D5 may transition from flag to revenue stream (R12) in Phase 4+ of the SSI-ENN model.
+</div>
+
+<!-- DNO VALUE AGGREGATION -->
+<h3>B.7 &ensp; DNO Value Aggregation and Cross-Validation Matrix</h3>
+
+<div class="formula-block">
+  <div class="main">V<sub>DNO,j,c</sub> = Σ_{t=1}^{30} [D1<sub>j,c</sub>(t) + D2<sub>j,c</sub>(t) + D3<sub>j,c</sub>(t) + D4<sub>j,c</sub>(t)] / (1 + WACC)^t</div>
+  <div class="sub">30-year NPV at country-specific regulated WACC. D5 excluded (qualitative flag). Each D-component is year-dependent: D1 steps down after reinforcement would have occurred; D2 grows with DER trajectory; D3 is approximately stable; D4 may decline if DNO invests in separate regulation or increase if PQ degrades with DER.</div>
+</div>
+
+<h4>Typical Config A vs. Config B Scaling</h4>
+
+<p>V_DNO,j,B / V_DNO,j,A is typically 1.4–2.2× (not 2.0×). The sub-linear scaling on D1 and D4, combined with super-linear scaling on D3 (quadratic current effect), produces this compound range. Substations with different SSI profiles scale differently:</p>
+
+<table>
+  <thead><tr><th>SSI Profile</th><th>D1 Weight</th><th>D2 Weight</th><th>D3 Weight</th><th>D4 Weight</th><th>Config B Scaling</th></tr></thead>
+  <tbody>
+    <tr style="background:#eaf2f8">
+      <td>High-C (reliability poor)</td>
+      <td>60%</td>
+      <td>10%</td>
+      <td>20%</td>
+      <td>10%</td>
+      <td>1.4–1.6× (sub-linear: D1 saturates)</td>
+    </tr>
+    <tr>
+      <td>High-S (DER-stressed)</td>
+      <td>15%</td>
+      <td>70%</td>
+      <td>10%</td>
+      <td>5%</td>
+      <td>2.0–2.2× (nearly linear: D2 scales linearly)</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td>High-I (infrastructure poor)</td>
+      <td>40%</td>
+      <td>20%</td>
+      <td>30%</td>
+      <td>10%</td>
+      <td>2.1–2.3× (super-linear: D3 quadratic effect dominates)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Double-Counting Prevention Matrix</h4>
+
+<p>Cross-reference matrix to ensure no MWh or cost is valued twice across D1–D5 and W1–W5 stacks:</p>
+
+<table>
+  <thead><tr><th>Potential Overlap</th><th>D Component</th><th>W Component</th><th>Separation Protocol</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Reliability improvement</td>
+      <td>D1 (avoided CAPEX investment)</td>
+      <td>W1 (customer VoLL benefit)</td>
+      <td>D1 captures DNO cost perspective; W1 captures social perspective. Overlap correction factor δ (~15–20%) applied to W1 to deduct the fraction already captured in D1 regulatory penalties.</td>
+    </tr>
+    <tr>
+      <td>Curtailment mitigation</td>
+      <td>D2 (avoided DER curtailment)</td>
+      <td>W2 (carbon displacement tCO₂)</td>
+      <td>D2 monetises avoided curtailment as €. W2 reports physical tCO₂ avoided from the same MWh. No € overlap: W2 is purely physical; monetary carbon valuation is in E1 (ESG stack).</td>
+    </tr>
+    <tr>
+      <td>Loss reduction</td>
+      <td>D3 (avoided I²R losses)</td>
+      <td>—</td>
+      <td>D3 is unique to DNO stack. No W-component capture the same loss savings. (W3 employment doesn't overlap with D3 physics.)</td>
+    </tr>
+    <tr>
+      <td>Voltage quality</td>
+      <td>D4 (avoided violations + reactive revenue)</td>
+      <td>—</td>
+      <td>D4 is unique to DNO stack. W-components do not capture voltage-specific value.</td>
+    </tr>
+    <tr>
+      <td>Employment</td>
+      <td>—</td>
+      <td>W3 (FTE construction + O&M wages, land lease, taxes)</td>
+      <td>W3 is unique to community stack. D-components do not capture employment value.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- VALIDATION GATES -->
+<h3>B.8 &ensp; Validation Gates and Audit Checklist</h3>
+
+<p>Each D-component must pass validation gates before inclusion in the final V_DNO figure.</p>
+
+<table>
+  <thead><tr><th style="width:12%">Gate</th><th style="width:22%">Test</th><th style="width:20%">Applied To</th><th>Method &amp; Pass Criterion</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">VD1</td>
+      <td><strong>Magnitude Reasonableness</strong></td>
+      <td>D1–D4</td>
+      <td>Each component must be positive. Typical ranges (Italy, Config B): D1 €0.5–3.0M (30-yr NPV), D2 €0.1–1.5M, D3 €0.2–0.8M, D4 €0.05–0.5M. Outliers >3σ from median reviewed manually.</td>
+    </tr>
+    <tr>
+      <td class="code">VD2</td>
+      <td><strong>Cross-Component Consistency</strong></td>
+      <td>D1 vs D2</td>
+      <td>Substations with high S1 (DER-stressed) should have large D2; low S1 should have large D1. Correlation check: does D2/V_DNO track with S1 component score? Spearman ρ > 0.50 expected.</td>
+    </tr>
+    <tr>
+      <td class="code">VD3</td>
+      <td><strong>Year-Dependency Validity</strong></td>
+      <td>D1(t) trajectory</td>
+      <td>D1 should step down after year t₀ (reinforcement would have occurred). Verify D1(t₀) > D1(t₀+Δt). D1 should not increase with time (degradation of BESS is separate from D1).</td>
+    </tr>
+    <tr>
+      <td class="code">VD4</td>
+      <td><strong>Revenue Escalation Validation</strong></td>
+      <td>D2(t), D4(t) with market growth</td>
+      <td>D2 should grow with S1(t) trajectory (DER penetration increasing). D4 may grow or decline depending on grid PQ evolution and DNO investment. Growth/decline should be monotonic or follow modelled trajectories.</td>
+    </tr>
+    <tr>
+      <td class="code">VD5</td>
+      <td><strong>Comparison to Peer DNOs</strong></td>
+      <td>V_DNO aggregated</td>
+      <td>V_DNO per MW should fall within range observed in published DSO business plans or regulatory submissions. Italian E-Distribuzione TOTEX data provides benchmark: €0.5–3.0M per DER-focused intervention across 39k substations.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- AUDITABLE DATA SOURCES FOR D1-D5 -->
+<h3>B.9 &ensp; Auditable Data Sources for D1–D5</h3>
+
+<table>
+  <thead><tr><th>Input Variable</th><th>D-Component(s)</th><th>Source</th><th>Vintage</th><th>Update Cycle</th></tr></thead>
+  <tbody>
+    <tr style="background:#eaf2f8">
+      <td class="code">SAIDI, SAIFI (C1, C2)</td>
+      <td>D1 (reinforcement need)</td>
+      <td>ARERA annual quality determinations</td>
+      <td>T (current year)</td>
+      <td>Annual (Apr–May)</td>
+    </tr>
+    <tr style="background:#eaf2f8">
+      <td class="code">Voltage dip logs (V1, V2)</td>
+      <td>D4 (violation avoidance)</td>
+      <td>ARERA TIQE; E-Distribuzione PQ monitoring</td>
+      <td>T</td>
+      <td>Annual</td>
+    </tr>
+    <tr style="background:#fdedec">
+      <td class="code">Asset age (I5)</td>
+      <td>D1 (age-driven trigger)</td>
+      <td>E-Distribuzione asset register; ARERA investment reports</td>
+      <td>T–1 (lag ~12–18 months)</td>
+      <td>Quarterly asset updates</td>
+    </tr>
+    <tr style="background:#e8f8f0">
+      <td class="code">Dimovski ratio (S1)</td>
+      <td>D2 (curtailment volume)</td>
+      <td>GSE Atlaimpianti (DER capacity) + E-Distribuzione ratings</td>
+      <td>T (monthly snapshot)</td>
+      <td>Monthly (GSE); static (ratings)</td>
+    </tr>
+    <tr>
+      <td class="code">Wholesale prices (GME)</td>
+      <td>D2 (avoided curtailment value)</td>
+      <td>GME (Gestore Mercati Energetici)</td>
+      <td>T+0 (daily settlement)</td>
+      <td>Daily</td>
+    </tr>
+    <tr>
+      <td class="code">Grid connection cost estimates</td>
+      <td>D1 (part of C_reinf)</td>
+      <td>ARERA benchmarks; DNO cost databases; historical project data</td>
+      <td>T–1</td>
+      <td>Annual (with tech cost indices)</td>
+    </tr>
+    <tr>
+      <td class="code">WACC (regulated)</td>
+      <td>All (discounting)</td>
+      <td>ARERA Deliberation (e.g., 223/2015); DNO business plan submissions</td>
+      <td>Regulatory period (2022–2027 for IT)</td>
+      <td>Per regulatory period (~3–5 years)</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+<!-- APPENDIX C: Community Value Stack (W1–W5) -->
+<div class="appendix-divider">
+  <h2>APPENDIX C &ensp; Community Value Stack: W1–W5 Formulae and Social Discount Rate</h2>
+  <p class="subtitle">Community and Societal Benefits of BESS Deployment — Reliability, Carbon, Economic, Resilience, Communications</p>
+  <p class="meta">Reference: Plan of Work v27a §0.4.2 &middot; Altinium Invest / Ikenga Infrastructure</p>
+</div>
+
+<!-- SOCIAL DISCOUNT RATE JUSTIFICATION -->
+<h3>C.1 &ensp; Social Discount Rate and EU Commission Cost-Benefit Analysis Guidance</h3>
+
+<p>The community value stack is discounted at <strong>r_social = 3.0% real</strong>, significantly lower than the DNO WACC (5.2–5.5%). This reflects the EU Commission's guidance for cost-benefit analysis (CBA) of public infrastructure investments.</p>
+
+<div class="card regulatory">
+  <strong>Regulatory basis:</strong> EU Commission, Directorate-General for Regional Policy, <em>"Guidance on Ex Ante and Ex Post Evaluation"</em> (2014) and <em>"Guide to Cost-Benefit Analysis of Investment Projects"</em> (2015 update). The 3% real discount rate is recommended for projects with significant public goods or intergenerational externalities. It reflects the lower social opportunity cost of capital compared to market-based financial returns, acknowledging that society values benefits to future generations more highly than private investors do.
+</div>
+
+<h4>Discount Rate Components</h4>
+
+<table>
+  <thead><tr><th>Component</th><th>Investor (WACC)</th><th>Society (3% SDR)</th><th>Justification</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Equity cost of capital</td>
+      <td>8–10% (risk premium)</td>
+      <td>3–4% (long-term growth rate)</td>
+      <td>Private investors demand premium for capital lock-up; society values future consumption growth at the long-term real GDP growth rate</td>
+    </tr>
+    <tr>
+      <td>Time preference</td>
+      <td>High (near-term cash focus)</td>
+      <td>Low (intergenerational fairness)</td>
+      <td>Private projects weight early years heavily; public projects treat all generations equally</td>
+    </tr>
+    <tr>
+      <td>Risk adjustments</td>
+      <td>Large (project-specific shocks)</td>
+      <td>None (diversified across society)</td>
+      <td>Investors bear idiosyncratic risk; society faces only systematic risk (GDP shocks), which is uncorrelated with BESS performance</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card formula">
+  <strong>Practical implication:</strong> At 3% SDR vs 5.5% WACC, a €1,000 benefit in Year 20 is worth €553 socially but only €278 to the investor. This 2× difference is why community value is often 2–3× higher than DNO value per substation — it's not that the physical benefits are larger, but that society weights them more heavily through the lower discount rate.
+</div>
+
+<!-- W1: RELIABILITY IMPROVEMENT -->
+<h3>C.2 &ensp; W1 — Reliability Improvement (Customer VoLL Perspective)</h3>
+
+<p>W1 quantifies the social value of improved supply reliability. The BESS acts as a local backup during upstream outages, reducing SAIDI (average interruption duration) experienced by customers.</p>
+
+<div class="formula-block">
+  <div class="main">W1<sub>j,c</sub>(t) = ΔSAIDI<sub>j,c</sub> × E2<sub>j</sub> × N<sub>customers,j</sub> × (1 − δ<sub>overlap,j</sub>)</div>
+  <div class="sub">Four inputs: (i) ΔSAIDI = minutes of interruption avoided per customer per year, (ii) E2 = VoLL per minute of interruption, (iii) N_customers = population affected, (iv) δ_overlap = correction for double-counting with D1.</div>
+</div>
+
+<h4>Component Details</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">ΔSAIDI<sub>j,c</sub></td>
+      <td>Reduction in SAIDI from BESS backup/islanding (min/cust/yr)</td>
+      <td>BESS supplies local feeder during upstream outages for up to its rated duration. Config A & B: both provide 4 hours (240 minutes). ΔSAIDI = min(C1_j, 240) × P(outage occurs during BESS window). For typical Italian substations: 15–120 min/cust/yr depending on baseline C1.</td>
+      <td>~60 min/cust/yr (median)</td>
+    </tr>
+    <tr>
+      <td class="code">E2<sub>j</sub></td>
+      <td>Customer-mix-weighted VoLL at substation j (€/kWh unserved)</td>
+      <td>Sector-specific VoLL from ARERA or CEER studies (residential: €2–8/kWh; commercial: €8–30/kWh; industrial: €5–50/kWh). Weighted by customer mix (ISTAT census + E-Distribuzione data). Converted to €/minute: E2_min = E2_kWh × P_avg,j / (60 × N_customers,j).</td>
+      <td>€6/kWh (blended); €10/min/cust</td>
+    </tr>
+    <tr>
+      <td class="code">N<sub>customers,j</sub></td>
+      <td>Total customers served by substation j</td>
+      <td>E-Distribuzione customer register; ISTAT settlement data. Italian range: 200 (small rural) to 15,000 (urban).</td>
+      <td>~3,000 (median)</td>
+    </tr>
+    <tr>
+      <td class="code">δ<sub>overlap,j</sub></td>
+      <td>Overlap correction factor (fraction of W1 already in D1)</td>
+      <td>Both D1 (DNO) and W1 (social) derive from improved reliability. δ captures the fraction of W1 benefit already monetized as avoided DNO regulatory penalties in D1. Depends on regulatory regime: UK high (~30–50%); continental Europe low (~10–25%); Italy: ~15–20%.</td>
+      <td>0.17 (Italy)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card warning">
+  <strong>Duration constraint:</strong> Both Config A and Config B provide 4 hours of backup. The power difference (4.9 vs 9.9 MW) affects how many feeders can be simultaneously backed up or how long selected critical loads can be supplied. Within a single substation's local area, both configs provide the same ΔSAIDI duration benefit. The power difference manifests in Options B (expand duration) and E (stage A→B), where larger BESS can serve more customers or provide selective critical-load backup.
+</div>
+
+<!-- W2: CARBON DISPLACEMENT -->
+<h3>C.3 &ensp; W2 — Carbon Displacement (Physical Metric Only)</h3>
+
+<p>W2 is <strong>restructured in v27a</strong> to report <em>physical carbon displacement only</em> (tCO₂/year). The monetary valuation of avoided carbon is consolidated into E1 (ESG stack) to eliminate double-counting between community and ESG perspectives.</p>
+
+<div class="formula-block">
+  <div class="main">W2<sub>j,c</sub>(t) = E<sub>displaced,j,c</sub>(t) × MEF<sub>country</sub>(t)  &ensp; [tCO₂/year — physical metric]</div>
+  <div class="sub">Where E_displaced is total MWh of marginal fossil generation displaced across all BESS dispatch modes (curtailment, arbitrage, frequency response), and MEF is the marginal emission factor of the national grid.</div>
+</div>
+
+<h4>Key Components</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">E<sub>displaced,j,c</sub></td>
+      <td>Total MWh of marginal fossil displaced per year (all dispatch modes)</td>
+      <td>Includes curtailment absorption (D2), arbitrage (R4), and frequency response (R2). The dispatch model tags each MWh with its primary service to prevent double-counting within W2 itself. BESS capacity (MW) × full cycles/year × duration (h) × round-trip efficiency × (1 − curtailment factor). Config A: ~12,000–18,000 MWh/yr; Config B: ~24,000–36,000 MWh/yr.</td>
+      <td>Config A: 15,000 MWh/yr; Config B: 30,000 MWh/yr</td>
+    </tr>
+    <tr>
+      <td class="code">MEF<sub>country</sub>(t)</td>
+      <td>Marginal emission factor of national grid (tCO₂/MWh)</td>
+      <td>The carbon intensity of the marginal plant displaced by BESS dispatch. Italy (2026): ≈0.35–0.45 tCO₂/MWh (gas CCGT at the margin). MEF declines over time as grid decarbonises (PNIEC 2030 targets). Stochastic in Monte Carlo. Primary source: ISPRA; cross-check: JRC, IEA.</td>
+      <td>0.40 tCO₂/MWh (Italy 2026); declining to 0.25 by 2050</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Monetisation Reference (Memo Item)</h4>
+
+<p>For compatibility with earlier reports or for community-facing communication at the social discount rate, the monetary W2 is computed as a memo item:</p>
+
+<div class="formula-block">
+  <div class="main">W2<sub>monetary,j,c</sub>(t) = W2<sub>j,c</sub>(t) × SCC(t)</div>
+  <div class="sub">where SCC(t) is the EU Commission recommended social cost of carbon (~€100–150/tCO₂, rising ~2%/yr). This is reported separately — not added to V_Community to avoid double-counting with E1 (ESG stack).</div>
+</div>
+
+<h4>No Double-Counting Protocol: W2 vs E1</h4>
+
+<div class="card formula">
+  <strong>Two components of the same CO₂ avoidance:</strong><br>
+  • <strong>W2:</strong> Reports physical tCO₂/year avoided. Metric required for EU Taxonomy substantial-contribution evidence, SFDR PAI Indicator 1, PNIEC progress reporting, local climate-action plans. Independent of carbon price assumptions — robust for policy dialogue.<br>
+  • <strong>E1:</strong> Monetises the same Q_disp × MEF at shadow carbon price (ETS floor, mid-point, SCC ceiling). Scope: ESG stakeholder value only. Three scenarios provided to show sensitivity to carbon price policy.<br>
+  <strong>Split ensures:</strong> (i) community reporting gets auditable physical metric (tCO₂), (ii) ESG gets monetised externality (€), (iii) no MWh valued twice.
+</div>
+
+<!-- W3: LOCAL ECONOMIC IMPACT -->
+<h3>C.4 &ensp; W3 — Local Economic Impact (Employment &amp; Tax Revenue)</h3>
+
+<p>W3 quantifies local job creation and tax revenue from BESS construction, operation, and maintenance.</p>
+
+<div class="formula-block">
+  <div class="main">W3<sub>j,c</sub> = [FTE<sub>construction,c</sub> × W<sub>local,j</sub> × T<sub>construction</sub>] + Σ_{t=1}^{30} [FTE<sub>O&M,c</sub> × W<sub>local,j</sub> + R<sub>land,c</sub> + R<sub>tax,c,j</sub>] / (1+r<sub>social</sub>)^t</div>
+  <div class="sub">Sum of: (i) construction-phase wages, (ii) O&M-phase wages + land lease + local tax revenue, all discounted at 3% social rate.</div>
+</div>
+
+<h4>Component Details</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">FTE<sub>construction,c</sub></td>
+      <td>Construction-phase FTE per MW (IRENA BESS employment factors)</td>
+      <td>Includes civil works, electrical installation, testing. IRENA 2023 data: 5–8 FTE-years/MW for utility-scale BESS. Config A (4.9 MW): 25–39 FTE-years; Config B (9.9 MW): 50–79 FTE-years. Typical construction duration: 18–24 months.</td>
+      <td>Config A: 32 FTE-yr; Config B: 64 FTE-yr</td>
+    </tr>
+    <tr>
+      <td class="code">FTE<sub>O&M,c</sub></td>
+      <td>Permanent O&M jobs per MW</td>
+      <td>IRENA data: 0.3–0.5 FTE/MW for operations, maintenance, and monitoring. Config A: 1.5–2.5 FTE; Config B: 3.0–5.0 FTE. Permanent positions (30-year horizon).</td>
+      <td>Config A: 2 FTE; Config B: 4 FTE</td>
+    </tr>
+    <tr>
+      <td class="code">W<sub>local,j</sub></td>
+      <td>Average annual wage in the substation's NUTS-3 region (€/year)</td>
+      <td>Eurostat/ISTAT regional labour data. Modulated by E1 (GDP per capita) — higher-GDP regions have higher wages but also higher opportunity cost. Net local benefit largest in lower-E1 regions where alternative employment is scarce. Italian range: €25k–45k/year depending on region.</td>
+      <td>€35k/year (median IT)</td>
+    </tr>
+    <tr>
+      <td class="code">R<sub>land,c</sub></td>
+      <td>Annual land lease payment to landowner (€/year)</td>
+      <td>Typical ground-mounted BESS footprint: 0.3–0.5 ha (Config A), 0.5–1.0 ha (Config B). Land lease rates: €3–8k/year (Config A), €5–15k/year (Config B). Regional variation significant (urban premium).</td>
+      <td>Config A: €5k/yr; Config B: €10k/yr</td>
+    </tr>
+    <tr>
+      <td class="code">R<sub>tax,c,j</sub></td>
+      <td>Local tax revenue (property tax + business rates to municipality)</td>
+      <td>Function of assessed value of BESS installation (€CAPEX × depreciation rate) and local tax rates (IMU ~0.4–1.0%, business rates ~0.1–0.5%). Italian municipalities: typically €2–8k/year (Config A), €4–15k/year (Config B).</td>
+      <td>Config A: €5k/yr; Config B: €10k/yr</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Reporting as Physical Metrics</h4>
+
+<p>W3 is reported both as NPV (€, 30-yr at 3% social rate) and as physical metrics:</p>
+
+<ul style="margin-left: 20px; margin-bottom: 14px">
+  <li><strong>FTE-years (construction):</strong> Direct job-creation metric for policy engagement and EU funding applications</li>
+  <li><strong>FTE (permanent):</strong> Ongoing employment commitment</li>
+  <li><strong>€ land lease/year:</strong> Landowner benefit (local community income)</li>
+  <li><strong>€ local tax/year:</strong> Municipality revenue (public finance benefit)</li>
+</ul>
+
+<!-- W4: RESILIENCE INSURANCE VALUE -->
+<h3>C.5 &ensp; W4 — Resilience Insurance Value (Extreme Weather Events)</h3>
+
+<p>W4 is the expected avoided economic loss from BESS backup during extreme weather events. It is an actuarial insurance value — the annual premium equivalent of the protection the BESS provides against floods, landslides, and heat-waves.</p>
+
+<div class="formula-block">
+  <div class="main">W4<sub>j,c</sub>(t) = Σ_{h∈{flood,landslide,heat}} P<sub>h,j</sub>(t) × L<sub>h,j</sub>(t) × M<sub>h,c</sub> × [1 + γ<sub>T2,j</sub> × (t/10)]</div>
+  <div class="sub">Annual probability of hazard × expected loss given hazard × BESS mitigation factor × climate escalation term.</div>
+</div>
+
+<h4>Component Details</h4>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">P<sub>h,j</sub>(t)</td>
+      <td>Annual probability of hazard h affecting substation j in year t</td>
+      <td>Derived from IRI scores: P_flood ≈ I1_j / 10 (normalized), similarly for landslide (I2) and heat-wave (I3). Not static: under CMIP6 SSP2-4.5, P_h increases over 30-year life (captured below).</td>
+      <td>P_flood: 1–10% depending on location; P_heat: 5–30%</td>
+    </tr>
+    <tr>
+      <td class="code">L<sub>h,j</sub>(t)</td>
+      <td>Expected economic loss given hazard h occurs (€)</td>
+      <td>L = E2_j × N_customers,j × D_outage,h × P_avg,j. D_outage,h is expected outage duration from the tail of C-component distribution (extreme weather causes longer outages than mean SAIDI). Typical D_outage: flood 6–48 hr, landslide 12–72 hr, heat-wave 2–24 hr (transformer thermal failure).</td>
+      <td>L_flood: €0.5–5M; L_heat: €0.2–2M</td>
+    </tr>
+    <tr>
+      <td class="code">M<sub>h,c</sub></td>
+      <td>BESS mitigation factor for hazard h under config c</td>
+      <td>M = min(1, Duration_BESS / D_outage,h). For Config A & B (4-hour duration): M_flood ≈ 0.2–0.6 (BESS bridges part of outage), M_heat ≈ 0.4–1.0 (heat-waves often <4 hr). Duration is binding constraint, not power.</td>
+      <td>M_flood: 0.40; M_heat: 0.70</td>
+    </tr>
+    <tr>
+      <td class="code">γ<sub>T2,j</sub></td>
+      <td>Decadal hazard escalation rate from climate trajectory</td>
+      <td>From T2 forward-looking index (CMIP6 SSP2-4.5). How much worse does each hazard get per decade? Southern Italy heat-wave: γ ≈ 0.15–0.30 (15–30% more frequent/decade). Northern Italy flood: γ ≈ 0.08–0.15.</td>
+      <td>γ_heat(south): 0.25; γ_flood(north): 0.12</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Escalation Mechanism</h4>
+
+<p>The term [1 + γ × (t/10)] makes W4 increasingly material in out-years. By Year 20, W4 can be 1.5–2× the Year 1 value at high-hazard substations. This growth is invisible to static insurance valuations but critical for long-lived BESS assets operating in climate-change environments.</p>
+
+<!-- W5: COMMUNICATIONS RESILIENCE -->
+<h3>C.6 &ensp; W5 — Catastrophic Communications Resilience (CRS)</h3>
+
+<p>W5 is <em>methodologically distinct</em> from W1 and W4. W1 captures average reliability (mean SAIDI × VoLL). W4 captures insurance during extreme weather (electricity layer). <strong>W5 captures the communications-cascade cost</strong> — the additional harm from losing fibre, mobile, internet, SCADA, and emergency coordination during extended grid failure, beyond and above the electricity loss itself.</p>
+
+<div class="formula-block">
+  <div class="main">W5<sub>j,c</sub>(t) = P<sub>extended,j</sub>(t) × [C<sub>emergency,j</sub> + C<sub>economic,j</sub> + C<sub>trust,j</sub>] × M<sub>comms,c</sub> × [1 + γ<sub>T2,j</sub> × (t/10)]</div>
+  <div class="sub">Probability of extended outage × sum of three cascade-cost categories × mitigation factor × climate escalation.</div>
+</div>
+
+<h4>Extended Outage Probability</h4>
+
+<p>W5 is conditioned on the <em>tail</em> of the outage distribution, not the mean. Communications collapse occurs only during extended events (>4 hours) that exhaust telecom backup batteries. Mean SAIDI is irrelevant; only right-tail matters.</p>
+
+<table>
+  <thead><tr><th>Variable</th><th>Definition</th><th>Derivation</th><th>Central Estimate</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">P<sub>extended,j</sub></td>
+      <td>Probability of upstream grid failure >4 hours at substation j per year</td>
+      <td>Estimated from: (i) tail of C-component (P(SAIDI_event > 240 min) per year, conditioned on extreme events), (ii) I-component IRI scores (climate hazards → extended outages), (iii) T2 climate trajectory. Tail calibration from ARERA/CEER historical multi-day outage records.</td>
+      <td>0.5–5% /year depending on I-profile</td>
+    </tr>
+    <tr>
+      <td class="code">C<sub>emergency,j</sub></td>
+      <td>Emergency-coordination failure cost per event (€)</td>
+      <td>Delayed emergency response × statistical value of life × excess mortality/morbidity from coordination collapse. Calibrated from: Hurricane Maria (~4,645 excess deaths, Harvard study), Texas 2021 ERCOT ($130B+ impact), EU CP case studies. For Italian substations: €0.5–15M depending on population × hospital density × CP node coverage.</td>
+      <td>€3–8M (range depends heavily on location)</td>
+    </tr>
+    <tr>
+      <td class="code">C<sub>economic,j</sub></td>
+      <td>Economic cascade cost per event (€)</td>
+      <td>Payment system downtime (POS, ATM, online banking), supply-chain disruption (JIT mfg, cold-chain failure), SCADA loss (water, sewage, traffic). Estimated from E1 (GDP density) × duration × disruption factor. Italian range: €0.1–5M per event.</td>
+      <td>€1–3M</td>
+    </tr>
+    <tr>
+      <td class="code">C<sub>trust,j</sub></td>
+      <td>Institutional trust cost (€)</td>
+      <td>Loss of government communication capability → political-economy externality with long-term fiscal consequences. Monetised at 5–15% of (C_emergency + C_economic) from Eurobarometer post-disaster trust surveys.</td>
+      <td>10% × (€3M + €2M) = €500k</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Communications Mitigation Factor</h4>
+
+<p>Critical determinant: what fraction of the communications-cascade cost can BESS avert?</p>
+
+<table>
+  <thead><tr><th>Operating Mode</th><th>Capability</th><th>Mitigation Factor</th><th>Configuration</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Full feeder islanding</strong></td>
+      <td>Sustains entire local area for BESS duration (~4 hours)</td>
+      <td>0.7–0.95</td>
+      <td>Both Config A & B can island one feeder</td>
+    </tr>
+    <tr>
+      <td><strong>Selective critical-load supply</strong></td>
+      <td>Sustains base stations, OLTs, emergency nodes for extended period (islanding switchgear + extended discharge into selec loads)</td>
+      <td>0.4–0.8</td>
+      <td>Config B better positioned (larger capacity for extended critical-load supply)</td>
+    </tr>
+    <tr>
+      <td><strong>Base station load</strong></td>
+      <td>~2–5 kW each; backup battery typical exhaustion 2–8 hours</td>
+      <td>—</td>
+      <td>Config A can sustain 50–200 stations; Config B 100–400</td>
+    </tr>
+    <tr>
+      <td><strong>Optical Line Terminal (OLT) load</strong></td>
+      <td>~0.5–1 kW each; critical for downstream fibre</td>
+      <td>—</td>
+      <td>Both configs easily supply OLT via critical-load switchgear</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card regulatory">
+  <strong>Regulatory alignment — NIS2 Directive (2022/2555):</strong> Member States must identify "essential entities" in telecom, energy, water, health, transport. These entities are required to implement cybersecurity and resilience measures. BESS-backed critical-load islands create resilience capacity that supports NIS2 compliance for telecoms and emergency services. W5 + R11 (CRS revenue) align with the regulatory push toward communications resilience.
+</div>
+
+<!-- W5 ESCALATION -->
+<h3>C.7 &ensp; W5 Climate Escalation and Time-Varying Composition</h3>
+
+<p>W5 grows faster than W4 because it captures the <em>multi-layer cascade</em> that climate events trigger. In southern European substations (high I3, steep T2), W5 can exceed W1 by Year 15–20.</p>
+
+<div class="highlight-box">
+  <strong>Time dynamics in a typical high-hazard southern Italian substation:</strong><br>
+  • <strong>Years 1–5:</strong> W1 dominates (steady-state reliability value); W5 minimal (extended outages rare).<br>
+  • <strong>Years 6–15:</strong> W4 begins growing (heat-wave frequency escalating); W5 emerging (compound events increasingly frequent).<br>
+  • <strong>Years 16–30:</strong> W5 dominant (communications cascade becomes central risk), growing 2–3× faster than W4 due to multi-layer feedback.<br>
+  Static community value assessments miss this shift entirely. The BESS value story changes over its operational life as climate hazards evolve.
+</div>
+
+<!-- W AGGREGATION -->
+<h3>C.8 &ensp; Community Value Aggregation and Discount Rate Effect</h3>
+
+<div class="formula-block">
+  <div class="main">V<sub>Community,j,c</sub> = Σ_{t=1}^{30} [W1<sub>j,c</sub>(t) + W2<sub>j,c</sub>(t) + W3<sub>j,c</sub>(t) + W4<sub>j,c</sub>(t) + W5<sub>j,c</sub>(t)] / (1 + r<sub>social</sub>)^t</div>
+  <div class="sub">30-year NPV at 3.0% real (social discount rate). W2 reported as physical tCO₂/year (not monetised in V_Community). W2 monetary memo item computed separately (€, at SCC price).</div>
+</div>
+
+<h4>Typical Component Composition (30-Year NPV, Config B)</h4>
+
+<table>
+  <thead><tr><th>Component</th><th>Early Years (1–5)</th><th>Mid Years (6–15)</th><th>Late Years (16–30)</th><th>Total 30-Yr NPV</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>W1</strong> Reliability</td>
+      <td>50%</td>
+      <td>35%</td>
+      <td>20%</td>
+      <td>€2.5M (33%)</td>
+    </tr>
+    <tr>
+      <td><strong>W2</strong> Carbon (physical)</td>
+      <td>15,000 tCO₂</td>
+      <td>14,000 tCO₂</td>
+      <td>12,000 tCO₂</td>
+      <td>390,000 tCO₂ (memo)</td>
+    </tr>
+    <tr>
+      <td><strong>W3</strong> Employment</td>
+      <td>30%</td>
+      <td>30%</td>
+      <td>30%</td>
+      <td>€1.0M (13%)</td>
+    </tr>
+    <tr>
+      <td><strong>W4</strong> Resilience (weather)</td>
+      <td>10%</td>
+      <td>20%</td>
+      <td>30%</td>
+      <td>€1.2M (16%)</td>
+    </tr>
+    <tr style="font-weight:700;background:#f7f4f1">
+      <td><strong>W5</strong> Communications CRS</td>
+      <td>5%</td>
+      <td>15%</td>
+      <td>20%</td>
+      <td>€2.1M (28%)</td>
+    </tr>
+    <tr style="background:#eaf2f8;font-weight:700">
+      <td colspan="4">Total V_Community (Config B)</td>
+      <td>€7.5M (+ 390k tCO₂)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card data">
+  <strong>Discount rate impact:</strong> At 3% social rate vs 5.2% DNO WACC, V_Community is systematically higher as a multiple of annual flows. A substation generating €250k/year from community benefits has: V_Community = €250k / 0.03 ≈ €8.3M (perpetuity, ignoring growth). Same €250k at 5.2% WACC yields €250k / 0.052 ≈ €4.8M. The 3% rate amplifies long-horizon value — precisely where climate escalation and social externalities matter most.
+</div>
+
+<!-- W VALIDATION -->
+<h3>C.9 &ensp; Validation Gates and Audit Checklist for W1–W5</h3>
+
+<table>
+  <thead><tr><th style="width:12%">Gate</th><th style="width:22%">Test</th><th style="width:20%">Applied To</th><th>Method &amp; Pass Criterion</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">VW1</td>
+      <td><strong>VoLL Reasonableness</strong></td>
+      <td>W1, W4, W5 (all use VoLL)</td>
+      <td>Customer-mix-weighted VoLL must fall within sector-specific ranges (ARERA, CEER): residential €2–8/kWh, commercial €8–30/kWh, industrial €5–50/kWh. Check that E2 composite aligns with published Italian estimates (~€6–10/kWh blended).</td>
+    </tr>
+    <tr>
+      <td class="code">VW2</td>
+      <td><strong>Physical Metric Validation</strong></td>
+      <td>W2 tCO₂/year, W3 FTE</td>
+      <td>W2 tCO₂ should scale approximately linearly with BESS capacity (Config B ≈ 2× Config A). W3 FTE should align with IRENA employment factors: 5–8 FTE-yr/MW construction, 0.3–0.5 FTE/MW O&M.</td>
+    </tr>
+    <tr>
+      <td class="code">VW3</td>
+      <td><strong>Hazard Probability Validation</strong></td>
+      <td>W4, W5 (P_h, P_extended)</td>
+      <td>IRI-derived probabilities must align with historical occurrence rates. For flood-prone regions: P_flood from I1 should match ISPRA ReNDiS landslide frequency data. For heat-waves: P_heat trajectory should track CMIP6 SSP2-4.5 projections.</td>
+    </tr>
+    <tr>
+      <td class="code">VW4</td>
+      <td><strong>Escalation Consistency</strong></td>
+      <td>W4(t), W5(t) with γ_T2</td>
+      <td>W4 and W5 should both escalate at consistent rate (γ_T2 from T2 metric). Verify that substations with high T2 climate exposure show steeper W4/W5 growth paths. Spearman ρ(T2 score, W4+W5 escalation) > 0.60 expected.</td>
+    </tr>
+    <tr>
+      <td class="code">VW5</td>
+      <td><strong>Double-Counting Prevention</strong></td>
+      <td>W1 vs D1 overlap; W2 vs E1 carbon; W3 vs employment</td>
+      <td>Verify δ_overlap applied to W1 (typically 15–20% correction for D1 overlap). Confirm W2 reported in tCO₂ only (no € in V_Community). Check W3 FTE against employment already claimed in W1/W4.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- AUDITABLE DATA SOURCES FOR W1-W5 -->
+<h3>C.10 &ensp; Auditable Data Sources for Community Value Stack</h3>
+
+<table>
+  <thead><tr><th>Input Variable</th><th>W-Component(s)</th><th>Source</th><th>Vintage</th><th>Update Cycle</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="code">SAIDI (C1)</td>
+      <td>W1, W4 (outage distribution)</td>
+      <td>ARERA annual quality determinations</td>
+      <td>T (current year)</td>
+      <td>Annual (Apr–May)</td>
+    </tr>
+    <tr>
+      <td class="code">VoLL estimates (E2)</td>
+      <td>W1, W4, W5 (customer damage valuation)</td>
+      <td>ARERA; CEER survey methodology</td>
+      <td>T–3 (updates 3–5 yearly)</td>
+      <td>Next ARERA update: 2026</td>
+    </tr>
+    <tr>
+      <td class="code">Marginal emission factor (MEF)</td>
+      <td>W2 (carbon displacement physical)</td>
+      <td>ISPRA annual "Efficiency &amp; Decarbonization Indicators" (R-404/2024 series). Cross-check: JRC GHG Emission Factors; IEA Emissions Factors 2025.</td>
+      <td>2023 data (pub. Oct 2024)</td>
+      <td>Annual (Apr–Jun)</td>
+    </tr>
+    <tr>
+      <td class="code">Employment multipliers (IRENA)</td>
+      <td>W3 (FTE construction + O&M)</td>
+      <td>IRENA "Renewable Energy and Jobs" Annual Review; ISTAT provincial labour statistics</td>
+      <td>2024 edition</td>
+      <td>Annual</td>
+    </tr>
+    <tr>
+      <td class="code">Regional wages (ISTAT)</td>
+      <td>W3 (wage rate per FTE)</td>
+      <td>ISTAT provincial labour force surveys; Eurostat regional employment</td>
+      <td>T–1 (lag ~12 months)</td>
+      <td>Annual</td>
+    </tr>
+    <tr>
+      <td class="code">Flood/landslide hazard maps (I1, I2)</td>
+      <td>W4 (hazard probability)</td>
+      <td>ISPRA IdroGeo; EU Floods Directive maps; ISPRA IFFI (Inventario Fenomeni Franosi)</td>
+      <td>5-yearly (last IT update 2023)</td>
+      <td>EU FD cycle (~5 yr)</td>
+    </tr>
+    <tr>
+      <td class="code">Heat-wave frequency/duration (I3)</td>
+      <td>W4, W5 (hazard + escalation)</td>
+      <td>Copernicus CDS ERA5 reanalysis (historical); CMIP6 SSP2-4.5 projections (forward)</td>
+      <td>Annual (reanalysis); decadal (CMIP6)</td>
+      <td>Annual reanalysis; CMIP6 multi-model ensemble</td>
+    </tr>
+    <tr>
+      <td class="code">Telecom infrastructure register</td>
+      <td>W5 (communications density, OLT/base station count)</td>
+      <td>AGCOM infrastructure register; MNO (mobile operator) network maps; Open Fiber / TIM fibre data</td>
+      <td>T–1 (semi-annual updates from AGCOM)</td>
+      <td>Annual (AGCOM)</td>
+    </tr>
+    <tr>
+      <td class="code">NIS2 essential entity register</td>
+      <td>W5 (critical infrastructure within service area)</td>
+      <td>National NIS2 authority (ACN in Italy); ENISA best-practice guidance</td>
+      <td>T–1 (registers being compiled 2024–2026)</td>
+      <td>Annual (registers newly established)</td>
+    </tr>
+    <tr>
+      <td class="code">Multi-day outage tail distribution</td>
+      <td>W5 (P_extended calibration)</td>
+      <td>ARERA quality reports (SAIDI tail); CEER Benchmarking; historical event records (e.g., 2003 blackout, 2012 hurricane)</td>
+      <td>T–5 (deep historical for tail calibration)</td>
+      <td>Occasional (event-driven updates)</td>
+    </tr>
+  </tbody>
+</table>
+
+</content>
+<!-- APPENDIX D: REVENUE ARCHITECTURE (R1–R11) -->
+<div class="appendix-divider">
+  <h2>Appendix D &ensp; Revenue Architecture (R1–R11)</h2>
+  <p class="appendix-ref">Reference: v27a §0.4.4, §2.2, §2.2.1</p>
+</div>
+
+<h3>D.1 &ensp; Italian Electricity Market Design</h3>
+<p>The BESS revenue model is anchored to the Italian electricity market (Gestore dei Mercati Energetici—GME) and transmission system operator (Terna). Italy's market design comprises four principal procurement layers: Day-Ahead (DA), Intra-Day (ID), Ancillary Services (Terna MSD), and Capacity Market (CM).</p>
+
+<div class="card formula">
+  <strong>Single-Cycle Constraint & Dispatch Optimization:</strong>
+  <div class="formula-block">
+    <div class="main">maximize &ensp; Σ<sub>i=1</sub><sup>11</sup> Rev<sub>i</sub>(t)</div>
+    <div class="sub">subject to: Σ E<sub>dispatch,i</sub> ≤ E<sub>nameplate</sub> / day × η<sub>round-trip</sub>(t)<br>
+    E<sub>nameplate</sub> = 19.6 MWh (Config A) or 39.6 MWh (Config B)<br>
+    η<sub>round-trip</sub>(t) = 88–89% BoL, declining ~0.5%/yr via calendar + cycle aging</div>
+  </div>
+</div>
+
+<h3>D.2 &ensp; Revenue Stream Catalogue (R1–R11)</h3>
+
+<p>Complete catalogue with formulas, auditable data sources, and cross-country availability.</p>
+
+<h4>R1 — Capacity Market Revenue</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R1<sub>t</sub> &nbsp;=&nbsp; MW<sub>contracted</sub> × P<sub>CM,t</sub></div>
+    <div class="sub">MW<sub>contracted</sub> = nameplate power (de-rated 60–80%)<br>
+    P<sub>CM,t</sub> = CM clearing price (€/MW/yr). Central: €65/MW/yr (Terna 2023–2025)</div>
+  </div>
+</div>
+
+<p><strong>Availability:</strong> Italy (✓), UK (✓), Germany (✗), France (✓), Spain (✓). Revenue share: 11.2–15.8% of total.</p>
+
+<h4>R2 — Frequency Response (FCR/FFR)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R2<sub>t</sub> &nbsp;=&nbsp; MW<sub>FCR</sub> × P<sub>FCR,t</sub></div>
+    <div class="sub">MW<sub>FCR</sub> = power capacity for frequency response (MW)<br>
+    P<sub>FCR,t</sub> = annual procurement price. Central: €11,000/MW/yr</div>
+  </div>
+</div>
+
+<p><strong>Availability:</strong> All markets (Italy, UK, Germany, France, Spain). Revenue share: 16–20%.</p>
+
+<h4>R3 — Replacement Reserve (aFRR/mFRR)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R3<sub>t</sub> &nbsp;=&nbsp; [aFRR<sub>cap</sub> × P<sub>cap</sub>] + [E<sub>aFRR</sub> × P<sub>en</sub>]</div>
+    <div class="sub">Capacity component (€/MW/yr): Central €5,000/MW/yr<br>
+    Energy activation (€/MWh): Central €15/MWh on ~500 MWh/yr expected activation</div>
+  </div>
+</div>
+
+<p><strong>Availability:</strong> All markets. Revenue share: 20–25% (largest regular revenue stream).</p>
+
+<h4>R4 — Wholesale Arbitrage (DA + ID)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R4<sub>t</sub> &nbsp;=&nbsp; Σ<sub>h=1</sub><sup>24</sup> [(P<sub>sell,h</sub> − P<sub>buy,h</sub>) × MWh<sub>h</sub> × η<sub>rt</sub>]</div>
+    <div class="sub">Location-sensitive. Sicily/South: €75/MWh avg spread; North: €40/MWh<br>
+    Central estimate (Config B, 35 MWh/day × 250 days): €656k/yr</div>
+  </div>
+</div>
+
+<p><strong>Availability:</strong> All markets. Revenue share: 5–12% (highly volatile; sensitive to renewable saturation).</p>
+
+<h4>R5 — DSO Flexibility Procurement (ARERA Pilot)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R5<sub>t</sub> &nbsp;=&nbsp; P<sub>flex</sub> × MWh<sub>flex</sub> + P<sub>avail</sub> × MW<sub>flex</sub></div>
+    <div class="sub">Central: €100/MWh delivery + €1,000/MW/yr availability<br>
+    Expected allocation (pilot): ~100 MWh/yr → €15k/yr</div>
+  </div>
+</div>
+
+<p><strong>Availability:</strong> Italy (Emerging), UK (✓), Germany (Pilot), France (Pilot), Spain (✗). Revenue share: 2–5% (emerging, high growth potential post-2027).</p>
+
+<h4>R6 — Balancing Mechanism (Real-Time Imbalance)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R6<sub>t</sub> &nbsp;=&nbsp; Σ |Imbalance| × P<sub>imbalance</sub></div>
+    <div class="sub">Opportunistic revenue from 2SMP (2-sided system marginal price) settlement<br>
+    Central: €5–15k/yr (low, highly stochastic)</div>
+  </div>
+</div>
+
+<h4>R7 — Fuel-Electricity Nexus (CCGT Spread Amplification)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R7<sub>t</sub> &nbsp;=&nbsp; Σ MWh<sub>dispatch</sub> × (Elec<sub>price</sub> − Gas<sub>price</sub> × Heat_Rate × Margin)</div>
+    <div class="sub">Captures avoided CCGT fuel cost when displacing marginal plant<br>
+    Central (Southern Italy, CCGT marginal): €15/MWh × 25 MWh/day × 250 days ≈ €94k/yr</div>
+  </div>
+</div>
+
+<p><strong>Market-Specific:</strong> High value in gas-intensive regions (Italy South, UK, Spain); minimal in hydro/nuclear-dominated (France).</p>
+
+<h4>R8 — Embedded Benefits (Triad, DUoS, TNUoS) — UK Only</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R8<sub>t</sub> &nbsp;=&nbsp; [Σ MW<sub>avoided</sub>] × P<sub>triad</sub></div>
+    <div class="sub">UK only. Triad peak avoidance + DNO DUoS relief<br>
+    Central: £40/MW/yr (≈ €46/MW/yr for South UK)</div>
+  </div>
+</div>
+
+<h4>R9 — Power Quality as a Service (PQaaS)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R9<sub>t</sub> &nbsp;=&nbsp; [Harmonic<sub>injection</sub> × P<sub>PQ</sub>] + Availability<sub>fee</sub></div>
+    <div class="sub">Emerging. Reactive power/harmonic filtering service<br>
+    Central: €200–500/MVAr/yr + €100–500/MW/yr availability ≈ €1.6k/yr (pilot)</div>
+  </div>
+</div>
+
+<h4>R10 — Locational Marginal Pricing (LMP) / Nodal Premium</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R10<sub>t</sub> &nbsp;=&nbsp; Σ [MWh<sub>h</sub> × (LMP<sub>node,h</sub> − LMP<sub>ref,h</sub>)]</div>
+    <div class="sub">Post-2030 transition in EU. Nodal premium: €5–30/MWh in congestion zones<br>
+    Central (Italy post-2030 transition probability ~10%/yr): deferred; high upside</div>
+  </div>
+</div>
+
+<h4>R11 — Communications Resilience Service (NIS2)</h4>
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">R11<sub>t</sub> &nbsp;=&nbsp; MW<sub>CRS</sub> × P<sub>CRS</sub> + Activation<sub>fee</sub></div>
+    <div class="sub">Emerging (NIS2 post-2025). Critical infrastructure islanding capability<br>
+    Central: €1,200/MW/yr availability + €20k/activation event (rare) ≈ €10k/yr pilot phase</div>
+  </div>
+</div>
+
+<h3>D.3 &ensp; Cross-Country Revenue Availability Matrix</h3>
+
+<table>
+  <thead><tr><th>Stream</th><th>Italy</th><th>UK</th><th>Germany</th><th>France</th><th>Spain</th><th>Central €/yr (10MW)</th></tr></thead>
+  <tbody>
+    <tr><td>R1 Capacity</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✗</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td class="num">€650k</td></tr>
+    <tr><td>R2 FCR</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td class="num">€110k</td></tr>
+    <tr><td>R3 aFRR/mFRR</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td class="num">€150k</td></tr>
+    <tr><td>R4 Arbitrage</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td class="num">€656k</td></tr>
+    <tr><td>R5 DSO Flex</td><td>Emerging</td><td style="text-align:center">✓</td><td>Pilot</td><td>Pilot</td><td style="text-align:center">✗</td><td class="num">€15k</td></tr>
+    <tr><td>R6 Balancing</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td class="num">€10k</td></tr>
+    <tr><td>R7 Fuel Nexus</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td>Partial</td><td>Limited</td><td style="text-align:center">✓</td><td class="num">€94k</td></tr>
+    <tr><td>R8 Triad/DUoS</td><td style="text-align:center">✗</td><td style="text-align:center">✓</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td class="num">€700 (UK)</td></tr>
+    <tr><td>R9 PQaaS</td><td>Emerging</td><td>Emerging</td><td>Pilot</td><td>Pilot</td><td>Emerging</td><td class="num">€1.6k</td></tr>
+    <tr><td>R10 LMP/Nodal</td><td>Study</td><td>Study</td><td>Pilot</td><td>Study</td><td>Study</td><td class="num">€33k (post-2030)</td></tr>
+    <tr><td>R11 CRS</td><td>Emerging</td><td>Emerging</td><td>Emerging</td><td>Emerging</td><td>Emerging</td><td class="num">€10k (post-2026)</td></tr>
+  </tbody>
+</table>
+
+<h3>D.4 &ensp; Illustrative Revenue Waterfall: Config B, Fiumetorto (Sicily)</h3>
+
+<table>
+  <thead><tr><th>Revenue Stream</th><th>Annual (€k)</th><th>% of Total</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>Contracted Services</td><td class="num">15,820</td><td class="num">27.6%</td><td>Fixed/near-fixed; low volatility</td></tr>
+    <tr><td>&nbsp;&nbsp;R1 Capacity Market</td><td class="num">643.5</td><td class="num">11.2%</td><td>9.9 MW × €65/MW/yr (de-rated 70%)</td></tr>
+    <tr><td>&nbsp;&nbsp;R2 FCR</td><td class="num">88.0</td><td class="num">1.5%</td><td>8 MW × €11,000/MW/yr</td></tr>
+    <tr><td>&nbsp;&nbsp;R3 aFRR/mFRR</td><td class="num">37.5</td><td class="num">0.7%</td><td>Capacity + energy activation</td></tr>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>Market-Dependent Services</td><td class="num">40,710</td><td class="num">71.0%</td><td>Volume/price variable; higher σ</td></tr>
+    <tr><td>&nbsp;&nbsp;R4 Arbitrage</td><td class="num">656.3</td><td class="num">11.4%</td><td>€75/MWh × 35 MWh/day × 250 days</td></tr>
+    <tr><td>&nbsp;&nbsp;R7 Fuel Nexus</td><td class="num">93.8</td><td class="num">1.6%</td><td>€15/MWh fuel benefit × 35 MWh/day</td></tr>
+    <tr style="border-top: 2px solid var(--ink); font-weight:700; background-color: #faf6f0">
+      <td><strong>TOTAL ANNUAL REVENUE (Year 1)</strong></td><td class="num" style="color: var(--sage); font-size:16px">57,380</td><td class="num" style="color: var(--sage)">100%</td><td>Config B, central case, Italy Sicily</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card regulatory">
+  <strong>Data Vintage Rule:</strong> All inputs must use most recent vintage at time of valuation. Month-to-month contracts (R1, R6): latest settlement. Annual contracts (R2, R3): most recent annual price + BNEF escalation. Emerging streams: disclose scenario assumptions (e.g., "pilot phase 2026 expansion") and sensitivity bands.
+</div>
+
+<!-- ========== END APPENDIX D ========== -->
+
+<!-- APPENDIX E: TOTAL COST OF OWNERSHIP MODEL -->
+<div class="appendix-divider">
+  <h2>Appendix E &ensp; Total Cost of Ownership Model</h2>
+  <p class="appendix-ref">Reference: v27a §0.4.3, §2.1</p>
+</div>
+
+<h3>E.1 &ensp; CAPEX Breakdown</h3>
+
+<p>Total installed cost (TIC) for two reference configurations:</p>
+
+<table>
+  <thead><tr><th>Component</th><th>Config A (€M)</th><th>% TIC</th><th>Config B (€M)</th><th>% TIC</th><th>Unit Basis</th></tr></thead>
+  <tbody>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>Battery Modules (LFP)</td><td class="num">1.960</td><td class="num">56.0%</td><td class="num">3.920</td><td class="num">56.0%</td><td>€100/kWh (2024 BNEF)</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Cells</td><td class="num">1.372</td><td class="num">39.2%</td><td class="num">2.744</td><td class="num">39.2%</td><td>LFP; 10-yr warranty</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Module Assembly</td><td class="num">0.588</td><td class="num">16.8%</td><td class="num">1.176</td><td class="num">16.8%</td><td>QA + testing</td></tr>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>Power Electronics</td><td class="num">0.735</td><td class="num">21.0%</td><td class="num">1.485</td><td class="num">21.2%</td><td>€75/kW (2024 BNEF)</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Inverter</td><td class="num">0.490</td><td class="num">14.0%</td><td class="num">0.990</td><td class="num">14.1%</td><td>Utility-grade, >95% eff</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Step-up Transformer</td><td class="num">0.245</td><td class="num">7.0%</td><td class="num">0.495</td><td class="num">7.1%</td><td>MV/HV connection</td></tr>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>BOS &amp; Integration</td><td class="num">0.595</td><td class="num">17.0%</td><td class="num">1.190</td><td class="num">17.0%</td><td>€60/kW (2024 BNEF)</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Cooling/Fire/SCADA</td><td class="num">0.392</td><td class="num">11.2%</td><td class="num">0.792</td><td class="num">11.3%</td><td>Thermal mgmt + monitoring</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Containerization/Civil</td><td class="num">0.203</td><td class="num">5.8%</td><td class="num">0.397</td><td class="num">5.7%</td><td>Structure, foundation</td></tr>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>Grid Connection &amp; Permitting</td><td class="num">0.385</td><td class="num">11.0%</td><td class="num">0.770</td><td class="num">11.0%</td><td>Substation reinforcement</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Grid studies, cabling, civil</td><td class="num">0.385</td><td class="num">11.0%</td><td class="num">0.770</td><td class="num">11.0%</td><td>TICA, MV works, land prep</td></tr>
+    <tr style="background-color: var(--highlight-bg); font-weight:700"><td>Development &amp; Soft Costs</td><td class="num">0.325</td><td class="num">9.3%</td><td class="num">0.650</td><td class="num">9.3%</td><td>Project dev + consulting</td></tr>
+    <tr><td>&nbsp;&nbsp;&nbsp; Environmental, planning, legal, financing</td><td class="num">0.325</td><td class="num">9.3%</td><td class="num">0.650</td><td class="num">9.3%</td><td>EIA + permissions + arranger fees</td></tr>
+    <tr style="border-top: 2px solid var(--ink); font-weight:700; background-color: #faf6f0">
+      <td><strong>TOTAL CAPEX</strong></td><td class="num" style="font-size:15px">3.500</td><td class="num" style="font-size:15px">100%</td><td class="num" style="font-size:15px">7.000</td><td class="num" style="font-size:15px">100%</td><td style="font-weight:400">Config A €714/kW; Config B €707/kW (scale economy)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>E.2 &ensp; Learning Curve & Cost Trajectory (2024–2054)</h3>
+
+<div class="formula-block">
+  <div class="main">CAPEX<sub>t</sub> &nbsp;=&nbsp; CAPEX<sub>2024</sub> × [1 − λ]<sup>t−2024</sup></div>
+  <div class="sub">λ = 10% annual learning rate (BNEF 2024; range 8–12%)</div>
+</div>
+
+<table>
+  <thead><tr><th>Year</th><th>€/kW</th><th>Config A (€M)</th><th>Config B (€M)</th><th>YoY Change</th></tr></thead>
+  <tbody>
+    <tr><td>2024</td><td class="num" style="font-weight:700">710.50</td><td class="num" style="font-weight:700">3.50</td><td class="num" style="font-weight:700">7.00</td><td class="num">—</td></tr>
+    <tr style="background-color: var(--highlight-bg)"><td>2026</td><td class="num">574.71</td><td class="num">2.82</td><td class="num">5.69</td><td class="num">−10%/yr</td></tr>
+    <tr><td>2030</td><td class="num">385.33</td><td class="num">1.89</td><td class="num">3.81</td><td class="num">−8.5% avg</td></tr>
+    <tr><td>2035</td><td class="num">258.11</td><td class="num">1.27</td><td class="num">2.55</td><td class="num">−8.5% avg</td></tr>
+    <tr style="background-color: var(--highlight-bg)"><td>2045</td><td class="num">115.46</td><td class="num">0.57</td><td class="num">1.14</td><td class="num">−8.2% avg</td></tr>
+  </tbody>
+</table>
+
+<h3>E.3 &ensp; OPEX Model (Fixed + Variable)</h3>
+
+<h4>E.3.1 — Fixed Annual O&M (€/kW/yr)</h4>
+
+<table>
+  <thead><tr><th>Component</th><th>€/kW/yr</th><th>Config A (€k)</th><th>Config B (€k)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Personnel (technicians)</td><td class="num">3.50</td><td class="num">17.2</td><td class="num">34.7</td><td>~0.5 FTE per 10 MW</td></tr>
+    <tr><td>Maintenance (routine/preventive)</td><td class="num">2.80</td><td class="num">13.7</td><td class="num">27.7</td><td>Inverter intervals, cooling checkups</td></tr>
+    <tr><td>Insurance (liability, property)</td><td class="num">1.20</td><td class="num">5.9</td><td class="num">11.9</td><td>~0.15%/yr of CAPEX</td></tr>
+    <tr><td>Land lease / grid charges</td><td class="num">1.00</td><td class="num">4.9</td><td class="num">9.9</td><td>Site rental + TICA tariff</td></tr>
+    <tr><td>Monitoring/admin/compliance</td><td class="num">0.40</td><td class="num">1.9</td><td class="num">4.0</td><td>SCADA, cloud, settlements</td></tr>
+    <tr style="border-top: 2px solid var(--ink); font-weight:700; background-color: #faf6f0">
+      <td><strong>TOTAL FIXED O&M</strong></td><td class="num" style="font-size:15px">8.90</td><td class="num" style="font-size:15px">43.6</td><td class="num" style="font-size:15px">88.2</td><td style="font-weight:400">Range €8–12/kW/yr; escalates 2%/yr</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>E.3.2 — Variable O&M (€/MWh Cycled)</h4>
+
+<p>Battery degradation warranty (excess wear): €0.35/MWh. Inverter O&M: €0.12/MWh. Spare parts: €0.08/MWh. <strong>Total: €0.55/MWh</strong> (range €0.5–1.0/MWh). Expected Config B throughput: ~24,000 MWh/yr → €13.2k/yr variable OPEX.</p>
+
+<h3>E.4 &ensp; Battery Degradation Model</h3>
+
+<div class="formula-block">
+  <div class="main">SoH(t) &nbsp;=&nbsp; 1 − α<sub>cal</sub>(T) × t − β<sub>cyc</sub> × N(t) × g(DoD, C−rate)</div>
+  <div class="sub">
+    α<sub>cal</sub> = 2%/yr calendar aging (at 25°C, 50% SoC storage)<br>
+    β<sub>cyc</sub> = 0.0002/cycle (LFP chemistry)<br>
+    Temperature effect: α<sub>cal</sub>(T) = 0.02 × 2<sup>(T−25)/10</sup> /yr (doubles every 10°C above 25°C)<br>
+    Fiumetorto (Sicily, avg 19°C): α<sub>cal</sub> ≈ 2.1%/yr (mildly elevated)
+  </div>
+</div>
+
+<table>
+  <thead><tr><th>Year</th><th>Calendar Loss</th><th>Cycle Loss</th><th>SoH</th><th>Nameplate (Config B)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr style="background-color: var(--highlight-bg)"><td>0</td><td class="num">0%</td><td class="num">0%</td><td class="num">100%</td><td class="num">39.6 MWh</td><td>BoL</td></tr>
+    <tr><td>5</td><td class="num">10%</td><td class="num">4%</td><td class="num">86%</td><td class="num">34.1 MWh</td><td></td></tr>
+    <tr style="background-color: #fdf8f6"><td>10</td><td class="num">20%</td><td class="num">8%</td><td class="num">72%</td><td class="num">28.5 MWh</td><td style="color: var(--terracotta); font-weight:600">Augmentation decision point</td></tr>
+    <tr><td>12</td><td class="num">24%</td><td class="num">9.6%</td><td class="num">66.4%</td><td class="num">26.3 MWh</td><td>May fall below 70% warranty threshold</td></tr>
+    <tr><td>15</td><td class="num">30%</td><td class="num">12%</td><td class="num">58%</td><td class="num">23.0 MWh</td><td>End of typical battery warranty</td></tr>
+  </tbody>
+</table>
+
+<div class="card warning">
+  <strong>Augmentation Trigger:</strong> At SoH < 70%, operator must decide: augment (add modules at declining cost), de-rate (reduce nameplate), replace (full battery swap), or abandon (exit). Real Options framework (Appendix F) prices this flexibility.
+</div>
+
+<h3>E.5 &ensp; Replacement Economics (Year 12–15)</h3>
+
+<div class="formula-block">
+  <div class="main">Replacement_Cost(t) &nbsp;=&nbsp; (€100/kWh)<sub>2024</sub> × [1 − 0.10]<sup>t−2024</sup> × Capacity_MWh × 0.3</div>
+  <div class="sub">BOP multiplier = 0.3 (labor + testing; skips development + land prep)</div>
+</div>
+
+<table>
+  <thead><tr><th>Year</th><th>Battery Cost (€/kWh)</th><th>Config B (€M)</th><th>Savings vs 2024 CAPEX</th></tr></thead>
+  <tbody>
+    <tr><td>Year 12 (2038)</td><td class="num">€57</td><td class="num">1.34</td><td class="num">−50%</td></tr>
+    <tr style="background-color: var(--highlight-bg)"><td>Year 15 (2041)</td><td class="num">€37</td><td class="num">0.86</td><td class="num">−68%</td></tr>
+    <tr><td>Year 20 (2046)</td><td class="num">€17</td><td class="num">0.40</td><td class="num">−83%</td></tr>
+  </tbody>
+</table>
+
+<h3>E.6 &ensp; Decommissioning & Salvage</h3>
+
+<p>Battery recycling: −€20/kWh salvage credit (EU Battery Regulation mandate). Inverter scrap: −€2/kW. Decommissioning labour: €50/kW. Grid disconnection: €20/kW. <strong>Net cost (Config B): €594k</strong> (~€60/kW; PV at year 30 ≈ €80k).</p>
+
+<h3>E.7 &ensp; WACC & Discount Rate</h3>
+
+<div class="formula-block">
+  <div class="main">WACC &nbsp;=&nbsp; 30% × 9.0% &nbsp;+&nbsp; 70% × 4.5% × (1 − 0.24) &nbsp;=&nbsp; 5.2%</div>
+  <div class="sub">
+    Equity (30%): CoE = 9.0% (risk-free 3.5% + infrastructure premium 5.5%)<br>
+    Debt (70%): Cost = 4.5% (BBB-equivalent infrastructure debt); tenor 18 years<br>
+    Tax rate (Italy): 24%<br>
+    Greenium effect (EU Taxonomy alignment): −30–40 bps → effective WACC ≈ 4.8–4.9%
+  </div>
+</div>
+
+<h3>E.8 &ensp; NPV Bridge: Revenue to Value</h3>
+
+<table>
+  <thead><tr><th>Line Item</th><th>Amount (€M)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr style="font-weight:700; background-color: var(--highlight-bg)"><td>Annual Revenue (Year 1, gross)</td><td class="num">57.38</td><td>From Appendix D waterfall</td></tr>
+    <tr><td>Less: Fixed + Variable OPEX</td><td class="num">−0.10</td><td>Fixed €88k + Variable €13k</td></tr>
+    <tr style="border-top:1px solid var(--card-border); font-weight:700"><td>Annual Net Operating Income (NOI)</td><td class="num">57.28</td><td>Year 1; escalates per Appendix D assumptions</td></tr>
+    <tr style="font-weight:700; background-color: var(--highlight-bg)"><td>Costs (30-year PV at 5.2% WACC):</td><td></td></tr>
+    <tr><td>&nbsp;&nbsp;Initial CAPEX (Year 0)</td><td class="num">−7.00</td><td>Upfront</td></tr>
+    <tr><td>&nbsp;&nbsp;Battery replacement (Year 12)</td><td class="num">−0.42</td><td>€0.86M discounted</td></tr>
+    <tr><td>&nbsp;&nbsp;Decommissioning (Year 30)</td><td class="num">−0.08</td><td>€0.59M discounted</td></tr>
+    <tr style="border-top:2px solid var(--ink); font-weight:700; background-color: #faf6f0; color: var(--sage)">
+      <td><strong>NPV<sub>base</strong></td><td class="num" style="font-size:16px">10.9</td><td>30-year NPV at 5.2% WACC; excludes real options</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card">
+  <strong>Auditable Baseline Assumptions:</strong>
+  <ul style="margin-top:8px; margin-left:16px; font-size:13.5px; line-height:1.6">
+    <li>Config B (9.9 MW / 39.6 MWh) deployed 2026</li>
+    <li>Year 1 revenue €57.38M (central case, Italy Sicily), escalating per Appendix D</li>
+    <li>OPEX: Fixed €88k + Variable €13k + grid charges; escalate 2%/yr</li>
+    <li>WACC = 5.2% (Italian cost of capital)</li>
+    <li>SoH reaches 70% at year 12; replacement at discounted cost</li>
+    <li>Terminal salvage offsets decommissioning (net ~€80k PV cost)</li>
+  </ul>
+</div>
+
+<h3>E.9 &ensp; Monte Carlo Sensitivity (10,000 Paths)</h3>
+
+<table>
+  <thead><tr><th>Parameter</th><th>Distribution</th><th>P10</th><th>P50</th><th>P90</th><th>Impact on NPV</th></tr></thead>
+  <tbody>
+    <tr><td>CAPEX/kW</td><td>Normal</td><td class="num">€680</td><td class="num">€707</td><td class="num">€740</td><td class="num">±€0.7M</td></tr>
+    <tr><td>Round-trip Efficiency</td><td>Normal</td><td class="num">87%</td><td class="num">89%</td><td class="num">91%</td><td class="num">±€1.2M</td></tr>
+    <tr><td>Calendar Aging (α_cal)</td><td>Normal</td><td class="num">1.5%/yr</td><td class="num">2.0%/yr</td><td class="num">2.5%/yr</td><td class="num">±€0.3M</td></tr>
+    <tr><td>Fixed O&M (€/kW/yr)</td><td>Normal</td><td class="num">€7.5</td><td class="num">€8.9</td><td class="num">€10.3</td><td class="num">±€0.4M</td></tr>
+    <tr><td>WACC</td><td>Normal</td><td class="num">4.8%</td><td class="num">5.2%</td><td class="num">6.0%</td><td class="num">±€1.6M</td></tr>
+  </tbody>
+</table>
+
+<p><strong>NPV<sub>base</sub> Distribution (P10/P50/P90):</strong> €7.8M / €10.9M / €14.2M (±€1.8M std dev; 17% CV). WACC is largest sensitivity driver.</p>
+
+<!-- ========== END APPENDIX E ========== -->
+
+<!-- APPENDIX F: REAL OPTIONS FRAMEWORK -->
+<div class="appendix-divider">
+  <h2>Appendix F &ensp; Real Options Framework (Options A–F)</h2>
+  <p class="appendix-ref">Reference: v27a §0.4.5, §2.3</p>
+</div>
+
+<h3>F.1 &ensp; Why Real Options for BESS</h3>
+
+<p>BESS projects exhibit three features creating embedded optionality: (i) <em>Irreversibility:</em> €7M CAPEX largely sunk; (ii) <em>Uncertainty:</em> Prices, costs, regulation are stochastic; (iii) <em>Flexibility:</em> Operators can defer, expand, contract, abandon, or switch technology. Traditional NPV ignores this flexibility value.</p>
+
+<div class="formula-block">
+  <div class="main">V<sub>RO</sub> &nbsp;=&nbsp; NPV<sub>base</sub> &nbsp;+&nbsp; Σ<sub>i=A</sub><sup>F</sup> Option<sub>i</sub></div>
+  <div class="sub">Real options value typically adds 10–40% premium for high-uncertainty infrastructure assets</div>
+</div>
+
+<h3>F.2 &ensp; Valuation Methodology: Longstaff-Schwartz LSM</h3>
+
+<p>SSI-ENN Layer 2 uses Least-Squares Monte Carlo (Longstaff-Schwartz 2001). Algorithm: (1) Simulate 10,000 economic paths forward 30 years; (2) Backward induction: regress continuation value against state variables (price, cost, SoH, year); (3) Optimal exercise rule at each node; (4) Aggregate option value across paths.</p>
+
+<p><strong>State variables:</strong> Electricity prices (mean-reverting OU), battery costs (GBM with drift), SoH (deterministic + temperature), regulatory events (Poisson jumps).</p>
+
+<h3>F.3 &ensp; Option Catalogue (A–F)</h3>
+
+<h4>Option A — Defer: Waiting for Better Conditions</h4>
+
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">V<sub>defer</sub> &nbsp;=&nbsp; max { NPV<sub>invest_now</sub>, E[V<sub>defer</sub>(t+1)] }</div>
+  </div>
+</div>
+
+<p><strong>Intuition:</strong> Battery costs fall ~10%/yr; prices evolve slowly (mean-reverting). Waiting 2 years saves €1.5M CAPEX. <strong>Option value: €1.2–1.8M</strong> (12–16% of base NPV if waiting up to 5 years is feasible; exercise probability ~35%).</p>
+
+<h4>Option B — Expand: Pilot (Config A) → Full (Config B)</h4>
+
+<div class="card formula">
+  <div class="formula-block">
+    <div class="main">V<sub>expand</sub> &nbsp;=&nbsp; max { 0, E[NPV<sub>incr</sub> − CAPEX<sub>incr</sub>] }</div>
+  </div>
+</div>
+
+<p><strong>Intuition:</strong> Deploy Config A (€3.5M) first; if market proves high-value (arbitrage > €100/MWh, strong DSO flex demand), pay €3.5M incremental for Config B. <strong>Option value: €0.8M</strong> (40% trigger probability in favorable scenarios).</p>
+
+<h4>Option C — Contract (De-rate Capacity)</h4>
+
+<p><strong>Intuition:</strong> If revenue collapses (oversupply, market design failure), downsize to €35M/yr revenue level (from €57M baseline) and reduce O&M. <strong>Option value: €0.3M</strong> (downside protection; 20% trigger probability).</p>
+
+<h4>Option D — Abandon: Exit via Liquidation</h4>
+
+<p><strong>Intuition:</strong> Salvage value (recycling + land) ≈ €0.4M at year 10. If PV(future losses) exceeds salvage, exit. <strong>Option value: €0.2M</strong> (tail-risk insurance; 5% trigger probability in base case).</p>
+
+<h4>Option E — Switch Technology (LFP → LMFP @ Year 12)</h4>
+
+<p><strong>Intuition:</strong> When battery replacement is due (year 12–15, SoH < 70%), upgrade to next-gen chemistry if superior (>10% better cycle life or cost). LMFP trajectory: likely commercial by 2035–2038. <strong>Option value: €0.35M</strong> (70% probability LMFP matures as forecast; adds €0.5M NPV if exercised).</p>
+
+<h4>Option F — Compound (Staged Investment)</h4>
+
+<p><strong>Intuition:</strong> Phase deployment: Config A (€3.5M) in year 0, decision gate at year 3, then Config B incremental (€3.5M) if conditions favorable. Trades 10–15% higher total CAPEX (€7.4M vs €7.0M) for reduced downside risk via learning. <strong>Option value: €0.85M</strong> (structural benefit in uncertain markets).</p>
+
+<h3>F.4 &ensp; Component Breakdown (Config B, Fiumetorto)</h3>
+
+<table>
+  <thead><tr><th>Option</th><th>Type</th><th>Value (€M)</th><th>Probability</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>A</td><td>American Call (defer)</td><td class="num">1.2</td><td>35%</td><td>5-year deferral window</td></tr>
+    <tr><td>B</td><td>American Call (expand)</td><td class="num">0.8</td><td>40%</td><td>Config A → B upgrade</td></tr>
+    <tr><td>C</td><td>American Put (contract)</td><td class="num">0.3</td><td>20%</td><td>Downside protection</td></tr>
+    <tr><td>D</td><td>American Put (abandon)</td><td class="num">0.2</td><td>5%</td><td>Tail-risk insurance</td></tr>
+    <tr><td>E</td><td>Exchange (tech switch)</td><td class="num">0.35</td><td>70%</td><td>Battery replacement with upgrade</td></tr>
+    <tr style="border-top: 2px solid var(--ink); font-weight:700; background-color: #faf6f0">
+      <td colspan="2"><strong>Total Options (A−E)</strong></td><td class="num" style="font-size:15px">2.95</td><td>—</td><td>Conservative (non-independent)</td>
+    </tr>
+    <tr style="border-top: 2px solid var(--ink); font-weight:700; background-color: #faf6f0; color: var(--sage)">
+      <td colspan="2"><strong>V<sub>RO</sub> = NPV<sub>base</sub> + Options</strong></td><td class="num" style="font-size:16px">13.85</td><td>—</td><td>27% uplift over base DCF</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>F.5 &ensp; Confidence Intervals (10,000-Path Monte Carlo)</h3>
+
+<table>
+  <thead><tr><th>Percentile</th><th>NPV<sub>base</sub></th><th>Options</th><th>V<sub>RO</sub></th><th>Interpretation</th></tr></thead>
+  <tbody>
+    <tr><td>P10</td><td class="num">€7.8M</td><td class="num">€1.2M</td><td class="num">€9.0M</td><td>Conservative (low prices, high costs, few triggers)</td></tr>
+    <tr style="background-color: var(--highlight-bg)"><td><strong>P50 (median)</strong></td><td class="num" style="font-weight:700">€10.9M</td><td class="num" style="font-weight:700">€3.0M</td><td class="num" style="font-weight:700">€13.9M</td><td style="font-weight:400">Central case; best estimate</td></tr>
+    <tr><td>P90</td><td class="num">€14.2M</td><td class="num">€5.2M</td><td class="num">€19.4M</td><td>Optimistic (favorable prices, cost learning, multiple triggers)</td></tr>
+    <tr><td>Mean</td><td class="num">€10.7M</td><td class="num">€3.1M</td><td class="num">€13.8M</td><td>Mathematical expectation; minimal skewness</td></tr>
+    <tr><td>Std Dev</td><td class="num">€2.3M</td><td class="num">€1.8M</td><td class="num">€2.9M</td><td>Uncertainty band (±1σ ≈ 68% of outcomes)</td></tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>Key Insight:</strong> Wide confidence interval (P10–P90 = €9.0M–€19.4M) reflects revenue uncertainty and option value. The €3.0M options premium (P50) represents ~22% of total V<sub>RO</sub>—typical for long-duration infrastructure under high uncertainty. If volatility increases (geopolitical crisis), options value balloons to 32–43% of total.
+</div>
+
+<h3>F.6 &ensp; Stochastic Processes & Calibration</h3>
+
+<p><strong>Electricity Prices (Mean-Reverting OU):</strong> κ=0.42/yr (1.6-yr half-life), μ=€65/MWh (10-yr BNEF average), σ=31%/yr (GME daily returns, Sicily 2022–2024).</p>
+
+<p><strong>Battery Costs (GBM):</strong> Drift λ=−10%/yr (learning curve), σ=15%/yr (cost volatility). 2024 baseline: €100/kWh LFP.</p>
+
+<p><strong>Degradation (Deterministic + Temp):</strong> SoH(t) = 1 − 0.02×t − 0.0002×N(t) × g(DoD). Temperature effect: α_cal(T) = 0.02 × 2^((T−25)/10) /yr.</p>
+
+<p><strong>Regulatory Events (Poisson):</strong> Jump intensity λ_event = 0.08/yr (major market change every 12.5 years on average).</p>
+
+<h3>F.7 &ensp; Convergence & Validation</h3>
+
+<p><strong>Tests Applied:</strong> (1) Re-run with 5k, 10k, 20k paths (converges within ±3% at 10k). (2) Test basis functions (quadratic, cubic, Laguerre; robust ±5%). (3) Nested simulations (Andersen-Broadie upper bound; ~10% above LSM). (4) Historical backtesting: price volatility, cost learning trajectory, regulatory event frequency all validated against 2015–2024 data.</p>
+
+<h3>F.8 &ensp; Sensitivity: Options Value vs Uncertainty</h3>
+
+<table>
+  <thead><tr><th>σ<sub>P</sub></th><th>σ<sub>C</sub></th><th>NPV<sub>base</sub></th><th>Options</th><th>V<sub>RO</sub></th><th>Options %</th></tr></thead>
+  <tbody>
+    <tr><td>20%</td><td>10%</td><td class="num">€10.9M</td><td class="num">€1.8M</td><td class="num">€12.7M</td><td class="num">14%</td></tr>
+    <tr style="background-color: var(--highlight-bg)"><td>30%</td><td>15%</td><td class="num">€10.9M</td><td class="num">€3.0M</td><td class="num">€13.9M</td><td class="num">22%</td></tr>
+    <tr><td>40%</td><td>20%</td><td class="num">€10.9M</td><td class="num">€5.2M</td><td class="num">€16.1M</td><td class="num">32%</td></tr>
+  </tbody>
+</table>
+
+<p>Option value increases with volatility (convex function of σ). If market uncertainty spikes, options premium can double from 22% to 43% of total value.</p>
+
+<h3>F.9 &ensp; Practical Decision Framework</h3>
+
+<div class="card">
+  <strong>Investment Decision Tree:</strong>
+  <ul style="margin-top:12px; margin-left:20px; font-size:13.5px; line-height:1.8">
+    <li><strong>NPV<sub>base</sub> < €8M:</strong> Economically weak. Consider Option D (abandon) or do not proceed. Real options cannot rescue negative-NPV projects.</li>
+    <li><strong>€8M–€10M:</strong> Marginal. Consider Option A (defer 1–2 years). If regulatory clarity improves or costs fall, invest. Otherwise walk away.</li>
+    <li><strong>€10M–€12M:</strong> Solid. Invest, but structure with flexibility (Config A + Option B expand, Option E technology switch, Option C de-rate terms).</li>
+    <li><strong>≥€12M:</strong> Strong. Invest at scale (Config B). Options are bonus upside. Focus on execution and capturing emerging revenue streams (R5, R9, R11).</li>
+  </ul>
+</div>
+
+<h3>F.10 &ensp; Integration into Three-Value Framework</h3>
+
+<p><strong>V<sub>Investor</strong> = NPV<sub>base</sub> (€10.9M) + Real Options (€3.0M) = V<sub>RO</sub> = €13.9M.</p>
+
+<p><strong>V<sub>DSO</strong> = €28.27M (D1–D5 regulation-driven avoided costs; independent of options).</p>
+
+<p><strong>V<sub>ESG</strong> = €12.9M (E1 avoided carbon + E2 greenium + E3 social). Real options to switch technology (Option E) and optimize dispatch enhance ESG standing.</p>
+
+<p><strong>Total Socio-Economic Value:</strong> €13.9M (investor) + €28.27M (DSO) + €12.9M (ESG) = €55.07M over 30 years at Fiumetorto (10 MW Config B). Investor captures ~25%, DSO ~51%, ESG/society ~23%.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     APPENDIX G: NEURAL NETWORK ARCHITECTURE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="appendix-divider">
+  <h2>APPENDIX G &ensp; Neural Network Architecture for BESS Valuation</h2>
+  <p class="subtitle">Ensemble Design, Feature Engineering, Multi-Task Learning & Explainability | SSI-ENN Layer 3 v3.4</p>
+  <p class="meta">Reference: v27a §0.5, §0.10 | March 2026</p>
+</div>
+
+<h3>G.1 &ensp; Problem Statement: Why Machine Learning for BESS Valuation at Scale</h3>
+
+<p>The deterministic formulas in Layers 1–2 (SSI aggregation, real options, Monte Carlo revenue) provide the economic ground truth for a single substation. However, the valuation model contains ~80 input features and ~20 decision thresholds (when is a BESS needed? How much capacity? What configuration A vs B?). At fleet scale (39,234 Italian substations, projected 200,000+ across EU countries), computational cost and human interpretability both demand a fast approximator.</p>
+
+<p>The neural network serves three purposes:</p>
+
+<ol>
+  <li><strong>Speed:</strong> Sub-millisecond inference vs. 30-second Monte Carlo per substation. Fleet evaluation: 11 hours (deterministic) → 2 minutes (NN ensemble).</li>
+  <li><strong>Distributional intelligence:</strong> The NN outputs not point estimates but uncertainty envelopes (P10/P50/P90), per-substation confidence intervals, and revenue decomposition across 10 streams.</li>
+  <li><strong>Explainability:</strong> SHAP values and feature attribution reveal which input dimensions drive valuation variance — critical for regulatory dialogue and investor communication.</li>
+</ol>
+
+<div class="card regulatory">
+  <strong>Regulatory imperative:</strong> ARERA requires transparency on the basis of valuation claims (TIQE methodology 2014/713/EU). A deterministic formula is a black box; a neural network with SHAP explanations is auditable. The NN is not a substitute for the deterministic layer — it is an acceleration layer that must faithfully reproduce the deterministic outputs on the validation set.
+</div>
+
+<h3>G.2 &ensp; Ensemble Architecture: GBT + DNN with Optimized Weighting</h3>
+
+<p>The Layer 3 ensemble combines two complementary architectures:</p>
+
+<div class="component-grid">
+  <div class="component-card" style="border-top: 3px solid var(--sage)">
+    <div class="code-label" style="color:var(--sage)">GBT Component</div>
+    <div class="name">Gradient Boosted Trees (XGBoost)</div>
+    <div class="desc">500 trees, max depth 6, learning rate η=0.05, L1/L2 regularization (λ=1.0, α=0.1). Strong on nonlinear interactions and feature interactions. Naturally captures thresholds (e.g., "BESS needed if I5 > 0.8").</div>
+  </div>
+  <div class="component-card" style="border-top: 3px solid var(--bronze)">
+    <div class="code-label" style="color:var(--bronze)">DNN Component</div>
+    <div class="name">Deep Neural Network (MLP)</div>
+    <div class="desc">4 hidden layers [256→128→64→64], ReLU activations, batch normalization after each layer, dropout rate 0.3. Strong on smooth nonlinear approximation and learning complex feature transformations.</div>
+  </div>
+  <div class="component-card" style="border-top: 3px solid var(--crimson)">
+    <div class="code-label" style="color:var(--crimson)">Ensemble Weight</div>
+    <div class="name">Learnable Combination</div>
+    <div class="desc">ŷ_ensemble = w_GBT × ŷ_GBT + w_DNN × ŷ_DNN, where w_GBT = 0.55, w_DNN = 0.45. Weights optimized on validation set to minimize MSE; periodically re-calibrated as new data enters.</div>
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">ŷ_final = 0.55 × ŷ_GBT + 0.45 × ŷ_DNN</div>
+  <div class="sub">
+    where each component is independently trained on {(x_i, y_i)}_{i=1}^{N} with 80% training, 10% validation, 10% test split.<br>
+    Cross-validation: stratified 5-fold to ensure balanced SSI classes (Low/Medium/High/Critical) in each fold.
+  </div>
+</div>
+
+<p><strong>Rationale for 0.55/0.45 split:</strong> XGBoost achieves higher R² on test sets (0.9820 vs 0.8887) but suffers from target leakage — it overfits to the ad-hoc formula structure. The DNN learns more generalizable patterns from the stochastic Monte Carlo targets (MC v3.3). The ensemble weight balances empirical performance (GBT) with robustness (DNN).</p>
+
+<h3>G.3 &ensp; Input Feature Vector (38 Features for v3.2)</h3>
+
+<table>
+<thead><tr><th>Feature Group</th><th>Count</th><th>Features</th><th>Normalization</th></tr></thead>
+<tbody>
+<tr><td class="code">x_SSI</td><td>6</td><td>C (R_base), V (R_base), I (R_base), E (R_base), S (R_base), T (R_base)</td><td>Min-max [0, 1]</td></tr>
+<tr><td class="code">x_grid</td><td>5</td><td>SAIDI, SAIFI, MAIFI, Transformer Age (I5), Network Density (I6)</td><td>CDF (empirical quantile)</td></tr>
+<tr><td class="code">x_DER</td><td>4</td><td>DER Ratio (S1), RPF (S2), Local Load (hourly std), Curtailment Hours</td><td>Min-max, robust to outliers</td></tr>
+<tr><td class="code">x_market</td><td>5</td><td>Zonal Base Price (GME), Volatility (60d rolling σ), Peak/Off-peak Ratio, FCR Price, Capacity Market Premium</td><td>Log-scale + robust scaling</td></tr>
+<tr><td class="code">x_reg</td><td>4</td><td>ARERA Territory Class (one-hot: 3), CAIDI (restoration speed)</td><td>One-hot categorical</td></tr>
+<tr><td class="code">x_econ</td><td>3</td><td>GDP per Capita (NUTS-3), Unemployment Rate (provincial), Energy Poverty Index (OIPE)</td><td>Log-scale + standardization</td></tr>
+<tr><td class="code">x_geo</td><td>3</td><td>Latitude, Longitude, Elevation</td><td>Standardized (zero mean, unit variance)</td></tr>
+<tr><td class="code">x_climate</td><td>2</td><td>Heatwave Exposure (I3, CMIP6), Flood Risk Class (I1)</td><td>Ordinal encoding + one-hot</td></tr>
+<tr><td class="code">x_digital</td><td>1</td><td>DESI Index (digital infrastructure maturity)</td><td>Min-max [0, 1]</td></tr>
+</tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>Feature engineering note:</strong> Raw features undergo standardization (z-score), log transforms where applicable (prices, economic variables), and embedding for categorical variables (territory class → 3-dim embedding). Missing values are imputed using KNN (k=5) on the full training set. The input layer is scaled to [0, 1] after all transformations, ensuring stable gradient flow through both GBT and DNN.
+</div>
+
+<h3>G.4 &ensp; Multi-Task Output Heads (7 Outputs)</h3>
+
+<p>The NN does not predict a single target (NPV). Instead, it maintains seven output neurons, each predicting a different valuation dimension:</p>
+
+<table>
+<thead><tr><th>Head</th><th>Output (ŷ)</th><th>Task Type</th><th>Target Metric</th><th>Loss Weight λ_h</th></tr></thead>
+<tbody>
+<tr><td><strong>ŷ₁</strong></td><td>V_DSO</td><td>Regression</td><td>DNO value (€M)</td><td>0.30</td></tr>
+<tr><td><strong>ŷ₂</strong></td><td>V_Community</td><td>Regression</td><td>Community/resilience value (€M)</td><td>0.20</td></tr>
+<tr><td><strong>ŷ₃</strong></td><td>Revenue_total</td><td>Regression</td><td>Annual revenue projection (€M/yr)</td><td>0.15</td></tr>
+<tr><td><strong>ŷ₄</strong></td><td>NPV</td><td>Regression</td><td>Net present value (€M)</td><td>0.20</td></tr>
+<tr><td><strong>ŷ₅</strong></td><td>Sharpe</td><td>Regression</td><td>Sharpe ratio (risk-adjusted return)</td><td>0.05</td></tr>
+<tr><td><strong>ŷ₆</strong></td><td>Investment_band</td><td>Classification</td><td>Band ∈ {Low, Medium, High, Critical}</td><td>0.07</td></tr>
+<tr><td><strong>ŷ₇</strong></td><td>Anomaly_flag</td><td>Binary Classification</td><td>Anomaly indicator (bool)</td><td>0.03</td></tr>
+</tbody>
+</table>
+
+<div class="formula-block">
+  <div class="main">L_total = Σ_{h=1}^{7} λ_h × L_h(ŷ_h, y_h)</div>
+  <div class="sub">
+    where L_h is regression MSE for ŷ₁–ŷ₅, categorical cross-entropy for ŷ₆, binary cross-entropy for ŷ₇.<br>
+    Weights are calibrated by relative task importance: V_DSO and NPV are primary (0.30 + 0.20); band classification is secondary (0.07); anomaly detection is diagnostic (0.03).
+  </div>
+</div>
+
+<p><strong>Why multi-task?</strong> The seven outputs are not independent. Predicting V_DSO, V_Community, and Revenue simultaneously creates implicit constraints — their sum approximates total value, and this interdependence improves generalization. Multi-task learning also provides built-in cross-validation: if one head overfits, the loss function for other heads will spike, signaling a regularization issue.</p>
+
+<h3>G.5 &ensp; Uncertainty Quantification: Quantile Regression & MC Dropout</h3>
+
+<p>The NN does not output point estimates. Instead, it predicts three quantiles for each regression task:</p>
+
+<div class="formula-block">
+  <div class="main">ŷ_P10, ŷ_P50, ŷ_P90 = f(x; θ)</div>
+  <div class="sub">
+    Three parallel output neurons per regression task, each trained with quantile loss L_q(y, ŷ_q) = q × (y − ŷ_q)⁺ + (1−q) × (ŷ_q − y)⁺.
+  </div>
+</div>
+
+<p><strong>MC Dropout at inference:</strong> To estimate epistemic (model) uncertainty, dropout is applied at test time. For each input x, 100 forward passes are run with dropout active (p=0.3), producing 100 predictions. The empirical distribution of these predictions gives a confidence band around ŷ_P50.</p>
+
+<div class="card formula">
+  <strong>Ensemble Disagreement Metric:</strong> σ_ensemble = std({ŷ_GBT, ŷ_DNN, ŷ_MC_Dropout_1, ..., ŷ_MC_Dropout_100}). If σ_ensemble > threshold (calibrated per task), the prediction is marked low-confidence and flagged for human review. This is critical for regulatory transparency: every valuation output carries a confidence tag.
+</div>
+
+<h3>G.6 &ensp; Transfer Learning Protocol for Multi-Country Deployment</h3>
+
+<p>Layer 3 is trained on Italian data (39,234 substations, §0.3.13 module inventory). To deploy into new countries (Phase 4: France, Spain, Germany), a transfer learning approach is used:</p>
+
+<div class="formula-block">
+  <div class="main">θ_new = freeze(θ_shared_layers) + retrain(θ_output_heads | x_new, y_new)</div>
+  <div class="sub">
+    The first three hidden layers [256→128→64] are frozen (weights from Italy training). Only the final hidden layer [64→64] and the 7 output heads are retrained on new-country data. This preserves learned feature representations while adapting to local market structures (e.g., different price levels, DSO network topologies).
+  </div>
+</div>
+
+<p><strong>Feature missingness handling:</strong> EU countries have varying data availability. If country X lacks ARERA territory class data, the NN gracefully handles missing features via:</p>
+
+<ul>
+  <li><strong>Masked embedding:</strong> A dedicated embedding vector z_missing is learned for missing categorical features.</li>
+  <li><strong>Mean imputation at inference:</strong> Numerical features missing in new countries are filled with the training-set mean, with a flag indicator x_imputed_flag appended to the input.</li>
+  <li><strong>Dropout-based robustness:</strong> The original training includes dropout at 0.3 rate, so the model is intrinsically robust to missing ~30% of features.</li>
+</ul>
+
+<h3>G.7 &ensp; Explainability: SHAP Values & Feature Attribution</h3>
+
+<p>For each substation, SHAP (SHapley Additive exPlanations) values decompose the prediction into contributions from each input feature:</p>
+
+<div class="formula-block">
+  <div class="main">ŷ(x) = ŷ_base + Σ_{i=1}^{38} φ_i(x_i)</div>
+  <div class="sub">
+    where φ_i is the Shapley value of feature i, computed via KernelSHAP (model-agnostic approximation requiring ~2,000 model evaluations per substation).<br>
+    Interpretation: a positive φ_i indicates that feature i_increases the prediction; φ_i > 0.5 means feature i is the primary driver.
+  </div>
+</div>
+
+<p><strong>Computational cost:</strong> Full-fleet SHAP computation (39,234 × 2,000 evals) is ~40 GPU-hours. This is batched as a post-hoc analysis, not live inference. For the v1 report, SHAP values are computed for 200 representative substations (stratified by SSI class and region) and published as a supplementary table.</p>
+
+<div class="highlight-box">
+  <strong>Practical example:</strong> Substation #12345 (Sicilia, High SSI, NPV €25M). SHAP decomposition: φ_heatwave=+€8.2M (climate resilience value dominates), φ_DER_ratio=+€6.1M (local flexibility), φ_base_price=+€4.5M (market size), φ_age=−€2.8M (aging infrastructure cost). Sum = €15.9M ≠ €25M because φ_interactions capture nonlinear effects between features. This transparency is regulatory-grade: any investor can see exactly why their substation valuation differs from the fleet median.
+</div>
+
+<h3>G.8 &ensp; Validation Framework: 5-Fold CV, Holdout Test, Temporal Split</h3>
+
+<table>
+<thead><tr><th>Validation Method</th><th>Purpose</th><th>Data Split</th><th>Metrics</th></tr></thead>
+<tbody>
+<tr><td><strong>5-Fold CV</strong></td><td>Estimate generalization error on training data</td><td>Each fold: 80% train, 20% validation</td><td>Mean CV R², MAE, RMSE; standard deviation across folds</td></tr>
+<tr><td><strong>Holdout Test</strong></td><td>Final performance on unseen data</td><td>10% of full dataset, held out before training</td><td>Test R², MAPE, within-band accuracy (6)</td></tr>
+<tr><td><strong>Temporal Split</strong></td><td>Detect data drift and temporal overfitting</td><td>First 80% temporal slice = train; last 20% = test</td><td>Holdout performance; degradation vs CV performance</td></tr>
+<tr><td><strong>Geographic Stratification</strong></td><td>Ensure regional balance</td><td>Each fold contains ~1/5 of each region (Nord, Centro, Sud, Isole)</td><td>Regional MAE; worst-case region R²</td></tr>
+</tbody>
+</table>
+
+<div class="card warning">
+  <strong>Data leakage check:</strong> Before training, the pipeline verifies that no substation appears in both training and test sets, and that no future market data (prices > report date) contaminates past training examples. A dedicated DataLeakageDetector module in the training pipeline flags and removes such cases.
+</div>
+
+<h3>G.9 &ensp; Model Monitoring & Drift Detection</h3>
+
+<p>Once deployed, the NN must be monitored for performance degradation caused by input distribution shifts (e.g., new DSO network topology, changed market price regime). Two statistical tests are applied quarterly:</p>
+
+<div class="formula-block">
+  <div class="main">KS_stat = max_z | F_train(z) − F_recent(z) |</div>
+  <div class="sub">
+    Kolmogorov–Smirnov test: compares the distribution of each input feature on the training set vs the most recent 1,000 predictions. If KS_stat > critical value (α=0.05), that input dimension has drifted and a retraining flag is raised.
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">PSI = Σ_{i} (p_recent,i − p_train,i) × ln(p_recent,i / p_train,i)</div>
+  <div class="sub">
+    Population Stability Index: measures divergence of the prediction distribution. PSI < 0.10 = stable; 0.10–0.25 = minor drift; > 0.25 = major drift requiring retraining.
+  </div>
+</div>
+
+<h3>G.10 &ensp; Performance Targets & Results</h3>
+
+<table>
+<thead><tr><th>Metric</th><th>Target</th><th>v3.2 Result (Formula Targets)</th><th>v3.3 Result (MC Targets)</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="code">R² (NPV Regression)</td><td>> 0.85</td><td>0.9821 (overfitting)</td><td>0.8887 (realistic)</td><td>✓ Pass</td></tr>
+<tr><td class="code">MAPE (NPV)</td><td>< 15%</td><td>0.81%</td><td>2.34%</td><td>✓ Pass</td></tr>
+<tr><td class="code">Within-band accuracy (ŷ₆)</td><td>> 80%</td><td>100%</td><td>100%</td><td>✓ Pass (trivial task)</td></tr>
+<tr><td class="code">Anomaly detection AUC (ŷ₇)</td><td>> 0.90</td><td>0.9432</td><td>0.9456</td><td>✓ Pass</td></tr>
+<tr><td class="code">Revenue decomposition MAE (M5)</td><td>< 2pp</td><td>0.074pp (avg across R1–R10)</td><td>0.074pp</td><td>✓ Pass</td></tr>
+<tr><td class="code">Conformal interval coverage (M6)</td><td>90%</td><td>89.8%</td><td>90.1%</td><td>✓ Pass</td></tr>
+</tbody>
+</table>
+
+<div class="card formula">
+  <strong>Rationale for v3.3 R² decrease:</strong> The v3.2 R² of 0.9821 reflected the NN memorizing the deterministic formula. The v3.3 R² of 0.8887 is more honest — it reflects learning patterns from stochastic MC targets, which have genuine ~10% irreducible variance. R² > 0.88 is close to the theoretical ceiling given MC sampling noise.
+</div>
+
+<h3>G.11 &ensp; Auditable Sources & Model Versioning</h3>
+
+<table>
+<thead><tr><th>Component</th><th>Source</th><th>Version</th><th>Commit Hash</th><th>Vintage</th></tr></thead>
+<tbody>
+<tr><td>Training data (SSI scores)</td><td>ssi-layer1 module suite</td><td>v1.2.1</td><td>76102c6</td><td>39,234 Italian substations, March 2026</td></tr>
+<tr><td>Target labels (MC NPV)</td><td>bess_valuator.py + copula.py</td><td>v3.3</td><td>a4d6f8e</td><td>10,000 iterations per substation</td></tr>
+<tr><td>NN architecture</td><td>layer3_ensemble.py</td><td>v3.4</td><td>2f19c5d</td><td>7-model ensemble, frozen Feb 2026</td></tr>
+<tr><td>Hyperparameters</td><td>config_layer3.yaml</td><td>v3.4</td><td>2f19c5d</td><td>XGBoost: 500 trees, depth 6, η=0.05; DNN: [256,128,64,64], ReLU, dropout 0.3</td></tr>
+<tr><td>Validation protocol</td><td>validation.py</td><td>v2.1</td><td>7a92f3c</td><td>5-fold CV + holdout + temporal split</td></tr>
+<tr><td>Model weights</td><td>layer3_ensemble_weights.h5</td><td>v3.4.0</td><td>SHA256: 4a9c...</td><td>Frozen 25 Feb 2026 after final validation</td></tr>
+</tbody>
+</table>
+
+<p>All code, data, and weights are stored in the <code>ssi-enn-layer3</code> GitHub repository (private, read access granted to auditors on request). Git tags mark every model version; no weights are modified post-deployment without a new tag and validation run.</p>
+
+<hr style="border:none; border-top:2px solid var(--card-border); margin: 48px 0">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     APPENDIX H: ADVANCED RISK MODULES
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="appendix-divider">
+  <h2>APPENDIX H &ensp; Advanced Risk Modules: Black Swan, Actuarial CAT, Cannibalization & Nodal Pricing</h2>
+  <p class="subtitle">Nonlinear Enrichments, Extreme Value Theory & Resilience-Adjusted Revenue | SSI-ENN Layer 2 Risk Extensions v4.2</p>
+  <p class="meta">Reference: v27a §0.3.14–0.3.19 | March 2026</p>
+</div>
+
+<h3>H.1 &ensp; Black Swan Nonlinearity Framework (BS-F1 to BS-F4)</h3>
+
+<p>Beyond the standard SSI component structure, four "black swan" enrichments address tail-risk events where infrastructure value spikes or crashes nonlinearly:</p>
+
+<h4>H.1.1 &ensp; BS-F1: Compound Event Probability (Joint Extremes)</h4>
+
+<p><strong>Problem:</strong> Climate hazards are not independent. A heat-wave (I3) simultaneously causes demand surge (load spikes), transmission constraint (Nord→Sud bottleneck), and transformer overheating. Standard additive models miss this compounding.</p>
+
+<div class="formula-block">
+  <div class="main">P(compound) = P(I3_high ∩ Load_surge ∩ TC_stress)</div>
+  <div class="sub">
+    Using Gaussian Copula with tail-dependence extension (Clayton component, α=0.15 calibrated from ERA5 historical extreme days). Numerical integration over joint distribution tail region (>90th percentile).
+  </div>
+</div>
+
+<table>
+<thead><tr><th>Event Class</th><th>Component Triggers</th><th>Joint Probability (annual)</th><th>BESS Value Uplift</th></tr></thead>
+<tbody>
+<tr><td>Summer Heat-Peak</td><td>I3 > P90 ∩ Load > P85 ∩ Nord transmission > P80</td><td>6.2%</td><td>+€150k revenue during event</td></tr>
+<tr><td>Winter Cold-Spike</td><td>Heating demand surge ∩ Hydro constraint ∩ Wind lull</td><td>3.1%</td><td>+€85k revenue</td></tr>
+<tr><td>Geopolitical Supply Shock</td><td>Gas price >3σ ∩ Thermal unavailable ∩ Renewable curtailed</td><td>4.7%</td><td>+€200k arbitrage opportunity</td></tr>
+</tbody>
+</table>
+
+<h4>H.1.2 &ensp; BS-F2: Cascading Failure Propagation (Multiplier Effect)</h4>
+
+<div class="formula-block">
+  <div class="main">M_cascade = 1 + ρ_spatial × N_affected × severity_factor</div>
+  <div class="sub">
+    where ρ_spatial = 0.08 (spatial correlation of outages in same ambito), N_affected = number of adjacent substations, severity_factor = C1 outage magnitude. A single substation failure propagates to neighbors with probability ρ_spatial per km of electrical distance.
+  </div>
+</div>
+
+<p>This modifier enters R11 (CRS — Communications Resilience Service) and W5 (cascade insurance value). Substations in dense urban networks (high N_affected) have high cascade multiplier (up to 2.5×), while rural substations (isolated) have multiplier ≈ 1.0.</p>
+
+<h4>H.1.3 &ensp; BS-F3: Regime Shift Detection (Changepoint Analysis)</h4>
+
+<p>Markets and climate regimes undergo abrupt transitions (e.g., 2022 energy crisis; 1.5°C climate threshold breach). The NN includes a changepoint detector using CUSUM (Cumulative Sum Control Chart):</p>
+
+<div class="formula-block">
+  <div class="main">CUSUM_t = max(0, CUSUM_{t-1} + (z_t − μ − δ))</div>
+  <div class="sub">
+    If CUSUM_t > h (threshold, h=5σ), a regime shift is flagged. Applied to 12-month rolling windows of electricity prices, DER connection rates, and climate indicators. Regime shifts trigger adaptive model recalibration and widen uncertainty bands (P10/P90).
+  </div>
+</div>
+
+<h4>H.1.4 &ensp; BS-F4: Fuel-Electricity Nexus (Geopolitical & Commodity Shocks)</h4>
+
+<p>Italy's thermal generation fleet (~18 GW, 40–50% of winter peak) creates a critical geopolitical vulnerability. Shocks to gas, oil, or LNG supply propagate directly to electricity prices.</p>
+
+<div class="formula-block">
+  <div class="main">ΔP_elec = R_conv × ζ_zone × β_pass × (M_fuel − 1) × P_base</div>
+  <div class="sub">
+    R_conv = thermal generation conversion ratio (declining: 0.58 in 2024 → 0.05 in 2050)<br>
+    ζ_zone = zone thermal dependency (Nord: 0.55 → Sicilia: 0.75)<br>
+    β_pass = 0.85 (pass-through efficiency)<br>
+    M_fuel = fuel price multiplier (Gas: 4.0× under supply shock)
+  </div>
+</div>
+
+<p><strong>Fleet results (Session 17 deployment):</strong></p>
+
+<ul>
+  <li><strong>Median fuel-nexus upside:</strong> €68.7k per MW</li>
+  <li><strong>Decarbonization trajectory:</strong> Value peaks 2024–2030 (high thermal capacity), decays to 3.5% by 2050 as grid decarbonizes</li>
+  <li><strong>Zone premium:</strong> Sicilia (highest thermal %) captures 62.4% of fleet fuel-nexus value on 8% of capacity</li>
+</ul>
+
+<div class="card teal">
+  <strong>Strategic implication:</strong> The fuel-electricity nexus is asymmetric in time. BESS sited in high-thermal zones (Sud, Sicilia, Sardegna) should prioritize the 2024–2030 window to extract maximum value before decarbonization. Post-2035, value comes from reactive power (V1/V2) and resilience (W4/W5), not fuel arbitrage.
+</div>
+
+<h3>H.2 &ensp; Actuarial Catastrophe Pricing (CAT/EVT/TVaR/PAD)</h3>
+
+<p>The insurance industry's catastrophe modelling framework is adapted to BESS valuation to explicitly price tail risk. Four layers:</p>
+
+<h4>H.2.1 &ensp; Layer A: CAT Event-Loss Table (10 Archetypes)</h4>
+
+<table>
+<thead><tr><th>Archetype</th><th>Trigger</th><th>Annual Frequency</th><th>Loss per Event</th><th>Data Source</th></tr></thead>
+<tbody>
+<tr><td>Heatwave + Cascade</td><td>I3 > P95 × ρ_spatial cascade</td><td>4.2%</td><td>€2.1M (W5 cascade insurance)</td><td>ERA5 + ARERA incident logs</td></tr>
+<tr><td>Flood + Outage</td><td>I1 > P90 × transformer vulnerability</td><td>2.8%</td><td>€1.5M (W4 flood insurance)</td><td>ISPRA + historical claims</td></tr>
+<tr><td>Seismic Event</td><td>Magnitude > 5.0 in proximity</td><td>0.3%</td><td>€8.2M (network downtime)</td><td>INGV catalogue</td></tr>
+<tr><td>Geopolitical Fuel Shock</td><td>Gas supply disruption (Gazprom-type)</td><td>4.0%</td><td>+€0.9M revenue (BS-F4 upside)</td><td>ACER risk framework, TTF volatility</td></tr>
+<tr><td>Wildfire + PSPS</td><td>Wildfire risk × overhead km (I5)</td><td>1.8%</td><td>€1.2M (forced outage)</td><td>EFFIS JRC + OSM</td></tr>
+<tr><td>Cyber Attack (NIS2)</td><td>Entity exposure × attack frequency</td><td>0.5%</td><td>€3.5M (control loss)</td><td>ENISA threat landscape</td></tr>
+<tr><td>Regulatory Regime Shift</td><td>New rule disqualifies revenue stream</td><td>8.0%</td><td>−€2.3M (R1/R3 revenue loss)</td><td>EUR-Lex + ARERA precedent</td></tr>
+<tr><td>Hysteresis (Repeated Failures)</td><td>CAIDI escalation × age (I5)</td><td>6.5%</td><td>−€0.7M cumulative (reputation)</td><td>ARERA TIQE trends</td></tr>
+<tr><td>Demand Destruction (EV/Heat Pump Saturation)</td><td>Electrification reduces arbitrage spreads</td><td>2.0%/yr</td><td>−€0.4M/yr declining revenue</td><td>GSE + PNIEC pathway</td></tr>
+<tr><td>Stranded Asset (Premature Decom)</td><td>Policy acceleration (net-zero 2040)</td><td>1.2%</td><td>−€6.8M (NPV loss)</td><td>EU climate policy discourse</td></tr>
+</tbody>
+</table>
+
+<h4>H.2.2 &ensp; Layer B: Extreme Value Theory (Tail Replacement)</h4>
+
+<p>For events in the tail (beyond historical data), a Generalized Pareto Distribution (GPD) fits the extreme tail:</p>
+
+<div class="formula-block">
+  <div class="main">P[X > x] = (1 + ξ(x − μ)/σ)^{−1/ξ}</div>
+  <div class="sub">
+    where ξ = 0.20–0.40 (tail index, estimated from ARERA historic top 10% SAIDI events), σ = scale parameter, μ = threshold (90th percentile). The GPD captures the fat tail where loss severity increases superlinearly.
+  </div>
+</div>
+
+<p><strong>Application:</strong> Return-period losses (RP100, RP500, RP1000) are extracted from the fitted GPD, feeding the Extreme Probability (EP) curve for risk-weighted valuation.</p>
+
+<h4>H.2.3 &ensp; Layer C: Tail Value at Risk (TVaR) — Expected Shortfall</h4>
+
+<div class="formula-block">
+  <div class="main">TVaR_α = E[X | X > VaR_α]</div>
+  <div class="sub">
+    VaR_α (Value-at-Risk) is the α-quantile of the loss distribution; TVaR is the mean loss conditional on exceeding VaR. For BESS investment, TVaR_0.90 is the expected loss during the worst 10% of scenarios.
+  </div>
+</div>
+
+<p>The Monte Carlo engine (§I.2) already produces P10/P50/P90 output. TVaR is extracted as the empirical mean of the bottom 10% of MC iterations. This is the <strong>actuarially honest</strong> risk measure for capital allocation: if you're truly tail-risk averse, TVaR is the metric to minimize.</p>
+
+<h4>H.2.4 &ensp; Layer D: Prudential Adjustment to Discount Rate (PAD)</h4>
+
+<div class="formula-block">
+  <div class="main">WACC_PAD = WACC_base + PAD_magnitude × (1 + κ_TR × tail_risk_loading)</div>
+  <div class="sub">
+    PAD_magnitude = +50–120 bps (honest loading for tail risk). Calibration: each 1% TVaR/NPV ratio adds 2 bps. κ_TR = 0.15 (tail-risk amplification factor).
+  </div>
+</div>
+
+<p>For High/Critical SSI substations with substantial BESS value, PAD ranges from +75 bps (conservative estimate) to +120 bps (scenario with compounded climate + regulatory risk). For Low-band substations, PAD ≈ +50 bps.</p>
+
+<div class="highlight-box">
+  <strong>Directional effect on NPV:</strong> Naive expectation: PAD increases discount rate → lower NPV (negative). Empirically, the opposite holds. For High/Critical substations, TVaR-adjusted values (W4 flood insurance, W5 cascade resilience, R11 CRS) are large enough that the 2.5% tail-pass-through (40% of TVaR to investors) more than compensates for the higher WACC. Net NPV effect: +2–5% for well-sited BESS in tail-risk-heavy regions (Sud, Sicilia).
+</div>
+
+<h3>H.3 &ensp; Cannibalization Resilience (v1.1) — Locality-Adjusted Revenue Protection</h3>
+
+<p>As BESS fleet grows, commodity spreads compress (merit-order effect). However, cannibalization is asymmetric: system-level services are fully exposed; local services are immune.</p>
+
+<h4>H.3.1 &ensp; Locality Factor by Revenue Stream</h4>
+
+<table>
+<thead><tr><th>Revenue Stream</th><th>λ (Locality Factor)</th><th>Cannibalization Exposure</th><th>Protection</th></tr></thead>
+<tbody>
+<tr><td>R1 Arbitrage</td><td>0.05</td><td>HIGH — spreads compress globally</td><td>Nil; fade as fleet grows</td></tr>
+<tr><td>R2 FCR (Frequency Reserve)</td><td>0.10</td><td>HIGH — national market, price falls</td><td>Quantity guarantee (ACER)</td></tr>
+<tr><td>R3 aFRR (Auto Reserve)</td><td>0.10</td><td>HIGH — activation rate falls</td><td>Quantity guarantee (ACER)</td></tr>
+<tr><td>R4 mFRR (Manual Reserve)</td><td>0.15</td><td>MEDIUM — zonal competition rises</td><td>Locational premium (node congestion)</td></tr>
+<tr><td>R5 Capacity Market</td><td>0.20</td><td>MEDIUM — auction clearing price falls</td><td>De-rating (BESS scarcity value)</td></tr>
+<tr><td>R6 Congestion (DSO zones)</td><td>0.50</td><td>LOW — zonal arbitrage, bounded by network limits</td><td>Locational constraint (physics)</td></tr>
+<tr><td>R7 Nodal/LMP Premium</td><td>0.70</td><td>VERY LOW — future regulatory reform (6% annual P)</td><td>Congestion-bound, high barrier to entry</td></tr>
+<tr><td>R8 DSO Flexibility (CER)</td><td>0.85</td><td>LOW — DSO constraint-bound, non-commodity</td><td>Network economics (DSO's avoided cost)</td></tr>
+<tr><td>R9 PQaaS (Reactive Power)</td><td>0.95</td><td>NEAR-ZERO — physics-bound local (MVA reserve)</td><td>Absolute (cannot be solved remotely)</td></tr>
+<tr><td>R10 Climate Resilience (W5)</td><td>0.90</td><td>LOW — climate events are local</td><td>Location-dependent hazard (ISPRA)</td></tr>
+</tbody>
+</table>
+
+<h4>H.3.2 &ensp; Cannibalization Resilience Score (CRS)</h4>
+
+<div class="formula-block">
+  <div class="main">CRS(s) = Σ_i (w_i × λ_i) / Σ_i w_i</div>
+  <div class="sub">
+    where w_i = weight of revenue stream i (R1–R10), λ_i = locality factor. CRS ∈ [0.05, 0.95]. Interpretation: CRS = 0.78 means 78% of revenue is immune to BESS fleet growth.
+  </div>
+</div>
+
+<p><strong>Fleet distribution:</strong></p>
+
+<ul>
+  <li><strong>Low-SSI substations:</strong> CRS ≈ 0.15 (R1/R2 dominated, no local services). Highly cannibalization-exposed.</li>
+  <li><strong>Medium-SSI:</strong> CRS ≈ 0.42 (balanced system + local services)</li>
+  <li><strong>High-SSI:</strong> CRS ≈ 0.72 (V1/V2/R8/R9 dominate, highly resilient)</li>
+  <li><strong>Critical-SSI:</strong> CRS ≈ 0.80+ (W4/W5/R11 resilience services dominate fleet value)</li>
+</ul>
+
+<h4>H.3.3 &ensp; Convex Revenue Haircut Model</h4>
+
+<div class="formula-block">
+  <div class="main">R_adj = R_base × [1 − (1 − λ) × δ × (SAT / x_crit)^γ]</div>
+  <div class="sub">
+    SAT = zonal BESS saturation (MW deployed / peak load), x_crit = saturation threshold where compression begins (~0.08 for Italian zones), δ = 0.25 (compression severity), γ = 1.8 (convexity: damage accelerates nonlinearly). This captures the "hockey-stick" merit-order collapse observed in grids with high VRE penetration.
+  </div>
+</div>
+
+<p><strong>Forward scenario (PNIEC roadmap):</strong> Italy targets 70–80 GW new renewables + 20 GW BESS by 2030. Zonal saturation rises: Nord 0.02 → 0.18, Sud 0.03 → 0.35. Haircut on R1/R2 reaches 35% by 2030, but is offset by R7/R9 growth (congestion premium + PQaaS). CRS evolution: fleet median 0.42 → 0.51 (net resilience gain).</p>
+
+<div class="card purple">
+  <strong>Strategic takeaway:</strong> BESS deployment is self-winnowing. As the fleet grows, low-CRS substations (commodity-exposed) face compression, reducing their relative NPV. The SSI scoring system inherently selects for high-CRS sites. The outcome: investor capital naturally flows toward resilient, locally-valuable substations — no additional cannibalization carve-out is needed in the pricing formula.
+</div>
+
+<h3>H.4 &ensp; Nodal Pricing Scenario — Zonal → Nodal Transition Model</h3>
+
+<p>Italy currently uses 6-zone bidding (Nord, Centro-Nord, Centro-Sud, Sud, Sicilia, Sardegna). The EU Clean Energy Package and ACER guidance encourage nodal (locational marginal pricing). A zonal→nodal transition is a regime shift that structurally improves BESS value.</p>
+
+<h4>H.4.1 &ensp; Nodal Enrichments (4 Formulas)</h4>
+
+<div class="formula-block">
+  <div class="main">BESS_SAT_nodal(n) = BESS_SAT_zonal × (1 − 0.30 × CF)</div>
+  <div class="sub">
+    CF = congestion factor [0, 1] per zone. Well-meshed zones (Nord, CF=0.25) allow more BESS; constrained zones (Sicilia, CF=0.70) hit saturation earlier. This asymmetry creates natural scarcity value for Sicilian nodes.
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">λ_R7_nodal = λ_R7_base + ψ × CF, capped at 0.95</div>
+  <div class="sub">
+    The nodal pricing premium (R7, LMP component) rises with congestion. Uncongested nodes see R7 ≈ 0.05; congested island nodes see R7 ≈ 0.70. ψ = 0.30 (congestion boost coefficient).
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">CRS_nodal = CRS_zonal × (1 + η × CF) + [0.40 × (λ_R7 − λ_R1) × CF × w_R1]</div>
+  <div class="sub">
+    Revenue redistribution: R1 (arbitrage, λ=0.05) → R7 (LMP premium, λ=0.70). The weight shift (w_R1: 0.25 → 0.15; w_R7: 0.05 → 0.15) improves CRS by 2–6% depending on congestion. η = 0.15.
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">NPV_Δ = V_RO × P(nodal) × E[CRS_uplift] × discount</div>
+  <div class="sub">
+    Option value of nodal transition: P(nodal) = 6%/yr (~45% 10-year probability), discount = 0.92 risk-adjusted PV. For Sicilian sites, NPV_Δ ≈ €800k–1.2M (15–20% portfolio upside).
+  </div>
+</div>
+
+<h4>H.4.2 &ensp; Zone-Specific Nodal Calibration</h4>
+
+<table>
+<thead><tr><th>Zone</th><th>Congestion Factor</th><th>CRS Uplift</th><th>λ_R7 (Nodal)</th><th>Basis</th></tr></thead>
+<tbody>
+<tr><td>Nord</td><td>0.25</td><td>+6.8%</td><td>0.575</td><td>Well-meshed; N→S bottleneck (TransPadana constraint)</td></tr>
+<tr><td>Centro-Nord</td><td>0.35</td><td>+9.5%</td><td>0.605</td><td>Toscana solar surplus vs Rome demand</td></tr>
+<tr><td>Centro-Sud</td><td>0.45</td><td>+12.2%</td><td>0.635</td><td>Structural N→S congestion (baseline planning)</td></tr>
+<tr><td>Sud</td><td>0.55</td><td>+14.9%</td><td>0.665</td><td>Wind curtailment, weak southern interconnectors</td></tr>
+<tr style="font-weight:700"><td>Sicilia</td><td style="font-weight:700">0.70</td><td style="font-weight:700;color:var(--crimson)">+19.0%</td><td style="font-weight:700">0.710</td><td>Island: limited HVDC capacity, highest premium</td></tr>
+<tr><td>Sardegna</td><td>0.65</td><td>+17.6%</td><td>0.695</td><td>Island: wind surplus, renewable-constrained</td></tr>
+</tbody>
+</table>
+
+<div class="card teal">
+  <strong>Implications for v27 deployment:</strong> The nodal scenario creates a natural hedge for southern BESS. Current zonal framework undervalues Sicilian sites (all substations in zone get same price). Nodal framework would reward well-sited Sicilian BESS (+19% CRS improvement) while potentially penalizing poorly-sited Nord sites (saturated congestion, cannibalization). The SSI scoring system, tuned on zonal data, will systematically underpredict southern site value post-nodal transition. Option F ("Market evolution: CRS emergence") captures this tail upside.
+</div>
+
+<h3>H.5 &ensp; Data Sources & Validation Framework</h3>
+
+<table>
+<thead><tr><th>Module</th><th>Primary Source</th><th>Cross-Check</th><th>Vintage</th><th>Refresh</th></tr></thead>
+<tbody>
+<tr><td><strong>BS-F1/F2/F3</strong> Compound, Cascade, Regime Shift</td><td>CMIP6 climate ensemble + ARERA incident logs</td><td>Copernicus C3S multi-model validation</td><td>2024 data (ERA5 reanalysis)</td><td>Annual</td></tr>
+<tr><td><strong>BS-F4</strong> Fuel Nexus</td><td>GME, Terna thermoelectric dispatch, TTF/PSV fuel indices</td><td>IEA fuel balance sheets</td><td>Monthly updated</td><td>Daily</td></tr>
+<tr><td><strong>CAT/EVT</strong> Extreme events</td><td>ARERA quality determinations (SAIDI tail), ISPRA flood catalogues, INGV seismic</td><td>EU Civil Protection Mechanism incident database</td><td>Annual ARERA, continuous INGV</td><td>Annual</td></tr>
+<tr><td><strong>PAD</strong> Tail-risk loading</td><td>Monte Carlo TVaR output from revenue engine</td><td>Historical BESS outage records (sparse for tech class)</td><td>Per valuation run</td><td>Real-time</td></tr>
+<tr><td><strong>Cannibalization</strong> Saturation & Haircut</td><td>GSE Atlaimpianti (DER connection queue), PNIEC roadmap</td><td>Terna grid plan, regional DSO investment plans</td><td>PNIEC 2024 revision (static to 2030)</td><td>5-yearly (PNIEC cycle)</td></tr>
+<tr><td><strong>Nodal Pricing</strong> Congestion factors</td><td>Terna congestion cost analysis (CN.4 dataset)</td><td>ENTSO-E congestion reports</td><td>2023 data (pub. 2024)</td><td>Annual</td></tr>
+</tbody>
+</table>
+
+<hr style="border:none; border-top:2px solid var(--card-border); margin: 48px 0">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     APPENDIX I: MONTE CARLO ENGINE & GAUSSIAN COPULA
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="appendix-divider">
+  <h2>APPENDIX I &ensp; Monte Carlo Engine & Gaussian Copula: Stochastic Valuation Architecture</h2>
+  <p class="subtitle">Revenue Simulation, Correlation Preservation, Convergence Diagnostics & Variance Reduction | SSI-ENN Layer 2 Stochastic Module v3.3</p>
+  <p class="meta">Reference: v27a §0.3.4, §0.4.6, §0.3.20 | March 2026</p>
+</div>
+
+<h3>I.1 &ensp; Why Monte Carlo for BESS Valuation: Nonlinear Payoffs & Path Dependency</h3>
+
+<p>BESS economic value is fundamentally nonlinear and path-dependent:</p>
+
+<ul>
+  <li><strong>Nonlinear payoffs:</strong> Revenue from frequency response (R2/R3) depends on activation frequency, which is a binary trigger (activated in hour h if grid frequency < 49.8 Hz). Revenue from arbitrage depends on the daily spread, which can spike to €100+/MWh during scarcity or collapse to near-zero during oversupply. Simple expectation-value models miss the optionality embedded in these payoff structures.</li>
+  <li><strong>Path dependency:</strong> The profitability of a BESS over 25 years depends on the entire sequence of prices, not just the average price. A portfolio that experiences three "black swan" events (fuel shock, climate disaster, regulatory change) may have lower NPV despite the same average return, due to timing of cash flows and refinancing risk.</li>
+  <li><strong>Tail-risk asymmetry:</strong> Insurance-like payoffs (W4, W5, R11) have low-probability, high-impact gains. Deterministic models miss these entirely; Monte Carlo captures them through scenario sampling.</li>
+</ul>
+
+<p>Monte Carlo method: simulate 10,000 independent 25-year paths, each sampling from the joint distribution of inputs (electricity prices, fuel costs, demand, climate, regulation), propagate through the valuation formula, and extract P10/P50/P90 output percentiles.</p>
+
+<h3>I.2 &ensp; Gaussian Copula Methodology: Decoupling Marginals from Dependence</h3>
+
+<p>SSI components are not independent. A substation with poor continuity (high C, low SAIDI benchmark) often also has poor voltage quality (high V), aged infrastructure (high I5), and is in a region with high DER penetration (high S1). Ignoring these correlations produces incorrect joint distributions.</p>
+
+<h4>I.2.1 &ensp; Sklar's Theorem & Copula Construction</h4>
+
+<div class="formula-block">
+  <div class="main">F(x_1, ..., x_20) = C(F_1(x_1), ..., F_20(x_20); Σ)</div>
+  <div class="sub">
+    The joint CDF F of 20 SSI sub-metrics can be decomposed into:<br>
+    (1) Marginal CDFs F_m (one per metric, from empirical distribution across 39,234 substations)<br>
+    (2) Copula function C that captures dependence structure, parameterized by correlation matrix Σ
+  </div>
+</div>
+
+<p><strong>Key insight:</strong> The copula allows each marginal to have its natural shape (SAIDI is Pareto-tailed, DER ratio is log-normal, age is exponential decay) while imposing a specified correlation structure on the joint distribution.</p>
+
+<h4>I.2.2 &ensp; Marginal Modelling (Non-Parametric)</h4>
+
+<p>Each of 20 sub-metrics is modeled using the empirical CDF (no parametric assumption):</p>
+
+<div class="formula-block">
+  <div class="main">F̂_m(x) = (number of substations with metric_m ≤ x) / 39,234</div>
+  <div class="sub">
+    Pros: captures real shape of the data (zero-inflated, fat-tailed, bimodal). Cons: no extrapolation beyond observed range (risk of underestimating tail). For tail risk, GPD extension applies (§H.2.2).
+  </div>
+</div>
+
+<h4>I.2.3 &ensp; Uniform Transform & Gaussian Transform</h4>
+
+<div class="formula-block">
+  <div class="main">ũ_m,j = F_m(x_m,j) ∼ U[0,1]</div>
+  <div class="sub">
+    Step 1: Transform each sub-metric to uniform [0,1] via its empirical CDF.
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">z_m,j = Φ^{−1}(ũ_m,j) ∼ N(0,1)</div>
+  <div class="sub">
+    Step 2: Transform each uniform marginal to standard normal via inverse Gaussian CDF. Vector z_j = (z_1,j, ..., z_20,j) is now approximately multivariate normal with correlation matrix Σ.
+  </div>
+</div>
+
+<h4>I.2.4 &ensp; Correlation Estimation (Kendall's Tau)</h4>
+
+<div class="formula-block">
+  <div class="main">ρ_ij = sin(π τ_ij / 2)</div>
+  <div class="sub">
+    Correlation matrix Σ is estimated from Kendall's tau rank correlation (more robust to outliers than Pearson). Positive-definiteness is ensured via nearest positive-definite projection if needed.
+  </div>
+</div>
+
+<p><strong>Empirical correlations (Italian fleet):</strong></p>
+
+<table>
+<thead><tr><th>Metric Pair</th><th>Kendall τ</th><th>Pearson ρ (converted)</th><th>Interpretation</th></tr></thead>
+<tbody>
+<tr><td>(C1 SAIDI, I5 Age)</td><td>0.68</td><td>0.87</td><td>Old infrastructure → more outages</td></tr>
+<tr><td>(I3 Heatwave, V1 Voltage Dips)</td><td>0.52</td><td>0.71</td><td>Climate stress → voltage instability</td></tr>
+<tr><td>(S1 DER Ratio, E1 GDP)</td><td>−0.31</td><td>−0.44</td><td>Rural (poor) → higher DER penetration</td></tr>
+<tr><td>(I1 Flood, C1 SAIDI)</td><td>0.44</td><td>0.60</td><td>Flood-prone areas → infrastructure stress</td></tr>
+<tr><td>(V1 Voltage, V2 Dips Severity)</td><td>0.81</td><td>0.92</td><td>Very high (same phenomenon)</td></tr>
+</tbody>
+</table>
+
+<h3>I.3 &ensp; Monte Carlo Simulation Engine</h3>
+
+<h4>I.3.1 &ensp; Sampling Protocol (Cholesky Decomposition)</h4>
+
+<div class="formula-block">
+  <div class="main">For k = 1, ..., 10,000:<br>
+  &nbsp;&nbsp;ε^(k) ~ N(0, I) [draw 20-dim standard normal]<br>
+  &nbsp;&nbsp;z^(k) = L · ε^(k) [Cholesky factorization: L·L^T = Σ]<br>
+  &nbsp;&nbsp;ũ^(k) = Φ(z^(k)) [transform to [0,1]^20]<br>
+  &nbsp;&nbsp;x^(k) = F^{−1}(ũ^(k)) [transform to original metric scales]<br>
+  &nbsp;&nbsp;V^(k) = valuation_engine(x^(k)) [propagate through Layer 1+2+3]</div>
+  <div class="sub">
+    After 10,000 iterations, V = {V^(1), ..., V^(10,000)} is the full valuation distribution.
+  </div>
+</div>
+
+<p><strong>Computational cost:</strong> ~0.5 seconds per substation on GPU; ~11 hours for full Italian fleet (39,234 × 2 configs). Post-convergence, reduced to 5,000 iterations for incremental analyses (2.75 hours fleet scan).</p>
+
+<h4>I.3.2 &ensp; Revenue Monte Carlo Engine (RMC)</h4>
+
+<p>The 10,000 iterations of x^(k) samples feed into a detailed revenue simulation engine:</p>
+
+<div class="formula-block">
+  <div class="main">For each path k and year t:<br>
+  &nbsp;&nbsp;P_hourly^(k,t)(h) ~ OU-Jump(κ, μ(t,h), σ, J, λ) [electricity price]<br>
+  &nbsp;&nbsp;R_stream_i^(k,t) = revenue_model_i(P^(k,t), Q_BESS, constraints) [per revenue stream i=1..10]<br>
+  &nbsp;&nbsp;Revenue^(k,t) = Σ_i R_stream_i^(k,t)<br>
+  &nbsp;&nbsp;NPV^(k) = Σ_{t=1}^{25} Revenue^(k,t) / (1+WACC)^t − CAPEX</div>
+  <div class="sub">
+    where OU-Jump = Ornstein-Uhlenbeck mean-reverting process with Poisson jump component (captures price spikes).
+  </div>
+</div>
+
+<p><strong>10 revenue streams modelled:</strong></p>
+
+<table>
+<thead><tr><th>Stream</th><th>Model</th><th>Fleet Avg %</th><th>Volatility</th></tr></thead>
+<tbody>
+<tr><td>R1 Arbitrage</td><td>Daily spread × cycles/year × efficiency</td><td>3.7%</td><td>High (price-dependent)</td></tr>
+<tr><td>R2 FCR</td><td>Availability × FCR price (Terna-fixed)</td><td>18.1%</td><td>Low (contract)</td></tr>
+<tr><td>R3 aFRR</td><td>Activation probability × price</td><td>25.4%</td><td>Medium (event-driven)</td></tr>
+<tr><td>R4 mFRR</td><td>Activation rarity × high price</td><td>8.6%</td><td>Medium</td></tr>
+<tr><td>R5 Capacity Market</td><td>Auction clearing price × availability</td><td>15.8%</td><td>Low (annual average)</td></tr>
+<tr><td>R6 Congestion</td><td>Zone price differential × dispatch</td><td>2.7%</td><td>Medium</td></tr>
+<tr><td>R7 Nodal/LMP</td><td>Future premium (6%/yr adoption)</td><td>7.9%</td><td>High (binary on transition)</td></tr>
+<tr><td>R8 Energy Community (CER)</td><td>Self-consumption surplus × local price</td><td>8.8%</td><td>Medium</td></tr>
+<tr><td>R9 DSO Services</td><td>Flexibility procurement × local constraint</td><td>7.5%</td><td>Medium</td></tr>
+<tr><td>R10 PQaaS</td><td>Reactive power × MVA compensation</td><td>1.5%</td><td>Low (new stream)</td></tr>
+</tbody>
+</table>
+
+<h3>I.4 &ensp; Integrated Valuation Propagation (§0.4.6)</h3>
+
+<p>The Monte Carlo flows through all three layers:</p>
+
+<div class="formula-block">
+  <div class="main">Layer 1: SSI(x^(k)) → C^(k), V^(k), I^(k), E^(k), S^(k), T^(k)</div>
+  <div class="sub">Base SSI score computation on sample k</div>
+</div>
+
+<div class="formula-block">
+  <div class="main">Layer 2: Options + Revenue + Real Options on (C^(k), ..., T^(k)) → D1–D5^(k), W1–W5^(k), R1–R11^(k), NPV^(k)</div>
+  <div class="sub">Valuation formulas applied to each sample</div>
+</div>
+
+<div class="formula-block">
+  <div class="main">Layer 3: NN(C^(k), ..., T^(k)) → ŷ^(k) (fast inference)</div>
+  <div class="sub">Cross-check against NN predictions (validation)</div>
+</div>
+
+<p><strong>Correlation preservation:</strong> The Gaussian Copula ensures that if, in the true data, high C correlates with high I (infrastructure risk), then sample k will reflect this relationship. When both dimensions feed into NPV, the covariance structure is preserved — NPV variance is neither artificially inflated (independent assumption) nor artificially collapsed (perfect correlation assumption).</p>
+
+<h3>I.5 &ensp; Convergence Diagnostics</h3>
+
+<p>How many iterations are enough? Three tests ensure convergence:</p>
+
+<h4>I.5.1 &ensp; Running Mean Stability Test</h4>
+
+<div class="formula-block">
+  <div class="main">CV_k = σ(NPV_P50^(1..k)) / mean(NPV_P50^(1..k))</div>
+  <div class="sub">
+    Coefficient of variation of running P50 estimate. Convergence achieved when CV_k < 0.01 (1% relative error). Typically achieved at k ≈ 5,000 iterations for Italian substations.
+  </div>
+</div>
+
+<h4>I.5.2 &ensp; Geweke Diagnostic (Autocorrelation)</h4>
+
+<div class="formula-block">
+  <div class="main">Z = (mean_early − mean_late) / sqrt(var_early/n_early + var_late/n_late)</div>
+  <div class="sub">
+    Splits the 10,000 samples into first 1,000 and last 1,000. If |Z| < 1.96 (95% confidence), the chain has mixed sufficiently and autocorrelation is negligible.
+  </div>
+</div>
+
+<h4>I.5.3 &ensp; Effective Sample Size (ESS)</h4>
+
+<div class="formula-block">
+  <div class="main">ESS = N / (1 + 2 Σ_{lag=1}^{∞} ρ(lag))</div>
+  <div class="sub">
+    Accounts for autocorrelation in the MC chain. Target: ESS > N/2 (i.e., ρ(lag) sum < 1). For Italian BESS samples, ESS ≈ 0.85 × N due to modest time-series structure in fuel prices.
+  </div>
+</div>
+
+<div class="highlight-box">
+  <strong>Standard protocol:</strong> Run 10,000 iterations, pass all three tests, report results with confidence intervals. If any test fails, increase to 15,000 iterations. Current fleet: 99.2% of substations converge at 10,000; only 0.8% (high-volatility sites) require 15,000.
+</div>
+
+<h3>I.6 &ensp; Variance Reduction Techniques</h3>
+
+<h4>I.6.1 &ensp; Antithetic Variates</h4>
+
+<p>For each sample ε^(k) ~ N(0, I), generate paired sample −ε^(k). This symmetry reduces variance of the mean estimate by ~20% (achieves same precision with 6,400 effective iterations instead of 10,000).</p>
+
+<h4>I.6.2 &ensp; Latin Hypercube Sampling (LHS)</h4>
+
+<p>Instead of naive Monte Carlo (which clusters in high-density regions), LHS stratifies the input space: each dimension is divided into N equiprobable bins, and one sample is drawn from each bin. Variance reduction: ~30% for smooth functions.</p>
+
+<h4>I.6.3 &ensp; Control Variates</h4>
+
+<p>If a fast approximator (e.g., simplified linear formula) is available, use it as a control. Let C^(k) = slow_model^(k) − fast_model^(k). The mean of C, E[C], is the bias correction. Then E[slow] ≈ E[fast] + E[C], estimated from fewer slow samples.</p>
+
+<p><strong>Applied in Layer 3:</strong> The NN acts as a control variate for deterministic MC. For new substations without full MC runs, NN predictions are adjusted by the empirical bias δ = mean(deterministic − NN) on the training set.</p>
+
+<h3>I.7 &ensp; Stochastic Process Specifications</h3>
+
+<h4>I.7.1 &ensp; Electricity Prices: Ornstein-Uhlenbeck Jump-Diffusion</h4>
+
+<div class="formula-block">
+  <div class="main">dP = κ(μ(t,h) − P) dt + σ(t) P dW + J dN(λ)</div>
+  <div class="sub">
+    P = electricity price, κ = 50/yr (mean reversion speed, half-life ≈5 days), μ(t,h) = time-varying mean (seasonal + intraday cycle from GME data), σ(t) = zone volatility (35% annual), J = jump size (lognormal), N(λ) = Poisson(λ=12/yr) jumps per year.
+  </div>
+</div>
+
+<p><strong>Calibration from GME data (Italian day-ahead market 2022–2025):</strong> Mean prices (zonal averages), intraday patterns (peak/off-peak ratio ~1.35), annual seasonality (summer dip due to hydro), volatility (35% fitted from rolling σ over 60-day windows), jump frequency (count of hours > P95), jump size (lognormal fitted to spike heights).</p>
+
+<h4>I.7.2 &ensp; Fuel Prices: GBM (Geometric Brownian Motion)</h4>
+
+<div class="formula-block">
+  <div class="main">dF / F = μ_F dt + σ_F dW</div>
+  <div class="sub">
+    F = fuel price, μ_F = drift (long-term trend, calibrated from IEA forecasts: 2%/yr gas, 1%/yr oil), σ_F = volatility (gas: 45%, oil: 55%, from CBOT/ICE data).
+  </div>
+</div>
+
+<h4>I.7.3 &ensp; Regulatory Events: Jump-Diffusion Poisson Process</h4>
+
+<div class="formula-block">
+  <div class="main">P(regulatory_shock) ~ Poisson(λ=0.08/yr)</div>
+  <div class="sub">
+    Annual probability 8% that a new rule (e.g., BESS mandatory contribution, BSF tax) affects revenue. Jump magnitude is a draw from a calibrated distribution (−5% to −25% revenue impact, based on historical ARERA precedent).
+  </div>
+</div>
+
+<h3>I.8 &ensp; Sensitivity Analysis Methodology</h3>
+
+<h4>I.8.1 &ensp; Sobol Indices (Global Sensitivity)</h4>
+
+<div class="formula-block">
+  <div class="main">S_i = Var(E[Y | X_i]) / Var(Y)</div>
+  <div class="sub">
+    First-order Sobol index: fraction of output variance explained by input i alone. Sum of all S_i ≤ 1; remainder is interaction variance.
+  </div>
+</div>
+
+<div class="formula-block">
+  <div class="main">S_T,i = 1 − Var(E[Y | X_{−i}]) / Var(Y)</div>
+  <div class="sub">
+    Total-order Sobol index: fraction of variance due to input i and all its interactions with other inputs. S_T,i ≥ S_i.
+  </div>
+</div>
+
+<p><strong>Fleet results (10,000 MC iterations, 80 input features):</strong></p>
+
+<table>
+<thead><tr><th>Input</th><th>S_i (First-Order)</th><th>S_T,i (Total-Order)</th><th>Interaction %</th></tr></thead>
+<tbody>
+<tr><td>C1 SAIDI</td><td>0.182</td><td>0.224</td><td>4.2%</td></tr>
+<tr><td>I3 Heatwave</td><td>0.156</td><td>0.198</td><td>4.2%</td></tr>
+<tr><td>Base Price (GME)</td><td>0.128</td><td>0.167</td><td>3.9%</td></tr>
+<tr><td>I5 Age</td><td>0.095</td><td>0.134</td><td>3.9%</td></tr>
+<tr><td>S1 DER Ratio</td><td>0.087</td><td>0.121</td><td>3.4%</td></tr>
+<tr style="font-weight:700;background:var(--highlight)"><td>Top 5 cumulative</td><td style="font-weight:700">0.648</td><td style="font-weight:700">0.844</td><td style="font-weight:700">19.6%</td></tr>
+</tbody>
+</table>
+
+<p><strong>Interpretation:</strong> Top 5 inputs explain 64.8% of variance independently; with interactions included, 84.4%. Remaining 15 inputs contribute <2% each. This justifies the feature selection in Layer 3 (38 features of 80 possible).</p>
+
+<h4>I.8.2 &ensp; Tornado Diagrams (One-At-A-Time Sensitivity)</h4>
+
+<p>For each input, vary it ±20% (or ±1 standard deviation), holding others at mean. Plot the resulting NPV range as a horizontal bar. Longer bars = higher sensitivity.</p>
+
+<p><strong>Fleet median tornado (typical High-SSI substation):</strong></p>
+
+<ul>
+  <li>SAIDI ±20% → NPV range €24M–€26M (±€1M)</li>
+  <li>Base price ±20% → €19M–€30M (±€5.5M)</li>
+  <li>Heatwave exposure ±50% (climatic uncertainty) → €22M–€28M (±€3M)</li>
+  <li>Cannibalization haircut ±30% → €21M–€27M (±€3M)</li>
+</ul>
+
+<h4>I.8.3 &ensp; Scenario Matrix (Multivariate Sensitivity)</h4>
+
+<p>Minimum 3×3×3 = 27 scenarios, varying three key drivers across {low, base, high}:</p>
+
+<table>
+<thead><tr><th>Scenario</th><th>SAIDI Recovery (years)</th><th>Base Price Path</th><th>Climate Escalation (CMIP6)</th><th>NPV (€M)</th><th>Likelihood</th></tr></thead>
+<tbody>
+<tr><td>L-L-L</td><td>2 years (fast)</td><td>Down 10%/yr (deflation)</td><td>Slow (+0.5°C by 2050)</td><td>€18.2M</td><td>5%</td></tr>
+<tr><td>M-M-M</td><td>5 years (baseline)</td><td>Flat (baseline GME)</td><td>Baseline SSP2-4.5</td><td>€25.4M</td><td>45%</td></tr>
+<tr><td>H-H-H</td><td>10 years (stalled)</td><td>Up 3%/yr (inflation)</td><td>Fast (+2.0°C by 2050)</td><td>€35.8M</td><td>8%</td></tr>
+<tr><td colspan="5"><strong>P10 / P50 / P90 from MC (10,000 iterations):</strong> €21.6M / €25.4M / €31.2M</td></tr>
+</tbody>
+</table>
+
+<h3>I.9 &ensp; Computational Requirements & Parallelization</h3>
+
+<table>
+<thead><tr><th>Phase</th><th>Substations</th><th>Iterations per Substation</th><th>Hardware</th><th>Runtime</th><th>Cost (AWS)</th></tr></thead>
+<tbody>
+<tr><td>Italian Fleet Full (Phase 1)</td><td>39,234</td><td>10,000</td><td>1× V100 GPU (32GB)</td><td>11 hours</td><td>~€15/run</td></tr>
+<tr><td>EU-4 Fleet (Phase 4 projection)</td><td>200,000</td><td>10,000</td><td>8× A100 GPU (80GB) cluster</td><td>14 hours</td><td>~€180/run</td></tr>
+<tr><td>Single Substation (NN inference)</td><td>1</td><td>—</td><td>CPU/GPU</td><td>1 ms</td><td>negligible</td></tr>
+</tbody>
+</table>
+
+<p><strong>Parallelization strategy:</strong> Each substation is an independent MC process. Batch 100 substations per GPU worker; distribute across 8 V100s in parallel (40× speedup). Linear scaling verified empirically (batch size 10→100 → 1,000).</p>
+
+<h3>I.10 &ensp; Validation: Analytical Benchmarks & Historical Backtesting</h3>
+
+<h4>I.10.1 &ensp; Analytical Benchmarks (Closed-Form Solutions)</h4>
+
+<p>For simplified cases (e.g., constant prices, no climate, single revenue stream), the Monte Carlo must match the deterministic formula exactly.</p>
+
+<table>
+<thead><tr><th>Benchmark</th><th>Formula (Deterministic)</th><th>MC P50 (10k iters)</th><th>Relative Error</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Simple Arbitrage (constant spread)</td><td>R = spread × cycles × efficiency / WACC</td><td>Matches formula</td><td>0.12%</td><td>✓ Pass</td></tr>
+<tr><td>Fixed Capacity Market (annual payment)</td><td>NPV = CM_price / WACC</td><td>Matches</td><td>0.03%</td><td>✓ Pass</td></tr>
+<tr><td>Climate Insurance (constant hazard)</td><td>W4 = hazard_cost × probability / WACC</td><td>Matches</td><td>0.26%</td><td>✓ Pass</td></tr>
+</tbody>
+</table>
+
+<h4>I.10.2 &ensp; Historical Backtesting (Out-of-Sample Validation)</h4>
+
+<p>For the subset of Italian BESS deployed before 2023 (n=47 systems, tracked by BNEF & Modo Energy), compare MC predictions (made in 2023) to actual 2023–2024 realized revenue.</p>
+
+<table>
+<thead><tr><th>Metric</th><th>MC P50 Forecast</th><th>Realized Actual</th><th>Error</th><th>In P10–P90 Band?</th></tr></thead>
+<tbody>
+<tr><td>Median Revenue (€/MW/yr)</td><td>€156k</td><td>€148k</td><td>−5.1%</td><td>Yes (within P25–P75)</td></tr>
+<tr><td>Revenue Volatility (σ)</td><td>€24k</td><td>€31k</td><td>+29%</td><td>Yes (within P5–P95)</td></tr>
+<tr><td>MAPE (all 47 sites)</td><td>—</td><td>—</td><td>11.2%</td><td>✓ < 15% target</td></tr>
+</tbody>
+</table>
+
+<div class="card formula">
+  <strong>Conclusion:</strong> Historical 2023–2024 realized revenues track within the MC P10–P90 confidence intervals. The model is neither systematically optimistic nor pessimistic. The 11.2% MAPE reflects genuine market volatility (e.g., gas price spike, unexpectedly high load) rather than model error.
+</div>
+
+<h3>I.11 &ensp; Data Sources for Stochastic Parameters</h3>
+
+<table>
+<thead><tr><th>Parameter</th><th>Source</th><th>Vintage</th><th>Update Cycle</th><th>Quality</th></tr></thead>
+<tbody>
+<tr><td>Electricity prices (hourly)</td><td>GME day-ahead settlement data</td><td>2022–2026 (5 years)</td><td>Daily</td><td>Grade A (official market)</td></tr>
+<tr><td>Seasonal patterns</td><td>ARERA typical load curves + Terna load data</td><td>2021–2025</td><td>Annual (updated Jan 1)</td><td>Grade A</td></tr>
+<tr><td>Price volatility σ(zone)</td><td>Computed from GME 60-day rolling SD</td><td>Rolling 60-day window</td><td>Daily</td><td>Grade A</td></tr>
+<tr><td>Jump frequency & size (λ, J)</td><td>ENTSO-E price spike archive; EPEX extremes</td><td>2020–2025</td><td>Annual recalibration</td><td>Grade A (market events)</td></tr>
+<tr><td>Mean reversion (κ)</td><td>Fitted from GME data via maximum likelihood</td><td>2022–2025</td><td>Annual</td><td>Grade B (econometric, some fitting risk)</td></tr>
+<tr><td>FCR/aFRR prices (Terna)</td><td>Terna MSD balancing service prices</td><td>2022–2025</td><td>Monthly</td><td>Grade A (published by TSO)</td></tr>
+<tr><td>DER curtailment profiles</td><td>Terna/GSE system data + simulation</td><td>2023–2025</td><td>Annual</td><td>Grade B (estimated, limited direct observation)</td></tr>
+<tr><td>Fuel prices (gas, oil)</td><td>ICE Endex (gas), Brent (oil); Trading Economics API</td><td>Daily</td><td>Daily</td><td>Grade A (commodity exchange)</td></tr>
+<tr><td>Climate projections (CMIP6)</td><td>Copernicus CDS EURO-CORDEX downscaled</td><td>Multi-model ensemble, historical 1981–2020 + scenario 2021–2100</td><td>Static (5-year IPCC cycle)</td><td>Grade A (peer-reviewed models)</td></tr>
+<tr><td>Regulatory shock probability</td><td>ARERA decision history + expert elicitation</td><td>1997–2025</td><td>Ad-hoc (as new rules emerge)</td><td>Grade C (subjective calibration)</td></tr>
+</tbody>
+</table>
+
+<div class="card warning">
+  <strong>Data quality hierarchy:</strong> Market prices (GME, Terna, ENTSO-E) are Grade A (real-time, auditable). Forecasted quantities (load, DER curtailment, climate) are Grade B (modeled, reasonable but not observed). Policy probabilities are Grade C (subjective). The valuation is most robust to Grade A changes; sensitivity to Grade C (regulatory) is large but explicitly quantified in Option F scenarios.
+</div>
+
+<hr style="border:none; border-top:2px solid var(--card-border); margin: 48px 0">
+
+<p style="font-size: 12px; color: var(--warm-grey); margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--card-border)">
+  <strong>Appendix Document Classification:</strong> Working Technical Specification — Altinium Invest / Ikenga Infrastructure<br>
+  <strong>Prepared:</strong> SSI-ENN Valuation Team · March 2026<br>
+  <strong>References:</strong> v27a Plan of Work · Academic sources cited throughout · ISPRA/ARERA/ENTSO-E/Copernicus public data · BNEF/Modo Energy market databases
+</p>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p><strong>Document classification:</strong> Working Draft &mdash; Altinium Invest / Ikenga Infrastructure</p>
+  <p><strong>Prepared by:</strong> SSI-ENN Valuation Team &middot; <strong>Date:</strong> March 2026</p>
+  <p><strong>Companion documents:</strong></p>
+  <p style="font-size:11px; line-height:1.8; margin-top:4px">
+    Plan of Work v27a (parent document) &middot;
+    ESG Value Uplift &mdash; Quantification Framework (Appendix J, published separately) &middot;
+    BESS Stakeholder Value Report &mdash; CP Fiumetorto Config B (v1) &middot;
+    BESS Valuation Dashboard v4.0-BESS
+  </p>
+  <p style="margin-top:16px"><strong>Primary regulatory &amp; data sources consulted:</strong></p>
+  <p style="font-size:11px; line-height:1.8">
+    ARERA Resolutions 574/2014, 646/2015, 352/2021, 685/2020, 568/2019, 341/2022 &middot;
+    EU Taxonomy Regulation 2020/852 &amp; Climate Delegated Act &middot;
+    EU ETS Directive 2003/87/EC (amended) &middot;
+    SFDR Regulation 2019/2088 &middot;
+    NIS2 Directive 2022/2555 &middot;
+    ISPRA Efficiency &amp; Decarbonization Indicators (Edition 2024) &middot;
+    Terna Statistical Data on the Italian Electricity System (2024) &middot;
+    Terna Adequacy Report (2024&ndash;2033) &middot;
+    GME Historical Market Data (MGP, MI, MSD, MB) &middot;
+    ENTSO-E Transparency Platform &middot;
+    ISTAT Census &amp; Economic Indicators &middot;
+    GSE DER Register (Atlaimpianti) &middot;
+    Eurostat EU-SILC Energy Poverty Indicators &middot;
+    ACER/CEER Value of Lost Load Methodology &middot;
+    EEA ExternE/NEEDS Air Pollution Damage Costs &middot;
+    IRENA Renewable Energy &amp; Jobs Annual Review 2024 &middot;
+    BNEF Energy Storage Outlook 2024 &middot;
+    Modo Energy Battery Storage Market Analytics &middot;
+    Wood Mackenzie Global Energy Storage Outlook &middot;
+    CMIP6 / Copernicus C3S Climate Projections (SSP2-4.5) &middot;
+    EPA Report on Social Cost of Greenhouse Gases (2023) &middot;
+    Amundi / Climate Bonds Initiative Green Bond Pricing Data (H2 2024) &middot;
+    MSCI ESG Ratings &amp; Cost of Capital Study &middot;
+    JRC GHG Emission Factors for Electricity Consumption &middot;
+    AGCOM / OFCOM IT Broadband &amp; OLT Location Data &middot;
+    ENISA NIS2 Essential Entity Registry
+  </p>
+</div>
+
+</div>
+</body>
+</html>
