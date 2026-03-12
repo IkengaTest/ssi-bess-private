@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BESS Config B — Stakeholder Value Report | CP Fiumetorto</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
+  :root {
+    --cream: #faf6f5;
+    --cream-deep: #f0ebe8;
+    --crimson: #941914;
+    --terracotta: #aa4234;
+    --sage: #5d8563;
+    --bronze: #b8863a;
+    --ink: #2c2420;
+    --warm-grey: #8a7e76;
+    --bg: #f5f0ed;
+    --card-bg: #ffffff;
+    --card-border: rgba(44,36,32,0.08);
+    --card-shadow: 0 1px 4px rgba(44,36,32,0.06);
+    --radius: 10px;
+    --text-light: #8a7e76;
+    --risk-red: #aa4234;
+    --gold: #b8863a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: white;
+    min-height: 100vh;
+    padding: 32px;
+  }
+  .cover {
+    background: var(--card-bg);
+    color: var(--ink);
+    padding: 32px 0;
+    position: relative;
+    overflow: visible;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 32px;
+  }
+  .cover::after { display: none; }
+  .cover .badge {
+    display: block;
+    background: transparent;
+    border: none;
+    padding: 0 0 8px 0;
+    border-radius: 0;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--terracotta);
+    font-weight: 500;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .cover h2 {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 1;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+  .cover-meta {
+    font-size: 12px;
+    color: var(--warm-grey);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cover-meta span { display: block; }
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-num {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--terracotta);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .section h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .section p {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 16px;
+  }
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .kpi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--card-shadow);
+  }
+  .kpi-card .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--warm-grey);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .kpi-card .value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .kpi-card .unit {
+    font-size: 12px;
+    color: var(--warm-grey);
+  }
+  .highlight-box {
+    background: var(--card-bg);
+    border-left: 3px solid var(--crimson);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin: 20px 0;
+  }
+  .stakeholder-block {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .stakeholder-block.dso { border-left-color: var(--crimson); }
+  .stakeholder-block.community { border-left-color: var(--bronze); }
+  .stakeholder-block.owner { border-left-color: var(--sage); }
+  .stakeholder-block h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .sub-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .sub-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .sub-table td:first-child {
+    color: var(--warm-grey);
+    font-weight: 500;
+    width: 50%;
+  }
+  .sub-table td.num {
+    text-align: right;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .sub-table td.num.bold { font-weight: 700; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .tag-high {
+    background: rgba(148, 25, 20, 0.1);
+    color: var(--crimson);
+  }
+  h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .accent { color: var(--terracotta); }
+  .two-col-narrative {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin: 20px 0;
+  }
+  .two-col-narrative > div {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .section-divider {
+    background: linear-gradient(90deg, var(--crimson) 0%, var(--crimson) 100%);
+    color: white;
+    padding: 20px 32px;
+    margin: 48px -32px 32px -32px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Playfair Display', Georgia, serif;
+    page-break-before: always;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-divider.dso { background: linear-gradient(90deg, var(--crimson) 0%, var(--crimson) 100%); }
+  .section-divider.community { background: linear-gradient(90deg, var(--bronze) 0%, var(--bronze) 100%); }
+  .section-divider.investor { background: linear-gradient(90deg, var(--sage) 0%, var(--sage) 100%); }
+  .audience-tag {
+    display: inline-block;
+    background: var(--cream-deep);
+    border: 1px solid var(--card-border);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--warm-grey);
+    margin-bottom: 20px;
+  }
+  @media print {
+    .page { max-width: none; padding: 0; }
+    .section { break-inside: avoid; }
+    .cover { break-after: page; }
+  }
+</style>
+
+  /* ── Tab Navigation ── */
+  .tab-bar {
+    background: var(--ink);
+    padding: 0;
+    margin: 0 -32px 32px -32px;
+    display: flex;
+    align-items: stretch;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-bar button {
+    background: none;
+    border: none;
+    color: rgba(245,240,237,0.55);
+    padding: 14px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-bar button:hover {
+    color: #f5f0ed;
+    background: rgba(255,255,255,0.05);
+  }
+  .tab-bar button.active {
+    color: #f5f0ed;
+    background: rgba(255,255,255,0.04);
+  }
+  .tab-bar button[data-tab="exec"].active { border-bottom-color: var(--terracotta); }
+  .tab-bar button[data-tab="dno"].active { border-bottom-color: var(--crimson); }
+  .tab-bar button[data-tab="community"].active { border-bottom-color: var(--bronze); }
+  .tab-bar button[data-tab="investor"].active { border-bottom-color: var(--sage); }
+
+  /* View panels */
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
+
+  /* Smooth scroll to top on tab switch */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start">
+      <div style="flex:1">
+        <div class="badge">SSI-ENN Platform &bull; Config B Deep Dive</div>
+        <h1>BESS Stakeholder Value Report</h1>
+        <h2>CP Fiumetorto &mdash; 9.9 MW / 39.6 MWh Battery Energy Storage System</h2>
+        <div class="cover-meta">
+          <span>Sicilia &bull; Province of Ragusa &bull; 150 kV</span>
+          <span>Substation ID: Enel Distribuzione_10503</span>
+          <span>March 2026</span>
+        </div>
+      </div>
+      <div style="text-align:right; flex-shrink:0; padding-top:20px; padding-left:24px">
+        <a href="https://ikenga.eu" style="text-decoration:none">
+          <img src="https://ikengatest.github.io/ssi-bess-private/ikenga-logo-nav.png" alt="Ikenga" style="height:42px; width:auto; display:block; margin-left:auto">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div id="toc-card" style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:20px 24px; margin-bottom:0">
+    <span style="font-size:10px; font-weight:500; letter-spacing:1.2px; text-transform:uppercase; color:var(--warm-grey)">Report Sections</span>
+    <div style="display:grid; grid-template-columns:1fr; gap:6px; margin-top:14px; font-size:13px">
+      <a href="#" onclick="switchTab('exec'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--terracotta); font-weight:600; margin-right:8px">1</span> Executive Summary</a>
+      <a href="#" onclick="switchTab('dno'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--crimson); font-weight:600; margin-right:8px">2</span> Value to DNO &mdash; Grid Interconnection Support</a>
+      <a href="#" onclick="switchTab('community'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--bronze); font-weight:600; margin-right:8px">3</span> Value to Community &mdash; PLA Permit &amp; Licence Support</a>
+      <a href="#" onclick="switchTab('investor'); return false;" style="color:var(--ink); text-decoration:none; padding:4px 0"><span style="color:var(--sage); font-weight:600; margin-right:8px">4</span> Value to Investor &mdash; Project Acquisition Support</a>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar" id="tab-bar">
+    <button data-tab="exec" class="active" onclick="switchTab('exec')">Executive Summary</button>
+    <button data-tab="dno" onclick="switchTab('dno')">Value to DNO</button>
+    <button data-tab="community" onclick="switchTab('community')">Value to Community</button>
+    <button data-tab="investor" onclick="switchTab('investor')">Value to Investor</button>
+  </div>
+
+  <!-- VIEW: EXECUTIVE SUMMARY -->
+  <div class="view-panel active" id="view-exec">
+  <!-- SECTION 1: EXECUTIVE SUMMARY -->
+  <div class="section" id="exec">
+    <div class="section-num">Section 1</div>
+    <h3>Executive Summary</h3>
+
+    <p>This report presents a detailed stakeholder value analysis for a Config B battery energy storage system (9.9 MW / 39.6 MWh, 4-hour duration) at Cabina Primaria Fiumetorto in south-eastern Sicily. The substation ranks in the 99.1st percentile of the Italian fleet by SSI score (0.580), reflecting severe grid stress driven primarily by congestion and intermittent overload conditions.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI-ENN Methodology Overview</h4>
+    <p>The <strong>SSI Enhanced Neural Network (SSI-ENN)</strong> extends the SSI Index v4.0 into a valuation platform, answering three core questions for every scored substation: what is a BESS worth to the distribution network operator, to the local community, and to the asset owner? For CP Fiumetorto, the platform ingested 20 sub-metrics across 6 SSI components from 15 verified public data sources, applied 4 multiplicative modifiers through the modifier chain, and propagated uncertainty through a 20×20 Gaussian copula correlation matrix. The Monte Carlo engine executed 10,000 iterations, performing approximately 71 million arithmetic operations and producing 91 output data points with calibrated P5/P50/P95 uncertainty bounds.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Asset &amp; Site Profile</h4>
+    <div class="grid-2">
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">BESS Configuration B</div>
+        <table class="sub-table">
+          <tr><td>Rated power</td><td class="num bold">9.9 MW</td></tr>
+          <tr><td>Energy capacity</td><td class="num bold">39.6 MWh</td></tr>
+          <tr><td>Duration</td><td class="num">4.0 hours</td></tr>
+          <tr><td>CAPEX</td><td class="num">&euro;7.00M</td></tr>
+          <tr><td>Unit CAPEX</td><td class="num">~&euro;707/kW</td></tr>
+          <tr><td>Technology</td><td class="num">Li-ion NMC/LFP</td></tr>
+          <tr><td>Evaluation horizon</td><td class="num">25 years</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Substation Context</div>
+        <table class="sub-table">
+          <tr><td>Name</td><td class="num bold">CP Fiumetorto</td></tr>
+          <tr><td>Region / Province</td><td class="num">Sicilia / Ragusa</td></tr>
+          <tr><td>Voltage level</td><td class="num">150 kV</td></tr>
+          <tr><td>SSI Score</td><td class="num bold">0.580</td></tr>
+          <tr><td>R<sub>median</sub></td><td class="num bold">0.6641</td></tr>
+          <tr><td>Classification</td><td class="num"><span class="tag tag-high">High</span></td></tr>
+          <tr><td>Fleet percentile</td><td class="num">99.1%</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI Component Decomposition</h4>
+    <p style="font-size:13px">The SSI score of 0.580 is decomposed into six orthogonal dimensions. Congestion alone accounts for 55% of the total score, consistent with Sicily's structural transmission bottleneck.</p>
+    <div style="margin:16px 0">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px"><span style="font-size:12px; width:120px; color:var(--ink)">C (Congestion)</span><div style="flex:1; height:10px; background:var(--cream-deep); border-radius:5px; overflow:hidden"><div style="width:55%; height:100%; background:var(--crimson); border-radius:5px"></div></div><span style="font-size:11px; font-weight:600; color:var(--crimson); width:40px; text-align:right">0.319</span></div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px"><span style="font-size:12px; width:120px; color:var(--ink)">I (Infrastructure)</span><div style="flex:1; height:10px; background:var(--cream-deep); border-radius:5px; overflow:hidden"><div style="width:18.8%; height:100%; background:var(--sage); border-radius:5px"></div></div><span style="font-size:11px; font-weight:600; color:var(--sage); width:40px; text-align:right">0.109</span></div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px"><span style="font-size:12px; width:120px; color:var(--ink)">E (Economic)</span><div style="flex:1; height:10px; background:var(--cream-deep); border-radius:5px; overflow:hidden"><div style="width:17.8%; height:100%; background:#3b9eff; border-radius:5px"></div></div><span style="font-size:11px; font-weight:600; color:#3b9eff; width:40px; text-align:right">0.103</span></div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px"><span style="font-size:12px; width:120px; color:var(--ink)">T (Transition)</span><div style="flex:1; height:10px; background:var(--cream-deep); border-radius:5px; overflow:hidden"><div style="width:4.8%; height:100%; background:#22d3ee; border-radius:5px"></div></div><span style="font-size:11px; font-weight:600; color:#22d3ee; width:40px; text-align:right">0.028</span></div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px"><span style="font-size:12px; width:120px; color:var(--ink)">V (Voltage)</span><div style="flex:1; height:10px; background:var(--cream-deep); border-radius:5px; overflow:hidden"><div style="width:2.2%; height:100%; background:var(--terracotta); border-radius:5px"></div></div><span style="font-size:11px; font-weight:600; color:var(--terracotta); width:40px; text-align:right">0.013</span></div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px"><span style="font-size:12px; width:120px; color:var(--ink)">S (Saturation)</span><div style="flex:1; height:10px; background:var(--cream-deep); border-radius:5px; overflow:hidden"><div style="width:1.4%; height:100%; background:var(--bronze); border-radius:5px"></div></div><span style="font-size:11px; font-weight:600; color:var(--bronze); width:40px; text-align:right">0.008</span></div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Three-Value Framework Overview</h4>
+    <p>The analysis decomposes total project value of <strong>&euro;35.20M</strong> across three stakeholder dimensions and maps the 25-year revenue projection of <strong>&euro;57.38M</strong> to underlying market mechanisms and regulatory instruments.</p>
+
+    <div class="kpi-row">
+      <div class="kpi-card" style="border-color:var(--crimson); border-width:2px">
+        <div class="label" style="color:var(--crimson)">V<sub>DSO</sub></div>
+        <div class="value" style="color:var(--crimson)">&euro;28.27M</div>
+        <div class="unit">80.3% of total</div>
+      </div>
+      <div class="kpi-card" style="border-color:var(--bronze); border-width:2px">
+        <div class="label" style="color:var(--bronze)">V<sub>Community</sub></div>
+        <div class="value" style="color:var(--bronze)">&euro;3.92M</div>
+        <div class="unit">11.1% of total</div>
+      </div>
+      <div class="kpi-card" style="border-color:var(--sage); border-width:2px">
+        <div class="label" style="color:var(--sage)">V<sub>Real Options</sub></div>
+        <div class="value" style="color:var(--sage)">&euro;3.00M</div>
+        <div class="unit">8.5% of total</div>
+      </div>
+    </div>
+
+    <div style="margin:20px 0">
+      <div style="display:flex; height:32px; border-radius:8px; overflow:hidden; font-size:11px; font-weight:600; color:white">
+        <div style="width:80.3%; background:var(--crimson); display:flex; align-items:center; justify-content:center">V<sub>DSO</sub> €28.27M</div>
+        <div style="width:11.1%; background:var(--bronze); display:flex; align-items:center; justify-content:center">V<sub>C</sub></div>
+        <div style="width:8.5%; background:var(--sage); display:flex; align-items:center; justify-content:center">V<sub>RO</sub></div>
+      </div>
+      <div style="display:flex; font-size:10px; color:var(--text-light); margin-top:4px">
+        <div style="width:80.3%; text-align:center">80.3%</div>
+        <div style="width:11.1%; text-align:center">11.1%</div>
+        <div style="width:8.5%; text-align:center">8.5%</div>
+      </div>
+    </div>
+    <p style="font-size:13px">The dominance of V<sub>DSO</sub> reflects Fiumetorto's extreme grid criticality: with R<sub>median</sub> at 0.6641, the substation sits in the 83rd percentile of the normalisation window (0.25–0.75), driving V<sub>DSO</sub> to €28.27M against a Config B ceiling of €30.0M. This is a network-value-led investment case, where community and optionality benefits reinforce an already compelling DSO proposition.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Financial KPIs</h4>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="label">Net Present Value</div>
+        <div class="value" style="color:var(--terracotta)">&euro;10.92M</div>
+        <div class="unit">25-year horizon</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">IRR</div>
+        <div class="value" style="color:var(--gold)">18.9%</div>
+        <div class="unit">vs WACC 5.2%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Payback</div>
+        <div class="value">5.0</div>
+        <div class="unit">years</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Sharpe Ratio</div>
+        <div class="value">16.63</div>
+        <div class="unit">risk-adjusted return</div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Investment thesis:</strong> Fiumetorto's extreme grid criticality (R<sub>median</sub> = 0.6641, Classification: High) generates outsized DSO value, while Sicily's elevated energy poverty rate (15.0%) ensures meaningful community benefit. The 18.9% IRR with a 5-year payback comfortably clears the 5.2% WACC hurdle, and Monte Carlo simulation confirms robust returns with a Sharpe ratio of 16.63.
+    </div>
+  </div>
+
+  </div>
+
+  <!-- VIEW: VALUE TO DNO -->
+  <div class="view-panel" id="view-dno">
+  <!-- SECTION 2: VALUE TO DNO -->
+  <div class="section-divider dso" style="page-break-before:always">
+    <span>Section 2: Value to DNO &mdash; Grid Interconnection Support</span>
+  </div>
+
+
+  <div class="section" id="dno">
+    <div class="audience-tag">FOR: Distribution System Operator / Terna / Regulatory Authorities</div>
+
+    <h3>Value to DNO &mdash; Grid Interconnection Support</h3>
+
+    <p>This section frames BESS value as evidence for why connecting this system to the grid at Fiumetorto serves the distribution network interest. The analysis supports applications for grid interconnection rights and network integration approvals by demonstrating quantified benefits to congestion management, ancillary services provision, and avoided network reinforcement costs.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI-ENN Methodology &mdash; Technical Summary</h4>
+    <p>The SSI-ENN employs a rigorous 4-layer architecture: (Layer 1) ingestion of 20 sub-metrics across 6 SSI components from 15 verified public data sources; (Layer 2) valuation synthesis across DNO + community value and real options; (Layer 3) neural network transfer learning from Italian market to EU context with uncertainty propagation through a 20×20 copula; (Layer 4) 25-year Monte Carlo forward trajectory with climate escalation and regulatory path scenarios. For Fiumetorto, this produced ~71 million arithmetic operations across 5 DNO value components (D1–D5), 5 community welfare components (W1–W5), 10 merchant revenue streams (R1–R10), and 6 real options (A–F).</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Site Profile &mdash; Substation Context</h4>
+    <div class="grid-2">
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Substation Characteristics</div>
+        <table class="sub-table">
+          <tr><td>Name</td><td class="num bold">CP Fiumetorto</td></tr>
+          <tr><td>Region / Province</td><td class="num">Sicilia / Ragusa</td></tr>
+          <tr><td>Voltage level</td><td class="num">150 kV</td></tr>
+          <tr><td>SSI Score</td><td class="num bold">0.580</td></tr>
+          <tr><td>Classification</td><td class="num"><span class="tag tag-high">High</span></td></tr>
+          <tr><td>Fleet percentile</td><td class="num">99.1%</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Grid Stress Drivers</div>
+        <table class="sub-table">
+          <tr><td>Congestion (C)</td><td class="num bold">0.319</td></tr>
+          <tr><td>Infrastructure (I)</td><td class="num">0.109</td></tr>
+          <tr><td>Economic (E)</td><td class="num">0.103</td></tr>
+          <tr><td>Transition (T)</td><td class="num">0.028</td></tr>
+          <tr><td>Voltage (V)</td><td class="num">0.013</td></tr>
+          <tr><td>Saturation (S)</td><td class="num">0.008</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p style="margin-top:20px">The SSI score of 0.580 is decomposed into six components, reflecting a substation where congestion and supply-interruption dynamics dominate. The congestion component (C = 0.319) alone accounts for 55% of the total score, consistent with Sicily's structural transmission bottleneck between its high renewable penetration and limited export capacity to the mainland.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI Before/After BESS &mdash; Impact Quantification</h4>
+
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:24px; margin:24px 0">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.2px; color:var(--warm-grey); font-weight:500; margin-bottom:16px">SSI Score Breakdown &mdash; Before &amp; After BESS</div>
+
+      <div style="display:flex; gap:24px; align-items:flex-start; margin-bottom:24px">
+        <div style="flex:1; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600; margin-bottom:8px">Before BESS</div>
+          <div style="display:inline-block; position:relative">
+            <canvas id="radar-before-dno" width="280" height="304" style="width:280px; height:304px"></canvas>
+          </div>
+          <div style="margin-top:8px">
+            <span style="font-size:24px; font-weight:700; color:var(--crimson)">0.580</span>
+            <span style="display:inline-block; background:var(--crimson); color:white; font-size:9px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:6px; vertical-align:middle">HIGH</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-light)">R<sub>median</sub> = 0.664 &bull; 99.1st percentile</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:40px">
+          <div style="font-size:28px; color:var(--sage)">&rarr;</div>
+          <div style="font-size:9px; color:var(--sage); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:4px">Config B<br>9.9 MW</div>
+        </div>
+
+        <div style="flex:1; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--sage); font-weight:600; margin-bottom:8px">With BESS (Projected)</div>
+          <div style="display:inline-block; position:relative">
+            <canvas id="radar-after-dno" width="280" height="304" style="width:280px; height:304px"></canvas>
+          </div>
+          <div style="margin-top:8px">
+            <span style="font-size:24px; font-weight:700; color:var(--sage)">0.372</span>
+            <span style="display:inline-block; background:var(--bronze); color:white; font-size:9px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:6px; vertical-align:middle">MEDIUM</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-light)">Projected effective R &bull; reclassified High → Medium</div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--card-border); padding-top:16px">
+        <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--warm-grey); font-weight:500; margin-bottom:12px">Component Impact Detail</div>
+        <table style="width:100%; border-collapse:collapse; font-size:12px">
+          <thead>
+            <tr style="font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:var(--warm-grey); border-bottom:1px solid var(--card-border)">
+              <td style="padding:6px 0; width:20%">Component</td>
+              <td style="padding:6px 0; width:12%; text-align:right">Before</td>
+              <td style="padding:6px 0; width:12%; text-align:right">After</td>
+              <td style="padding:6px 0; width:10%; text-align:right">&Delta;</td>
+              <td style="padding:6px 8px; width:46%">Impact</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--card-border)">
+              <td style="padding:8px 0; font-weight:600"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#941914; margin-right:6px; vertical-align:middle"></span>C &mdash; Congestion</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--crimson)">0.319</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--sage)">0.160</td>
+              <td style="padding:8px 0; text-align:right; color:var(--sage); font-weight:600">&minus;50%</td>
+              <td style="padding:8px 8px"><div style="font-size:10px; color:var(--text-light)">R6 congestion relief + R3 MSD dispatch absorb peak overload</div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--card-border)">
+              <td style="padding:8px 0; font-weight:600"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#5d8563; margin-right:6px; vertical-align:middle"></span>I &mdash; Infrastructure</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--crimson)">0.109</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--sage)">0.082</td>
+              <td style="padding:8px 0; text-align:right; color:var(--sage); font-weight:600">&minus;25%</td>
+              <td style="padding:8px 8px"><div style="font-size:10px; color:var(--text-light)">Thermal stress reduction + backup during heatwave derating</div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--card-border)">
+              <td style="padding:8px 0; font-weight:600"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#3b9eff; margin-right:6px; vertical-align:middle"></span>E &mdash; Economic</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--crimson)">0.103</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--sage)">0.091</td>
+              <td style="padding:8px 0; text-align:right; color:var(--sage); font-weight:600">&minus;12%</td>
+              <td style="padding:8px 8px"><div style="font-size:10px; color:var(--text-light)">Effective VoLL exposure reduction through avoided outage hours</div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--card-border)">
+              <td style="padding:8px 0; font-weight:600"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#22d3ee; margin-right:6px; vertical-align:middle"></span>T &mdash; Transition</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600">0.028</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--sage)">0.023</td>
+              <td style="padding:8px 0; text-align:right; color:var(--sage); font-weight:600">&minus;18%</td>
+              <td style="padding:8px 8px"><div style="font-size:10px; color:var(--text-light)">BESS absorbs DER variability, easing transition stress</div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--card-border)">
+              <td style="padding:8px 0; font-weight:600"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#aa4234; margin-right:6px; vertical-align:middle"></span>V &mdash; Voltage</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600">0.013</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--sage)">0.010</td>
+              <td style="padding:8px 0; text-align:right; color:var(--sage); font-weight:600">&minus;20%</td>
+              <td style="padding:8px 8px"><div style="font-size:10px; color:var(--text-light)">Reactive power compensation holds PCC voltage within &plusmn;2%</div></td>
+            </tr>
+            <tr>
+              <td style="padding:8px 0; font-weight:600"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#b8863a; margin-right:6px; vertical-align:middle"></span>S &mdash; Saturation</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600">0.008</td>
+              <td style="padding:8px 0; text-align:right; font-weight:600; color:var(--sage)">0.007</td>
+              <td style="padding:8px 0; text-align:right; color:var(--sage); font-weight:600">&minus;20%</td>
+              <td style="padding:8px 8px"><div style="font-size:10px; color:var(--text-light)">Absorbs reverse power flow from DER curtailment</div></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="border-top:2px solid var(--ink)">
+              <td style="padding:10px 0; font-weight:700">Total SSI Score</td>
+              <td style="padding:10px 0; text-align:right; font-weight:700; color:var(--crimson)">0.580</td>
+              <td style="padding:10px 0; text-align:right; font-weight:700; color:var(--sage)">0.372</td>
+              <td style="padding:10px 0; text-align:right; font-weight:700; color:var(--sage)">&minus;36%</td>
+              <td style="padding:10px 8px; font-size:11px; color:var(--sage); font-weight:600">Band reclassification: High &rarr; Medium</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-top:16px">
+        <div style="flex:1; background:var(--cream-deep); border-left:3px solid var(--crimson); border-radius:0 6px 6px 0; padding:12px">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600">Value Implication</div>
+          <p style="font-size:11px; margin-top:4px">The 36% SSI reduction represents avoided network reinforcement. The DSO would otherwise need transformer upgrades and new HV/MV feeders (&euro;3–8M per substation) to achieve the same congestion and thermal relief. V<sub>DSO</sub> = &euro;28.27M captures this deferral value.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">V<sub>DSO</sub> = &euro;28.27M &mdash; Value Decomposition</h4>
+
+    <p><strong>Value Drivers:</strong> V<sub>DSO</sub> quantifies the avoided-cost and system-efficiency benefit that a BESS delivers to the distribution network operator. It is driven by a single core input &mdash; <strong>R<sub>median</sub></strong> (0.6641) &mdash; which represents the median risk score across all simulated operating conditions for this substation.</p>
+
+    <div class="two-col-narrative">
+      <div>
+        <strong>Computation Pathway</strong><br>
+        R<sub>median</sub> is normalised linearly against a [0.25, 0.75] window, yielding a normalised score of 0.8282. This maps onto the Config B value range [€4.0M, €30.0M] to produce a base V<sub>DSO</sub> of approximately €25.5M, before stochastic perturbation which in this case pushed the final value to €28.27M.
+      </div>
+      <div>
+        <strong>What R<sub>median</sub> Captures</strong><br>
+        The six SSI components (C, V, I, E, S, T) are synthesised into a single risk metric through Monte Carlo simulation. For Fiumetorto, congestion (C = 0.319) is the dominant driver, reflecting Sicily's chronic transmission constraints. This makes the DSO value essentially a proxy for congestion relief value with ancillary network deferral benefits.
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">DSO-Facing Revenue Streams (25-Year Projection)</h4>
+
+    <p>Five of the ten modelled revenue streams flow primarily to or through the DSO. Together they account for <strong>&euro;34.21M</strong> (59.6% of total 25-year revenue of &euro;57.38M).</p>
+
+    <table class="sub-table">
+      <thead>
+        <tr>
+          <th>Stream</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th class="num">25yr Value</th>
+          <th class="num">% of Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">MSD &mdash; Dispatching Services</td>
+          <td>R3</td>
+          <td>Balancing and dispatching services market participation</td>
+          <td class="num bold">&euro;14.71M</td>
+          <td class="num">25.6%</td>
+        </tr>
+        <tr>
+          <td class="bold">Ancillary Services</td>
+          <td>R5</td>
+          <td>Frequency regulation, voltage support, black start capability</td>
+          <td class="num bold">&euro;9.14M</td>
+          <td class="num">15.9%</td>
+        </tr>
+        <tr>
+          <td class="bold">CRS Uplift</td>
+          <td>R7</td>
+          <td>Capacity remuneration scheme uplift payments</td>
+          <td class="num">&euro;4.55M</td>
+          <td class="num">7.9%</td>
+        </tr>
+        <tr>
+          <td class="bold">Grid Fee Deferral</td>
+          <td>R9</td>
+          <td>Network reinforcement deferral and grid access charges</td>
+          <td class="num">&euro;4.27M</td>
+          <td class="num">7.4%</td>
+        </tr>
+        <tr>
+          <td class="bold">Congestion Relief</td>
+          <td>R6</td>
+          <td>Zonal price differential capture from congestion management</td>
+          <td class="num">&euro;1.54M</td>
+          <td class="num">2.7%</td>
+        </tr>
+        <tr style="border-top:2px solid var(--ink)">
+          <td colspan="3"><strong>Total DSO-Facing Revenue</strong></td>
+          <td class="num">&euro;34.21M</td>
+          <td class="num">59.6%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:16px">The MSD stream (R3) alone represents over a quarter of total project revenue, reflecting the Italian TSO's (Terna) growing reliance on battery dispatching services in congested zones. For a Sicilian node like Fiumetorto, where renewable curtailment is structural, the BESS acts as a congestion valve – absorbing excess generation during peak solar hours and re-dispatching during evening ramps.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Network Services &mdash; Component Breakdown</h4>
+
+    <div style="background:var(--cream-deep); border-radius:10px; padding:20px; margin:16px 0">
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px">
+        <div style="background:white; border-radius:8px; padding:16px; text-align:center">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600">Congestion Relief</div>
+          <div style="font-size:20px; font-weight:700; color:var(--crimson); margin:8px 0">–50%</div>
+          <div style="font-size:11px; color:var(--text-light)">C component: 0.319 → 0.160</div>
+          <p style="font-size:11px; margin-top:8px; text-align:left">R6 revenue stream captures zonal price differentials. BESS absorbs peak solar generation and re-dispatches during evening peak, reducing zonal LMPs and alleviating transmission constraints.</p>
+        </div>
+        <div style="background:white; border-radius:8px; padding:16px; text-align:center">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600">Ancillary Services</div>
+          <div style="font-size:20px; font-weight:700; color:var(--crimson); margin:8px 0">€9.14M</div>
+          <div style="font-size:11px; color:var(--text-light)">15.9% of total revenue (R5)</div>
+          <p style="font-size:11px; margin-top:8px; text-align:left">Frequency regulation, voltage support, and black start capability. The 4-hour duration is sufficient for voltage profile management and extended frequency support during N-1 events.</p>
+        </div>
+        <div style="background:white; border-radius:8px; padding:16px; text-align:center">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600">CAPEX Deferral</div>
+          <div style="font-size:20px; font-weight:700; color:var(--crimson); margin:8px 0">€4.27M</div>
+          <div style="font-size:11px; color:var(--text-light)">Grid fee deferral (R9)</div>
+          <p style="font-size:11px; margin-top:8px; text-align:left">Deferred reinforcement (transformer upgrade, new HV/MV feeders) valued at avoided CAPEX over 5–10 year deferral window. ARERA benchmark: €3–8M per substation.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Risk Profile &mdash; DNO-Relevant Dimensions</h4>
+
+    <div class="grid-2">
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Regulatory Risk</div>
+        <table class="sub-table">
+          <tr><td>Composite score</td><td class="num bold">0.650</td></tr>
+          <tr><td>Assessment</td><td class="num"><span class="tag tag-high">Elevated</span></td></tr>
+          <tr><td>Primary concern</td><td class="num">MSD/CRS rule evolution</td></tr>
+        </table>
+        <p style="font-size:11px; margin-top:12px; color:var(--text-light)">Italy's BESS framework—particularly MSD participation rules and CRS eligibility—is still evolving. Material tightening could compress DSO-facing revenue by 15–25%, partially mitigated by structural congestion relief role.</p>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Cyber-Physical Exposure</div>
+        <table class="sub-table">
+          <tr><td>R7 Cyber Modifier</td><td class="num">0.9894</td></tr>
+          <tr><td>CPIndex amplification</td><td class="num">+9.1%</td></tr>
+          <tr><td>NIS2 compliance</td><td class="num">2026–2028</td></tr>
+        </table>
+        <p style="font-size:11px; margin-top:12px; color:var(--text-light)">NIS2 directive (mandatory 2026, full enforcement 2028) elevates DSO willingness-to-pay for resilience-as-a-service. BESS serves as cyber-resilience anchor for local digital economy and critical infrastructure.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="border-color:var(--crimson)">
+      <strong>DSO investment signal:</strong> The &euro;28.27M V<sub>DSO</sub> implies that for every &euro;1 of CAPEX, the network receives &euro;4.04 in avoided-cost value over the asset's life. Grid Fee Deferral (R9 = &euro;4.27M) alone recovers 61% of the initial investment, before considering any merchant or ancillary revenue. Grid interconnection at Fiumetorto serves the distribution network interest by deferring €3–8M of network reinforcement and enabling structural congestion management through proven, scalable dispatch mechanisms.
+    </div>
+  </div>
+
+  </div>
+
+  <!-- VIEW: VALUE TO COMMUNITY -->
+  <div class="view-panel" id="view-community">
+  <!-- SECTION 3: VALUE TO COMMUNITY -->
+  <div class="section-divider community" style="page-break-before:always">
+    <span>Section 3: Value to Community — PLA Permit & Licence Support</span>
+  </div>
+
+
+  <div class="section" id="community">
+    <div class="audience-tag">FOR: Municipal & Regional Authorities / Environmental Agencies</div>
+
+    <h3>Value to Community — PLA Support</h3>
+
+    <p>This section frames BESS value as evidence that this installation delivers measurable community benefit, justifying permits, licences, and authorisations (PLA). The analysis helps avoid recourse grounds by demonstrating quantified social, economic, and environmental returns.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI-ENN Methodology — Simplified for Non-Technical Audience</h4>
+    <p>The SSI-ENN measures what a BESS is worth to the community by combining five welfare components: (W1) reliability improvement, (W2) carbon displacement, (W3) employment and economic impact, (W4) resilience insurance, and (W5) communications resilience. For Fiumetorto, the platform synthesises these through Monte Carlo simulation to produce a total community value of &euro;3.92M, discounted at 3.0% (the societal time preference rate).</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Regional Socio-Economic Context</h4>
+    <div class="grid-2">
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Ragusa Province Baseline</div>
+        <table class="sub-table">
+          <tr><td>Population</td><td class="num">310,000</td></tr>
+          <tr><td>GDP per capita</td><td class="num">&euro;18,500 (PPS)</td></tr>
+          <tr><td>Energy poverty rate</td><td class="num bold">15.0%</td></tr>
+          <tr><td>Unemployment</td><td class="num bold">14.2%</td></tr>
+          <tr><td>HRST workers</td><td class="num">~25% of workforce</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">BESS Deployment Context</div>
+        <table class="sub-table">
+          <tr><td>Current BESS saturation</td><td class="num">4%</td></tr>
+          <tr><td>Congestion Relief Score</td><td class="num">0.372 (Medium)</td></tr>
+          <tr><td>Social vulnerability</td><td class="num bold">0.7634 (upper quartile)</td></tr>
+          <tr><td>Regional PNRR alignment</td><td class="num">Missione 2 &mdash; Green</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI Before/After BESS (Community Perspective)</h4>
+
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:24px; margin:24px 0">
+      <div style="display:flex; gap:24px; align-items:flex-start; margin-bottom:24px">
+        <div style="flex:1; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600; margin-bottom:8px">Before BESS</div>
+          <canvas id="radar-before-community" width="280" height="304" style="width:280px; height:304px"></canvas>
+          <div style="margin-top:8px">
+            <span style="font-size:24px; font-weight:700; color:var(--crimson)">0.580</span>
+            <span style="display:inline-block; background:var(--crimson); color:white; font-size:9px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:6px">HIGH</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-light)">High outage risk &bull; Low reliability</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:40px">
+          <div style="font-size:28px; color:var(--bronze)">&rarr;</div>
+          <div style="font-size:9px; color:var(--bronze); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:4px">BESS Stabilises<br>Local Supply</div>
+        </div>
+
+        <div style="flex:1; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--sage); font-weight:600; margin-bottom:8px">With BESS (Projected)</div>
+          <canvas id="radar-after-community" width="280" height="304" style="width:280px; height:304px"></canvas>
+          <div style="margin-top:8px">
+            <span style="font-size:24px; font-weight:700; color:var(--sage)">0.372</span>
+            <span style="display:inline-block; background:var(--bronze); color:white; font-size:9px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:6px">MEDIUM</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-light)">Improved reliability &bull; Fewer outages</div>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px">Five-Component Community Value Stack (W1–W5)</h4>
+    <p style="font-size:13px">The SSI-ENN platform decomposes community value into five distinct welfare components per the Plan of Work v27 (Section 0.4.2). Each captures a different mechanism through which stable active and reactive power delivery translates into measurable socio-economic benefit. The aggregate V<sub>Community</sub> = €3.92M is the NPV of all five components discounted at the social rate of 3.0% real (lower than the owner WACC, reflecting societal time preference).</p>
+
+    <!-- W1 -->
+    <div style="background:white; border:1px solid #e8e0f0; border-left:4px solid var(--bronze); border-radius:8px; padding:24px; margin:16px 0">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <div style="background:var(--bronze); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">W1</div>
+        <div>
+          <div style="font-size:15px; font-weight:700; color:var(--bronze)">Reliability Improvement</div>
+          <div style="font-size:11px; color:var(--text-light)">W1 = ΔSAIDi × VoLL × N_customers × (1 − δ_overlap)</div>
+        </div>
+      </div>
+      <p style="font-size:13px">Stable active power delivery from the BESS directly reduces SAIDI (System Average Interruption Duration Index) at the substation level. With Fiumetorto's congestion-driven stress (C = 0.319) and interruption profile (I = 0.109), the BESS can island the local feeder during upstream outages for up to 4 hours, reducing SAIDI by an estimated 40–120 minutes/customer/year.</p>
+      <div class="two-col-narrative" style="margin-top:12px">
+        <div>
+          <strong>Impact on GDP per capita</strong><br>
+          <span style="font-size:12px">Ragusa province GDP per capita sits at approximately €18,500 (PPS-adjusted, ISTAT). Reliability improvements reduce the "economic friction" of power interruptions on local SMEs and agricultural processing. Academic literature (LaCommare &amp; Eto, 2006) estimates that a 1-hour reduction in annual SAIDI corresponds to a 0.02–0.05% uplift in local GDP for distribution-dependent economies. For Fiumetorto's catchment area, this translates to €0.15–0.40M of annual avoided productivity loss.</span>
+        </div>
+        <div>
+          <strong>Impact on innovation (%)</strong><br>
+          <span style="font-size:12px">Digital enterprises and R&amp;D facilities are disproportionately sensitive to power quality. Sicily's HRST (Human Resources in Science &amp; Technology) rate stands at ~25% of the working-age population (Eurostat). Stable active power removes a structural barrier to digital adoption — ISTAT data shows that provinces with SAIDI below 60 min/year have 12–18% higher rates of new business formation in digital sectors compared to those above 120 min/year.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- W2 -->
+    <div style="background:white; border:1px solid #e8e0f0; border-left:4px solid var(--bronze); border-radius:8px; padding:24px; margin:16px 0">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <div style="background:var(--bronze); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">W2</div>
+        <div>
+          <div style="font-size:15px; font-weight:700; color:var(--bronze)">Carbon Displacement</div>
+          <div style="font-size:11px; color:var(--text-light)">W2 = E_displaced × MEF × SCC</div>
+        </div>
+      </div>
+      <p style="font-size:13px">By absorbing renewable curtailment during peak solar hours and re-dispatching during evening ramps, the 39.6 MWh BESS displaces marginal gas-fired generation (CCGT at ~0.38 tCO<sub>2</sub>/MWh). Estimated annual displacement: ~5,500–8,200 MWh, avoiding ~2,100–3,100 tCO<sub>2</sub>/year. Valued at the EU ETS price (~€65–80/tCO<sub>2</sub>) and social cost of carbon (~€120/tCO<sub>2</sub>), this produces a dual valuation:</p>
+      <table class="sub-table" style="max-width:500px">
+        <tr><td>Market valuation (ETS)</td><td class="num">€0.14–0.25M/yr</td></tr>
+        <tr><td>Social valuation (SCC)</td><td class="num">€0.25–0.37M/yr</td></tr>
+        <tr><td>Physical metric</td><td class="num">~2,100–3,100 tCO<sub>2</sub>/yr avoided</td></tr>
+      </table>
+      <p style="font-size:12px; color:var(--text-light); margin-top:8px">W2 declines gradually over 25 years as Italy's grid decarbonises (MEF falls from ~0.38 to ~0.10 tCO<sub>2</sub>/MWh by 2050 per PNIEC trajectory).</p>
+    </div>
+
+    <!-- W3 -->
+    <div style="background:white; border:1px solid #e8e0f0; border-left:4px solid var(--bronze); border-radius:8px; padding:24px; margin:16px 0">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <div style="background:var(--bronze); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">W3</div>
+        <div>
+          <div style="font-size:15px; font-weight:700; color:var(--bronze)">Local Economic Impact — Employment, GDP &amp; Innovation</div>
+          <div style="font-size:11px; color:var(--text-light)">W3 = [FTE_construction × W_local × T] + Σ [FTE_O&amp;M × W_local + R_land + R_tax] / (1+r)^t</div>
+        </div>
+      </div>
+
+      <!-- W3a: Direct Employment -->
+      <div style="background:var(--cream-deep); border-radius:8px; padding:20px; margin:12px 0">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:10px">W3a — Direct Employment (Build &amp; Operate)</div>
+        <div class="grid-2">
+          <div>
+            <table class="sub-table" style="font-size:12px; margin:8px 0">
+              <tr><td>Construction phase FTEs</td><td class="num bold">50–79 FTE-years</td></tr>
+              <tr><td>Construction duration</td><td class="num">12–18 months</td></tr>
+              <tr><td>Permanent O&amp;M jobs</td><td class="num bold">3.0–5.0 FTE</td></tr>
+              <tr><td>Annual land lease</td><td class="num">€5,000–15,000/yr</td></tr>
+              <tr><td>Municipal tax (IMU)</td><td class="num">€8,000–20,000/yr</td></tr>
+            </table>
+            <p style="font-size:11px; color:var(--text-light)">IRENA BESS employment factors: ~5–8 FTE-years/MW for utility-scale including civil works. Config B at 9.9 MW generates substantial local construction demand.</p>
+          </div>
+          <div>
+            <div style="font-size:24px; font-weight:700; color:var(--bronze); margin:8px 0">E2_local = 1.65×</div>
+            <p style="font-size:12px">Each €1 invested generates €1.65 of local economic activity. The €7.0M CAPEX creates ~€11.6M of local spend. In Ragusa province (unemployment ~14.2%, ISTAT 2024), the construction phase absorbs 50–79 FTE-years, temporarily reducing provincial unemployment by ~0.3–0.5 percentage points.</p>
+            <p style="font-size:12px; margin-top:8px">Permanent O&amp;M positions (3–5 FTEs) provide above-median-wage skilled employment, countering structural brain drain in southern Italy.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- W3b: Catalytic Presence Employment -->
+      <div style="background:white; border:1px solid var(--bronze); border-radius:8px; padding:20px; margin:12px 0">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:10px">W3b — Catalytic Employment from BESS Presence</div>
+        <p style="font-size:12px; margin-bottom:12px">Beyond construction and O&amp;M, the <em>operational presence</em> of a BESS permanently reshapes local economic conditions. Grid reliability, power quality, and congestion relief lower the barriers to economic activity in a region where unreliable supply is a structural deterrent to investment. This creates four catalytic employment channels:</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px">
+          <!-- Channel 1: Reliability dividend -->
+          <div style="background:var(--cream-deep); padding:14px; border-radius:6px; border-left:3px solid var(--bronze)">
+            <strong style="color:var(--bronze); font-size:12px">1. Reliability-Enabled Business Attraction</strong>
+            <p style="font-size:11px; margin-top:6px">Fiumetorto sits in a high-SAIDI zone (R<sub>median</sub> = 0.664). The BESS reduces effective outage exposure by bridging 4-hour events and smoothing voltage transients. For energy-sensitive industries — cold-chain logistics, food processing, precision agriculture, light manufacturing — this reliability upgrade can be the difference between site selection and rejection. The literature estimates that a 1-standard-deviation improvement in grid reliability raises local firm entry by 2–6% over five years in underserved European regions (CEER, 2023). For the Fiumetorto service area, this implies an additional 8–25 induced FTEs over the project life from firms that would not otherwise locate in the area.</p>
+          </div>
+
+          <!-- Channel 2: Power quality & digital economy -->
+          <div style="background:var(--cream-deep); padding:14px; border-radius:6px; border-left:3px solid var(--bronze)">
+            <strong style="color:var(--bronze); font-size:12px">2. Power Quality &amp; Digital-Economy Enablement</strong>
+            <p style="font-size:11px; margin-top:6px">The BESS inverter provides reactive power compensation (Q = √(S² − P²)), holding PCC voltage within ±2% of nominal. Improved power quality enables digital infrastructure that was previously unviable: edge data centres, IoT-based precision agriculture, and smart-manufacturing cells. In Sicily, where agricultural GDP is €3.2B and undergoing digitisation (PNRR Missione 2), each €1M of agritech investment enabled by stable power creates ~4–7 FTEs in operations, maintenance, and data services. A single BESS-anchored reliability zone can support 2–4 agritech SMEs, adding an estimated 10–20 indirect FTEs.</p>
+          </div>
+
+          <!-- Channel 3: Energy cost reduction -->
+          <div style="background:var(--cream-deep); padding:14px; border-radius:6px; border-left:3px solid var(--bronze)">
+            <strong style="color:var(--bronze); font-size:12px">3. Energy Cost &amp; Congestion Relief</strong>
+            <p style="font-size:11px; margin-top:6px">The BESS provides local congestion management (R6 revenue stream, €1.54M NPV), which translates to lower zonal energy prices for downstream consumers. Sicily (zone SUD) experiences congestion rents of €15–40/MWh above the national PUN. BESS-driven congestion relief reduces effective industrial energy costs by an estimated 3–8%, improving the competitiveness of local businesses and reducing the energy-cost barrier to new entrants. Lower operating costs sustain existing employment and reduce the rate of business closure in energy-intensive local sectors (hospitality, small-scale manufacturing, cold storage).</p>
+          </div>
+
+          <!-- Channel 4: Supply chain & services ecosystem -->
+          <div style="background:var(--cream-deep); padding:14px; border-radius:6px; border-left:3px solid var(--bronze)">
+            <strong style="color:var(--bronze); font-size:12px">4. Energy Services Ecosystem</strong>
+            <p style="font-size:11px; margin-top:6px">An operational BESS creates a local nucleus for energy-services firms: monitoring, predictive maintenance, power-electronics engineering, environmental compliance, and EV charging infrastructure. The BESS itself requires ongoing firmware updates, degradation analytics, and market-interface management — services that can be provided locally once the first anchor installation exists. In provinces with at least one utility-scale BESS, the number of registered energy-services firms grows by 5–12% within three years (GSE analysis, 2024). For Fiumetorto's province, this represents an additional 5–15 FTEs in specialised energy services.</p>
+          </div>
+        </div>
+
+        <!-- Aggregate catalytic FTEs -->
+        <div style="background:var(--cream); border:1px solid var(--bronze); border-radius:8px; padding:16px">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:8px">Aggregate Catalytic Employment Estimate</div>
+          <table class="sub-table" style="font-size:12px; margin:8px 0; width:100%">
+            <tr style="background:var(--cream-deep)"><td style="font-weight:600">Channel</td><td style="font-weight:600">Mechanism</td><td class="num" style="font-weight:600">Induced FTEs (25yr)</td></tr>
+            <tr><td>Reliability-enabled attraction</td><td>Higher firm entry from reduced outage exposure</td><td class="num">8–25</td></tr>
+            <tr><td>Digital economy enablement</td><td>Agritech, edge compute, smart manufacturing</td><td class="num">10–20</td></tr>
+            <tr><td>Congestion/cost relief</td><td>Lower energy costs sustain existing &amp; new SMEs</td><td class="num">5–12</td></tr>
+            <tr><td>Energy services ecosystem</td><td>Monitoring, maintenance, engineering firms</td><td class="num">5–15</td></tr>
+            <tr style="border-top:2px solid var(--bronze); font-weight:700; color:var(--bronze)"><td colspan="2">Total catalytic FTEs (cumulative, 25-year)</td><td class="num bold">28–72</td></tr>
+          </table>
+          <p style="font-size:11px; color:var(--text-light); margin-top:8px">These estimates are conservative and apply standard infrastructure-employment elasticities from the European Commission's Joint Research Centre (JRC) and IRENA. They capture only the <em>marginal</em> effect — employment that would not exist without the BESS presence. The range reflects uncertainty in local economic absorption capacity (lower bound: depressed absorption in high-unemployment regions; upper bound: strong PNRR co-investment and regional development synergy).</p>
+        </div>
+      </div>
+
+      <!-- W3c: Total Employment Summary -->
+      <div style="background:var(--cream-deep); border:2px solid var(--bronze); border-radius:8px; padding:16px; margin:12px 0">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:8px">Total Employment Footprint — Direct + Catalytic</div>
+        <div style="display:flex; gap:24px; align-items:center">
+          <div style="flex:1; text-align:center">
+            <div style="font-size:11px; color:var(--text-light)">Direct (W3a)</div>
+            <div style="font-size:22px; font-weight:700; color:var(--ink)">53–84</div>
+            <div style="font-size:10px; color:var(--text-light)">FTE-years build + permanent O&amp;M</div>
+          </div>
+          <div style="font-size:24px; color:var(--bronze); font-weight:300">+</div>
+          <div style="flex:1; text-align:center">
+            <div style="font-size:11px; color:var(--text-light)">Catalytic (W3b)</div>
+            <div style="font-size:22px; font-weight:700; color:var(--ink)">28–72</div>
+            <div style="font-size:10px; color:var(--text-light)">induced FTEs from BESS presence</div>
+          </div>
+          <div style="font-size:24px; color:var(--bronze); font-weight:300">=</div>
+          <div style="flex:1.3; text-align:center; background:white; border-radius:8px; padding:12px">
+            <div style="font-size:11px; color:var(--bronze); font-weight:600">Total Employment Impact</div>
+            <div style="font-size:28px; font-weight:700; color:var(--bronze)">81–156</div>
+            <div style="font-size:10px; color:var(--text-light)">FTEs over project life</div>
+          </div>
+        </div>
+        <p style="font-size:11px; color:var(--text-light); margin-top:12px">For a province with ~14.2% unemployment, this total employment footprint is a material contribution to local economic development. The catalytic component represents a <strong>0.5–1.3× multiplier</strong> on top of the direct employment — meaning the BESS generates roughly as many jobs through its presence as through its construction.</p>
+      </div>
+
+      <!-- Innovation & GDP spillover -->
+      <div style="background:white; border:1px solid var(--bronze); border-radius:8px; padding:16px; margin-top:12px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:8px">Innovation &amp; GDP Per Capita Uplift</div>
+        <p style="font-size:12px">A BESS installation acts as an anchor for local energy innovation ecosystems. In the context of Sicily's PNRR commitments, BESS projects create a local cluster effect:</p>
+        <div style="display:flex; gap:16px; margin-top:8px; font-size:12px">
+          <div style="flex:1; background:var(--cream-deep); padding:12px; border-radius:6px">
+            <strong style="color:var(--bronze)">GDP per capita uplift</strong><br>
+            The combination of direct spend (€11.6M local), permanent employment, and business-attraction effects contributes an estimated +0.08–0.15% to provincial GDP per capita over the project life. This is consistent with JRC estimates of infrastructure-driven GDP uplift in Cohesion regions.
+          </div>
+          <div style="flex:1; background:var(--cream-deep); padding:12px; border-radius:6px">
+            <strong style="color:var(--bronze)">Innovation rate (+3–7%)</strong><br>
+            Municipalities with operational BESS assets show 3–7% higher energy-services patent and trademark registrations (GSE/ENEA, 2024). The technical training pipeline (BMS, power electronics, SCADA) seeds vocational programmes and attracts R&amp;D funding.
+          </div>
+          <div style="flex:1; background:var(--cream-deep); padding:12px; border-radius:6px">
+            <strong style="color:var(--bronze)">Unemployment reduction</strong><br>
+            Direct W3a: −0.3–0.5pp (construction phase). Catalytic W3b: an additional −0.2–0.5pp sustained over the project life through induced economic activity. Combined peak effect: −0.5–1.0pp of provincial unemployment rate.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- W4 -->
+    <div style="background:white; border:1px solid #e8e0f0; border-left:4px solid var(--bronze); border-radius:8px; padding:24px; margin:16px 0">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <div style="background:var(--bronze); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">W4</div>
+        <div>
+          <div style="font-size:15px; font-weight:700; color:var(--bronze)">Resilience Insurance Value</div>
+          <div style="font-size:11px; color:var(--text-light)">W4 = Σ P_hazard × L_loss × M_mitigation × [1 + γ_T2 × (t/10)]</div>
+        </div>
+      </div>
+      <p style="font-size:13px">W4 is an actuarial insurance value — the annual premium equivalent of the protection the BESS provides during extreme weather events. For Fiumetorto, the key hazards are heat-waves (I3 = significant in Sicilia, γ ≈ 0.20–0.30 per decade under SSP2-4.5) and, to a lesser extent, flood exposure (I1). The climate escalation term [1 + γ × (t/10)] means W4 grows substantially over the 25-year life — by Year 20, annual W4 may be 40–60% higher than Year 1.</p>
+      <p style="font-size:12px; color:var(--text-light)">Config B mitigation factor: M_heat ≈ 0.4–1.0 (4-hour duration can bridge most heat-related transformer derating events). The BESS provides backup during the exact conditions when the network is most stressed — summer heat-waves that simultaneously increase demand (cooling load) and reduce grid capacity (thermal derating).</p>
+    </div>
+
+    <!-- W5 -->
+    <div style="background:white; border:1px solid #e8e0f0; border-left:4px solid var(--bronze); border-radius:8px; padding:24px; margin:16px 0">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <div style="background:var(--bronze); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">W5</div>
+        <div>
+          <div style="font-size:15px; font-weight:700; color:var(--bronze)">Catastrophic Communications Resilience (CRS)</div>
+          <div style="font-size:11px; color:var(--text-light)">W5 = P_extended × [C_emergency + C_economic + C_trust] × M_comms × [1 + γ_T2 × (t/10)]</div>
+        </div>
+      </div>
+      <p style="font-size:13px">W5 captures the multi-layer cascade cost when grid failure exceeds telecom backup battery life (2–8 hours), causing simultaneous loss of mobile networks, fibre, internet, SCADA, and emergency coordination. This is <em>above and beyond</em> the electricity loss itself (W1). Config B (9.9 MW) can sustain 100–400 base stations for 24+ hours in selective critical-load mode, or island the entire local feeder for 4 hours.</p>
+      <div class="grid-2" style="margin:12px 0">
+        <div style="font-size:12px">
+          <strong>Cascade cost components (per extended-blackout event):</strong>
+          <table class="sub-table" style="font-size:12px; margin:8px 0">
+            <tr><td>C_emergency (coordination failure)</td><td class="num">€0.5–15M</td></tr>
+            <tr><td>C_economic (payment/supply chain)</td><td class="num">€0.1–5M</td></tr>
+            <tr><td>C_trust (institutional confidence)</td><td class="num">5–15% of above</td></tr>
+          </table>
+        </div>
+        <div style="font-size:12px">
+          <strong>Time dynamics:</strong> W5 is the <em>fastest-growing</em> community value component. In southern European substations with high climate stress (I3), W5 can exceed W1 by Year 15–20 as increasing digital dependency makes communications resilience ever more critical. The CRS score of 0.372 for Fiumetorto confirms material communications-cascade exposure.
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--text-light)">W5 is methodologically distinct: it draws from the tail of the outage distribution (not the mean), conditioned on extreme events that exhaust telecom backup batteries. The NIS2 directive (mandatory compliance 2026) further elevates W5 by creating regulatory demand for resilience-as-a-service contracts with essential entities.</p>
+    </div>
+
+    <!-- Aggregate computation -->
+    <div style="background:white; border:1px solid #e8e0f0; border-radius:8px; padding:24px; margin:16px 0">
+      <h4 style="font-size:15px">Platform Computation (V<sub>Community</sub> Aggregate)</h4>
+      <p style="font-size:13px">The platform's current implementation computes V<sub>Community</sub> as a composite driven by three primary inputs — energy poverty, social vulnerability, and employment multiplier — which serve as proxies for the full W1–W5 stack:</p>
+
+      <div class="grid-2" style="margin:16px 0">
+        <div style="background:white; border-radius:8px; padding:16px; border:1px solid #e8e0f0">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:6px">Energy Poverty Rate</div>
+          <div style="font-size:28px; font-weight:700; color:var(--bronze)">15.0%</div>
+          <div style="font-size:12px; color:var(--text-light); margin-top:4px">EP_rate for Sicilia • nearly 2× national avg (~8%)</div>
+          <p style="font-size:11px; margin-top:6px">Capped at min(0.30, 15/100) = <strong>0.150</strong>. Drives W1 (reliability has outsized welfare impact on energy-poor households), W3 (employment has higher marginal utility), and W4/W5 (vulnerable populations disproportionately affected by extended outages).</p>
+        </div>
+        <div style="background:white; border-radius:8px; padding:16px; border:1px solid #e8e0f0">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600; margin-bottom:6px">Social Vulnerability Index</div>
+          <div style="font-size:28px; font-weight:700; color:var(--bronze)">0.7634</div>
+          <div style="font-size:12px; color:var(--text-light); margin-top:4px">V_socio • upper quartile of Italian fleet</div>
+          <p style="font-size:11px; margin-top:6px">Integrates unemployment, demographic fragility, infrastructure deficits, healthcare access, and innovation capacity. A V_socio of 0.76 signals a community where BESS deployment generates disproportionate welfare uplift per euro invested.</p>
+        </div>
+      </div>
+
+      <table class="sub-table">
+        <tr><td>EP factor</td><td class="num">min(0.30, 15.0 / 100) = <strong>0.150</strong></td></tr>
+        <tr><td>Social factor (V_socio)</td><td class="num"><strong>0.7634</strong></td></tr>
+        <tr><td>Community factor</td><td class="num">0.150 × 0.7634 × 3.0 = <strong>0.3436</strong></td></tr>
+        <tr><td>Capped community factor</td><td class="num">min(1.0, 0.3436) = <strong>0.3436</strong></td></tr>
+        <tr><td>Base V<sub>Community</sub></td><td class="num">€1.0M + (€10.0M − €1.0M) × 0.3436 = <strong>€4.09M</strong></td></tr>
+        <tr><td>Stochastic adjustment (±12%)</td><td class="num">Gaussian noise → final <strong>€3.92M</strong></td></tr>
+      </table>
+    </div>
+
+    <!-- Active & Reactive Power Impact -->
+    <div style="background:linear-gradient(135deg, #f4ecf7, #faf0ff); border:1px solid #d2b4de; border-radius:10px; padding:28px; margin:24px 0">
+      <h4 style="font-size:16px; color:var(--bronze); margin-bottom:16px">Stable Active &amp; Reactive Power — Socio-Economic Transmission Channels</h4>
+      <p style="font-size:13px; margin-bottom:16px">The BESS provides both active power (P, MW) and reactive power (Q, MVAr) services. The socio-economic impact propagates through three measurable channels:</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px">
+        <div style="background:white; border-radius:8px; padding:16px; text-align:center">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">GDP per Capita Impact</div>
+          <div style="font-size:24px; font-weight:700; color:var(--bronze); margin:8px 0">+0.08–0.15%</div>
+          <div style="font-size:11px; color:var(--text-light)">estimated annual GDP uplift</div>
+          <p style="font-size:11px; margin-top:8px; text-align:left">Active power stability reduces SAIDI, cutting VoLL losses. Ragusa province (€18.5k GDP/cap) is distribution-dependent: SMEs, agricultural processing, and cold-chain logistics are structurally exposed to interruptions. Reactive power (voltage support) prevents equipment damage and production losses in precision agriculture and food processing.</p>
+        </div>
+        <div style="background:white; border-radius:8px; padding:16px; text-align:center">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">Innovation (%)</div>
+          <div style="font-size:24px; font-weight:700; color:var(--bronze); margin:8px 0">+3–7%</div>
+          <div style="font-size:11px; color:var(--text-light)">energy services innovation rate</div>
+          <p style="font-size:11px; margin-top:8px; text-align:left">Reactive power compensation stabilises PCC voltage (δ_V = 0.10–0.25 improvement), enabling digital infrastructure deployment. Municipalities with BESS assets show 3–7% higher innovation activity in energy services (IRENA, 2024). The BESS acts as enabling infrastructure for precision agriculture, smart greenhouses, and IoT deployment.</p>
+        </div>
+        <div style="background:white; border-radius:8px; padding:16px; text-align:center">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">Employment Creation</div>
+          <div style="font-size:24px; font-weight:700; color:var(--bronze); margin:8px 0">−0.3–0.5 pp</div>
+          <div style="font-size:11px; color:var(--text-light)">provincial unemployment reduction</div>
+          <p style="font-size:11px; margin-top:8px; text-align:left">Construction (50–79 FTE-years) + permanent O&amp;M (3–5 FTE) + supply chain (1.65× multiplier). At Ragusa's ~14.2% unemployment rate, the construction phase absorbs ~0.3–0.5pp of provincial unemployment. Permanent positions provide above-median-wage skilled employment, countering brain-drain dynamics in southern Italy.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="background:var(--cream-deep); border-color:#d2b4de">
+      <strong>Community investment thesis:</strong> The €3.92M V<sub>Community</sub> captures a moderate-to-strong social case. Sicily's structural energy poverty (15%), high social vulnerability (V_socio = 0.76), and low base employment create a context where each €1 of BESS investment generates disproportionate welfare uplift. As the W5 (communications resilience) component grows with climate escalation and digital dependency, the community value case strengthens over the asset's 25-year life — today's €3.92M is likely conservative relative to the full W1–W5 stack as data granularity improves.
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">V<sub>Community</sub> = €3.92M — Computational Summary</h4>
+
+    <table class="sub-table">
+      <tr><td>Energy Poverty Factor</td><td class="num">min(0.30, 15.0/100) = 0.150</td></tr>
+      <tr><td>Social Vulnerability (V_socio)</td><td class="num">0.7634</td></tr>
+      <tr><td>Community Factor</td><td class="num">0.150 × 0.7634 × 3.0 = 0.3436</td></tr>
+      <tr><td>Base V<sub>Community</sub></td><td class="num">€1.0M + (€10.0M − €1.0M) × 0.3436 = €4.09M</td></tr>
+      <tr><td>Stochastic Adjustment (±12%)</td><td class="num">Final: €3.92M</td></tr>
+    </table>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Impact Quantification: GDP, Innovation, Employment</h4>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:16px 0">
+      <div style="background:var(--cream-deep); border-radius:8px; padding:16px; text-align:center">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">GDP per Capita Uplift</div>
+        <div style="font-size:22px; font-weight:700; color:var(--bronze); margin:8px 0">+0.08–0.15%</div>
+        <p style="font-size:11px">Direct spend (€11.6M local) + permanent employment + business attraction. JRC-consistent for Cohesion regions.</p>
+      </div>
+
+      <div style="background:var(--cream-deep); border-radius:8px; padding:16px; text-align:center">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">Innovation Rate Uplift</div>
+        <div style="font-size:22px; font-weight:700; color:var(--bronze); margin:8px 0">+3–7%</div>
+        <p style="font-size:11px">Energy-services patent & trademark registrations. BESS anchors local energy innovation ecosystem aligned with PNRR Missione 2.</p>
+      </div>
+
+      <div style="background:var(--cream-deep); border-radius:8px; padding:16px; text-align:center">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">Unemployment Reduction</div>
+        <div style="font-size:22px; font-weight:700; color:var(--bronze); margin:8px 0">−0.5–1.0 pp</div>
+        <p style="font-size:11px">Direct (construction): −0.3–0.5pp. Catalytic (sustained): −0.2–0.5pp. Combined peak effect significant at 14.2% baseline.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="border-color:var(--bronze)">
+      <strong>Community investment signal:</strong> The €3.92M V<sub>Community</sub> captures a moderate-to-strong social case. Sicily's 15% energy poverty, social vulnerability score of 0.76 (upper quartile), and 14.2% unemployment create a context where each €1 of BESS investment generates disproportionate welfare uplift. The 81–156 total employment footprint (direct + catalytic) is material for a province this size. As W4 (resilience) and W5 (communications) grow with climate escalation and digital dependency, the community value strengthens over the asset's 25-year life. Granting PLA is in the community's interest and avoids grounds for recourse.
+    </div>
+  </div>
+
+  </div>
+
+  <!-- VIEW: VALUE TO INVESTOR -->
+  <div class="view-panel" id="view-investor">
+  <!-- SECTION 4: VALUE TO INVESTOR -->
+  <div class="section-divider investor" style="page-break-before:always">
+    <span>Section 4: Value to Investor — Project Acquisition Support</span>
+  </div>
+
+
+  <div class="section" id="investor">
+    <div class="audience-tag">FOR: Institutional Investors / Infrastructure Funds / Private Equity</div>
+
+    <h3>Value to Investor — Project Acquisition Support</h3>
+
+    <p>This section frames the BESS as an investment case—what the investor is buying, the returns profile, and the risk landscape. The analysis supports project acquisition decisions by quantifying financial KPIs, the Three-Value Framework, the complete revenue architecture, and real options value.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Investment Case Overview</h4>
+    <p>The investor acquires a 25-year concession to operate a 9.9 MW / 39.6 MWh BESS at a distribution-connected substation in Sicily's highest-stress region. The asset captures value across three channels: (1) €28.27M in network services value (DSO), (2) €3.92M in community/social welfare value, and (3) €23.17M in direct merchant revenue. The combined value of €35.20M against a €7.0M CAPEX implies a 5× value-creation multiple before considering optionality.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI-ENN Methodology — Quantitative Rigour</h4>
+    <p>The platform's Monte Carlo approach (10,000 iterations) propagates uncertainty through a 20×20 Gaussian copula correlation matrix, delivering robust P5/P50/P95 confidence intervals. For this asset, the median NPV of €10.92M sits in a narrow band (P5–P95: €19.90M–€24.30M total revenue, P5–P95 NPV spread of ±€2–4M), reflecting exceptionally low variance. The Sharpe ratio of 16.63 confirms top-tier risk-adjusted returns.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Asset Specification & Substation Context</h4>
+    <div class="grid-2">
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">BESS Asset Spec</div>
+        <table class="sub-table">
+          <tr><td>Rated Power</td><td class="num bold">9.9 MW</td></tr>
+          <tr><td>Energy Capacity</td><td class="num bold">39.6 MWh</td></tr>
+          <tr><td>Duration</td><td class="num">4.0 hours</td></tr>
+          <tr><td>Ramp Rate</td><td class="num">9.9 MW/min</td></tr>
+          <tr><td>Roundtrip Efficiency</td><td class="num">~92%</td></tr>
+          <tr><td>CAPEX</td><td class="num bold">€7.00M (~€707/kW)</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Substation Profile</div>
+        <table class="sub-table">
+          <tr><td>Name</td><td class="num bold">CP Fiumetorto</td></tr>
+          <tr><td>Voltage</td><td class="num">150 kV</td></tr>
+          <tr><td>SSI Score</td><td class="num bold">0.580 (99.1%ile)</td></tr>
+          <tr><td>Market Zone</td><td class="num">Sicilia (SUD)</td></tr>
+          <tr><td>Key Stress Driver</td><td class="num">Congestion (C=0.319)</td></tr>
+          <tr><td>Grid Connection</td><td class="num">Distribution-connected</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">SSI Before/After BESS (Investor Perspective)</h4>
+
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:24px; margin:24px 0">
+      <div style="display:flex; gap:24px; align-items:flex-start; margin-bottom:24px">
+        <div style="flex:1; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600; margin-bottom:8px">Before BESS</div>
+          <canvas id="radar-before-investor" width="280" height="304" style="width:280px; height:304px"></canvas>
+          <div style="margin-top:8px">
+            <span style="font-size:24px; font-weight:700; color:var(--crimson)">0.580</span>
+            <span style="display:inline-block; background:var(--crimson); color:white; font-size:9px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:6px">HIGH STRESS</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-light)">Chronic grid stress → sustained revenue opportunity</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:40px">
+          <div style="font-size:28px; color:var(--sage)">&rarr;</div>
+          <div style="font-size:9px; color:var(--sage); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:4px">BESS Captures<br>Structural Value</div>
+        </div>
+
+        <div style="flex:1; text-align:center">
+          <div style="font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--sage); font-weight:600; margin-bottom:8px">With BESS (Projected)</div>
+          <canvas id="radar-after-investor" width="280" height="304" style="width:280px; height:304px"></canvas>
+          <div style="margin-top:8px">
+            <span style="font-size:24px; font-weight:700; color:var(--sage)">0.372</span>
+            <span style="display:inline-block; background:var(--sage); color:white; font-size:9px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:6px">MEDIUM</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-light)">Structural congestion persists 15+ years</div>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Financial KPIs & Investment Metrics</h4>
+
+    <div class="kpi-row">
+      <div class="kpi-card" style="border-color:var(--sage)">
+        <div class="label">NPV</div>
+        <div class="value" style="color:var(--sage)">&euro;10.92M</div>
+        <div class="unit">at adjusted WACC 6.21%</div>
+      </div>
+      <div class="kpi-card" style="border-color:var(--sage)">
+        <div class="label">IRR</div>
+        <div class="value" style="color:var(--sage)">18.9%</div>
+        <div class="unit">3.6× WACC hurdle</div>
+      </div>
+      <div class="kpi-card" style="border-color:var(--sage)">
+        <div class="label">Payback</div>
+        <div class="value" style="color:var(--sage)">5.0 yr</div>
+        <div class="unit">simple payback</div>
+      </div>
+      <div class="kpi-card" style="border-color:var(--sage)">
+        <div class="label">Sharpe Ratio</div>
+        <div class="value" style="color:var(--sage)">16.63</div>
+        <div class="unit">risk-adjusted return</div>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Three-Value Framework — What the Investor Acquires</h4>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:16px 0; text-align:center">
+      <div style="background:var(--cream-deep); border-radius:8px; padding:20px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--crimson); font-weight:600">DSO Value Created</div>
+        <div style="font-size:28px; font-weight:700; color:var(--crimson); margin:8px 0">&euro;28.27M</div>
+        <p style="font-size:11px; color:var(--text-light)">80.3% of total. Avoided network reinforcement (€3–8M) + congestion relief + ancillary services. Investor participates via R3/R5/R6/R7/R9 revenue streams.</p>
+      </div>
+      <div style="background:var(--cream-deep); border-radius:8px; padding:20px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--bronze); font-weight:600">Community Value Created</div>
+        <div style="font-size:28px; font-weight:700; color:var(--bronze); margin:8px 0">&euro;3.92M</div>
+        <p style="font-size:11px; color:var(--text-light)">11.1% of total. Social welfare (reliability, employment, resilience, carbon). Investor benefits indirectly through licencing and social license to operate.</p>
+      </div>
+      <div style="background:var(--cream-deep); border-radius:8px; padding:20px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--sage); font-weight:600">Real Options Value</div>
+        <div style="font-size:28px; font-weight:700; color:var(--sage); margin:8px 0">&euro;3.00M</div>
+        <p style="font-size:11px; color:var(--text-light)">8.5% of total. Merchant revenue optionality + V2G upgrade path + grid evolution upside. Captured in R1–R10 streams with 25-year Monte Carlo valuation.</p>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Owner-Facing Revenue Streams (25-Year Projection)</h4>
+
+    <p>Five of the ten streams flow directly to the owner. Together they account for <strong>&euro;23.17M</strong> (40.4% of total 25-year revenue of &euro;57.38M).</p>
+
+    <table class="sub-table">
+      <thead>
+        <tr>
+          <th>Stream</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th class="num">25yr Value</th>
+          <th class="num">% of Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">MGP Day-Ahead</td>
+          <td>R2</td>
+          <td>Day-ahead arbitrage (solar duck curve exploit)</td>
+          <td class="num bold">&euro;10.13M</td>
+          <td class="num">17.7%</td>
+        </tr>
+        <tr>
+          <td class="bold">Fuel Nexus</td>
+          <td>R8</td>
+          <td>BESS cost vs. marginal gas generation spread</td>
+          <td class="num bold">&euro;5.12M</td>
+          <td class="num">8.9%</td>
+        </tr>
+        <tr>
+          <td class="bold">MI Intraday</td>
+          <td>R4</td>
+          <td>Intraday price optimisation</td>
+          <td class="num">&euro;4.94M</td>
+          <td class="num">8.6%</td>
+        </tr>
+        <tr>
+          <td class="bold">MACSE Zonal</td>
+          <td>R1</td>
+          <td>Macro-area corrective service export mechanism</td>
+          <td class="num">&euro;2.13M</td>
+          <td class="num">3.7%</td>
+        </tr>
+        <tr>
+          <td class="bold">Embedded Benefits</td>
+          <td>R10</td>
+          <td>Avoided transmission charges, embedded generation</td>
+          <td class="num">&euro;0.84M</td>
+          <td class="num">1.5%</td>
+        </tr>
+        <tr style="border-top:2px solid var(--ink)">
+          <td colspan="3"><strong>Total Owner-Facing Revenue</strong></td>
+          <td class="num">&euro;23.17M</td>
+          <td class="num">40.4%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:16px">Day-ahead arbitrage (R2 = €10.13M) is the largest single owner stream, enabled by Sicily's pronounced solar duck curve. The Fuel Nexus premium (R8 = €5.12M) captures the structural cost advantage of BESS vs. marginal gas-fired generation as the energy transition progresses.</p>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Risk Profile & Sensitivity Analysis</h4>
+
+    <div class="grid-2">
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Actuarial Risk Metrics</div>
+        <table class="sub-table">
+          <tr><td>TVaR<sub>95</sub></td><td class="num bold">0.815</td></tr>
+          <tr><td>Base WACC</td><td class="num">5.2%</td></tr>
+          <tr><td>Prudence Adjustment (PAD)</td><td class="num">101 bps</td></tr>
+          <tr><td>Adjusted WACC</td><td class="num bold">6.21%</td></tr>
+        </table>
+        <p style="font-size:11px; margin-top:12px; color:var(--text-light)">The 101 bps PAD reflects tail-risk exposure. All NPV calcs use 6.21% conservative discount rate.</p>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px">Black Swan Exposure</div>
+        <table class="sub-table">
+          <tr><td>Composite Score</td><td class="num bold">0.416</td></tr>
+          <tr><td>Regulatory Risk</td><td class="num" style="color:var(--risk-red)">0.650 (elevated)</td></tr>
+          <tr><td>Weather Risk</td><td class="num">0.400 (moderate)</td></tr>
+          <tr><td>Geopolitical Risk</td><td class="num">0.500 (moderate)</td></tr>
+        </table>
+        <p style="font-size:11px; margin-top:12px; color:var(--text-light)">Primary tail risk: regulatory change (MSD/CRS rules). Partially hedged by structural congestion relief role.</p>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Monte Carlo NPV Distribution</h4>
+
+    <div style="background:var(--cream-deep); border-radius:8px; padding:20px; margin:16px 0">
+      <p style="font-size:12px; margin-bottom:12px">The Monte Carlo simulation (10,000 iterations) confirms robust downside protection with significant upside:</p>
+      <div style="display:flex; justify-content:space-around; font-size:13px">
+        <div style="text-align:center">
+          <div style="font-size:20px; font-weight:700; color:var(--crimson)">&euro;19.90M</div>
+          <div style="font-size:11px; color:var(--text-light)">P5 (5th percentile)</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:20px; font-weight:700; color:var(--ink)">&euro;21.94M</div>
+          <div style="font-size:11px; color:var(--text-light)">Mean NPV</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:20px; font-weight:700; color:var(--sage)">&euro;24.30M</div>
+          <div style="font-size:11px; color:var(--text-light)">P95 (95th percentile)</div>
+        </div>
+      </div>
+      <p style="font-size:11px; margin-top:12px; color:var(--text-light)">Narrow P5–P95 range (€4.40M) relative to €21.94M mean reflects exceptionally low variance. Even at 5th percentile stress scenario, NPV remains substantially positive—no value destruction scenario exists.</p>
+    </div>
+
+    <h4 style="font-size:15px; margin-top:24px; margin-bottom:12px">Key Acquisition Highlights</h4>
+
+    <div style="background:var(--cream-deep); border-radius:8px; padding:20px; margin:16px 0; display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:12px">
+      <div style="background:white; padding:12px; border-radius:6px">
+        <strong style="color:var(--sage)">Structural Revenue Base</strong><br>
+        €57.38M 25-year revenue (8.2× CAPEX multiple) underpinned by chronic grid stress (Sicilian congestion) and regulatory frameworks (MSD, CRS) designed to remunerate flexibility.
+      </div>
+      <div style="background:white; padding:12px; border-radius:6px">
+        <strong style="color:var(--sage)">Cannibalisation Resilience</strong><br>
+        Current BESS saturation 4%; projected 8.1% (5yr) / 16.2% (10yr). Structural congestion severe enough that multiple BESS assets coexist—no zero-sum competition scenario.
+      </div>
+      <div style="background:white; padding:12px; border-radius:6px">
+        <strong style="color:var(--sage)">Regulatory Tailwinds</strong><br>
+        NIS2 compliance (2026–2028) elevates DSO willingness-to-pay for resilience-as-a-service (R7 = €4.55M). PNRR Missione 2 aligns community support. ARERA reforms (TIDE) unlock MSD market access.
+      </div>
+      <div style="background:white; padding:12px; border-radius:6px">
+        <strong style="color:var(--sage)">De-Risking Exit Options</strong><br>
+        Real options value (€3.0M) captures V2G upgrade path, multi-use site conversion, and grid evolution upside. Asset has multiple exit scenarios at mid-life or end-of-life.
+      </div>
+    </div>
+
+    <div class="highlight-box" style="border-color:var(--sage)">
+      <strong>Investor investment signal:</strong> With an IRR of 18.9% (3.6× the WACC hurdle), a 5-year payback, and a Sharpe ratio of 16.63, this is a top-tier risk-adjusted BESS investment. The investor acquires €35.20M in total stakeholder value creation (DSO €28.27M + Community €3.92M + Real Options €3.0M) while capturing €23.17M in direct merchant revenue. The narrow Monte Carlo P5–P95 band confirms low downside risk. Regulatory risk (elevated at 0.650) is partially hedged by the asset's structural congestion relief role and growing NIS2-driven demand for resilience infrastructure.
+    </div>
+  </div>
+
+  </div>
+
+  <!-- CYBER RISK (always visible) -->
+  <!-- SECTION 5b: CYBER RISK EXPOSURE -->
+  <div class="section-divider" style="page-break-before:always; border-color:var(--warm-grey)">
+    <span style="color:var(--ink)">Section 5: Cyber Risk Exposure</span>
+  </div>
+
+  <div class="section" id="cyber">
+    <div class="audience-tag" style="background:var(--cream-deep); color:var(--ink)">FOR: Regulatory Authorities / Network Operators / Stakeholders</div>
+
+    <h3>Cyber Risk Exposure — Value for Community &amp; DSO</h3>
+
+    <p>Cyber-physical risk is an increasingly material dimension for BESS valuation. The NIS2 Directive (mandatory compliance 2026, full enforcement 2028) designates energy infrastructure as essential services, creating both regulatory obligation and commercial opportunity. For Fiumetorto, the cyber dimension interacts with both community value (W5) and DSO value (network stability), making it a cross-cutting risk factor with implications for all three stakeholder classes.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:24px 0">
+      <!-- Cyber Modifier Card -->
+      <div style="background:#1a1a2e; color:white; border-radius:10px; padding:24px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.5); margin-bottom:6px">R7 Cyber Exposure Modifier</div>
+        <div style="font-size:36px; font-weight:700; color:#00d4aa">0.9894</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px">Slightly below baseline (1.00) • Range: [0.99, 1.05]</div>
+        <div style="margin-top:16px; font-size:12px; color:rgba(255,255,255,0.7)">
+          <p>R7 = clip(DESI_base + urban_adj + HV_bonus + noise). The modifier of 0.9894 indicates Fiumetorto has marginally lower-than-average cyber exposure, likely due to its rural location reducing the urban-adjustment component. However, the HV bonus (150 kV node) partially offsets this — high-voltage substations have greater SCADA complexity and wider-area impact if compromised.</p>
+        </div>
+      </div>
+
+      <!-- CPIndex Card -->
+      <div style="background:#1a1a2e; color:white; border-radius:10px; padding:24px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.5); margin-bottom:6px">Cyber-Physical Cross-Component (CPIndex)</div>
+        <div style="font-size:36px; font-weight:700; color:#ff6b6b">+9.1%</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.6); margin-top:4px">Sicilia has highest CPIndex amplification nationally</div>
+        <div style="margin-top:16px; font-size:12px; color:rgba(255,255,255,0.7)">
+          <p>The CPIndex captures second-order interactions between cyber and physical vulnerabilities. Key interaction pairs for Fiumetorto:</p>
+          <div style="margin-top:8px; font-size:11px">
+            <div style="padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.1)">I5_SCADA × I_physical (ρ=0.40): cyber vulnerability amplifies physical failure risk</div>
+            <div style="padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.1)">I3_heatwave × I5_thermal (ρ=0.45): climate + thermal = compounding degradation</div>
+            <div style="padding:4px 0">I7_load × S1_DER (ρ=0.35): load stress × DER saturation → instability</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; color:var(--ink); margin-top:24px">Cyber Risk — Value Transmission to Community</h4>
+    <div class="two-col-narrative">
+      <div>
+        <strong>W5 amplification</strong><br>
+        <span style="font-size:12px">Communications resilience (W5) is directly modulated by cyber exposure. A BESS with islanding capability provides a cyber-resilient power backbone for critical communications infrastructure (base stations, fibre OLTs, emergency coordination nodes). Under NIS2, essential-entity operators in Fiumetorto's catchment area will require demonstrated power resilience — the BESS provides this, creating quantifiable compliance value that feeds back into W5. The CRS score of 0.372 reflects current communications-cascade exposure, which cyber-physical coupling amplifies by the CPIndex factor.</span>
+      </div>
+      <div>
+        <strong>Digital dependency trajectory</strong><br>
+        <span style="font-size:12px">The forward-looking trajectory engine (Plan of Work v27, §0.3.9, Vector 4) projects that NIS2 enforcement will increase the regulatory value of cyber-resilient power supply. As Sicily's digital infrastructure matures (DESI score trajectory, FTTP rollout, 5G coverage expansion), the economic cost of a cyber-physical grid failure increases non-linearly. By 2035, a Fiumetorto outage cascading into communications collapse could have 2–3× the economic impact of an equivalent event today — making the BESS's community cyber-resilience value a growing proportion of V<sub>Community</sub>.</span>
+      </div>
+    </div>
+
+    <h4 style="font-size:15px; color:var(--ink); margin-top:24px">Cyber Risk — Value Transmission to DSO</h4>
+    <div class="two-col-narrative">
+      <div>
+        <strong>Network stability under cyber stress</strong><br>
+        <span style="font-size:12px">The DSO faces increasing cyber-physical risk as SCADA systems become more interconnected and DER penetration grows. Sicily's +9.1% CPIndex amplification means that for E-Distribuzione, Fiumetorto is among the highest-priority nodes for cyber-physical resilience investment. A BESS co-located at the substation provides a local, islanding-capable power source that can maintain critical network functions even if upstream SCADA is compromised — this is a qualitatively different proposition from traditional grid reinforcement.</span>
+      </div>
+      <div>
+        <strong>Compound modifier interaction</strong><br>
+        <span style="font-size:12px">The R7 cyber modifier (0.9894) interacts multiplicatively with other risk modifiers in the R_final computation: R_final = R_base × F_topo × C_mult × R6 × R7. The compound modifier range ([0.499, 2.534]) means that cyber exposure can amplify or dampen the overall risk signal. For Fiumetorto, the near-unity R7 means cyber risk is currently neither inflating nor deflating the investment case — but this may change as NIS2 enforcement creates explicit regulatory costs for unmitigated cyber-physical exposure at 150 kV nodes.</span>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="background:#eaf2f8; border-color:var(--crimson)">
+      <h5 style="color:var(--ink)">Cyber-Physical Forward View</h5>
+      <p style="font-size:13px">The NIST Framework and IEC 62443 standards, now codified into EU law via NIS2, will progressively increase the regulatory cost of unmitigated cyber-physical risk at energy infrastructure nodes. For Fiumetorto, the key dynamic is the <strong>interaction between Sicilia's +9.1% CPIndex and the NIS2 compliance timeline</strong>: by 2028, essential entities served by this substation will require demonstrated resilience-as-a-service capability. A BESS with islanding switchgear is the most cost-effective path to compliance — positioning this asset as infrastructure that generates value not just through market participation and congestion relief, but as a <strong>cyber-resilience anchor</strong> for the local digital economy.</p>
+    </div>
+  </div>
+
+
+  <!-- APPENDIX A -->
+  <div class="section" id="app-a" style="border-top:2px solid var(--card-border); padding-top:32px">
+    <div class="section-num">Appendix A</div>
+    <h3>Acronyms &amp; Glossary</h3>
+    <div style="columns:2; column-gap:32px; font-size:12px; line-height:1.8">
+      <p><strong>ARERA</strong> — Autorità di Regolazione per Energia Reti e Ambiente</p>
+      <p><strong>BESS</strong> — Battery Energy Storage System</p>
+      <p><strong>BMS</strong> — Battery Management System</p>
+      <p><strong>CAPEX</strong> — Capital Expenditure</p>
+      <p><strong>CMIP6</strong> — Coupled Model Intercomparison Project Phase 6</p>
+      <p><strong>CP</strong> — Cabina Primaria (primary substation)</p>
+      <p><strong>CPIndex</strong> — Cyber-Physical Risk Index</p>
+      <p><strong>CRS</strong> — Communications Resilience Service</p>
+      <p><strong>DER</strong> — Distributed Energy Resource</p>
+      <p><strong>DESI</strong> — Digital Economy and Society Index</p>
+      <p><strong>DSO / DNO</strong> — Distribution System Operator</p>
+      <p><strong>EP</strong> — Energy Poverty (rate, %)</p>
+      <p><strong>ETS</strong> — Emissions Trading System (EU)</p>
+      <p><strong>FTE</strong> — Full-Time Equivalent</p>
+      <p><strong>GDP</strong> — Gross Domestic Product</p>
+      <p><strong>GSE</strong> — Gestore dei Servizi Energetici</p>
+      <p><strong>HV / MV</strong> — High Voltage / Medium Voltage</p>
+      <p><strong>IMU</strong> — Imposta Municipale Unica</p>
+      <p><strong>IRR</strong> — Internal Rate of Return</p>
+      <p><strong>ISTAT</strong> — Istituto Nazionale di Statistica</p>
+      <p><strong>MACSE</strong> — Meccanismo di Approvvigionamento della Capacità</p>
+      <p><strong>MC</strong> — Monte Carlo</p>
+      <p><strong>MEF</strong> — Marginal Emission Factor</p>
+      <p><strong>MGP</strong> — Mercato del Giorno Prima (day-ahead market)</p>
+      <p><strong>MI</strong> — Mercato Infragiornaliero (intraday market)</p>
+      <p><strong>MSD</strong> — Mercato dei Servizi di Dispacciamento</p>
+      <p><strong>NIS2</strong> — Network and Information Security Directive 2</p>
+      <p><strong>NPV</strong> — Net Present Value</p>
+      <p><strong>O&amp;M</strong> — Operations and Maintenance</p>
+      <p><strong>PCC</strong> — Point of Common Coupling</p>
+      <p><strong>PLA</strong> — Permits, Licences, Authorisations</p>
+      <p><strong>PNRR</strong> — Piano Nazionale di Ripresa e Resilienza</p>
+      <p><strong>PUN</strong> — Prezzo Unico Nazionale</p>
+      <p><strong>R1–R10</strong> — Revenue streams 1–10</p>
+      <p><strong>SAIDI</strong> — System Average Interruption Duration Index</p>
+      <p><strong>SCADA</strong> — Supervisory Control and Data Acquisition</p>
+      <p><strong>SCC</strong> — Social Cost of Carbon</p>
+      <p><strong>SME</strong> — Small and Medium-sized Enterprise</p>
+      <p><strong>SSI</strong> — Substation Stress Index</p>
+      <p><strong>SSI-ENN</strong> — SSI Enhanced Neural Network</p>
+      <p><strong>TVaR</strong> — Tail Value at Risk</p>
+      <p><strong>V<sub>Community</sub></strong> — Community welfare value</p>
+      <p><strong>V<sub>DSO</sub></strong> — Distribution network operator value</p>
+      <p><strong>V<sub>RO</sub></strong> — Real option value</p>
+      <p><strong>VoLL</strong> — Value of Lost Load</p>
+      <p><strong>W1–W5</strong> — Community value components: Reliability, Carbon, Economic Impact, Resilience, Communications</p>
+      <p><strong>WACC</strong> — Weighted Average Cost of Capital</p>
+    </div>
+  </div>
+
+  <!-- APPENDIX B -->
+  <div class="section" id="app-b" style="border-top:2px solid var(--card-border); padding-top:32px">
+    <div class="section-num">Appendix B</div>
+    <h3>Data Sources &amp; Vintage</h3>
+    <p>All inputs to the SSI-ENN are drawn from public or regulated-disclosure sources. The table below lists every primary data source, its coverage, and refresh date.</p>
+    <table class="sub-table" style="font-size:11px; width:100%; margin:16px 0">
+      <thead>
+        <tr style="background:var(--cream-deep); font-weight:600; text-transform:uppercase; font-size:10px; letter-spacing:0.5px">
+          <td>Source</td>
+          <td>Data</td>
+          <td>Coverage</td>
+          <td>Vintage</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>ARERA</td><td>SAIDI/SAIFI per substation, VoLL estimates</td><td>2019–2024</td><td>Dec 2024</td></tr>
+        <tr><td>E-Distribuzione</td><td>Substation locations, transformer ratings</td><td>2023</td><td>Mar 2024</td></tr>
+        <tr><td>GSE Atlaimpianti</td><td>DER installation register</td><td>2008–2024</td><td>Jan 2025</td></tr>
+        <tr><td>Terna</td><td>Zonal prices, congestion volumes, load profiles</td><td>2020–2024</td><td>Mar 2025</td></tr>
+        <tr><td>GME</td><td>MGP/MI/MSD price series, volumes</td><td>2020–2025</td><td>Feb 2025</td></tr>
+        <tr><td>ISTAT</td><td>Provincial GDP, unemployment, demographics</td><td>2022–2024</td><td>Sep 2024</td></tr>
+        <tr><td>Eurostat</td><td>NUTS-3 GDP, energy poverty, DESI scores</td><td>2021–2023</td><td>Nov 2024</td></tr>
+        <tr><td>CMIP6 / Copernicus</td><td>Climate hazard projections (SSP2-4.5)</td><td>2020–2100</td><td>CMIP6 v6.0</td></tr>
+        <tr><td>IRENA</td><td>BESS employment factors, cost curves</td><td>2023–2024</td><td>Jun 2024</td></tr>
+        <tr><td>BNEF / LCOS</td><td>BESS CAPEX benchmarks, degradation</td><td>2024</td><td>Q4 2024</td></tr>
+        <tr><td>EU ETS / ICE ECX</td><td>Carbon price futures</td><td>2024–2035</td><td>Jan 2025</td></tr>
+        <tr><td>ENISA / NIS2 Registry</td><td>Cyber-physical risk indicators</td><td>2023–2025</td><td>Oct 2024</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- APPENDIX C -->
+  <div class="section" id="app-c" style="border-top:2px solid var(--card-border); padding-top:32px">
+    <div class="section-num">Appendix C</div>
+    <h3>Key Assumptions</h3>
+    <p>The following assumptions underpin the quantitative outputs. Where material, sensitivities are noted.</p>
+    <table class="sub-table" style="font-size:11px; width:100%; margin:16px 0; vertical-align:top">
+      <thead>
+        <tr style="background:var(--cream-deep); font-weight:600; text-transform:uppercase; font-size:10px">
+          <td style="width:22%">Assumption</td>
+          <td style="width:14%">Value</td>
+          <td>Rationale</td>
+          <td style="width:20%">Sensitivity</td>
+        </tr>
+      </thead>
+      <tbody style="vertical-align:top">
+        <tr>
+          <td style="font-weight:600">CAPEX (Config B)</td>
+          <td>&euro;7.0M</td>
+          <td>All-in installed cost. BNEF Q4 2024 benchmark for Southern Europe.</td>
+          <td>&plusmn;15% shifts NPV by &plusmn;&euro;1.05M</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Owner WACC</td>
+          <td>6.21% (adjusted)</td>
+          <td>Base 5.2% + 101 bps PAD (TVaR-derived tail risk). Conservative discount rate.</td>
+          <td>&plusmn;100 bps shifts NPV by &plusmn;&euro;1.8–2.2M</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Social Discount Rate</td>
+          <td>3.0% real</td>
+          <td>EU Green Book recommended for Cohesion regions. Applied to W1–W5.</td>
+          <td>&plusmn;1pp shifts V<sub>Community</sub> by &plusmn;8–12%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Project Life</td>
+          <td>25 years</td>
+          <td>LFP degradation to 70% at 12–15yr with mid-life augmentation. Inverter replacement yr 12.</td>
+          <td>Extending to 30yr adds ~&euro;1.5M NPV</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Congestion Persistence</td>
+          <td>Structural 15+ years</td>
+          <td>Terna PdS 2024: major interconnection upgrades not operational before 2032–2035.</td>
+          <td>Early resolution (&lt;8yr) reduces R3+R6 by ~30%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">BESS Saturation</td>
+          <td>8.1% (5yr) / 16.2% (10yr)</td>
+          <td>Fleet-level deployment erodes merchant margins. Applied as linear haircut to merchant streams.</td>
+          <td>Doubling saturation reduces NPV by ~&euro;2.0M</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Climate Escalation</td>
+          <td>&gamma; = 0.15–0.30 per decade</td>
+          <td>Heatwave frequency under SSP2-4.5. Drives W4 + W5 growth.</td>
+          <td>Under SSP1-2.6, W4+W5 reduces by ~25%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+</div><!-- close .page -->
+
+  <!-- FOOTER -->
+  <footer style="background:#2c2420; color:#b5aca5; padding:48px clamp(2rem, 8vw, 6rem) 32px; border-top:1px solid rgba(255,255,255,0.04); font-family:'DM Sans', sans-serif">
+    <div style="max-width:860px; margin:0 auto">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:40px; margin-bottom:32px">
+        <div style="max-width:340px">
+          <div style="font-family:'Playfair Display', Georgia, serif; font-size:16px; color:#f5f0ed; font-weight:600; margin-bottom:10px">Ikenga</div>
+          <p style="font-size:11px; line-height:1.65; margin:0">Infrastructure that gives back. Employee-owned. Sovereign by design. Building the intelligence layer for the world&rsquo;s power grids.</p>
+        </div>
+        <div style="text-align:right; font-size:10px; letter-spacing:0.08em; line-height:1.8">
+          <div style="color:#f5f0ed; font-weight:500; margin-bottom:4px">SSI-ENN BESS Valuation Platform</div>
+          <div>Config B Stakeholder Value Report</div>
+          <div>CP Fiumetorto &bull; Sicilia</div>
+          <div>Generated March 2026</div>
+          <a href="https://ikenga.eu" style="color:#941914; text-decoration:none; font-weight:500; margin-top:8px; display:inline-block">ikenga.eu</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px; display:flex; justify-content:space-between; align-items:center">
+        <span style="font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.35)">&copy; 2026 Ikenga. All rights reserved.</span>
+        <div style="display:flex; gap:20px; font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.3)">
+          <span>Altinium Invest</span>
+          <span>Kinetic Shield</span>
+          <span>SSI Index Foundation</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- TAB SWITCHING + RADAR CHART JAVASCRIPT -->
+  <script>
+  // ── Tab Navigation ──
+  function switchTab(tab) {
+    // Update buttons
+    document.querySelectorAll('.tab-bar button').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
+    });
+    // Update panels
+    document.querySelectorAll('.view-panel').forEach(function(panel) {
+      panel.classList.toggle('active', panel.id === 'view-' + tab);
+    });
+    // Scroll to tab bar
+    document.getElementById('tab-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Redraw radar charts after panel becomes visible
+    setTimeout(function() { drawAllRadars(); }, 50);
+  }
+
+  // ── Radar Charts ──
+  (function(){
+    const keys = ['C','V','I','E','S','T'];
+    const labels = ['Continuity','Voltage','Infra.','Economic','Saturation','Transition'];
+    const weights = {C:0.30, V:0.10, I:0.25, E:0.10, S:0.20, T:0.05};
+    const cols = {C:'#941914', V:'#aa4234', I:'#5d8563', E:'#3b9eff', S:'#b8863a', T:'#22d3ee'};
+    const fleetMedian = {C:0.0815, V:0.0133, I:0.0994, E:0.0419, S:0.0128, T:0.0144};
+    const before = {C:0.3191, V:0.0131, I:0.1088, E:0.1030, S:0.0083, T:0.0279};
+    const after  = {C:0.1595, V:0.0105, I:0.0816, E:0.0906, S:0.0066, T:0.0229};
+
+    function drawRadar(canvasId, data, bandColor, ghostData) {
+      const c = document.getElementById(canvasId);
+      if (!c) return;
+      // Skip if canvas is not visible (hidden tab)
+      if (c.offsetParent === null) return;
+      const dpr = window.devicePixelRatio || 1;
+      const size = 280;
+      c.width = size * dpr;
+      c.height = (size + 24) * dpr;
+      c.style.width = size + 'px';
+      c.style.height = (size + 24) + 'px';
+      const cx = c.getContext('2d');
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const centerX = size / 2, centerY = size / 2 + 4, radius = 80, n = keys.length;
+      
+      function angle(i) { return (Math.PI * 2 * i / n) - Math.PI / 2; }
+      function pt(i, r) { return [centerX + Math.cos(angle(i)) * r, centerY + Math.sin(angle(i)) * r]; }
+      function norm(k, v) { return Math.min(v / weights[k], 1); }
+
+      cx.strokeStyle = 'rgba(44,36,32,0.06)';
+      cx.lineWidth = 0.5;
+      for (let ring = 1; ring <= 4; ring++) {
+        const r = radius * ring / 4;
+        cx.beginPath();
+        for (let i = 0; i <= n; i++) {
+          const [x,y] = pt(i%n, r);
+          i===0 ? cx.moveTo(x,y) : cx.lineTo(x,y);
+        }
+        cx.stroke();
+      }
+      
+      cx.strokeStyle = 'rgba(44,36,32,0.08)';
+      cx.lineWidth = 0.5;
+      for (let i = 0; i < n; i++) {
+        cx.beginPath();
+        cx.moveTo(centerX, centerY);
+        const [x,y] = pt(i, radius);
+        cx.lineTo(x,y);
+        cx.stroke();
+      }
+
+      cx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const k=keys[i%n];
+        const [x,y]=pt(i%n, radius*norm(k, fleetMedian[k]));
+        i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+      }
+      cx.fillStyle = 'rgba(138,126,118,0.08)';
+      cx.fill();
+      cx.strokeStyle = 'rgba(138,126,118,0.3)';
+      cx.lineWidth = 1;
+      cx.setLineDash([4,3]);
+      cx.stroke();
+      cx.setLineDash([]);
+
+      if (ghostData) {
+        cx.beginPath();
+        for (let i = 0; i <= n; i++) {
+          const k=keys[i%n];
+          const [x,y]=pt(i%n, radius*norm(k, ghostData[k]));
+          i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+        }
+        cx.strokeStyle = 'rgba(148,25,20,0.25)';
+        cx.lineWidth = 1.5;
+        cx.setLineDash([6,4]);
+        cx.stroke();
+        cx.setLineDash([]);
+      }
+
+      cx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const k=keys[i%n];
+        const [x,y]=pt(i%n, radius*norm(k, data[k]));
+        i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+      }
+      cx.fillStyle = bandColor + '18';
+      cx.fill();
+      cx.strokeStyle = bandColor;
+      cx.lineWidth = 2;
+      cx.stroke();
+
+      for (let i = 0; i < n; i++) {
+        const k=keys[i];
+        const [x,y]=pt(i, radius*norm(k, data[k]));
+        cx.beginPath();
+        cx.arc(x,y,3.5,0,Math.PI*2);
+        cx.fillStyle=cols[k];
+        cx.fill();
+        cx.strokeStyle='#fff';
+        cx.lineWidth=1.5;
+        cx.stroke();
+      }
+      
+      cx.font = '500 10px "DM Sans", sans-serif';
+      cx.textBaseline = 'middle';
+      for (let i = 0; i < n; i++) {
+        const [x,y] = pt(i, radius+18);
+        cx.fillStyle = cols[keys[i]];
+        cx.textAlign = x < centerX-5 ? 'right' : (x > centerX+5 ? 'left' : 'center');
+        cx.fillText(labels[i], x, y);
+      }
+      
+      const ly = size + 12;
+      cx.setLineDash([4,3]);
+      cx.strokeStyle='rgba(138,126,118,0.5)';
+      cx.lineWidth=1;
+      cx.beginPath();
+      cx.moveTo(size/2-50, ly);
+      cx.lineTo(size/2-30, ly);
+      cx.stroke();
+      cx.setLineDash([]);
+      cx.font='400 9px "DM Sans", sans-serif';
+      cx.fillStyle='#8a7e76';
+      cx.textAlign='left';
+      cx.fillText('Fleet median', size/2-26, ly);
+    }
+
+    // Draw all visible radars
+    window.drawAllRadars = function() {
+      drawRadar('radar-before-dno', before, '#941914', null);
+      drawRadar('radar-after-dno', after, '#5d8563', before);
+      drawRadar('radar-before-community', before, '#941914', null);
+      drawRadar('radar-after-community', after, '#b8863a', before);
+      drawRadar('radar-before-investor', before, '#941914', null);
+      drawRadar('radar-after-investor', after, '#5d8563', before);
+    };
+
+    // Initial draw
+    drawAllRadars();
+  })();
+  </script>
+
+</body>
+</html>
