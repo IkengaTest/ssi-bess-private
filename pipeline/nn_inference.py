@@ -1,17 +1,20 @@
 """
-SSI-ENN BESS — Neural Network Inference Module (v3)
-====================================================
+SSI-ENN BESS — Neural Network Inference Module (v3.4)
+======================================================
 Load trained models and score all substations with predictions.
-v3: 32-feature set with BS/Actuarial/Cannibalization enrichments.
+v3.4: 7-model pipeline with multi-target, revenue streams, conformal, SHAP.
 
 Outputs:
-  - nn_predictions.json: Complete per-substation predictions with confidence scores
+  - nn_predictions.json: Complete per-substation predictions
 
 Models used:
-  1. BESS Recommender   (MLP) → Config A/B classification + probability
-  2. NPV Regressor      (MLP) → Config B NPV prediction
-  3. Band Predictor     (RF)  → Low/Medium/High/Critical classification
-  4. Anomaly Detector   (IF)  → Anomaly flags and types
+  1. BESS Recommender       (MLP) → Config A/B classification + probability
+  2. Multi-Target Regressor (MLP) → NPV P5/P50/P95 + IRR + Sharpe
+  3. Band Predictor         (RF)  → Low/Medium/High/Critical classification
+  4. Anomaly Detector       (IF)  → Anomaly flags and types
+  5. Revenue Predictor      (MLP) → R1–R10 percentage decomposition
+  6. Conformal Intervals          → 90% coverage NPV bounds
+  7. SHAP Explainability          → Per-substation feature attributions
 """
 
 import json
@@ -23,7 +26,10 @@ import time
 import numpy as np
 import joblib
 
-from pipeline.nn_trainer import FeatureEngineer, BAND_NAMES, BAND_MAP, ALL_FEATURES
+from pipeline.nn_trainer import (
+    FeatureEngineer, BAND_NAMES, BAND_MAP, ALL_FEATURES,
+    MULTI_TARGETS, MULTI_TARGET_LABELS, REVENUE_STREAMS, REVENUE_STREAM_NAMES,
+)
 
 # ─────────────────────────── Paths ───────────────────────────
 
@@ -46,7 +52,7 @@ class NeuralNetworkInference:
 
         if self.verbose:
             print(f"\n{'='*70}")
-            print(f"  SSI-ENN BESS — Neural Network Inference (v2)")
+            print(f"  SSI-ENN BESS — Neural Network Inference (v3.4)")
             print(f"{'='*70}")
             print(f"  Data file       : {self.data_file}")
             print(f"  Models dir      : {self.models_dir}")
@@ -83,11 +89,32 @@ class NeuralNetworkInference:
         self.band_predictor = joblib.load(self.models_dir / 'band_predictor.pkl')
         self.anomaly_detector = joblib.load(self.models_dir / 'anomaly_detector.pkl')
 
+        # v3.4: New models
+        rev_path = self.models_dir / 'revenue_predictor.pkl'
+        self.revenue_predictor = joblib.load(rev_path) if rev_path.exists() else None
+
+        conf_path = self.models_dir / 'conformal.json'
+        if conf_path.exists():
+            with open(conf_path) as f:
+                self.conformal = json.load(f)
+        else:
+            self.conformal = None
+
+        shap_path = self.models_dir / 'shap_values.json'
+        if shap_path.exists():
+            with open(shap_path) as f:
+                self.shap_data = json.load(f)
+        else:
+            self.shap_data = None
+
         if self.verbose:
             print(f"    bess_recommender.pkl   (MLP)")
-            print(f"    npv_regressor.pkl      (MLP)")
+            print(f"    npv_regressor.pkl      (MultiOutput MLP)")
             print(f"    band_predictor.pkl     (RandomForest)")
             print(f"    anomaly_detector.pkl   (IsolationForest)")
+            print(f"    revenue_predictor.pkl  ({'loaded' if self.revenue_predictor else 'not found'})")
+            print(f"    conformal.json         ({'loaded' if self.conformal else 'not found'})")
+            print(f"    shap_values.json       ({'loaded' if self.shap_data else 'not found'})")
             print(f"    scaler.pkl             (StandardScaler)")
 
     def score_all(self) -> dict:
@@ -108,10 +135,41 @@ class NeuralNetworkInference:
         rec_confidence = rec_proba[np.arange(len(rec_proba)), rec_pred]
 
         # ═══════════════════════════════════════════════════════════════
-        # Model 2: NPV Regressor
+        # Model 2: Multi-Target Regressor (v3.4: 5 targets)
         # ═══════════════════════════════════════════════════════════════
 
-        npv_pred = self.npv_regressor.predict(X_scaled)
+        multi_pred = self.npv_regressor.predict(X_scaled)
+        if multi_pred.ndim == 2 and multi_pred.shape[1] >= 5:
+            npv_p5_pred = multi_pred[:, 0]
+            npv_pred = multi_pred[:, 1]      # P50 (backward compat)
+            npv_p95_pred = multi_pred[:, 2]
+            irr_pred = multi_pred[:, 3]
+            sharpe_pred = multi_pred[:, 4]
+            is_multi_target = True
+        else:
+            npv_pred = multi_pred if multi_pred.ndim == 1 else multi_pred.ravel()
+            npv_p5_pred = npv_p95_pred = irr_pred = sharpe_pred = None
+            is_multi_target = False
+
+        # ═══════════════════════════════════════════════════════════════
+        # Model 5: Revenue Stream Predictor (v3.4)
+        # ═══════════════════════════════════════════════════════════════
+
+        if self.revenue_predictor is not None:
+            rev_pred = self.revenue_predictor.predict(X_scaled)
+        else:
+            rev_pred = None
+
+        # ═══════════════════════════════════════════════════════════════
+        # Model 6: Conformal Prediction Intervals (v3.4)
+        # ═══════════════════════════════════════════════════════════════
+
+        if self.conformal is not None:
+            q_hat = self.conformal['q_hat']
+            conf_lower = npv_pred - q_hat
+            conf_upper = npv_pred + q_hat
+        else:
+            conf_lower = conf_upper = None
 
         # ═══════════════════════════════════════════════════════════════
         # Model 3: Band Predictor (uses unscaled features)
@@ -184,12 +242,12 @@ class NeuralNetworkInference:
             else:
                 anomaly_type = None
 
-            # NPV residual
-            cfg_b = substation.get('bess', {}).get('config_B', {})
-            actual_npv = cfg_b.get('NPV_M', 0)
-            npv_residual = npv_pred[i] - actual_npv
+            # NPV residual (against MC target)
+            mc = substation.get('mc_results', {})
+            actual_npv_mc = mc.get('npv', {}).get('npv_P50', 0)
+            npv_residual = npv_pred[i] - actual_npv_mc
 
-            self.predictions[substation_id] = {
+            pred_entry = {
                 'nn_recommendation': rec_class,
                 'nn_recommendation_confidence': round(float(rec_confidence[i]), 4),
                 'nn_npv_predicted_M': round(float(npv_pred[i]), 4),
@@ -201,6 +259,31 @@ class NeuralNetworkInference:
                 'nn_anomaly_type': anomaly_type,
             }
 
+            # v3.4: Multi-target outputs
+            if is_multi_target:
+                pred_entry['nn_npv_P5_M'] = round(float(npv_p5_pred[i]), 4)
+                pred_entry['nn_npv_P95_M'] = round(float(npv_p95_pred[i]), 4)
+                pred_entry['nn_irr_pct'] = round(float(irr_pred[i]), 2)
+                pred_entry['nn_sharpe'] = round(float(sharpe_pred[i]), 3)
+
+            # v3.4: Revenue stream decomposition
+            if rev_pred is not None:
+                pred_entry['nn_revenue_streams'] = {
+                    name: round(float(rev_pred[i, j]), 2)
+                    for j, name in enumerate(REVENUE_STREAM_NAMES)
+                }
+
+            # v3.4: Conformal intervals
+            if conf_lower is not None:
+                pred_entry['nn_conformal_lower_M'] = round(float(conf_lower[i]), 4)
+                pred_entry['nn_conformal_upper_M'] = round(float(conf_upper[i]), 4)
+
+            # v3.4: SHAP drivers
+            if self.shap_data and substation_id in self.shap_data.get('per_substation', {}):
+                pred_entry['nn_shap_drivers'] = self.shap_data['per_substation'][substation_id]['top_drivers']
+
+            self.predictions[substation_id] = pred_entry
+
         # ═══════════════════════════════════════════════════════════════
         # Build metadata
         # ═══════════════════════════════════════════════════════════════
@@ -210,19 +293,21 @@ class NeuralNetworkInference:
 
         self.meta = {
             'timestamp': datetime.utcnow().isoformat() + 'Z',
-            'version': 3,
+            'version': 3.4,
             'total_scored': len(self.substations),
             'total_anomalies': n_anomalies,
             'anomaly_pct': round(100 * n_anomalies / len(self.substations), 2),
             'models': {
                 'bess_recommender': 'MLPClassifier(128,64,32)',
-                'npv_regressor': 'MLPRegressor(512,256,128)',
+                'multi_target_regressor': 'MultiOutput MLP(512,256,128) × 5 targets',
                 'band_predictor': 'RandomForestClassifier(200)',
                 'anomaly_detector': 'IsolationForest(200, contamination=0.05)',
-                'scaler': 'StandardScaler',
+                'revenue_predictor': 'MultiOutput MLP(256,128,64) × 10 streams' if self.revenue_predictor else 'N/A',
+                'conformal': f'Split conformal (q̂={self.conformal["q_hat"]:.4f}M)' if self.conformal else 'N/A',
+                'shap': f'{self.shap_data["n_explained"]} substations explained' if self.shap_data else 'N/A',
             },
             'feature_count': self.X.shape[1],
-            'enrichments': ['black_swan', 'cannibalization', 'actuarial'],
+            'enrichments': ['black_swan', 'cannibalization', 'actuarial', 'monte_carlo'],
             'duration_s': round(duration, 2),
         }
 

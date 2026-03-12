@@ -160,63 +160,81 @@
     "epochs": 24
   },
   "npv_regressor": {
-    "mae_train": 0.07920246763232933,
-    "mae_test": 0.10658990122088612,
-    "rmse_test": 0.1344958039631493,
-    "r2_train": 0.9360823971127618,
-    "r2_test": 0.8887210044627749,
-    "spearman_corr": 0.8606277581481019,
-    "bias": 0.0079,
-    "quartile_mae": {
-      "Q1": 0.0926,
-      "Q2": 0.1081,
-      "Q3": 0.1091,
-      "Q4": 0.1166
+    "multi_target": true,
+    "n_targets": 5,
+    "target_names": [
+      "npv_P5",
+      "npv_b",
+      "npv_P95",
+      "irr_b",
+      "sharpe_ratio"
+    ],
+    "per_target": {
+      "npv_P5": {
+        "label": "NPV P5",
+        "mae_train": 0.1264,
+        "mae_test": 0.1459,
+        "rmse_test": 0.1842,
+        "r2_train": 0.8489,
+        "r2_test": 0.792,
+        "spearman": 0.7833,
+        "bias": -0.0017,
+        "n_err_gt_1M": 0
+      },
+      "npv_b": {
+        "label": "NPV P50",
+        "mae_train": 0.0792,
+        "mae_test": 0.1066,
+        "rmse_test": 0.1345,
+        "r2_train": 0.9361,
+        "r2_test": 0.8887,
+        "spearman": 0.8606,
+        "bias": 0.0079,
+        "n_err_gt_1M": 0
+      },
+      "npv_P95": {
+        "label": "NPV P95",
+        "mae_train": 0.155,
+        "mae_test": 0.1786,
+        "rmse_test": 0.2256,
+        "r2_train": 0.7921,
+        "r2_test": 0.7218,
+        "spearman": 0.7922,
+        "bias": 0.0273,
+        "n_err_gt_1M": 0
+      },
+      "irr_b": {
+        "label": "IRR",
+        "mae_train": 0.1362,
+        "mae_test": 0.1551,
+        "rmse_test": 0.2035,
+        "r2_train": 0.8625,
+        "r2_test": 0.8162,
+        "spearman": 0.7852,
+        "bias": 0.0428,
+        "n_err_gt_1M": 0
+      },
+      "sharpe_ratio": {
+        "label": "Sharpe",
+        "mae_train": 0.527,
+        "mae_test": 0.5419,
+        "rmse_test": 0.6892,
+        "r2_train": 0.3796,
+        "r2_test": 0.2646,
+        "spearman": 0.4894,
+        "bias": 0.0255,
+        "n_err_gt_1M": 0
+      }
     },
+    "mae_train": 0.0792,
+    "mae_test": 0.1066,
+    "rmse_test": 0.1345,
+    "r2_train": 0.9361,
+    "r2_test": 0.8887,
+    "spearman_corr": 0.8606,
+    "bias": 0.0079,
     "n_err_gt_1M": 0,
     "n_err_gt_2M": 0,
-    "top_features": [
-      {
-        "feature": "bs_composite",
-        "importance": 45.1402
-      },
-      {
-        "feature": "revenue_haircut_pct",
-        "importance": 39.4642
-      },
-      {
-        "feature": "congestion_factor",
-        "importance": 33.5597
-      },
-      {
-        "feature": "crs_uplift_pct",
-        "importance": 30.9124
-      },
-      {
-        "feature": "crs_nodal",
-        "importance": 26.9552
-      },
-      {
-        "feature": "exposure_index",
-        "importance": 18.4666
-      },
-      {
-        "feature": "mod_R3",
-        "importance": 17.8093
-      },
-      {
-        "feature": "mod_R7",
-        "importance": 15.3856
-      },
-      {
-        "feature": "bess_sat",
-        "importance": 12.7225
-      },
-      {
-        "feature": "fleet_percentile",
-        "importance": 9.9181
-      }
-    ],
     "per_region": {
       "Abruzzo": {
         "n": 23,
@@ -318,8 +336,7 @@
         "mae": 0.1284,
         "r2": -1.3966
       }
-    },
-    "epochs": 206
+    }
   },
   "band_predictor": {
     "accuracy_train": 1.0,
@@ -762,13 +779,145 @@
       }
     }
   },
+  "revenue_predictor": {
+    "n_streams": 10,
+    "overall_mae_pct": 0.074,
+    "per_stream": {
+      "R1_pct": {
+        "name": "R1 Arbitrage",
+        "mae_pct": 0.012,
+        "r2": 0.9966,
+        "mean_actual_pct": 2.96
+      },
+      "R2_pct": {
+        "name": "R2 FCR",
+        "mae_pct": 0.086,
+        "r2": 0.7429,
+        "mean_actual_pct": 18.14
+      },
+      "R3_pct": {
+        "name": "R3 aFRR",
+        "mae_pct": 0.133,
+        "r2": 0.605,
+        "mean_actual_pct": 26.31
+      },
+      "R4_pct": {
+        "name": "R4 mFRR",
+        "mae_pct": 0.062,
+        "r2": 0.3825,
+        "mean_actual_pct": 8.89
+      },
+      "R5_pct": {
+        "name": "R5 CM",
+        "mae_pct": 0.066,
+        "r2": 0.7983,
+        "mean_actual_pct": 16.35
+      },
+      "R6_pct": {
+        "name": "R6 Congestion",
+        "mae_pct": 0.012,
+        "r2": 0.9994,
+        "mean_actual_pct": 0.91
+      },
+      "R7_pct": {
+        "name": "R7 Nodal/LMP",
+        "mae_pct": 0.099,
+        "r2": 0.231,
+        "mean_actual_pct": 8.22
+      },
+      "R8_pct": {
+        "name": "R8 Energy Community",
+        "mae_pct": 0.046,
+        "r2": 0.6909,
+        "mean_actual_pct": 9.13
+      },
+      "R9_pct": {
+        "name": "R9 DSO Services",
+        "mae_pct": 0.04,
+        "r2": 0.6762,
+        "mean_actual_pct": 7.63
+      },
+      "R10_pct": {
+        "name": "R10 PQaaS",
+        "mae_pct": 0.186,
+        "r2": 0.0,
+        "mean_actual_pct": 1.5
+      }
+    }
+  },
+  "conformal": {
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "actual_coverage": 0.8971,
+    "q_hat_M": 0.2216,
+    "avg_interval_width_M": 0.4433,
+    "n_calibration": 510,
+    "n_evaluation": 340,
+    "coverage_met": false
+  },
+  "shap": {
+    "n_explained": 200,
+    "n_background": 100,
+    "top_global_features": [
+      {
+        "feature": "revenue_haircut_pct",
+        "mean_abs_shap": 1.3341
+      },
+      {
+        "feature": "bs_composite",
+        "mean_abs_shap": 0.9989
+      },
+      {
+        "feature": "crs_uplift_pct",
+        "mean_abs_shap": 0.7853
+      },
+      {
+        "feature": "congestion_factor",
+        "mean_abs_shap": 0.7269
+      },
+      {
+        "feature": "mod_R3",
+        "mean_abs_shap": 0.6143
+      },
+      {
+        "feature": "crs_nodal",
+        "mean_abs_shap": 0.4852
+      },
+      {
+        "feature": "exposure_index",
+        "mean_abs_shap": 0.4843
+      },
+      {
+        "feature": "fleet_percentile",
+        "mean_abs_shap": 0.4477
+      },
+      {
+        "feature": "bess_sat",
+        "mean_abs_shap": 0.4092
+      },
+      {
+        "feature": "EP_rate_region",
+        "mean_abs_shap": 0.2408
+      }
+    ],
+    "method": "KernelSHAP"
+  },
+  "temporal_validation": {
+    "rank_spearman_npv": 0.9029,
+    "rank_spearman_irr": 0.8343,
+    "cross_target_corr": 0.8999,
+    "top10_overlap_pct": 97.0,
+    "bottom10_overlap_pct": 39.4,
+    "temporal_stable": true
+  },
   "_meta": {
-    "version": 3.3,
+    "version": 3.4,
     "n_substations": 4293,
     "n_features": 38,
+    "n_models": 7,
     "n_train": 3443,
     "n_test": 850,
-    "duration_s": 35.49,
+    "duration_s": 264.31,
     "random_state": 42,
     "target_source": "monte_carlo",
     "mc_paths": 200,
@@ -783,20 +932,26 @@
       "nodal": 3,
       "fuel_nexus": 3
     },
+    "models_list": [
+      "M1: BESS Recommender (MLP 128-64-32)",
+      "M2: Multi-Target Regressor (5 MC targets, MLP 512-256-128)",
+      "M3: Band Predictor (RandomForest 200 trees)",
+      "M4: Anomaly Detector (3-residual IsolationForest)",
+      "M5: Revenue Stream Predictor (R1-R10, MLP 256-128-64)",
+      "M6: Conformal Prediction Intervals (split conformal)",
+      "M7: SHAP Explainability (KernelSHAP)"
+    ],
     "refinements": [
       "v3: Feature expansion 22 \u2192 32 (+10 enrichment features)",
-      "v3: Added CRS, BESS_SAT, exposure_index from cannibalization.py",
-      "v3: Added bs_composite from black_swan.py",
-      "v3: Added tvar_95, tail_ratio, pad_bps, wacc_adjusted, gpd_xi from actuarial.py",
-      "v3.1: Added 3 nodal pricing features (crs_nodal, crs_uplift_pct, congestion_factor)",
-      "v3.2: Added 3 fuel nexus features (fuel_shock_exposure, bess_fuel_upside, decarb_discount)",
-      "v3.3: NPV target switched from ad-hoc formula \u2192 MC-derived P50",
-      "v3.3: MC engine: OU jump-diffusion \u00d7 10 revenue streams \u00d7 200 paths \u00d7 25 years",
-      "v3.3: Breaks circular dependency \u2014 NN no longer trains on formula outputs",
-      "Model 1: MLP(128,64,32) confirmed, added feature importance + confusion matrix",
-      "Model 2: Upgraded to MLP(512,256,128), now predicts MC NPV P50",
-      "Model 3: Switched to RandomForest (100% accuracy vs 98.6% MLP)",
-      "Model 4: 3-residual inputs (rec+NPV+band), anomaly type classification"
+      "v3.1: +3 nodal pricing features",
+      "v3.2: +3 fuel nexus features",
+      "v3.3: NPV target \u2192 MC-derived P50 (breaks circular dependency)",
+      "v3.4: Model 2 \u2192 5-target simultaneous (P5/P50/P95/IRR/Sharpe)",
+      "v3.4: +Model 5 Revenue stream predictor (R1-R10 decomposition)",
+      "v3.4: +Model 6 Conformal prediction intervals (90% coverage)",
+      "v3.4: +Model 7 SHAP per-substation attributions (KernelSHAP)",
+      "v3.4: Walk-forward temporal validation (rank stability)",
+      "v3.4: Fast-inference surrogate mode (multi-target \u2192 real-time)"
     ]
   }
 }
