@@ -1,11 +1,18 @@
 """
-SSI-ENN BESS — Neural Network Training Module (v3.1 — + Nodal Pricing Scenario)
+SSI-ENN BESS — Neural Network Training Module (v3.2 — + Fuel-Electricity Nexus)
 ==================================================================================
-Four models trained on 4,293 Italian substations with expanded 35-feature set:
+Four models trained on 4,293 Italian substations with expanded 38-feature set:
   1. BESS Recommender   — Config A vs B (MLP, confirmed optimal)
   2. NPV Regressor      — Config B NPV (MLP 512-256-128, upgraded)
   3. Band Predictor     — Low/Medium/High/Critical (RandomForest, 100% acc)
   4. Anomaly Detector   — 3-residual IsolationForest (rec + NPV + band)
+
+v3.2 enhancements (from v3.1):
+  - Feature expansion: 35 → 38 features (+3 fuel-electricity nexus features)
+  - New features: fuel_shock_exposure, bess_fuel_upside, decarb_discount
+  - Fuel nexus features from black_swan.py v1.1 Family 4 (BS-F4-1 → BS-F4-4)
+  - Geopolitical fuel shock → electricity price transmission → BESS arbitrage upside
+  - Time-varying conventional generation ratio per EU 2030/2035/2050 targets
 
 v3.1 enhancements (from v3):
   - Feature expansion: 32 → 35 features (+3 nodal pricing scenario features)
@@ -68,8 +75,16 @@ NODAL_FEATURES = [
     'congestion_factor',      # Zone/node congestion factor [0, 1]
 ]
 
+# v3.2: Fuel-electricity nexus features (BS-F4)
+FUEL_NEXUS_FEATURES = [
+    'fuel_shock_exposure',    # Probability-weighted fuel→elec transmission [0, 1]
+    'bess_fuel_upside',       # BESS arbitrage upside from fuel volatility [0, 1]
+    'decarb_discount',        # Effective conventional ratio over horizon [0, 1]
+]
+
 ALL_FEATURES = (GEOGRAPHIC_FEATURES + SSI_SCORE_FEATURES + COMPONENT_FEATURES +
-                MODIFIER_FEATURES + SOCIO_FEATURES + ENRICHMENT_FEATURES + NODAL_FEATURES)
+                MODIFIER_FEATURES + SOCIO_FEATURES + ENRICHMENT_FEATURES +
+                NODAL_FEATURES + FUEL_NEXUS_FEATURES)
 
 BAND_MAP = {'Low': 0, 'Medium': 1, 'High': 2, 'Critical': 3}
 BAND_NAMES = ['Low', 'Medium', 'High', 'Critical']
@@ -146,6 +161,10 @@ class FeatureEngineer:
                 'crs_nodal': cann.get('nodal_scenario', {}).get('crs_nodal', 0.50),
                 'crs_uplift_pct': cann.get('nodal_scenario', {}).get('crs_uplift_pct', 0.0),
                 'congestion_factor': cann.get('nodal_scenario', {}).get('congestion_factor', 0.40),
+                # v3.2: Fuel-electricity nexus (BS-F4)
+                'fuel_shock_exposure': bs.get('fuel_nexus', {}).get('fuel_shock_exposure', 0.0),
+                'bess_fuel_upside': bs.get('fuel_nexus', {}).get('bess_fuel_upside', 0.0),
+                'decarb_discount': bs.get('fuel_nexus', {}).get('decarb_discount', 0.45),
                 # Targets
                 'recommendation': 1 if bess.get('recommendation') == 'Config B' else 0,
                 'priority': bess.get('investment_priority', 5),
@@ -157,7 +176,7 @@ class FeatureEngineer:
         return pd.DataFrame(rows)
 
     def get_feature_matrix(self) -> np.ndarray:
-        """Full 32-feature matrix (22 base + 10 enrichment)."""
+        """Full 38-feature matrix (22 base + 10 enrichment + 3 nodal + 3 fuel nexus)."""
         return self.df[ALL_FEATURES].fillna(0).values.astype(np.float64)
 
     def get_target(self, name: str) -> np.ndarray:

@@ -195,6 +195,20 @@ BLACK_SWAN = {
     'supply_disruption_prob': 0.05,
     'commodity_spike_multiplier': 2.0,
     'rate_shock_bps': 200.0,
+    # Family 4 — Fuel-Electricity Nexus (v1.1)
+    'gas_crisis_prob': 0.04,             # Annual probability of major gas disruption
+    'gas_spike_multiplier': 4.0,         # TTF spike ratio
+    'oil_embargo_prob': 0.02,            # Annual probability of oil supply shock
+    'oil_spike_multiplier': 2.5,         # Brent spike ratio
+    'lng_disruption_prob': 0.03,         # Annual probability of LNG supply disruption
+    'lng_spike_multiplier': 3.0,         # Asian LNG diversion premium
+    'beta_pass_through': 0.85,           # Merit order gas→electricity pass-through
+    'p_elec_base': 120.0,               # Base electricity price (€/MWh)
+    'phi_spread_capture': 0.40,          # BESS spread capture fraction
+    'r_conv_2024': 0.58,                 # 2024 thermoelectric share
+    'r_conv_2030': 0.42,                 # PNIEC 2030 target
+    'r_conv_2035': 0.25,                 # EU 2035 interim
+    'r_conv_2050': 0.05,                 # EU net-zero 2050
 }
 
 # Actuarial enrichment — see actuarial.py for full documentation
@@ -259,6 +273,34 @@ ENRICHMENT_DATA_SOURCES = {
         'variables': ['continuity_tail_distribution'],
         'status': 'phase2',
         'description': 'Continuity metric tail distributions for GPD fitting',
+    },
+    # BS-DS.1 — GME Day-Ahead Prices
+    'gme_mgp_prices': {
+        'provider': 'GME / Gestore Mercati Energetici',
+        'variables': ['zonal_price_spreads', 'peak_offpeak_ratio'],
+        'status': 'phase2',
+        'description': 'Day-ahead zonal electricity prices for spread calibration',
+    },
+    # BS-DS.2 — Terna Thermoelectric Statistics
+    'terna_thermoelectric': {
+        'provider': 'Terna Open Data',
+        'variables': ['thermoelectric_share_by_zone', 'fuel_mix'],
+        'status': 'phase2',
+        'description': 'Conventional generation share per zone (R_conv calibration)',
+    },
+    # BS-DS.3 — TTF/PSV Gas Futures
+    'ttf_gas_futures': {
+        'provider': 'ICIS / ICE Endex',
+        'variables': ['ttf_spot', 'psv_spread', 'forward_curve'],
+        'status': 'phase2',
+        'description': 'Natural gas price data for fuel shock calibration',
+    },
+    # BS-DS.4 — PNIEC Decarbonisation Pathway
+    'pniec_decarb': {
+        'provider': 'PNIEC / EU Fit-for-55',
+        'variables': ['r_conv_trajectory', 'res_target_pct'],
+        'status': 'phase2',
+        'description': 'National decarbonisation targets for conventional ratio projection',
     },
 }
 

@@ -201,6 +201,36 @@
         </div>
       </div>
 
+      <!-- v3.2: Fuel-Electricity Nexus -->
+      <div class="section-label" style="margin-top:2rem;">Fuel-Electricity Nexus <span style="font-size:0.65rem;background:#fef3c7;padding:2px 6px;border-radius:3px;color:#92400e;margin-left:0.5rem;">NEW v3.2</span></div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin:1rem 0 0.5rem;">
+        <div class="kpi-card" style="border-left:3px solid #dc2626;">
+          <div class="kpi-label">Fuel Shock Exposure</div>
+          <div class="kpi-value" id="enr-fuel-exposure" style="font-size:1.4rem;color:#dc2626;"></div>
+          <div class="kpi-unit">Probability × transmission</div>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid #059669;">
+          <div class="kpi-label">BESS Fuel Upside</div>
+          <div class="kpi-value" id="enr-fuel-upside" style="font-size:1.4rem;color:#059669;"></div>
+          <div class="kpi-unit">Arbitrage gain from price spikes</div>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid #7c3aed;">
+          <div class="kpi-label">Decarb Discount</div>
+          <div class="kpi-value" id="enr-decarb" style="font-size:1.4rem;color:#7c3aed;"></div>
+          <div class="kpi-unit">Effective R_conv over horizon</div>
+        </div>
+        <div class="kpi-card" style="border-left:3px solid #ea580c;">
+          <div class="kpi-label">Price Spike (€/MWh)</div>
+          <div class="kpi-value" id="enr-price-spike" style="font-size:1.4rem;color:#ea580c;"></div>
+          <div class="kpi-unit" id="enr-price-zone">Zone thermal dependency</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;margin:0.5rem 0 1.5rem;font-size:0.72rem;color:#6b7280;">
+        <span>R_conv trajectory: <strong>2024</strong> 58% → <strong>2030</strong> 42% → <strong>2035</strong> 25% → <strong>2050</strong> 5%</span>
+        <span>Annual shock probability: <strong>8.7%</strong></span>
+        <span>Features: <strong>38</strong> (v3.2)</span>
+      </div>
+
       <!-- Narrative -->
       <div class="narrative-block" id="narrative-block">
         <p id="narrative-text"></p>
@@ -697,6 +727,24 @@
 
       const npvDelta = nodal.npv_delta_M || 0;
       document.getElementById('enr-npv-nodal').textContent = '€' + npvDelta.toFixed(3) + 'M';
+
+      // v3.2: Fuel-Electricity Nexus
+      const fn = bs.fuel_nexus || {};
+      const fuelExp = fn.fuel_shock_exposure || 0;
+      document.getElementById('enr-fuel-exposure').textContent = (fuelExp * 100).toFixed(1) + '%';
+
+      const fuelUp = fn.bess_fuel_upside || 0;
+      document.getElementById('enr-fuel-upside').textContent = (fuelUp * 100).toFixed(1) + '%';
+
+      const decarb = fn.decarb_discount || 0;
+      document.getElementById('enr-decarb').textContent = (decarb * 100).toFixed(1) + '%';
+
+      const transNow = fn.transmission_now || {};
+      const deltaP = transNow.delta_p_elec || 0;
+      document.getElementById('enr-price-spike').textContent = '€' + deltaP.toFixed(0);
+      const zone = transNow.zone || '';
+      const zeta = transNow.zone_thermal_dependency || 0;
+      document.getElementById('enr-price-zone').textContent = `${zone} (ζ=${(zeta*100).toFixed(0)}%)`;
     }
 
     function drawNarrative(sub) {
